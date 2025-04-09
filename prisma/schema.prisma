@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  // Quiz related fields
+  quizAttempts       QuizAttempt[]
+  surveyResponses    DemographicSurvey[]
+  consent            UserConsent[]
+  completedWordLists String[]            @default([])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// Quiz related models
+model WordList {
+  id             String        @id @default(cuid())
+  words          String[] // Real words
+  nonWords       String[]      @map("non_words") // Non-words
+  timesCompleted Int           @default(0)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  quizAttempts   QuizAttempt[]
+}
+
+model QuizAttempt {
+  id                String   @id @default(cuid())
+  userId            String
+  wordListId        String
+  score             Float
+  correctWords      Int      @map("correct_words")
+  incorrectWords    Int      @map("incorrect_words")
+  correctNonWords   Int      @map("correct_non_words")
+  incorrectNonWords Int      @map("incorrect_non_words")
+  completionTime    Int      @map("completion_time") // in milliseconds
+  responses         Json // Array of responses
+  createdAt         DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordList WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)
+}
+
+model DemographicSurvey {
+  id                  String   @id @default(cuid())
+  userId              String
+  age                 String
+  gender              String
+  educationLevel      String   @map("education_level")
+  nativeLanguage      String   @map("native_language")
+  otherLanguages      String[] @map("other_languages")
+  arabicProficiency   String?  @map("arabic_proficiency")
+  yearsLearningArabic String?  @map("years_learning_arabic")
+  createdAt           DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model UserConsent {
+  id             String   @id @default(cuid())
+  userId         String
+  consentedAt    DateTime @map("consented_at")
+  consentVersion String   @map("consent_version")
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
