@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
-import { Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+
+import { Noto_Sans_Arabic } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
+import Header from "@/components/view/Header";
 
 const notoSansArabic = Noto_Sans_Arabic({
   variable: "--font-arabic",
@@ -23,9 +25,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ar" dir="rtl">
       <body
-        className={`${notoSansArabic.variable} antialiased mx-auto max-w-3xl`}
+        className={`${notoSansArabic.className} antialiased mx-auto max-w-3xl`}
       >
         <Toaster />
+        <Header />
+
         {children}
       </body>
     </html>
