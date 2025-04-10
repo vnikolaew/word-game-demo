@@ -26,8 +26,20 @@ export default function AppPage() {
 
   // Handle consent submission
   const handleConsent = async () => {
-    setLoading(true);
-    setError(null);
+    try {
+      setLoading(true);
+      setError(null);
+
+      // Save consent to database or perform any other necessary actions
+
+      // Move to practice state
+      setAppState("practice");
+    } catch (error) {
+      setError("حدث خطأ أثناء حفظ الموافقة");
+      console.error("Consent error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Handle quiz completion

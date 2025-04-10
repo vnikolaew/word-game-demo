@@ -18,6 +18,7 @@ interface ConsentViewProps {
 
 export function ConsentView({ onConsent }: ConsentViewProps) {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const [submitting, setSubmitting] = useState(false);
 
   const consentItems = [
     {
@@ -35,6 +36,18 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
   ];
 
   const allChecked = checkedItems.length === consentItems.length;
+
+  const handleSubmitConsent = async () => {
+    if (!allChecked || submitting) return;
+
+    try {
+      setSubmitting(true);
+      // Call the parent's onConsent handler
+      await onConsent();
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <Card>
@@ -125,8 +138,11 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button onClick={onConsent} disabled={!allChecked}>
-          نعم، أوافق.
+        <Button
+          onClick={handleSubmitConsent}
+          disabled={!allChecked || submitting}
+        >
+          {submitting ? "جاري الحفظ..." : "نعم، أوافق."}
         </Button>
       </CardFooter>
     </Card>
