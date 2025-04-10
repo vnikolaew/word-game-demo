@@ -13,25 +13,39 @@ import {
 export default function LandingPage() {
   const faqs = [
     {
-      question: "ما هو هذا المشروع البحثي؟",
+      question: "ما هو هدف هذا الاختبار؟",
       answer:
-        "يهدف هذا المشروع البحثي إلى فهم كيفية معالجة الناس وتمييزهم للكلمات العربية. مشاركتك ستساعدنا في فهم آليات معالجة اللغة بشكل أفضل.",
+        "يهدف الاختبار إلى جمع بيانات لغوية عن معرفتنا بمفردات اللغة العربية الفصحى، مما يساهم في فهم أعمق للغتنا",
     },
     {
-      question: "كم من الوقت سيستغرق؟",
-      answer:
-        "تستغرق العملية بأكملها حوالي 15-20 دقيقة، بما في ذلك جلسة التدريب والاختبار الرئيسي والاستبيان.",
+      question: "كم سيستغرق هذا الاختبار؟",
+      answer: "لن تستغرق الإجابة أكثر من 10 دقائق من وقتك",
     },
     {
-      question: "ماذا يجب علي أن أفعل؟",
+      question: "من يمكنه المشاركة؟",
       answer:
-        "سيتم عرض سلسلة من الكلمات وسيُطلب منك تحديد ما إذا كانت كل كلمة عربية حقيقية أم لا. يمكنك الإجابة باستخدام أسهم لوحة المفاتيح على الكمبيوتر أو الأزرار على الأجهزة المحمولة.",
+        "يمكن لأي شخص يبلغ من العمر 18 عامًا أو أكثر المشاركة، شرط أن يكون متحدثاً للغة العربية. نرحب بمشاركتكم! 👥",
     },
     {
-      question: "هل بياناتي سرية؟",
-      answer:
-        "نعم، جميع البيانات التي يتم جمعها مجهولة المصدر وسيتم استخدامها لأغراض البحث فقط. يمكنك العثور على مزيد من التفاصيل في نموذج الموافقة قبل بدء الاختبار.",
+      question: "هل يمكن لمتعلمي العربية كلغة ثانية المشاركة؟",
+      answer: "نعم نسعد بمشاركتهم معنا.",
     },
+    {
+      question: "كيف يتم حماية خصوصية المشاركين؟",
+      answer:
+        "نولي اهتمامًا كبيرًا بخصوصية المشاركين. سيتم تشفير جميع البيانات الشخصية وحمايتها، ولن تُستخدم إلا لأغراض البحث العلمي.",
+    },
+    {
+      question: "هل يمكن الانسحاب من الاختبار؟",
+      answer:
+        "نعم، يمكنك الانسحاب في أي وقت تريده دون أي عواقب. نحن نحترم قرارك ونقدّر مشاركتك مهما كانت مدتها.",
+    },
+  ];
+
+  const benefits = [
+    "⚡ سهلة وسريعة",
+    "⏱️ تستغرق دقائق معدودة",
+    "🏆 اختبر معرفتك باللغة العربية",
   ];
 
   return (
@@ -43,7 +57,7 @@ export default function LandingPage() {
           transition={{ duration: 0.3, delay: 0.3 }}
           className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl"
         >
-          مرحباً بك في اختبار الكلمات العربية
+          حروفنا
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
@@ -51,8 +65,40 @@ export default function LandingPage() {
           transition={{ duration: 0.3, delay: 0.4 }}
           className="max-w-2xl mx-auto text-muted-foreground text-lg"
         >
-          اختبر معرفتك باللغة العربية من خلال تحديد الكلمات الحقيقية
+          اكتشف جمال اللغة العربية
         </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.4 }}
+          className="max-w-2xl mx-auto text-muted-foreground text-lg"
+        >
+          تعرف على الكلمات العربية الصحيحة
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.5 }}
+          className="flex flex-col items-center gap-4 my-8"
+        >
+          <p className="text-lg font-medium">
+            مهمتك بسيطة: حدد إذا كانت الكلمات موجودة في اللغة العربية أم لا
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {benefits.map((benefit, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
+                className="bg-secondary/50 px-4 py-2 rounded-lg"
+              >
+                {benefit}
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -61,7 +107,7 @@ export default function LandingPage() {
           className="flex justify-center"
         >
           <Button asChild size="lg">
-            <Link href="/auth/login">ابدأ الاختبار</Link>
+            <Link href="/auth/login">ابدأ الآن</Link>
           </Button>
         </motion.div>
       </div>

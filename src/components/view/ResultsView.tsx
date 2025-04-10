@@ -50,17 +50,43 @@ export function ResultsView({ score, onNext }: ResultsViewProps) {
     fetchResults();
   }, []);
 
+  const getFeedbackMessage = (score: number): string => {
+    const feedbackMessages = [
+      { range: [-100, 0], message: "تحتاج إلى تحسين معرفتك بالكلمات العربية." },
+      {
+        range: [1, 25],
+        message: "معرفتك بالكلمات العربية محدودة، واصل التعلم.",
+      },
+      { range: [26, 50], message: "مستوى متواضع في تمييز الكلمات العربية." },
+      { range: [51, 70], message: "مستوى جيد في معرفة الكلمات العربية." },
+      { range: [71, 80], message: "مستوى جيد جداً في تمييز الكلمات العربية." },
+      { range: [81, 90], message: "مستوى ممتاز في معرفة الكلمات العربية." },
+      {
+        range: [91, 95],
+        message: "مستوى متقدم جداً في معرفة الكلمات العربية.",
+      },
+      { range: [96, 100], message: "معرفة استثنائية بالكلمات العربية. أحسنت!" },
+    ];
+
+    for (const { range, message } of feedbackMessages) {
+      if (score >= range[0] && score <= range[1]) {
+        return message;
+      }
+    }
+    return feedbackMessages[0].message;
+  };
+
   const handleShare = async () => {
     if (!results) return;
 
-    const shareText = `لقد حصلت على ${results.score.toFixed(
+    const shareText = `حصلت على ${results.score.toFixed(
       1
-    )}% في اختبار الكلمات العربية!`;
+    )} من 100 في اختبار #حروفنا! 🎉\nجرّب الاختبار وشاركنا نتيجتك:\n##اللغة_العربية #تقييم_الكلمات`;
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "نتائج اختبار الكلمات",
+          title: "نتائج اختبار حروفنا",
           text: shareText,
           url: window.location.href,
         });
@@ -74,7 +100,7 @@ export function ResultsView({ score, onNext }: ResultsViewProps) {
         await navigator.clipboard.writeText(
           `${shareText}\n${window.location.href}`
         );
-        alert("تم نسخ النتائج إلى الحافظة!");
+        toast.success("تم نسخ النتائج إلى الحافظة!");
       } catch (error) {
         console.error("Error copying to clipboard:", error);
       }
@@ -102,101 +128,30 @@ export function ResultsView({ score, onNext }: ResultsViewProps) {
     );
   }
 
-  const totalWords = results.correct_words + results.incorrect_words;
-  const totalNonWords = results.correct_non_words + results.incorrect_non_words;
-  const wordAccuracy = (results.correct_words / totalWords) * 100;
-  const nonWordAccuracy = (results.correct_non_words / totalNonWords) * 100;
-  const overallAccuracy =
-    ((results.correct_words + results.correct_non_words) /
-      (totalWords + totalNonWords)) *
-    100;
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>نتائج الاختبار</CardTitle>
+        <CardTitle>نتيجة الاختبار</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="text-center">
-          <p className="text-sm text-gray-500">النتيجة الإجمالية</p>
+          <p className="text-sm text-gray-500">الدرجة النهائية:</p>
           <p className="mt-1 text-4xl font-extrabold text-indigo-600">
-            {results.score.toFixed(1)}
+            {results.score.toFixed(1)}%
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              التعرف على الكلمات
-            </h3>
-            <dl className="space-y-1">
-              <div className="flex justify-between">
-                <dt className="text-sm text-gray-500">صحيح:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {results.correct_words}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-sm text-gray-500">خطأ:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {results.incorrect_words}
-                </dd>
-              </div>
-              <div className="flex justify-between border-t border-gray-200 pt-1">
-                <dt className="text-sm text-gray-500">الدقة:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {wordAccuracy.toFixed(1)}%
-                </dd>
-              </div>
-            </dl>
-          </div>
-
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              التعرف على الكلمات غير الحقيقية
-            </h3>
-            <dl className="space-y-1">
-              <div className="flex justify-between">
-                <dt className="text-sm text-gray-500">صحيح:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {results.correct_non_words}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-sm text-gray-500">خطأ:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {results.incorrect_non_words}
-                </dd>
-              </div>
-              <div className="flex justify-between border-t border-gray-200 pt-1">
-                <dt className="text-sm text-gray-500">الدقة:</dt>
-                <dd className="text-sm font-medium text-gray-900">
-                  {nonWordAccuracy.toFixed(1)}%
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-
-        <div className="text-center">
-          <p className="text-sm text-gray-500">الدقة الإجمالية</p>
-          <p className="mt-1 text-2xl font-bold text-gray-900">
-            {overallAccuracy.toFixed(1)}%
+          <p className="mt-2 text-lg text-gray-700">
+            {getFeedbackMessage(results.score)}
           </p>
         </div>
 
         <div className="text-center">
-          <p className="text-sm text-gray-500">وقت الإكمال</p>
-          <p className="mt-1 text-lg font-medium text-gray-900">
-            {(results.completion_time / 1000).toFixed(1)} ثانية
-          </p>
-        </div>
-
-        <div className="mt-8 flex justify-center space-x-4">
-          <Button variant="outline" onClick={handleShare}>
-            مشاركة
-          </Button>
-          <Button onClick={onNext}>متابعة</Button>
+          <p className="text-sm text-gray-500">شارك نتيجتك مع الآخرين!</p>
+          <div className="mt-4 flex justify-center space-x-4">
+            <Button variant="outline" onClick={handleShare}>
+              مشاركة
+            </Button>
+            <Button onClick={onNext}>أعد الاختبار!</Button>
+          </div>
         </div>
       </CardContent>
     </Card>
