@@ -1,206 +1,125 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-
-interface QuizItem {
-  id: string;
-  word: string;
-  isNonWord: boolean;
-}
+import { useWordList } from "@/hooks/useWordList";
+import { Loader2 } from "lucide-react";
 
 interface QuizResponse {
   word: string;
   isCorrect: boolean;
-  userResponse: boolean;
   isNonWord: boolean;
-  responseTime: number;
 }
 
-interface QuizViewProps {
-  onComplete: (score: number) => void;
-}
-
-export default function QuizView({ onComplete }: QuizViewProps) {
-  const [wordList, setWordList] = useState<QuizItem[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [responses, setResponses] = useState<QuizResponse[]>([]);
-  const [startTime, setStartTime] = useState<number>(0);
-  const [wordListId, setWordListId] = useState<string>("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function QuizView() {
   const router = useRouter();
+  const { currentList, isLoading, error, getNewWordList } = useWordList();
+  const [responses, setResponses] = useState<QuizResponse[]>([]);
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [shuffledWords, setShuffledWords] = useState<string[]>([]);
+  const [quizComplete, setQuizComplete] = useState(false);
 
   useEffect(() => {
-    fetchWordList();
+    loadWordList();
   }, []);
 
-  const fetchWordList = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`/api/quiz/word-list?locale=ar`);
-      if (!response.ok) {
-        if (response.status === 404) {
-          setError("حدث خطأ في تحميل قائمة الكلمات");
-        } else {
-          throw new Error("فشل في تحميل قائمة الكلمات");
-        }
-        return;
-      }
-      const data = await response.json();
-      setWordList(data.words);
-      setWordListId(data.id);
-      setStartTime(Date.now());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "حدث خطأ");
-      toast.error("حدث خطأ في تحميل قائمة الكلمات");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (currentList) {
+      // Combine and shuffle words and non-words
+      const allWords = [...currentList.words, ...currentList.nonWords];
+      setShuffledWords(shuffleArray(allWords));
     }
+  }, [currentList]);
+
+  const loadWordList = async () => {
+    await getNewWordList();
   };
 
-  const handleResponse = async (isWord: boolean) => {
-    if (currentIndex >= wordList.length) return;
+  const shuffleArray = (array: string[]) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
-    const currentWord = wordList[currentIndex];
-    const isCorrect = isWord === !currentWord.isNonWord;
-    const responseTime = Date.now() - startTime;
+  const handleResponse = (isRealWord: boolean) => {
+    if (!currentList || !shuffledWords[currentWordIndex]) return;
+
+    const currentWord = shuffledWords[currentWordIndex];
+    const isNonWord = currentList.nonWords.includes(currentWord);
+    const isCorrect = isRealWord !== isNonWord;
 
     const response: QuizResponse = {
-      word: currentWord.word,
+      word: currentWord,
       isCorrect,
-      userResponse: isWord,
-      isNonWord: currentWord.isNonWord,
-      responseTime,
+      isNonWord,
     };
 
-    try {
-      const result = await fetch("/api/quiz/attempts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(response),
-      });
+    setResponses([...responses, response]);
 
-      if (!result.ok) {
-        throw new Error("فشل في حفظ الإجابة");
-      }
-
-      setResponses([...responses, response]);
-
-      if (currentIndex === wordList.length - 1) {
-        await saveResults(responses);
-      } else {
-        setCurrentIndex(currentIndex + 1);
-        setStartTime(Date.now());
-      }
-    } catch (err) {
-      toast.error("حدث خطأ في حفظ الإجابة");
-      console.error("Error saving response:", err);
+    if (currentWordIndex < shuffledWords.length - 1) {
+      setCurrentWordIndex(currentWordIndex + 1);
+    } else {
+      setQuizComplete(true);
+      // Save results and navigate to results page
+      const results = {
+        wordList: currentList,
+        responses,
+        completionTime: new Date().getTime(), // You might want to track actual completion time
+      };
+      // Save results to local storage or state management
+      localStorage.setItem("quizResults", JSON.stringify(results));
+      router.push("/results");
     }
   };
-
-  const saveResults = async (finalResponses: QuizResponse[]) => {
-    try {
-      const correctWords = finalResponses.filter(
-        (r) => !r.isNonWord && r.isCorrect
-      ).length;
-      const incorrectWords = finalResponses.filter(
-        (r) => !r.isNonWord && !r.isCorrect
-      ).length;
-      const correctNonWords = finalResponses.filter(
-        (r) => r.isNonWord && r.isCorrect
-      ).length;
-      const incorrectNonWords = finalResponses.filter(
-        (r) => r.isNonWord && !r.isCorrect
-      ).length;
-
-      const totalCorrect = correctWords + correctNonWords;
-      const score = (totalCorrect / finalResponses.length) * 100;
-      const completionTime = finalResponses.reduce(
-        (sum, r) => sum + r.responseTime,
-        0
-      );
-
-      const response = await fetch("/api/quiz/attempts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          wordListId,
-          score,
-          correctWords,
-          incorrectWords,
-          correctNonWords,
-          incorrectNonWords,
-          completionTime,
-          responses: finalResponses,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("فشل في حفظ النتائج");
-      }
-
-      toast.success("تم إكمال الاختبار بنجاح");
-      onComplete(score);
-    } catch (error) {
-      console.error("Error saving results:", error);
-      toast.error("حدث خطأ في حفظ النتائج");
-    }
-  };
-
-  if (loading) {
-    return <div>جاري التحميل...</div>;
-  }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4">
-        <p className="text-red-500">{error}</p>
-        <Button onClick={() => router.push("/dashboard")}>
-          العودة إلى لوحة التحكم
-        </Button>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <p className="text-red-500 mb-4">{error}</p>
+        <Button onClick={loadWordList}>Try Again</Button>
       </div>
     );
   }
 
-  if (currentIndex >= wordList.length) {
-    return <div>جاري معالجة النتائج...</div>;
+  if (isLoading || !currentList || !shuffledWords.length) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
   }
 
-  const progress = (currentIndex / wordList.length) * 100;
-  const currentWord = wordList[currentIndex];
+  const currentWord = shuffledWords[currentWordIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 rtl">
-      <Progress value={progress} className="w-full" />
-      <Card className="p-6">
-        <h2 className="mb-4 text-2xl font-bold text-center font-arabic">
-          {currentWord.word}
-        </h2>
-        <div className="flex justify-center gap-4">
-          <Button
-            variant="default"
-            onClick={() => handleResponse(true)}
-            className="w-32"
-          >
-            نعم
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => handleResponse(false)}
-            className="w-32"
-          >
-            لا
-          </Button>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-lg p-6">
+        <div className="text-center">
+          <p className="text-sm text-gray-500 mb-2">
+            Word {currentWordIndex + 1} of {shuffledWords.length}
+          </p>
+          <h2 className="text-3xl font-bold mb-8">{currentWord}</h2>
+          <div className="flex justify-center gap-4">
+            <Button
+              variant="outline"
+              onClick={() => handleResponse(true)}
+              className="w-32"
+            >
+              Real Word
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => handleResponse(false)}
+              className="w-32"
+            >
+              Non-Word
+            </Button>
+          </div>
         </div>
       </Card>
     </div>

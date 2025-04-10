@@ -2,72 +2,60 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function POST(req: Request) {
+// In-memory storage for attempts (replace with database in production)
+const attempts: any[] = [];
+
+export async function POST(request: Request) {
   try {
     const session = await getServerSession();
-    if (!session?.user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const {
-      wordListId,
-      score,
-      correctWords,
-      incorrectWords,
-      correctNonWords,
-      incorrectNonWords,
-      completionTime,
-      responses,
-    } = await req.json();
+    const data = await request.json();
 
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email! },
-    });
+    // Add user info and timestamp
+    const attempt = {
+      ...data,
+      userId: session.user.email,
+      timestamp: new Date().toISOString(),
+    };
 
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
+    // Store attempt
+    attempts.push(attempt);
 
-    // Save quiz attempt
-    const quizAttempt = await prisma.quizAttempt.create({
-      data: {
-        userId: user.id,
-        wordListId,
-        score,
-        correctWords,
-        incorrectWords,
-        correctNonWords,
-        incorrectNonWords,
-        completionTime,
-        responses,
-      },
-    });
-
-    // Update user's completed word lists
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        completedWordLists: {
-          push: wordListId,
-        },
-      },
-    });
-
-    // Update word list completion count
-    await prisma.wordList.update({
-      where: { id: wordListId },
-      data: {
-        timesCompleted: {
-          increment: 1,
-        },
-      },
-    });
-
-    return NextResponse.json(quizAttempt, { status: 201 });
+    return NextResponse.json(attempt);
   } catch (error) {
-    console.error("Error saving quiz attempt:", error);
+    console.error("Error saving attempt:", error);
     return NextResponse.json(
-      { message: "Internal server error" },
+      { error: "Failed to save attempt" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    const session = await getServerSession();
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // Get user's latest attempt
+    const userAttempts = attempts.filter(
+      (attempt) => attempt.userId === session.user?.email
+    );
+    const latestAttempt = userAttempts[userAttempts.length - 1];
+
+    if (!latestAttempt) {
+      return NextResponse.json({ error: "No attempts found" }, { status: 404 });
+    }
+
+    return NextResponse.json(latestAttempt);
+  } catch (error) {
+    console.error("Error fetching attempts:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch attempts" },
       { status: 500 }
     );
   }

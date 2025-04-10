@@ -36,7 +36,7 @@ export default function LandingPage() {
 
   return (
     <div className="py-10 w-full">
-      <div className="space-y-2">
+      <div className="space-y-2 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

@@ -20,10 +20,10 @@ model User {
   sessions      Session[]
 
   // Quiz related fields
-  quizAttempts       QuizAttempt[]
-  surveyResponses    DemographicSurvey[]
-  consent            UserConsent[]
-  completedWordLists String[]            @default([])
+  quizAttempts        QuizAttempt[]
+  surveyResponses     DemographicSurvey[]
+  consent             UserConsent[]
+  wordListAssignments UserWordList[]
 }
 
 model Account {
@@ -61,20 +61,42 @@ model VerificationToken {
 }
 
 // Quiz related models
+model Word {
+  id         Int      @id @default(autoincrement())
+  word       String
+  isNonWord  Boolean
+  wordList   WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)
+  wordListId Int
+
+  @@index([wordListId])
+}
+
 model WordList {
-  id             String        @id @default(cuid())
-  words          String[] // Real words
-  nonWords       String[]      @map("non_words") // Non-words
-  timesCompleted Int           @default(0)
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  quizAttempts   QuizAttempt[]
+  id              Int            @id @default(autoincrement())
+  createdAt       DateTime       @default(now())
+  timesUsed       Int            @default(0)
+  lastUsedAt      DateTime?
+  words           Word[]
+  userAssignments UserWordList[]
+  quizAttempts    QuizAttempt[]
+}
+
+model UserWordList {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  wordList   WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)
+  wordListId Int
+  assignedAt DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, wordListId])
+  @@index([userId])
 }
 
 model QuizAttempt {
-  id                String   @id @default(cuid())
+  id                Int      @id @default(autoincrement())
   userId            String
-  wordListId        String
+  wordListId        Int
   score             Float
   correctWords      Int      @map("correct_words")
   incorrectWords    Int      @map("incorrect_words")
@@ -86,6 +108,9 @@ model QuizAttempt {
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   wordList WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([wordListId])
 }
 
 model DemographicSurvey {
