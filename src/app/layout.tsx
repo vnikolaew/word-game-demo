@@ -5,7 +5,6 @@ import "./globals.css";
 import { Noto_Kufi_Arabic } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
-import { SessionProvider } from "next-auth/react";
 import AuthProvider from "@/components/providers/AuthProvider";
 
 const notoSansArabic = Noto_Kufi_Arabic({

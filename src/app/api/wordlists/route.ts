@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { Word } from "@prisma/client";
+import { Word } from "../../../../prisma/generated/client";
 
 // Get a word list for the current user
 export async function GET() {
