@@ -121,8 +121,12 @@ export async function POST(request: Request) {
 
     const response = {
       id: wordList.id,
-      words: wordList.words.filter((w) => !w.isNonWord).map((w) => w.word),
-      nonWords: wordList.words.filter((w) => w.isNonWord).map((w) => w.word),
+      words: wordList.words
+        .filter((w: Word) => !w.isNonWord)
+        .map((w: Word) => w.word),
+      nonWords: wordList.words
+        .filter((w: Word) => w.isNonWord)
+        .map((w: Word) => w.word),
       timesUsed: wordList.timesUsed,
       lastUsedAt: wordList.lastUsedAt,
     };
