@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Noto_Sans_Arabic } from "next/font/google";
+import { Noto_Kufi_Arabic } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
 import { SessionProvider } from "next-auth/react";
 import AuthProvider from "@/components/providers/AuthProvider";
 
-const notoSansArabic = Noto_Sans_Arabic({
+const notoSansArabic = Noto_Kufi_Arabic({
   variable: "--font-arabic",
   subsets: ["arabic"],
   display: "swap",
