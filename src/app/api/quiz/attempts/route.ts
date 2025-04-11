@@ -1,30 +1,28 @@
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-
-// In-memory storage for attempts (replace with database in production)
-const attempts: any[] = [];
+import { authOptions } from "@/lib/auth";
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession();
-    if (!session?.user?.email) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const data = await request.json();
 
-    // Add user info and timestamp
-    const attempt = {
-      ...data,
-      userId: session.user.email,
-      timestamp: new Date().toISOString(),
-    };
+    await prisma.quizAttempt.create({
+      data: {
+        ...data,
+        userId: session.user.id,
+      },
+    });
 
-    // Store attempt
-    attempts.push(attempt);
-
-    return NextResponse.json(attempt);
+    return NextResponse.json(
+      { message: "Attempt saved", attempt: data },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error saving attempt:", error);
     return NextResponse.json(
@@ -36,22 +34,24 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    const session = await getServerSession();
-    if (!session?.user?.email) {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Get user's latest attempt
-    const userAttempts = attempts.filter(
-      (attempt) => attempt.userId === session.user?.email
-    );
-    const latestAttempt = userAttempts[userAttempts.length - 1];
+    const attempts = await prisma.quizAttempt.findMany({
+      where: {
+        userId: session.user.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        wordList: true,
+      },
+    });
 
-    if (!latestAttempt) {
-      return NextResponse.json({ error: "No attempts found" }, { status: 404 });
-    }
-
-    return NextResponse.json(latestAttempt);
+    return NextResponse.json(attempts);
   } catch (error) {
     console.error("Error fetching attempts:", error);
     return NextResponse.json(

@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
+// components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -32,6 +34,29 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
   const currentItem = PRACTICE_ITEMS[currentIndex];
   const isComplete = currentIndex >= PRACTICE_ITEMS.length;
 
+  const handleResponse = useCallback(
+    (response: boolean) => {
+      if (showFeedback || isComplete) return;
+
+      const correct = response === currentItem.isWord;
+      setIsCorrect(correct);
+      setShowFeedback(true);
+      setResponses([...responses, correct]);
+    },
+    [currentItem.isWord, isComplete, responses, showFeedback]
+  );
+
+  const handleNextItem = useCallback(() => {
+    if (currentIndex + 1 >= PRACTICE_ITEMS.length) {
+      onComplete();
+      return;
+    }
+
+    setCurrentIndex(currentIndex + 1);
+    setShowFeedback(false);
+    setIsCorrect(null);
+  }, [currentIndex, onComplete]);
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (showFeedback) {
@@ -50,27 +75,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentIndex, showFeedback]);
-
-  const handleResponse = (response: boolean) => {
-    if (showFeedback || isComplete) return;
-
-    const correct = response === currentItem.isWord;
-    setIsCorrect(correct);
-    setShowFeedback(true);
-    setResponses([...responses, correct]);
-  };
-
-  const handleNextItem = () => {
-    if (currentIndex + 1 >= PRACTICE_ITEMS.length) {
-      onComplete();
-      return;
-    }
-
-    setCurrentIndex(currentIndex + 1);
-    setShowFeedback(false);
-    setIsCorrect(null);
-  };
+  }, [currentIndex, handleNextItem, handleResponse, showFeedback]);
 
   if (isComplete) {
     const correctCount = responses.filter(Boolean).length;
@@ -86,69 +91,64 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
             لقد حصلت على {correctCount} من أصل {PRACTICE_ITEMS.length} صحيحة (
             {accuracy.toFixed(1)}%)
           </p>
-          <Button onClick={onComplete}>ابدأ الاختبار</Button>
+          <Button onClick={onComplete} className="w-full md:w-auto">
+            ابدأ الاختبار
+          </Button>
         </CardContent>
       </Card>
     );
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-center">
-          تدريب على التعرف على الكلمات
-        </CardTitle>
-        <p className="text-center text-muted-foreground">
-          هل هذه كلمة عربية حقيقية؟ اضغط على نعم أو لا
-        </p>
-      </CardHeader>
-      <CardContent className="space-y-6">
+    <div className="flex flex-col items-center justify-center p-4">
+      <Card className="w-full p-6">
         <div className="text-center">
           <Progress
             value={(currentIndex / PRACTICE_ITEMS.length) * 100}
-            className="mb-4"
+            className="mb-6"
           />
-          <p className="text-sm text-muted-foreground mb-2">
-            الكلمة {currentIndex + 1} من {PRACTICE_ITEMS.length}
+          <div className="flex justify-center items-center h-[200px]">
+            {!showFeedback ? (
+              <h2 className="text-4xl font-bold mb-8">{currentItem.word}</h2>
+            ) : (
+              <div className="text-center">
+                <p
+                  className={`text-xl font-semibold mb-4 ${
+                    isCorrect ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {isCorrect ? "إجابة صحيحة!" : "إجابة خاطئة"}
+                </p>
+                <Button onClick={handleNextItem} className="w-full md:w-auto">
+                  التالي
+                </Button>
+              </div>
+            )}
+          </div>
+          <p className="text-sm text-gray-500 mb-4">
+            اضغط على مفتاح السهم الأيمن (→) للإجابة بـ &quot;نعم&quot; أو مفتاح
+            السهم الأيسر (←) للإجابة بـ &quot;لا&quot;
           </p>
-          <div className="text-4xl font-bold mb-4">{currentItem.word}</div>
-
-          {!showFeedback ? (
-            <div className="flex justify-center space-x-4">
-              <Button variant="default" onClick={() => handleResponse(true)}>
+          {!showFeedback && (
+            <div className="flex flex-row justify-center gap-4">
+              <Button
+                variant="default"
+                onClick={() => handleResponse(true)}
+                className="w-full md:w-32 h-12 text-lg"
+              >
                 نعم
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => handleResponse(false)}
+                className="w-full md:w-32 h-12 text-lg text-white"
               >
                 لا
               </Button>
             </div>
-          ) : (
-            <div className="text-center">
-              <p
-                className={`text-xl font-semibold mb-4 ${
-                  isCorrect ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {isCorrect ? "إجابة صحيحة!" : "إجابة خاطئة"}
-              </p>
-              <Button onClick={handleNextItem}>التالي</Button>
-            </div>
           )}
         </div>
-
-        <div className="text-center text-sm text-muted-foreground">
-          <p>
-            اضغط على مفتاح السهم الأيمن (→) للإجابة بـ &quot;نعم&quot; أو مفتاح
-            السهم الأيسر (←) للإجابة بـ &quot;لا&quot;
-          </p>
-          <p className="mt-2">
-            اضغط على مفتاح المسافة أو الإدخال للمتابعة بعد الملاحظات
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+      </Card>
+    </div>
   );
 }

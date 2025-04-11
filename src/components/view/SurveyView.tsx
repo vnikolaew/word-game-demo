@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/Spinner";
+import { toast } from "sonner";
 
 interface SurveyViewProps {
   onComplete: (data: SurveyData) => void;
@@ -15,10 +16,11 @@ interface SurveyViewProps {
 interface SurveyData {
   age: string;
   gender: string;
-  education: string;
+  educationLevel: string;
   nativeLanguage: string;
-  otherLanguages: string;
-  readingHabits: string;
+  otherLanguages: string[];
+  arabicProficiency?: string;
+  yearsLearningArabic?: string;
 }
 
 export function SurveyView({ onComplete }: SurveyViewProps) {
@@ -26,10 +28,11 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
   const [formData, setFormData] = useState<SurveyData>({
     age: "",
     gender: "",
-    education: "",
+    educationLevel: "",
     nativeLanguage: "",
-    otherLanguages: "",
-    readingHabits: "",
+    otherLanguages: [],
+    arabicProficiency: "",
+    yearsLearningArabic: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,9 +40,27 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
     setLoading(true);
 
     try {
-      onComplete(formData);
+      // Convert otherLanguages string to array if needed
+      const formattedData = {
+        ...formData,
+        otherLanguages:
+          formData.otherLanguages.length > 0 ? formData.otherLanguages : [],
+      };
+
+      const response = await fetch("/api/survey", {
+        method: "POST",
+        body: JSON.stringify(formattedData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit survey");
+      }
+      toast.success("Survey submitted successfully");
+
+      onComplete(formattedData);
     } catch (error) {
       console.error("Error submitting survey:", error);
+      toast.error("Failed to submit survey");
     } finally {
       setLoading(false);
     }
@@ -102,9 +123,9 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             <Label>المستوى التعليمي</Label>
             <RadioGroup
               required
-              value={formData.education}
+              value={formData.educationLevel}
               onValueChange={(value: string) =>
-                setFormData({ ...formData, education: value })
+                setFormData({ ...formData, educationLevel: value })
               }
             >
               <div className="flex items-center space-x-2">
@@ -143,40 +164,59 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             <Label htmlFor="otherLanguages">اللغات الأخرى</Label>
             <Input
               id="otherLanguages"
-              value={formData.otherLanguages}
+              value={formData.otherLanguages.join(", ")}
               onChange={(e) =>
-                setFormData({ ...formData, otherLanguages: e.target.value })
+                setFormData({
+                  ...formData,
+                  otherLanguages: e.target.value
+                    .split(",")
+                    .map((lang) => lang.trim())
+                    .filter(Boolean),
+                })
               }
-              placeholder="أدخل اللغات الأخرى التي تتحدثها (اختياري)"
+              placeholder="أدخل اللغات الأخرى التي تتحدثها (مفصولة بفواصل)"
             />
           </div>
 
           <div className="space-y-2">
-            <Label>عادات القراءة</Label>
+            <Label htmlFor="arabicProficiency">مستوى إتقان اللغة العربية</Label>
             <RadioGroup
-              required
-              value={formData.readingHabits}
+              value={formData.arabicProficiency}
               onValueChange={(value: string) =>
-                setFormData({ ...formData, readingHabits: value })
+                setFormData({ ...formData, arabicProficiency: value })
               }
             >
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="daily" id="daily" />
-                <Label htmlFor="daily">يومياً</Label>
+                <RadioGroupItem value="beginner" id="beginner" />
+                <Label htmlFor="beginner">مبتدئ</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="weekly" id="weekly" />
-                <Label htmlFor="weekly">أسبوعياً</Label>
+                <RadioGroupItem value="intermediate" id="intermediate" />
+                <Label htmlFor="intermediate">متوسط</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <RadioGroupItem value="monthly" id="monthly" />
-                <Label htmlFor="monthly">شهرياً</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="rarely" id="rarely" />
-                <Label htmlFor="rarely">نادراً</Label>
+                <RadioGroupItem value="advanced" id="advanced" />
+                <Label htmlFor="advanced">متقدم</Label>
               </div>
             </RadioGroup>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="yearsLearningArabic">
+              سنوات تعلم اللغة العربية
+            </Label>
+            <Input
+              id="yearsLearningArabic"
+              type="number"
+              value={formData.yearsLearningArabic}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  yearsLearningArabic: e.target.value,
+                })
+              }
+              placeholder="عدد سنوات تعلم اللغة العربية"
+            />
           </div>
 
           <Button type="submit" className="w-full">

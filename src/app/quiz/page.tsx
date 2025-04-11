@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+// components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
@@ -22,7 +24,6 @@ export default function AppPage() {
   const [appState, setAppState] = useState<AppState>("consent");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [quizScore, setQuizScore] = useState<number>(0);
 
   // Handle consent submission
   const handleConsent = async () => {
@@ -31,6 +32,10 @@ export default function AppPage() {
       setError(null);
 
       // Save consent to database or perform any other necessary actions
+      await fetch("/api/consent", {
+        method: "POST",
+        body: JSON.stringify({ consentVersion: "1.0" }),
+      });
 
       // Move to practice state
       setAppState("practice");
@@ -43,9 +48,12 @@ export default function AppPage() {
   };
 
   // Handle quiz completion
-  const handleQuizComplete = (score: number) => {
-    setQuizScore(score);
+  const handleQuizComplete = async () => {
     setAppState("results");
+  };
+
+  const handleResultsComplete = () => {
+    setAppState("survey");
   };
 
   // Handle survey completion
@@ -57,7 +65,7 @@ export default function AppPage() {
     <div className="mx-auto py-12">
       {loading ? (
         <div className="flex items-center justify-center min-h-[50vh]">
-          <Spinner size="lg" />
+          <Spinner size="sm" />
         </div>
       ) : error ? (
         <Card>
@@ -74,10 +82,7 @@ export default function AppPage() {
           )}
           {appState === "quiz" && <QuizView onComplete={handleQuizComplete} />}
           {appState === "results" && (
-            <ResultsView
-              score={quizScore}
-              onNext={() => setAppState("survey")}
-            />
+            <ResultsView onNext={handleResultsComplete} />
           )}
           {appState === "survey" && (
             <SurveyView onComplete={handleSurveyComplete} />

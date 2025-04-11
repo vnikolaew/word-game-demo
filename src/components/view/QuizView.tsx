@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+
+// components
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { Loader2 } from "lucide-react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { Spinner } from "../ui/Spinner";
 
-interface WordList {
-  id: string;
-  words: string[];
-  nonWords: string[];
-}
+// types
+import { WordListResponse } from "@/types";
 
 interface QuizResponse {
   word: string;
@@ -21,7 +20,7 @@ interface QuizResponse {
 }
 
 interface QuizViewProps {
-  onComplete: (score: number) => void;
+  onComplete: () => void;
 }
 
 const TOTAL_WORDS = 100;
@@ -29,8 +28,9 @@ const STIMULUS_DURATION = 2000; // 2 seconds max per word
 const INTER_STIMULUS_INTERVAL = 500; // 500ms blank screen
 
 export default function QuizView({ onComplete }: QuizViewProps) {
-  const [currentList, setCurrentList] = useState<WordList | null>(null);
+  const [currentList, setCurrentList] = useState<WordListResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [responses, setResponses] = useState<QuizResponse[]>([]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -110,6 +110,24 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       if (!currentList) return;
 
       try {
+        setIsSubmitting(true);
+        // Calculate detailed statistics
+        const correctWords = newResponses.filter(
+          (r) => !r.isNonWord && r.isCorrect
+        ).length;
+        const incorrectWords = newResponses.filter(
+          (r) => !r.isNonWord && !r.isCorrect
+        ).length;
+        const correctNonWords = newResponses.filter(
+          (r) => r.isNonWord && r.isCorrect
+        ).length;
+        const incorrectNonWords = newResponses.filter(
+          (r) => r.isNonWord && !r.isCorrect
+        ).length;
+        const npxionTime = Math.round(
+          newResponses.reduce((sum, r) => sum + r.responseTime, 0)
+        );
+
         const submitResponse = await fetch("/api/quiz/attempts", {
           method: "POST",
           headers: {
@@ -119,7 +137,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             wordListId: currentList.id,
             responses: newResponses,
             score,
-            completionTime: new Date().toISOString(),
+            correctWords,
+            incorrectWords,
+            correctNonWords,
+            incorrectNonWords,
+            npxionTime,
           }),
         });
 
@@ -127,11 +149,13 @@ export default function QuizView({ onComplete }: QuizViewProps) {
           throw new Error("Failed to submit quiz attempt");
         }
 
-        onComplete(score);
+        onComplete();
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to submit results"
         );
+      } finally {
+        setIsSubmitting(false);
       }
     },
     [currentList, onComplete]
@@ -227,8 +251,13 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
   if (isLoading || !currentList || !shuffledWords.length) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
+        <Spinner size="sm" />
+        <p className="text-sm text-gray-500">
+          {isSubmitting
+            ? "Saving quiz results..."
+            : "please wait while we load the quiz..."}
+        </p>
       </div>
     );
   }
@@ -237,16 +266,18 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const progress = (currentWordIndex / TOTAL_WORDS) * 100;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+    <div className="flex flex-col items-center justify-center p-4">
       <Card className="w-full p-6">
         <div className="text-center">
           <Progress value={progress} className="mb-6" />
+          <div className="flex justify-center items-center h-[200px]">
+            {showWord ? (
+              <h2 className="text-3xl font-bold mb-8">{currentWord}</h2>
+            ) : (
+              <div className="h-full" />
+            )}
+          </div>
 
-          {showWord ? (
-            <h2 className="text-3xl font-bold mb-8">{currentWord}</h2>
-          ) : (
-            <div className="h-[60px]" />
-          )}
           <p className="text-sm text-gray-500 mb-4">
             {isMobile
               ? "Tap your response"
@@ -256,14 +287,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             <Button
               variant="default"
               onClick={() => handleResponse(true)}
-              className="w-32"
+              className="w-full md:w-32 h-12 text-lg"
             >
               Real Word
             </Button>
             <Button
               variant="destructive"
               onClick={() => handleResponse(false)}
-              className="w-32 text-white"
+              className="w-full md:w-32 h-12 text-lg text-white"
             >
               Non-Word
             </Button>

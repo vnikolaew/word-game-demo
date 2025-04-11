@@ -5,23 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
 import { toast } from "sonner";
-
-interface QuizResults {
-  score: number;
-  correct_words: number;
-  incorrect_words: number;
-  correct_non_words: number;
-  incorrect_non_words: number;
-  completion_time: number;
-}
+import { QuizAttempt } from "@prisma/client";
 
 interface ResultsViewProps {
-  score: number;
   onNext: () => void;
 }
 
-export function ResultsView({ score, onNext }: ResultsViewProps) {
-  const [results, setResults] = useState<QuizResults | null>(null);
+export function ResultsView({ onNext }: ResultsViewProps) {
+  const [results, setResults] = useState<QuizAttempt | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,9 +22,10 @@ export function ResultsView({ score, onNext }: ResultsViewProps) {
         const response = await fetch("/api/quiz/attempts/latest");
         if (!response.ok) {
           if (response.status === 404) {
-            throw new Error("لم يتم العثور على نتائج");
+            toast.error("لم يتم العثور على نتائج");
+            setError("لم يتم العثور على نتائج");
           }
-          throw new Error("فشل في تحميل النتائج");
+          toast.error("فشل في تحميل النتائج");
         }
         const data = await response.json();
         setResults(data);
@@ -109,8 +101,11 @@ export function ResultsView({ score, onNext }: ResultsViewProps) {
 
   if (loading || !results) {
     return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <Spinner size="lg" />
+      <div className="flex flex-col gap-2 items-center justify-center min-h-[50vh]">
+        <Spinner size="sm" />
+        <p className="text-sm text-gray-500">
+          please wait while we load the results...
+        </p>
       </div>
     );
   }
