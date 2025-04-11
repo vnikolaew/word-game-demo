@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-
+import { Word } from "../../../../../prisma/generated/client";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -27,8 +27,12 @@ export async function GET() {
 
     const response = wordLists.map((list) => ({
       id: list.id,
-      words: list.words.filter((w) => !w.isNonWord).map((w) => w.word),
-      nonWords: list.words.filter((w) => w.isNonWord).map((w) => w.word),
+      words: list.words
+        .filter((w: Word) => !w.isNonWord)
+        .map((w: Word) => w.word),
+      nonWords: list.words
+        .filter((w: Word) => w.isNonWord)
+        .map((w: Word) => w.word),
       timesUsed: list.timesUsed,
       lastUsedAt: list.lastUsedAt,
     }));
