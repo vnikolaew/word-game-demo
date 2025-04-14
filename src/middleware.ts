@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
+import { withAuth } from "next-auth/middleware";
 
 export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
@@ -26,10 +27,18 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
+export default withAuth({
+  callbacks: {
+    authorized: ({ token }) => !!token,
+  },
+});
+
 // Configure the paths that middleware should run on
 export const config = {
   matcher: [
     "/quiz/:path*", // Match all paths starting with /quiz
     "/auth/login", // Match the login page
+    "/profile",
+    "/api/profile",
   ],
 };
