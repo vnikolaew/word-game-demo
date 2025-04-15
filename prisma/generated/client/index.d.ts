@@ -13786,10 +13786,10 @@ export namespace Prisma {
 
   export type DemographicSurveyWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId?: string
     AND?: DemographicSurveyWhereInput | DemographicSurveyWhereInput[]
     OR?: DemographicSurveyWhereInput[]
     NOT?: DemographicSurveyWhereInput | DemographicSurveyWhereInput[]
-    userId?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
     gender?: StringFilter<"DemographicSurvey"> | string
     educationLevel?: StringFilter<"DemographicSurvey"> | string
@@ -13799,7 +13799,7 @@ export namespace Prisma {
     yearsLearningArabic?: StringNullableFilter<"DemographicSurvey"> | string | null
     createdAt?: DateTimeFilter<"DemographicSurvey"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "userId">
 
   export type DemographicSurveyOrderByWithAggregationInput = {
     id?: SortOrder
@@ -13856,15 +13856,15 @@ export namespace Prisma {
 
   export type UserConsentWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    userId?: string
     AND?: UserConsentWhereInput | UserConsentWhereInput[]
     OR?: UserConsentWhereInput[]
     NOT?: UserConsentWhereInput | UserConsentWhereInput[]
-    userId?: StringFilter<"UserConsent"> | string
     consentedAt?: DateTimeFilter<"UserConsent"> | Date | string
     consentVersion?: StringFilter<"UserConsent"> | string
     createdAt?: DateTimeFilter<"UserConsent"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "userId">
 
   export type UserConsentOrderByWithAggregationInput = {
     id?: SortOrder

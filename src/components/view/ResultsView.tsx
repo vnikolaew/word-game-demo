@@ -9,9 +9,10 @@ import { QuizAttempt } from "@prisma/client";
 
 interface ResultsViewProps {
   onNext: () => void;
+  onRetake: () => void;
 }
 
-export function ResultsView({ onNext }: ResultsViewProps) {
+export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
   const [results, setResults] = useState<QuizAttempt | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -145,7 +146,7 @@ export function ResultsView({ onNext }: ResultsViewProps) {
             <Button variant="outline" onClick={handleShare}>
               مشاركة
             </Button>
-            <Button onClick={onNext}>أعد الاختبار!</Button>
+            <Button onClick={onRetake}>أعد الاختبار!</Button>
           </div>
         </div>
       </CardContent>

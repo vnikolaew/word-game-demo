@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // components
@@ -15,15 +15,41 @@ import QuizView from "@/components/view/QuizView";
 import { ResultsView } from "@/components/view/ResultsView";
 import { SurveyView } from "@/components/view/SurveyView";
 
+// types
+import { UserConsent } from "@prisma/client";
+
 type AppState = "consent" | "practice" | "quiz" | "results" | "survey";
 
 export default function AppPage() {
   const router = useRouter();
 
   // Global state
+
+  const [consent, setConsent] = useState<UserConsent | null>(null);
   const [appState, setAppState] = useState<AppState>("consent");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Get consent from database
+  const getConsent = async () => {
+    setLoading(true);
+    setError(null);
+    const response = await fetch("/api/consent");
+    const data = await response.json();
+    setLoading(false);
+    return data;
+  };
+
+  useEffect(() => {
+    getConsent().then((data) => {
+      if (data) {
+        setConsent(data);
+        setAppState("quiz");
+      } else {
+        setError("حدث خطأ أثناء جلب الموافقة");
+      }
+    });
+  }, []);
 
   // Handle consent submission
   const handleConsent = async () => {
@@ -49,16 +75,24 @@ export default function AppPage() {
 
   // Handle quiz completion
   const handleQuizComplete = async () => {
-    setAppState("results");
+    if (consent) {
+      setAppState("results");
+    } else {
+      setAppState("survey");
+    }
   };
 
   const handleResultsComplete = () => {
-    setAppState("survey");
+    router.push("/");
+  };
+
+  const handleRetake = () => {
+    setAppState("quiz");
   };
 
   // Handle survey completion
   const handleSurveyComplete = () => {
-    router.push("/");
+    setAppState("results");
   };
 
   return (
@@ -82,7 +116,10 @@ export default function AppPage() {
           )}
           {appState === "quiz" && <QuizView onComplete={handleQuizComplete} />}
           {appState === "results" && (
-            <ResultsView onNext={handleResultsComplete} />
+            <ResultsView
+              onNext={handleResultsComplete}
+              onRetake={handleRetake}
+            />
           )}
           {appState === "survey" && (
             <SurveyView onComplete={handleSurveyComplete} />

@@ -9,6 +9,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
+    const existingSurvey = await prisma.demographicSurvey.findUnique({
+      where: { userId: session.user.id },
+    });
+
+    if (existingSurvey) {
+      return NextResponse.json(
+        { message: "Survey already exists" },
+        { status: 400 }
+      );
+    }
+
     const {
       age,
       gender,

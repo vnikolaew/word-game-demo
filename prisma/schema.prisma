@@ -116,7 +116,7 @@ model QuizAttempt {
 
 model DemographicSurvey {
   id                  String   @id @default(cuid())
-  userId              String
+  userId              String   @unique @map("user_id")
   age                 String
   gender              String
   educationLevel      String   @map("education_level")
@@ -131,7 +131,7 @@ model DemographicSurvey {
 
 model UserConsent {
   id             String   @id @default(cuid())
-  userId         String
+  userId         String   @unique @map("user_id")
   consentedAt    DateTime @map("consented_at")
   consentVersion String   @map("consent_version")
   createdAt      DateTime @default(now())
