@@ -42,11 +42,7 @@ export default function LandingPage() {
     },
   ];
 
-  const benefits = [
-    "⚡ سهلة وسريعة",
-    "⏱️ تستغرق دقائق معدودة",
-    "🏆 اختبر معرفتك باللغة العربية",
-  ];
+  const benefits = ["⚡ سهلة وسريعة"];
 
   return (
     <div className="py-10 w-full">
@@ -59,22 +55,6 @@ export default function LandingPage() {
         >
           حروفنا
         </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          className="max-w-2xl mx-auto text-muted-foreground text-lg"
-        >
-          اكتشف جمال اللغة العربية
-        </motion.p>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.4 }}
-          className="max-w-2xl mx-auto text-muted-foreground text-lg"
-        >
-          تعرف على الكلمات العربية الصحيحة
-        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 10 }}

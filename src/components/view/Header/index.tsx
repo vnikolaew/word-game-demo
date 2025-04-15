@@ -32,7 +32,6 @@ const Header = () => {
     <header className="bg-white shadow-sm rounded-full my-2 sticky top-2 border border-gray-200">
       <nav className="h-14 flex items-center justify-between px-4">
         <Link href="/" className="text-center flex items-center gap-2">
-          <Logo />
           <span className="text-xl font-bold">اختبار الكلمات</span>
         </Link>
 
