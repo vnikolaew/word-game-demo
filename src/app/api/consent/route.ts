@@ -6,12 +6,13 @@ import { authOptions } from "@/lib/auth";
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const { consentVersion } = await req.json();
 
+    // Check if user exists
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
     });
@@ -20,8 +21,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
+    // Check for existing consent using userId
     const existingConsent = await prisma.userConsent.findUnique({
-      where: { id: session.user.id },
+      where: { userId: session.user.id },
     });
 
     if (existingConsent) {
@@ -34,7 +36,7 @@ export async function POST(req: Request) {
     // Save user consent
     const consent = await prisma.userConsent.create({
       data: {
-        userId: user.id,
+        userId: session.user.id,
         consentVersion,
         consentedAt: new Date(),
       },
@@ -53,7 +55,7 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user) {
+    if (!session?.user?.id) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
@@ -62,6 +64,10 @@ export async function GET(req: Request) {
         userId: session.user.id,
       },
     });
+
+    if (!consent) {
+      return NextResponse.json(null, { status: 200 });
+    }
 
     return NextResponse.json(consent, { status: 200 });
   } catch (error) {

@@ -174,8 +174,7 @@ exports.Prisma.UserWordListScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   wordListId: 'wordListId',
-  assignedAt: 'assignedAt',
-  wordOrder: 'wordOrder'
+  assignedAt: 'assignedAt'
 };
 
 exports.Prisma.QuizAttemptScalarFieldEnum = {

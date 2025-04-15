@@ -9,11 +9,39 @@ export async function GET() {
   try {
     // Get the current user's session
     const session = await getServerSession(authOptions);
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    if (!session) {
+      console.error("No session found");
+      return NextResponse.json({ error: "No session found" }, { status: 401 });
+    }
+
+    if (!session.user) {
+      console.error("No user in session");
+      return NextResponse.json(
+        { error: "No user in session" },
+        { status: 401 }
+      );
+    }
+
+    if (!session.user.id) {
+      console.error("No user ID in session");
+      return NextResponse.json(
+        { error: "No user ID in session" },
+        { status: 401 }
+      );
     }
 
     const userId = session.user.id;
+
+    // Verify user exists
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      console.error("User not found:", userId);
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
 
     // Find the least used word list that hasn't been assigned to this user
     const wordList = await prisma.wordList.findFirst({
@@ -45,8 +73,16 @@ export async function GET() {
     await prisma.$transaction([
       prisma.userWordList.create({
         data: {
-          userId: userId,
-          wordListId: wordList.id,
+          user: {
+            connect: {
+              id: userId,
+            },
+          },
+          wordList: {
+            connect: {
+              id: wordList.id,
+            },
+          },
         },
       }),
       prisma.wordList.update({

@@ -8533,7 +8533,6 @@ export namespace Prisma {
     userId: number
     wordListId: number
     assignedAt: number
-    wordOrder: number
     _all: number
   }
 
@@ -8567,7 +8566,6 @@ export namespace Prisma {
     userId?: true
     wordListId?: true
     assignedAt?: true
-    wordOrder?: true
     _all?: true
   }
 
@@ -8662,7 +8660,6 @@ export namespace Prisma {
     userId: string
     wordListId: number
     assignedAt: Date
-    wordOrder: JsonValue
     _count: UserWordListCountAggregateOutputType | null
     _avg: UserWordListAvgAggregateOutputType | null
     _sum: UserWordListSumAggregateOutputType | null
@@ -8689,7 +8686,6 @@ export namespace Prisma {
     userId?: boolean
     wordListId?: boolean
     assignedAt?: boolean
-    wordOrder?: boolean
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userWordList"]>
@@ -8699,7 +8695,6 @@ export namespace Prisma {
     userId?: boolean
     wordListId?: boolean
     assignedAt?: boolean
-    wordOrder?: boolean
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userWordList"]>
@@ -8709,7 +8704,6 @@ export namespace Prisma {
     userId?: boolean
     wordListId?: boolean
     assignedAt?: boolean
-    wordOrder?: boolean
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["userWordList"]>
@@ -8719,10 +8713,9 @@ export namespace Prisma {
     userId?: boolean
     wordListId?: boolean
     assignedAt?: boolean
-    wordOrder?: boolean
   }
 
-  export type UserWordListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "assignedAt" | "wordOrder", ExtArgs["result"]["userWordList"]>
+  export type UserWordListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "assignedAt", ExtArgs["result"]["userWordList"]>
   export type UserWordListInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -8747,7 +8740,6 @@ export namespace Prisma {
       userId: string
       wordListId: number
       assignedAt: Date
-      wordOrder: Prisma.JsonValue
     }, ExtArgs["result"]["userWordList"]>
     composites: {}
   }
@@ -9177,7 +9169,6 @@ export namespace Prisma {
     readonly userId: FieldRef<"UserWordList", 'String'>
     readonly wordListId: FieldRef<"UserWordList", 'Int'>
     readonly assignedAt: FieldRef<"UserWordList", 'DateTime'>
-    readonly wordOrder: FieldRef<"UserWordList", 'Json'>
   }
     
 
@@ -13060,8 +13051,7 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     wordListId: 'wordListId',
-    assignedAt: 'assignedAt',
-    wordOrder: 'wordOrder'
+    assignedAt: 'assignedAt'
   };
 
   export type UserWordListScalarFieldEnum = (typeof UserWordListScalarFieldEnum)[keyof typeof UserWordListScalarFieldEnum]
@@ -13206,20 +13196,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -13230,6 +13206,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
   /**
    * Deep Input Types
@@ -13625,7 +13615,6 @@ export namespace Prisma {
     userId?: StringFilter<"UserWordList"> | string
     wordListId?: IntFilter<"UserWordList"> | number
     assignedAt?: DateTimeFilter<"UserWordList"> | Date | string
-    wordOrder?: JsonFilter<"UserWordList">
     wordList?: XOR<WordListScalarRelationFilter, WordListWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -13635,7 +13624,6 @@ export namespace Prisma {
     userId?: SortOrder
     wordListId?: SortOrder
     assignedAt?: SortOrder
-    wordOrder?: SortOrder
     wordList?: WordListOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
   }
@@ -13649,7 +13637,6 @@ export namespace Prisma {
     userId?: StringFilter<"UserWordList"> | string
     wordListId?: IntFilter<"UserWordList"> | number
     assignedAt?: DateTimeFilter<"UserWordList"> | Date | string
-    wordOrder?: JsonFilter<"UserWordList">
     wordList?: XOR<WordListScalarRelationFilter, WordListWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId_wordListId">
@@ -13659,7 +13646,6 @@ export namespace Prisma {
     userId?: SortOrder
     wordListId?: SortOrder
     assignedAt?: SortOrder
-    wordOrder?: SortOrder
     _count?: UserWordListCountOrderByAggregateInput
     _avg?: UserWordListAvgOrderByAggregateInput
     _max?: UserWordListMaxOrderByAggregateInput
@@ -13675,7 +13661,6 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"UserWordList"> | string
     wordListId?: IntWithAggregatesFilter<"UserWordList"> | number
     assignedAt?: DateTimeWithAggregatesFilter<"UserWordList"> | Date | string
-    wordOrder?: JsonWithAggregatesFilter<"UserWordList">
   }
 
   export type QuizAttemptWhereInput = {
@@ -14303,7 +14288,6 @@ export namespace Prisma {
 
   export type UserWordListCreateInput = {
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
     wordList: WordListCreateNestedOneWithoutUserAssignmentsInput
     user: UserCreateNestedOneWithoutWordListAssignmentsInput
   }
@@ -14313,12 +14297,10 @@ export namespace Prisma {
     userId: string
     wordListId: number
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListUpdateInput = {
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
     wordList?: WordListUpdateOneRequiredWithoutUserAssignmentsNestedInput
     user?: UserUpdateOneRequiredWithoutWordListAssignmentsNestedInput
   }
@@ -14328,7 +14310,6 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     wordListId?: IntFieldUpdateOperationsInput | number
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListCreateManyInput = {
@@ -14336,12 +14317,10 @@ export namespace Prisma {
     userId: string
     wordListId: number
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListUpdateManyMutationInput = {
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListUncheckedUpdateManyInput = {
@@ -14349,7 +14328,6 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     wordListId?: IntFieldUpdateOperationsInput | number
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type QuizAttemptCreateInput = {
@@ -15054,29 +15032,6 @@ export namespace Prisma {
     id?: SortOrder
     timesUsed?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type UserWordListUserIdWordListIdCompoundUniqueInput = {
     userId: string
@@ -15088,7 +15043,6 @@ export namespace Prisma {
     userId?: SortOrder
     wordListId?: SortOrder
     assignedAt?: SortOrder
-    wordOrder?: SortOrder
   }
 
   export type UserWordListAvgOrderByAggregateInput = {
@@ -15114,14 +15068,25 @@ export namespace Prisma {
     id?: SortOrder
     wordListId?: SortOrder
   }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
 
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
     equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     path?: string[]
     mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
@@ -15136,20 +15101,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type QuizAttemptCountOrderByAggregateInput = {
@@ -15228,6 +15179,32 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -16056,6 +16033,22 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -16078,22 +16071,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -16251,7 +16228,6 @@ export namespace Prisma {
 
   export type UserWordListCreateWithoutUserInput = {
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
     wordList: WordListCreateNestedOneWithoutUserAssignmentsInput
   }
 
@@ -16259,7 +16235,6 @@ export namespace Prisma {
     id?: number
     wordListId: number
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListCreateOrConnectWithoutUserInput = {
@@ -16448,7 +16423,6 @@ export namespace Prisma {
     userId?: StringFilter<"UserWordList"> | string
     wordListId?: IntFilter<"UserWordList"> | number
     assignedAt?: DateTimeFilter<"UserWordList"> | Date | string
-    wordOrder?: JsonFilter<"UserWordList">
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -16684,7 +16658,6 @@ export namespace Prisma {
 
   export type UserWordListCreateWithoutWordListInput = {
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
     user: UserCreateNestedOneWithoutWordListAssignmentsInput
   }
 
@@ -16692,7 +16665,6 @@ export namespace Prisma {
     id?: number
     userId: string
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListCreateOrConnectWithoutWordListInput = {
@@ -17274,7 +17246,6 @@ export namespace Prisma {
     id?: number
     wordListId: number
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -17434,7 +17405,6 @@ export namespace Prisma {
 
   export type UserWordListUpdateWithoutUserInput = {
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
     wordList?: WordListUpdateOneRequiredWithoutUserAssignmentsNestedInput
   }
 
@@ -17442,14 +17412,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     wordListId?: IntFieldUpdateOperationsInput | number
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     wordListId?: IntFieldUpdateOperationsInput | number
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type WordCreateManyWordListInput = {
@@ -17462,7 +17430,6 @@ export namespace Prisma {
     id?: number
     userId: string
     assignedAt?: Date | string
-    wordOrder: JsonNullValueInput | InputJsonValue
   }
 
   export type QuizAttemptCreateManyWordListInput = {
@@ -17497,7 +17464,6 @@ export namespace Prisma {
 
   export type UserWordListUpdateWithoutWordListInput = {
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
     user?: UserUpdateOneRequiredWithoutWordListAssignmentsNestedInput
   }
 
@@ -17505,14 +17471,12 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type UserWordListUncheckedUpdateManyWithoutWordListInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
     assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordOrder?: JsonNullValueInput | InputJsonValue
   }
 
   export type QuizAttemptUpdateWithoutWordListInput = {

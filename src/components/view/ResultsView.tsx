@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
 import { toast } from "sonner";
 import { QuizAttempt } from "@prisma/client";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import {
   TwitterShareButton,
   WhatsappShareButton,

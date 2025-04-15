@@ -89,7 +89,6 @@ model UserWordList {
   wordListId Int
   assignedAt DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  wordOrder  Json // Array of word IDs in randomized order for this user
 
   @@unique([userId, wordListId])
   @@index([userId])

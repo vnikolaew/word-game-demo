@@ -95,6 +95,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       clearTimeout(interStimulusTimeout.current);
       interStimulusTimeout.current = null;
     }
+    // Reset state when cleaning up
+    setShowWord(false);
   }, []);
 
   const startNewTrial = useCallback(() => {
@@ -170,7 +172,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
     (isRealWord: boolean, isTimeout: boolean = false) => {
       if (!currentList || !shuffledWords[currentWordIndex]) return;
 
-      // Clear any existing timeouts
+      // Clear any existing timeouts before proceeding
       cleanupTimeouts();
 
       const currentWord = shuffledWords[currentWordIndex];
@@ -188,18 +190,18 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
       const newResponses = [...responses, newResponse];
       setResponses(newResponses);
+
+      // Ensure we set showWord to false before the transition
       setShowWord(false);
 
-      // Handle inter-stimulus interval
-      interStimulusTimeout.current = setTimeout(() => {
+      // Handle inter-stimulus interval with proper cleanup
+      const handleNextWord = () => {
         if (currentWordIndex < TOTAL_WORDS - 1) {
-          setCurrentWordIndex(currentWordIndex + 1);
+          setCurrentWordIndex((prev) => prev + 1);
           startNewTrial();
         } else {
           // Calculate final score
           const timeoutCount = newResponses.filter((r) => r.isTimeout).length;
-
-          // If all responses were timeouts, score is 0
           const score =
             timeoutCount === TOTAL_WORDS
               ? 0
@@ -209,9 +211,16 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                     100
                 );
 
+          // Clean up before submitting
+          cleanupTimeouts();
           submitQuizAttempt(newResponses, score);
         }
-      }, INTER_STIMULUS_INTERVAL);
+      };
+
+      interStimulusTimeout.current = setTimeout(
+        handleNextWord,
+        INTER_STIMULUS_INTERVAL
+      );
     },
     [
       currentList,
@@ -231,7 +240,15 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
   useEffect(() => {
     loadWordList();
-    return () => cleanupTimeouts();
+
+    return () => {
+      cleanupTimeouts();
+      // Reset all state on unmount
+      setCurrentWordIndex(0);
+      setResponses([]);
+      setShuffledWords([]);
+      setCurrentList(null);
+    };
   }, [loadWordList, cleanupTimeouts]);
 
   useEffect(() => {

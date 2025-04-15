@@ -1,25 +1,36 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
-import { withAuth } from "next-auth/middleware";
 
 export async function middleware(request: NextRequest) {
-  const token = await getToken({ req: request });
+  const token = await getToken({
+    req: request,
+    secret: process.env.NEXTAUTH_SECRET,
+  });
 
-  // Check if the path starts with /quiz
+  // Handle API routes
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    if (!token) {
+      return new NextResponse(
+        JSON.stringify({ error: "Authentication required" }),
+        { status: 401, headers: { "content-type": "application/json" } }
+      );
+    }
+    return NextResponse.next();
+  }
+
+  // Handle /quiz routes
   if (request.nextUrl.pathname.startsWith("/quiz")) {
     if (!token) {
-      // Redirect to login page if not authenticated
       const loginUrl = new URL("/auth/login", request.url);
       loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
       return NextResponse.redirect(loginUrl);
     }
   }
 
-  // Prevent authenticated users from accessing login page
+  // Handle /auth/login route
   if (request.nextUrl.pathname.startsWith("/auth/login")) {
     if (token) {
-      // Redirect to quiz page if already authenticated
       return NextResponse.redirect(new URL("/quiz", request.url));
     }
   }
@@ -27,18 +38,12 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export default withAuth({
-  callbacks: {
-    authorized: ({ token }) => !!token,
-  },
-});
-
 // Configure the paths that middleware should run on
 export const config = {
   matcher: [
-    "/quiz/:path*", // Match all paths starting with /quiz
-    "/auth/login", // Match the login page
+    "/quiz/:path*",
+    "/auth/login",
     "/profile",
-    "/api/profile",
+    "/api/(profile|wordlists|quiz|consent)/:path*", // Match all protected API routes
   ],
 };
