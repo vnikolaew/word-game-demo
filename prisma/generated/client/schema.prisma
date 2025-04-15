@@ -64,8 +64,8 @@ model VerificationToken {
 // Quiz related models
 model Word {
   id         Int      @id @default(autoincrement())
-  word       String
-  isNonWord  Boolean
+  word       String // The actual word (item)
+  isNonWord  Boolean // True if item_type is "nonword"
   wordList   WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)
   wordListId Int
 
@@ -89,6 +89,7 @@ model UserWordList {
   wordListId Int
   assignedAt DateTime @default(now())
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordOrder  Json // Array of word IDs in randomized order for this user
 
   @@unique([userId, wordListId])
   @@index([userId])
