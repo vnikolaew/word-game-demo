@@ -12,7 +12,7 @@ import { Spinner } from "@/components/ui/Spinner";
 import { ConsentView } from "@/components/view/ConsentView";
 import { PracticeView } from "@/components/view/PracticeView";
 import QuizView from "@/components/view/QuizView";
-import { ResultsView } from "@/components/view/ResultsView";
+import ResultsView from "@/components/view/ResultsView";
 import { SurveyView } from "@/components/view/SurveyView";
 
 // types
@@ -27,7 +27,7 @@ export default function AppPage() {
 
   const [consent, setConsent] = useState<UserConsent | null>(null);
   const [appState, setAppState] = useState<AppState>("consent");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Get consent from database
@@ -46,7 +46,7 @@ export default function AppPage() {
         setConsent(data);
         setAppState("quiz");
       } else {
-        setError("حدث خطأ أثناء جلب الموافقة");
+        setAppState("consent");
       }
     });
   }, []);

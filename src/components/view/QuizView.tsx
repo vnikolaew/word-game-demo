@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 
 // components
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Spinner } from "../ui/Spinner";
@@ -17,17 +17,21 @@ interface QuizResponse {
   isCorrect: boolean;
   isNonWord: boolean;
   responseTime: number; // Time taken to respond
+  isTimeout: boolean;
 }
 
 interface QuizViewProps {
   onComplete: () => void;
 }
 
+type QuizState = "instructions" | "quiz";
+
 const TOTAL_WORDS = 100;
 const STIMULUS_DURATION = 2000; // 2 seconds max per word
 const INTER_STIMULUS_INTERVAL = 500; // 500ms blank screen
 
 export default function QuizView({ onComplete }: QuizViewProps) {
+  const [state, setState] = useState<QuizState>("instructions");
   const [currentList, setCurrentList] = useState<WordListResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -42,9 +46,9 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const stimulusStartTime = useRef<number>(0);
   const stimulusTimeout = useRef<NodeJS.Timeout | null>(null);
   const interStimulusTimeout = useRef<NodeJS.Timeout | null>(null);
-  const handleResponseRef = useRef<((isRealWord: boolean) => void) | null>(
-    null
-  );
+  const handleResponseRef = useRef<
+    ((isRealWord: boolean, isTimeout?: boolean) => void) | null
+  >(null);
 
   const shuffleArray = (array: string[]) => {
     const shuffled = [...array];
@@ -100,7 +104,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
     // Set timeout for maximum stimulus duration
     stimulusTimeout.current = setTimeout(() => {
       if (currentWordIndex < TOTAL_WORDS && handleResponseRef.current) {
-        handleResponseRef.current(false); // Default to "Non-Word" if no response
+        // Pass true as second argument to indicate timeout
+        handleResponseRef.current(false, true);
       }
     }, STIMULUS_DURATION);
   }, [currentWordIndex]);
@@ -162,7 +167,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   );
 
   const handleResponse = useCallback(
-    (isRealWord: boolean) => {
+    (isRealWord: boolean, isTimeout: boolean = false) => {
       if (!currentList || !shuffledWords[currentWordIndex]) return;
 
       // Clear any existing timeouts
@@ -170,7 +175,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
       const currentWord = shuffledWords[currentWordIndex];
       const isNonWord = currentList.nonWords.includes(currentWord);
-      const isCorrect = isRealWord !== isNonWord;
+      const isCorrect = isTimeout ? false : isRealWord !== isNonWord;
       const responseTime = performance.now() - stimulusStartTime.current;
 
       const newResponse: QuizResponse = {
@@ -178,6 +183,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
         isCorrect,
         isNonWord,
         responseTime,
+        isTimeout,
       };
 
       const newResponses = [...responses, newResponse];
@@ -190,11 +196,19 @@ export default function QuizView({ onComplete }: QuizViewProps) {
           setCurrentWordIndex(currentWordIndex + 1);
           startNewTrial();
         } else {
-          // Calculate final score and complete quiz
-          const correctResponses = newResponses.filter(
-            (r) => r.isCorrect
-          ).length;
-          const score = Math.round((correctResponses / TOTAL_WORDS) * 100);
+          // Calculate final score
+          const timeoutCount = newResponses.filter((r) => r.isTimeout).length;
+
+          // If all responses were timeouts, score is 0
+          const score =
+            timeoutCount === TOTAL_WORDS
+              ? 0
+              : Math.round(
+                  (newResponses.filter((r) => r.isCorrect).length /
+                    TOTAL_WORDS) *
+                    100
+                );
+
           submitQuizAttempt(newResponses, score);
         }
       }, INTER_STIMULUS_INTERVAL);
@@ -221,7 +235,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }, [loadWordList, cleanupTimeouts]);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile) return; // Early return for mobile devices - no keyboard controls
 
     const handleKeyPress = (event: KeyboardEvent) => {
       switch (event.key) {
@@ -246,6 +260,51 @@ export default function QuizView({ onComplete }: QuizViewProps) {
         <p className="text-red-500 mb-4">{error}</p>
         <Button onClick={loadWordList}>Try Again</Button>
       </div>
+    );
+  }
+
+  if (state === "instructions") {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">
+            تعليمات الاختبار
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-4 text-right">
+            <p className="text-lg">كيفية الإجابة على الاختبار:</p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>سيتم عرض {TOTAL_WORDS} كلمة عليك</li>
+              <li>لديك ثانيتان للإجابة على كل كلمة</li>
+              <li>
+                إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على زر &quot;كلمة
+                حقيقية&quot; أو مفتاح السهم الأيمن (→)
+              </li>
+              <li>
+                إذا كانت الكلمة غير حقيقية، اضغط على زر &quot;كلمة غير
+                حقيقية&quot; أو مفتاح السهم الأيسر (←)
+              </li>
+              <li>
+                إذا لم تجب خلال ثانيتين، سيتم اعتبار إجابتك &quot;كلمة غير
+                حقيقية&quot;
+              </li>
+              <li>ستظهر شاشة فارغة لفترة قصيرة بين الكلمات</li>
+            </ul>
+          </div>
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={() => {
+                setState("quiz");
+                loadWordList();
+              }}
+              className="w-full md:w-auto"
+            >
+              ابدأ الاختبار
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
@@ -280,25 +339,28 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
           <p className="text-sm text-gray-500 mb-4">
             {isMobile
-              ? "Tap your response"
-              : "Use arrow keys (← →) or numbers (1, 2) to respond"}
+              ? "اضغط على الزر للإجابة"
+              : "استخدم مفاتيح الأسهم (← →) للإجابة"}
           </p>
-          <div className="flex justify-center gap-4">
-            <Button
-              variant="default"
-              onClick={() => handleResponse(true)}
-              className="w-full md:w-32 h-12 text-lg"
-            >
-              Real Word
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={() => handleResponse(false)}
-              className="w-full md:w-32 h-12 text-lg text-white"
-            >
-              Non-Word
-            </Button>
-          </div>
+
+          {isMobile && (
+            <div className="flex justify-center gap-4">
+              <Button
+                variant="default"
+                onClick={() => handleResponse(true)}
+                className="w-full md:w-32 h-12 text-lg"
+              >
+                نعم
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => handleResponse(false)}
+                className="w-full md:w-32 h-12 text-lg text-white"
+              >
+                لا
+              </Button>
+            </div>
+          )}
         </div>
       </Card>
     </div>

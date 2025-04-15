@@ -6,16 +6,25 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
 import { toast } from "sonner";
 import { QuizAttempt } from "@prisma/client";
+import { useRouter } from "next/router";
+import {
+  TwitterShareButton,
+  WhatsappShareButton,
+  TwitterIcon,
+  WhatsappIcon,
+} from "react-share";
 
 interface ResultsViewProps {
   onNext: () => void;
   onRetake: () => void;
 }
 
-export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
+export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
   const [results, setResults] = useState<QuizAttempt | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [shareUrl, setShareUrl] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -41,9 +50,12 @@ export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
     };
 
     fetchResults();
+
+    // Set the share URL when the component mounts
+    setShareUrl(window.location.origin);
   }, []);
 
-  const getFeedbackMessage = (score: number): string => {
+  const getFeedbackMessage = (score: number, total: number): string => {
     const feedbackMessages = [
       { range: [-100, 0], message: "تحتاج إلى تحسين معرفتك بالكلمات العربية." },
       {
@@ -69,34 +81,34 @@ export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
     return feedbackMessages[0].message;
   };
 
+  const getTotalQuestions = (results: QuizAttempt) => {
+    return (
+      results.correctWords +
+      results.incorrectWords +
+      results.correctNonWords +
+      results.incorrectNonWords
+    );
+  };
+
   const handleShare = async () => {
     if (!results) return;
 
-    const shareText = `حصلت على ${results.score.toFixed(
-      1
-    )} من 100 في اختبار #حروفنا! 🎉\nجرّب الاختبار وشاركنا نتيجتك:\n##اللغة_العربية #تقييم_الكلمات`;
+    const totalQuestions = getTotalQuestions(results);
+    const shareText = `I scored ${results.score} out of ${totalQuestions} on the Lexical Decision Task! Try it yourself!`;
 
-    if (navigator.share) {
-      try {
+    try {
+      if (navigator.share) {
         await navigator.share({
-          title: "نتائج اختبار حروفنا",
+          title: "My Quiz Results",
           text: shareText,
-          url: window.location.href,
+          url: shareUrl,
         });
-      } catch (error) {
-        if (error instanceof Error && error.name !== "AbortError") {
-          console.error("Error sharing:", error);
-        }
-      }
-    } else {
-      try {
-        await navigator.clipboard.writeText(
-          `${shareText}\n${window.location.href}`
-        );
+      } else {
+        await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
         toast.success("تم نسخ النتائج إلى الحافظة!");
-      } catch (error) {
-        console.error("Error copying to clipboard:", error);
       }
+    } catch (error) {
+      console.error("Error sharing:", error);
     }
   };
 
@@ -124,6 +136,9 @@ export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
     );
   }
 
+  const totalQuestions = getTotalQuestions(results);
+  const shareText = `I scored ${results.score} out of ${totalQuestions} on the Lexical Decision Task! Try it yourself!`;
+
   return (
     <Card>
       <CardHeader>
@@ -136,18 +151,28 @@ export function ResultsView({ onNext, onRetake }: ResultsViewProps) {
             {results.score.toFixed(1)}%
           </p>
           <p className="mt-2 text-lg text-gray-700">
-            {getFeedbackMessage(results.score)}
+            {getFeedbackMessage(results.score, totalQuestions)}
           </p>
         </div>
 
         <div className="text-center">
           <p className="text-sm text-gray-500">شارك نتيجتك مع الآخرين!</p>
           <div className="mt-4 flex justify-center space-x-4">
-            <Button variant="outline" onClick={handleShare}>
-              مشاركة
-            </Button>
-            <Button onClick={onRetake}>أعد الاختبار!</Button>
+            <TwitterShareButton url={shareUrl} title={shareText}>
+              <TwitterIcon size={32} round />
+            </TwitterShareButton>
+            <WhatsappShareButton url={shareUrl} title={shareText}>
+              <WhatsappIcon size={32} round />
+            </WhatsappShareButton>
           </div>
+          <Button onClick={handleShare}>مشاركة</Button>
+        </div>
+
+        <div className="flex justify-center gap-4 mt-8">
+          <Button onClick={onRetake} variant="outline">
+            إعادة الاختبار
+          </Button>
+          <Button onClick={onNext}>العودة للصفحة الرئيسية</Button>
         </div>
       </CardContent>
     </Card>

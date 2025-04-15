@@ -6,6 +6,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // Practice items - Arabic only
 const PRACTICE_ITEMS = [
@@ -25,7 +26,11 @@ interface PracticeViewProps {
   onComplete: () => void;
 }
 
+type PracticeState = "intro" | "instructions" | "practice" | "completion";
+
 export function PracticeView({ onComplete }: PracticeViewProps) {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [state, setState] = useState<PracticeState>("intro");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -58,6 +63,8 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
   }, [currentIndex, onComplete]);
 
   useEffect(() => {
+    if (isMobile) return; // Early return for mobile devices - no keyboard controls
+
     const handleKeyPress = (event: KeyboardEvent) => {
       if (showFeedback) {
         if (event.key === "Enter" || event.key === " ") {
@@ -75,7 +82,81 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentIndex, handleNextItem, handleResponse, showFeedback]);
+  }, [currentIndex, handleNextItem, handleResponse, showFeedback, isMobile]);
+
+  if (state === "intro") {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">
+            مرحباً بك في جلسة التدريب
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-center">
+          <p className="text-lg">
+            ستبدأ أولاً بجلسة تدريبية للتعرف على كيفية الإجابة على الاختبار
+          </p>
+          <Button
+            onClick={() => setState("instructions")}
+            className="w-full md:w-auto"
+          >
+            التالي
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (state === "instructions") {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">
+            تعليمات الجلسة التدريبية
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="space-y-4 text-right">
+            <p className="text-lg">كيفية الإجابة على الاختبار:</p>
+            <ul className="list-disc list-inside space-y-2">
+              <li>ستظهر لك كلمة على الشاشة</li>
+              {isMobile ? (
+                <li>
+                  إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على زر
+                  &quot;نعم&quot;
+                </li>
+              ) : (
+                <li>
+                  إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على مفتاح السهم
+                  الأيمن (→)
+                </li>
+              )}
+              {isMobile ? (
+                <li>إذا كانت الكلمة غير حقيقية، اضغط على زر &quot;لا&quot;</li>
+              ) : (
+                <li>
+                  إذا كانت الكلمة غير حقيقية، اضغط على مفتاح السهم الأيسر (←)
+                </li>
+              )}
+              <li>ستحصل على تغذية راجعة فورية لكل إجابة</li>
+              <li>
+                اضغط على &quot;التالي&quot;{!isMobile && " أو مفتاح Enter"}{" "}
+                للانتقال إلى الكلمة التالية
+              </li>
+            </ul>
+          </div>
+          <div className="flex justify-center pt-4">
+            <Button
+              onClick={() => setState("practice")}
+              className="w-full md:w-auto"
+            >
+              ابدأ التدريب
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (isComplete) {
     const correctCount = responses.filter(Boolean).length;
@@ -91,8 +172,28 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
             لقد حصلت على {correctCount} من أصل {PRACTICE_ITEMS.length} صحيحة (
             {accuracy.toFixed(1)}%)
           </p>
+          <Button
+            onClick={() => setState("completion")}
+            className="w-full md:w-auto"
+          >
+            التالي
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (state === "completion") {
+    return (
+      <Card className="w-full max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">
+            لقد أكملت جلسة التدريب
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6 text-center">
           <Button onClick={onComplete} className="w-full md:w-auto">
-            ابدأ الاختبار
+            ابدأ الاختبار الرئيسي
           </Button>
         </CardContent>
       </Card>
@@ -125,11 +226,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
               </div>
             )}
           </div>
-          <p className="text-sm text-gray-500 mb-4">
-            اضغط على مفتاح السهم الأيمن (→) للإجابة بـ &quot;نعم&quot; أو مفتاح
-            السهم الأيسر (←) للإجابة بـ &quot;لا&quot;
-          </p>
-          {!showFeedback && (
+          {!showFeedback && isMobile && (
             <div className="flex flex-row justify-center gap-4">
               <Button
                 variant="default"
