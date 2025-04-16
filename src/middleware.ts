@@ -26,10 +26,6 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
       return NextResponse.redirect(loginUrl);
     }
-
-    if (!token.isAdmin) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
   }
 
   // Handle /quiz routes
@@ -44,10 +40,6 @@ export async function middleware(request: NextRequest) {
   // Handle /auth/login route
   if (request.nextUrl.pathname.startsWith("/auth/login")) {
     if (token) {
-      // If user is admin and trying to access login, redirect to admin dashboard
-      if (token.isAdmin) {
-        return NextResponse.redirect(new URL("/admin", request.url));
-      }
       return NextResponse.redirect(new URL("/quiz", request.url));
     }
   }
