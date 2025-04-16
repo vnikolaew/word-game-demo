@@ -26,7 +26,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="ar" dir="rtl">
       <body
-        className={`${notoSansArabic.className} antialiased mx-auto max-w-3xl`}
+        className={`${notoSansArabic.className} antialiased mx-auto max-w-7xl`}
       >
         <AuthProvider>
           <Toaster />

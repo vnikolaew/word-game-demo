@@ -19,6 +19,19 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Handle admin routes
+  if (request.nextUrl.pathname.startsWith("/admin")) {
+    if (!token) {
+      const loginUrl = new URL("/auth/login", request.url);
+      loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    if (!token.isAdmin) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
   // Handle /quiz routes
   if (request.nextUrl.pathname.startsWith("/quiz")) {
     if (!token) {
@@ -31,6 +44,10 @@ export async function middleware(request: NextRequest) {
   // Handle /auth/login route
   if (request.nextUrl.pathname.startsWith("/auth/login")) {
     if (token) {
+      // If user is admin and trying to access login, redirect to admin dashboard
+      if (token.isAdmin) {
+        return NextResponse.redirect(new URL("/admin", request.url));
+      }
       return NextResponse.redirect(new URL("/quiz", request.url));
     }
   }
@@ -44,6 +61,7 @@ export const config = {
     "/quiz/:path*",
     "/auth/login",
     "/profile",
+    "/admin/:path*",
     "/api/(profile|wordlists|quiz|consent)/:path*", // Match all protected API routes
   ],
 };

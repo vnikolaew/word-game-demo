@@ -77,11 +77,11 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         // First time jwt callback is run, user object is available
         token.id = user.id;
-        token.email = user.email || "";
-        token.name = user.name || "";
+        token.email = user.email ?? "";
+        token.name = user.name ?? "";
       } else {
         // Subsequent times, token.sub will contain the user id
-        token.id = token.sub || "";
+        token.id = token.sub ?? "";
       }
       return token as ExtendedToken;
     },
@@ -90,7 +90,7 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
-          id: token.sub as string, // Use token.sub as the user ID
+          id: token.sub as string,
           email: (token.email as string) || null,
           name: (token.name as string) || null,
         },

@@ -1831,6 +1831,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    isAdmin: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1842,6 +1843,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    isAdmin: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1853,6 +1855,7 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
+    isAdmin: number
     _all: number
   }
 
@@ -1866,6 +1869,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    isAdmin?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1877,6 +1881,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    isAdmin?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1888,6 +1893,7 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    isAdmin?: true
     _all?: true
   }
 
@@ -1972,6 +1978,7 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
+    isAdmin: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2000,6 +2007,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isAdmin?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     quizAttempts?: boolean | User$quizAttemptsArgs<ExtArgs>
@@ -2018,6 +2026,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isAdmin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2029,6 +2038,7 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isAdmin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2040,9 +2050,10 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    isAdmin?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "isAdmin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -2074,6 +2085,7 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
+      isAdmin: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2511,6 +2523,7 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly isAdmin: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -12984,7 +12997,8 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     image: 'image',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    isAdmin: 'isAdmin'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -13175,6 +13189,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -13185,13 +13206,6 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -13238,6 +13252,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    isAdmin?: BoolFilter<"User"> | boolean
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
@@ -13255,6 +13270,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isAdmin?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     quizAttempts?: QuizAttemptOrderByRelationAggregateInput
@@ -13275,6 +13291,7 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    isAdmin?: BoolFilter<"User"> | boolean
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
@@ -13292,6 +13309,7 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isAdmin?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -13309,6 +13327,7 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    isAdmin?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type AccountWhereInput = {
@@ -13897,6 +13916,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -13914,6 +13934,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -13931,6 +13952,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -13948,6 +13970,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -13965,6 +13988,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -13976,6 +14000,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -13987,6 +14012,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type AccountCreateInput = {
@@ -14620,6 +14646,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
     some?: AccountWhereInput
@@ -14694,6 +14725,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isAdmin?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -14705,6 +14737,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isAdmin?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -14716,6 +14749,7 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    isAdmin?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -14780,6 +14814,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -14927,11 +14969,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type WordListScalarRelationFilter = {
     is?: WordListWhereInput
     isNot?: WordListWhereInput
@@ -14982,14 +15019,6 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type WordListRelationFilter = {
@@ -15376,6 +15405,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type AccountUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -15584,10 +15617,6 @@ export namespace Prisma {
     create?: XOR<WordListCreateWithoutWordsInput, WordListUncheckedCreateWithoutWordsInput>
     connectOrCreate?: WordListCreateOrConnectWithoutWordsInput
     connect?: WordListWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type WordListUpdateOneRequiredWithoutWordsNestedInput = {
@@ -15883,6 +15912,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15967,6 +16001,14 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -15994,11 +16036,6 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -16024,14 +16061,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -16434,6 +16463,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -16450,6 +16480,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -16482,6 +16513,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -16498,6 +16530,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -16514,6 +16547,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -16530,6 +16564,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -16562,6 +16597,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -16578,6 +16614,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -16801,6 +16838,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -16817,6 +16855,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -16877,6 +16916,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -16893,6 +16933,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -16909,6 +16950,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -16925,6 +16967,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -16979,6 +17022,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -16995,6 +17039,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -17039,6 +17084,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -17055,6 +17101,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -17087,6 +17134,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -17103,6 +17151,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -17119,6 +17168,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -17135,6 +17185,7 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    isAdmin?: boolean
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -17167,6 +17218,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -17183,6 +17235,7 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isAdmin?: BoolFieldUpdateOperationsInput | boolean
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
