@@ -19,7 +19,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useWordList } from "@/hooks/useWordList";
 
 interface QuizAttempt {
   id: number;
@@ -30,6 +29,7 @@ interface QuizAttempt {
   correctNonWords: number;
   incorrectNonWords: number;
   npxionTime: number;
+  totalQuizDuration: number;
 }
 
 interface UserProfile {
@@ -49,8 +49,45 @@ interface UserProfile {
 
 export default function UserProfile() {
   const router = useRouter();
-  const { profile, isLoading, error, getUserProfile, deleteUserProfile } =
-    useWordList();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const getUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch("/api/profile");
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+      const data = await response.json();
+      setProfile(data);
+      return data;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const deleteUserProfile = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch("/api/profile", {
+        method: "DELETE",
+      });
+      if (!response.ok) throw new Error("Failed to delete account");
+      return true;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete account");
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Fetch profile on component mount
   useEffect(() => {
@@ -67,7 +104,7 @@ export default function UserProfile() {
     return () => {
       mounted = false;
     };
-  }, [getUserProfile, profile]);
+  }, [profile]);
 
   // Delete account
   const handleDeleteAccount = async () => {
