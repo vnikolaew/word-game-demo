@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { Word } from "@prisma/client";
 
+const MAX_ATTEMPTS = 200;
+
 // Get a word list for the current user
 export async function GET() {
   try {
@@ -43,11 +45,23 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    // Find the least used word list that hasn't been assigned to this user
+    // Check number of attempts
+    const attemptCount = await prisma.quizAttempt.count({
+      where: { userId },
+    });
+
+    if (attemptCount >= MAX_ATTEMPTS) {
+      return NextResponse.json(
+        { error: "Maximum number of attempts reached" },
+        { status: 403 }
+      );
+    }
+
+    // Find a word list that hasn't been used by this user in their attempts
     const wordList = await prisma.wordList.findFirst({
       where: {
         NOT: {
-          userAssignments: {
+          quizAttempts: {
             some: {
               userId: userId,
             },
@@ -64,35 +78,19 @@ export async function GET() {
 
     if (!wordList) {
       return NextResponse.json(
-        { error: "No available word lists" },
+        { error: "No more available word lists" },
         { status: 404 }
       );
     }
 
-    // Assign this word list to the user and update usage statistics in a transaction
-    await prisma.$transaction([
-      prisma.userWordList.create({
-        data: {
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
-          wordList: {
-            connect: {
-              id: wordList.id,
-            },
-          },
-        },
-      }),
-      prisma.wordList.update({
-        where: { id: wordList.id },
-        data: {
-          timesUsed: { increment: 1 },
-          lastUsedAt: new Date(),
-        },
-      }),
-    ]);
+    // Update usage statistics
+    await prisma.wordList.update({
+      where: { id: wordList.id },
+      data: {
+        timesUsed: { increment: 1 },
+        lastUsedAt: new Date(),
+      },
+    });
 
     // Format the response
     const response = {
@@ -105,6 +103,7 @@ export async function GET() {
         .map((w: Word) => w.word),
       timesUsed: wordList.timesUsed,
       lastUsedAt: wordList.lastUsedAt,
+      attemptsRemaining: MAX_ATTEMPTS - attemptCount,
     };
 
     return NextResponse.json(response);

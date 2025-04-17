@@ -9617,6 +9617,7 @@ export namespace Prisma {
     correctNonWords: number | null
     incorrectNonWords: number | null
     npxionTime: number | null
+    totalQuizDuration: number | null
   }
 
   export type QuizAttemptSumAggregateOutputType = {
@@ -9628,6 +9629,7 @@ export namespace Prisma {
     correctNonWords: number | null
     incorrectNonWords: number | null
     npxionTime: number | null
+    totalQuizDuration: number | null
   }
 
   export type QuizAttemptMinAggregateOutputType = {
@@ -9640,6 +9642,7 @@ export namespace Prisma {
     correctNonWords: number | null
     incorrectNonWords: number | null
     npxionTime: number | null
+    totalQuizDuration: number | null
     createdAt: Date | null
   }
 
@@ -9653,6 +9656,7 @@ export namespace Prisma {
     correctNonWords: number | null
     incorrectNonWords: number | null
     npxionTime: number | null
+    totalQuizDuration: number | null
     createdAt: Date | null
   }
 
@@ -9666,6 +9670,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: number
     createdAt: number
     _all: number
@@ -9681,6 +9686,7 @@ export namespace Prisma {
     correctNonWords?: true
     incorrectNonWords?: true
     npxionTime?: true
+    totalQuizDuration?: true
   }
 
   export type QuizAttemptSumAggregateInputType = {
@@ -9692,6 +9698,7 @@ export namespace Prisma {
     correctNonWords?: true
     incorrectNonWords?: true
     npxionTime?: true
+    totalQuizDuration?: true
   }
 
   export type QuizAttemptMinAggregateInputType = {
@@ -9704,6 +9711,7 @@ export namespace Prisma {
     correctNonWords?: true
     incorrectNonWords?: true
     npxionTime?: true
+    totalQuizDuration?: true
     createdAt?: true
   }
 
@@ -9717,6 +9725,7 @@ export namespace Prisma {
     correctNonWords?: true
     incorrectNonWords?: true
     npxionTime?: true
+    totalQuizDuration?: true
     createdAt?: true
   }
 
@@ -9730,6 +9739,7 @@ export namespace Prisma {
     correctNonWords?: true
     incorrectNonWords?: true
     npxionTime?: true
+    totalQuizDuration?: true
     responses?: true
     createdAt?: true
     _all?: true
@@ -9831,6 +9841,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonValue
     createdAt: Date
     _count: QuizAttemptCountAggregateOutputType | null
@@ -9864,6 +9875,7 @@ export namespace Prisma {
     correctNonWords?: boolean
     incorrectNonWords?: boolean
     npxionTime?: boolean
+    totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -9880,6 +9892,7 @@ export namespace Prisma {
     correctNonWords?: boolean
     incorrectNonWords?: boolean
     npxionTime?: boolean
+    totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -9896,6 +9909,7 @@ export namespace Prisma {
     correctNonWords?: boolean
     incorrectNonWords?: boolean
     npxionTime?: boolean
+    totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -9912,11 +9926,12 @@ export namespace Prisma {
     correctNonWords?: boolean
     incorrectNonWords?: boolean
     npxionTime?: boolean
+    totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
   }
 
-  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "score" | "correctWords" | "incorrectWords" | "correctNonWords" | "incorrectNonWords" | "npxionTime" | "responses" | "createdAt", ExtArgs["result"]["quizAttempt"]>
+  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "score" | "correctWords" | "incorrectWords" | "correctNonWords" | "incorrectNonWords" | "npxionTime" | "totalQuizDuration" | "responses" | "createdAt", ExtArgs["result"]["quizAttempt"]>
   export type QuizAttemptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
@@ -9946,6 +9961,7 @@ export namespace Prisma {
       correctNonWords: number
       incorrectNonWords: number
       npxionTime: number
+      totalQuizDuration: number
       responses: Prisma.JsonValue
       createdAt: Date
     }, ExtArgs["result"]["quizAttempt"]>
@@ -10382,6 +10398,7 @@ export namespace Prisma {
     readonly correctNonWords: FieldRef<"QuizAttempt", 'Int'>
     readonly incorrectNonWords: FieldRef<"QuizAttempt", 'Int'>
     readonly npxionTime: FieldRef<"QuizAttempt", 'Int'>
+    readonly totalQuizDuration: FieldRef<"QuizAttempt", 'Int'>
     readonly responses: FieldRef<"QuizAttempt", 'Json'>
     readonly createdAt: FieldRef<"QuizAttempt", 'DateTime'>
   }
@@ -13081,6 +13098,7 @@ export namespace Prisma {
     correctNonWords: 'correctNonWords',
     incorrectNonWords: 'incorrectNonWords',
     npxionTime: 'npxionTime',
+    totalQuizDuration: 'totalQuizDuration',
     responses: 'responses',
     createdAt: 'createdAt'
   };
@@ -13695,6 +13713,7 @@ export namespace Prisma {
     correctNonWords?: IntFilter<"QuizAttempt"> | number
     incorrectNonWords?: IntFilter<"QuizAttempt"> | number
     npxionTime?: IntFilter<"QuizAttempt"> | number
+    totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13711,6 +13730,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -13730,6 +13750,7 @@ export namespace Prisma {
     correctNonWords?: IntFilter<"QuizAttempt"> | number
     incorrectNonWords?: IntFilter<"QuizAttempt"> | number
     npxionTime?: IntFilter<"QuizAttempt"> | number
+    totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -13746,6 +13767,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
     _count?: QuizAttemptCountOrderByAggregateInput
@@ -13768,6 +13790,7 @@ export namespace Prisma {
     correctNonWords?: IntWithAggregatesFilter<"QuizAttempt"> | number
     incorrectNonWords?: IntWithAggregatesFilter<"QuizAttempt"> | number
     npxionTime?: IntWithAggregatesFilter<"QuizAttempt"> | number
+    totalQuizDuration?: IntWithAggregatesFilter<"QuizAttempt"> | number
     responses?: JsonWithAggregatesFilter<"QuizAttempt">
     createdAt?: DateTimeWithAggregatesFilter<"QuizAttempt"> | Date | string
   }
@@ -14363,6 +14386,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutQuizAttemptsInput
@@ -14379,6 +14403,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -14390,6 +14415,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutQuizAttemptsNestedInput
@@ -14406,6 +14432,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14420,6 +14447,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -14431,6 +14459,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14445,6 +14474,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -15142,6 +15172,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
   }
@@ -15155,6 +15186,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
   }
 
   export type QuizAttemptMaxOrderByAggregateInput = {
@@ -15167,6 +15199,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -15180,6 +15213,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -15192,6 +15226,7 @@ export namespace Prisma {
     correctNonWords?: SortOrder
     incorrectNonWords?: SortOrder
     npxionTime?: SortOrder
+    totalQuizDuration?: SortOrder
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -16169,6 +16204,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     wordList: WordListCreateNestedOneWithoutQuizAttemptsInput
@@ -16183,6 +16219,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -16365,6 +16402,7 @@ export namespace Prisma {
     correctNonWords?: IntFilter<"QuizAttempt"> | number
     incorrectNonWords?: IntFilter<"QuizAttempt"> | number
     npxionTime?: IntFilter<"QuizAttempt"> | number
+    totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
   }
@@ -16721,6 +16759,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutQuizAttemptsInput
@@ -16735,6 +16774,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -17272,6 +17312,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -17368,6 +17409,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     wordList?: WordListUpdateOneRequiredWithoutQuizAttemptsNestedInput
@@ -17382,6 +17424,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17395,6 +17438,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17494,6 +17538,7 @@ export namespace Prisma {
     correctNonWords: number
     incorrectNonWords: number
     npxionTime: number
+    totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -17539,6 +17584,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutQuizAttemptsNestedInput
@@ -17553,6 +17599,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17566,6 +17613,7 @@ export namespace Prisma {
     correctNonWords?: IntFieldUpdateOperationsInput | number
     incorrectNonWords?: IntFieldUpdateOperationsInput | number
     npxionTime?: IntFieldUpdateOperationsInput | number
+    totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

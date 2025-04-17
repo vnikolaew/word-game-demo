@@ -19,6 +19,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useWordList } from "@/hooks/useWordList";
 
 interface QuizAttempt {
   id: number;
@@ -48,42 +49,35 @@ interface UserProfile {
 
 export default function UserProfile() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  // Fetch user profile data
-  const fetchProfile = async () => {
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/profile");
-      if (!response.ok) throw new Error("Failed to fetch profile");
-      const data = await response.json();
-      setProfile(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { profile, isLoading, error, getUserProfile, deleteUserProfile } =
+    useWordList();
 
   // Fetch profile on component mount
   useEffect(() => {
+    let mounted = true;
+
+    const fetchProfile = async () => {
+      if (mounted && !profile) {
+        await getUserProfile();
+      }
+    };
+
     fetchProfile();
-  }, []);
+
+    return () => {
+      mounted = false;
+    };
+  }, [getUserProfile, profile]);
 
   // Delete account
   const handleDeleteAccount = async () => {
     try {
-      setIsLoading(true);
-      const response = await fetch("/api/profile", {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete account");
-      await signOut({ callbackUrl: "/" });
+      const success = await deleteUserProfile();
+      if (success) {
+        await signOut({ callbackUrl: "/" });
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete account");
-      setIsLoading(false);
+      console.error("Failed to delete account:", err);
     }
   };
 
@@ -105,7 +99,7 @@ export default function UserProfile() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <p className="text-red-500 mb-4">{error}</p>
-        <Button onClick={fetchProfile}>Try Again</Button>
+        <Button onClick={getUserProfile}>Try Again</Button>
       </div>
     );
   }
@@ -174,12 +168,20 @@ export default function UserProfile() {
       <Card className="mb-8 p-6">
         <h2 className="text-xl font-semibold mb-4">Quiz History</h2>
         <div className="space-y-4">
-          <div className="flex items-center gap-2 mb-4">
-            <p className="text-sm text-gray-500">Total Quizzes Completed:</p>
-            <p className="font-medium">{profile.quizAttempts.length}</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 mb-4">
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-gray-500">Total Quizzes Completed:</p>
+              <p className="font-medium">{profile?.quizAttempts.length || 0}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <p className="text-sm text-gray-500">Attempts Remaining:</p>
+              <p className="font-medium">
+                {200 - (profile?.quizAttempts.length || 0)}
+              </p>
+            </div>
           </div>
 
-          {profile.quizAttempts.length > 0 ? (
+          {profile?.quizAttempts.length > 0 ? (
             <div className="space-y-4">
               {profile.quizAttempts.map((attempt) => (
                 <div key={attempt.id} className="border rounded-lg p-4">
@@ -197,7 +199,7 @@ export default function UserProfile() {
                     <div>
                       <p className="text-sm text-gray-500">Completion Time</p>
                       <p className="font-medium">
-                        {Math.round(attempt.npxionTime / 1000)}s
+                        {Math.round(attempt.totalQuizDuration / 1000)}s
                       </p>
                     </div>
                     <div>

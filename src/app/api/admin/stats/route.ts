@@ -30,9 +30,12 @@ export async function GET() {
     const highScoreQuizzes = quizzes.filter((quiz) => quiz.score >= 70).length;
 
     // Calculate average quiz time
-    const totalTime = quizzes.reduce((acc, quiz) => acc + quiz.npxionTime, 0);
+    const totalTime = quizzes.reduce(
+      (acc, quiz) => acc + quiz.totalQuizDuration,
+      0
+    );
     const averageQuizTime =
-      completedQuizzes > 0 ? totalTime / completedQuizzes : 0;
+      completedQuizzes > 0 ? Math.round(totalTime / completedQuizzes) : 0;
 
     // Get statistics by word list
     const wordLists = await prisma.wordList.findMany({

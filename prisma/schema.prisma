@@ -105,6 +105,7 @@ model QuizAttempt {
   correctNonWords   Int      @map("correct_non_words")
   incorrectNonWords Int      @map("incorrect_non_words")
   npxionTime        Int      @map("completion_time") // in milliseconds
+  totalQuizDuration Int      @map("total_quiz_duration") // in milliseconds
   responses         Json // Array of responses
   createdAt         DateTime @default(now())
 

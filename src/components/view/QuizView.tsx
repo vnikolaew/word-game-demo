@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useWordList } from "@/hooks/useWordList";
 
 // components
 import { Button } from "@/components/ui/button";
@@ -30,8 +31,6 @@ const FEEDBACK_DURATION = 200; // 200ms for feedback display
 
 export default function QuizView({ onComplete }: QuizViewProps) {
   const [state, setState] = useState<string>("instructions");
-  const [currentList, setCurrentList] = useState<WordListResponse | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [responses, setResponses] = useState<QuizResponse[]>([]);
@@ -42,6 +41,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
+  // Use the word list hook
+  const {
+    currentList,
+    isLoading,
+    error: wordListError,
+    getNewWordList,
+  } = useWordList();
+
   // Timing references
   const stimulusStartTime = useRef<number>(0);
   const stimulusTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -49,6 +56,9 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const handleResponseRef = useRef<
     ((isRealWord: boolean, isTimeout?: boolean) => void) | null
   >(null);
+
+  // Add quiz start time reference
+  const quizStartTime = useRef<number>(0);
 
   const shuffleArray = (array: string[]) => {
     const shuffled = [...array];
@@ -61,30 +71,12 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
   const loadWordList = useCallback(async () => {
     try {
-      setIsLoading(true);
       setError(null);
-      const response = await fetch("/api/wordlists");
-
-      if (!response.ok) {
-        throw new Error("Failed to load word list");
-      }
-
-      const data = await response.json();
-      setCurrentList(data);
-
-      const allWords = [...data.words, ...data.nonWords];
-      const selectedWords = shuffleArray(allWords).slice(0, TOTAL_WORDS);
-      setShuffledWords(selectedWords);
-      setCurrentWordIndex(0);
-
-      // Start first trial
-      startNewTrial();
+      await getNewWordList();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
-    } finally {
-      setIsLoading(false);
     }
-  }, []);
+  }, [getNewWordList]);
 
   const cleanupTimeouts = useCallback(() => {
     if (stimulusTimeout.current) {
@@ -134,6 +126,10 @@ export default function QuizView({ onComplete }: QuizViewProps) {
         const npxionTime = Math.round(
           newResponses.reduce((sum, r) => sum + r.responseTime, 0)
         );
+        // Calculate total quiz duration
+        const totalQuizDuration = Math.round(
+          performance.now() - quizStartTime.current
+        );
 
         const submitResponse = await fetch("/api/quiz/attempts", {
           method: "POST",
@@ -149,6 +145,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             correctNonWords,
             incorrectNonWords,
             npxionTime,
+            totalQuizDuration,
           }),
         });
 
@@ -238,6 +235,17 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }, [handleResponse]);
 
   useEffect(() => {
+    if (currentList) {
+      const allWords = [...currentList.words, ...currentList.nonWords];
+      const selectedWords = shuffleArray(allWords).slice(0, TOTAL_WORDS);
+      setShuffledWords(selectedWords);
+      setCurrentWordIndex(0);
+      quizStartTime.current = performance.now();
+      startNewTrial();
+    }
+  }, [currentList]);
+
+  useEffect(() => {
     loadWordList();
 
     return () => {
@@ -246,7 +254,6 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       setCurrentWordIndex(0);
       setResponses([]);
       setShuffledWords([]);
-      setCurrentList(null);
     };
   }, [loadWordList, cleanupTimeouts]);
 
@@ -270,10 +277,10 @@ export default function QuizView({ onComplete }: QuizViewProps) {
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, [isMobile, handleResponse]);
 
-  if (error) {
+  if (error || wordListError) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <p className="text-red-500 mb-4">{error}</p>
+        <p className="text-red-500 mb-4">{error || wordListError}</p>
         <Button onClick={loadWordList}>Try Again</Button>
       </div>
     );

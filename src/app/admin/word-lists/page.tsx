@@ -204,12 +204,12 @@ export default function WordListsPage() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>المعرف</TableHead>
-                <TableHead>الكلمات</TableHead>
-                <TableHead>عدد مرات الاستخدام</TableHead>
-                <TableHead>آخر استخدام</TableHead>
-                <TableHead>تاريخ الإنشاء</TableHead>
-                <TableHead>الإجراءات</TableHead>
+                <TableHead className="text-right">المعرف</TableHead>
+                <TableHead className="text-right">الكلمات</TableHead>
+                <TableHead className="text-right">عدد مرات الاستخدام</TableHead>
+                <TableHead className="text-right">آخر استخدام</TableHead>
+                <TableHead className="text-right">تاريخ الإنشاء</TableHead>
+                <TableHead className="text-right">الإجراءات</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -265,16 +265,16 @@ export default function WordListsPage() {
                   إضافة كلمة
                 </Button>
               </div>
-              <div className="space-y-2 max-h-[300px] overflow-y-auto">
+              <div className="space-y-2 max-h-[400px] w-full overflow-y-auto">
                 {words.map((word, index) => (
-                  <div key={index} className="flex gap-2 items-center">
+                  <div key={index} className="flex gap-2 items-center w-full">
                     <Input
                       value={word.word}
                       onChange={(e) =>
                         updateWord(index, "word", e.target.value)
                       }
                       placeholder="أدخل الكلمة"
-                      className="flex-1"
+                      className="flex-1 w-full"
                     />
                     <Button
                       variant="outline"

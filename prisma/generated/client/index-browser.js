@@ -188,6 +188,7 @@ exports.Prisma.QuizAttemptScalarFieldEnum = {
   correctNonWords: 'correctNonWords',
   incorrectNonWords: 'incorrectNonWords',
   npxionTime: 'npxionTime',
+  totalQuizDuration: 'totalQuizDuration',
   responses: 'responses',
   createdAt: 'createdAt'
 };
