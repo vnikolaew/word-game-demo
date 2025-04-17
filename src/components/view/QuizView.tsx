@@ -10,9 +10,6 @@ import { Spinner } from "../ui/Spinner";
 import QuizCard from "./QuizCard";
 import Instructions from "./Instructions";
 
-// types
-import { WordListResponse } from "@/types";
-
 interface QuizResponse {
   word: string;
   isCorrect: boolean;
@@ -51,8 +48,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
   // Timing references
   const stimulusStartTime = useRef<number>(0);
-  const stimulusTimeout = useRef<NodeJS.Timeout | null>(null);
-  const interStimulusTimeout = useRef<NodeJS.Timeout | null>(null);
+  const stimulusRAF = useRef<number | null>(null);
+  const feedbackRAF = useRef<number | null>(null);
   const handleResponseRef = useRef<
     ((isRealWord: boolean, isTimeout?: boolean) => void) | null
   >(null);
@@ -79,13 +76,13 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }, [getNewWordList]);
 
   const cleanupTimeouts = useCallback(() => {
-    if (stimulusTimeout.current) {
-      clearTimeout(stimulusTimeout.current);
-      stimulusTimeout.current = null;
+    if (stimulusRAF.current) {
+      cancelAnimationFrame(stimulusRAF.current);
+      stimulusRAF.current = null;
     }
-    if (interStimulusTimeout.current) {
-      clearTimeout(interStimulusTimeout.current);
-      interStimulusTimeout.current = null;
+    if (feedbackRAF.current) {
+      cancelAnimationFrame(feedbackRAF.current);
+      feedbackRAF.current = null;
     }
     // Reset state when cleaning up
     setShowWord(false);
@@ -95,13 +92,18 @@ export default function QuizView({ onComplete }: QuizViewProps) {
     setShowWord(true);
     stimulusStartTime.current = performance.now();
 
-    // Set timeout for maximum stimulus duration
-    stimulusTimeout.current = setTimeout(() => {
-      if (currentWordIndex < TOTAL_WORDS && handleResponseRef.current) {
-        // Pass true as second argument to indicate timeout
-        handleResponseRef.current(false, true);
+    // Set timeout for maximum stimulus duration using requestAnimationFrame
+    const checkStimulusDuration = (timestamp: number) => {
+      if (timestamp - stimulusStartTime.current >= STIMULUS_DURATION) {
+        if (currentWordIndex < TOTAL_WORDS && handleResponseRef.current) {
+          // Pass true as second argument to indicate timeout
+          handleResponseRef.current(false, true);
+        }
+        return;
       }
-    }, STIMULUS_DURATION);
+      stimulusRAF.current = requestAnimationFrame(checkStimulusDuration);
+    };
+    stimulusRAF.current = requestAnimationFrame(checkStimulusDuration);
   }, [currentWordIndex]);
 
   const submitQuizAttempt = useCallback(
@@ -193,30 +195,39 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       const newResponses = [...responses, newResponse];
       setResponses(newResponses);
 
-      // Handle feedback and transition to next word
-      setTimeout(() => {
-        setShowFeedback(false);
-        if (currentWordIndex < TOTAL_WORDS - 1) {
-          setCurrentWordIndex((prev) => prev + 1);
-          setShowWord(true);
-          startNewTrial();
-        } else {
-          // Calculate final score
-          const timeoutCount = newResponses.filter((r) => r.isTimeout).length;
-          const score =
-            timeoutCount === TOTAL_WORDS
-              ? 0
-              : Math.round(
-                  (newResponses.filter((r) => r.isCorrect).length /
-                    TOTAL_WORDS) *
-                    100
-                );
+      // Handle feedback and transition using requestAnimationFrame
+      const feedbackStartTime = performance.now();
+      const handleFeedback = (timestamp: number) => {
+        if (timestamp - feedbackStartTime >= FEEDBACK_DURATION) {
+          setShowFeedback(false);
+          if (currentWordIndex < TOTAL_WORDS - 1) {
+            setCurrentWordIndex((prev) => prev + 1);
+            setShowWord(true);
+            startNewTrial();
+          } else {
+            // Simple scoring: percentage of correct answers, counting timeouts as incorrect
+            const timeoutCount = newResponses.filter((r) => r.isTimeout).length;
 
-          // Clean up before submitting
-          cleanupTimeouts();
-          submitQuizAttempt(newResponses, score);
+            let score: number;
+            if (timeoutCount === TOTAL_WORDS) {
+              score = 0;
+            } else {
+              // Only count non-timeout responses that are correct
+              const correctAnswers = newResponses.filter(
+                (r) => r.isCorrect && !r.isTimeout
+              ).length;
+              score = Math.round((correctAnswers / TOTAL_WORDS) * 100);
+            }
+
+            // Clean up before submitting
+            cleanupTimeouts();
+            submitQuizAttempt(newResponses, score);
+          }
+          return;
         }
-      }, FEEDBACK_DURATION);
+        feedbackRAF.current = requestAnimationFrame(handleFeedback);
+      };
+      feedbackRAF.current = requestAnimationFrame(handleFeedback);
     },
     [
       currentList,
@@ -315,11 +326,6 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       isCorrect={isCorrect ?? false}
       isMobile={isMobile}
       handleResponse={handleResponse}
-      isActuallyCorrect={
-        shuffledWords[currentWordIndex].includes(currentWord)
-          ? isCorrect
-          : !isCorrect
-      }
     />
   );
 }

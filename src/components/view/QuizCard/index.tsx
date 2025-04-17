@@ -1,7 +1,7 @@
 import React from "react";
 
 // Components
-import { Card, CardFooter } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
@@ -14,7 +14,6 @@ interface QuizCardProps {
   isCorrect: boolean;
   isMobile: boolean;
   handleResponse: (response: boolean) => void;
-  isActuallyCorrect: boolean | null;
 }
 
 const QuizCard = ({
@@ -25,7 +24,6 @@ const QuizCard = ({
   isCorrect,
   isMobile,
   handleResponse,
-  isActuallyCorrect,
 }: QuizCardProps) => {
   return (
     <Card className="w-full p-6">
@@ -63,15 +61,6 @@ const QuizCard = ({
           </div>
         )}
       </div>
-
-      {process.env.NODE_ENV === "development" && (
-        <CardFooter className="flex gap-y-2 justify-between border border-gray-200 p-3 rounded-lg">
-          <p>Current Word: {currentWord}</p>
-          <p>Is Correct: {isActuallyCorrect ? "Correct" : "Incorrect"}</p>
-          <p>Show Feedback: {showFeedback ? "Yes" : "No"}</p>
-          <p>Progress: {progress}</p>
-        </CardFooter>
-      )}
     </Card>
   );
 };
