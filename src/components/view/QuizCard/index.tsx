@@ -14,6 +14,7 @@ interface QuizCardProps {
   isCorrect: boolean;
   isMobile: boolean;
   handleResponse: (response: boolean) => void;
+  isActuallyCorrect: boolean | null;
 }
 
 const QuizCard = ({
@@ -24,6 +25,7 @@ const QuizCard = ({
   isCorrect,
   isMobile,
   handleResponse,
+  isActuallyCorrect,
 }: QuizCardProps) => {
   return (
     <Card className="w-full p-6">
@@ -65,7 +67,7 @@ const QuizCard = ({
       {process.env.NODE_ENV === "development" && (
         <CardFooter className="flex gap-y-2 justify-between border border-gray-200 p-3 rounded-lg">
           <p>Current Word: {currentWord}</p>
-          <p>Is Correct: {isCorrect ? "Correct" : "Incorrect"}</p>
+          <p>Is Correct: {isActuallyCorrect ? "Correct" : "Incorrect"}</p>
           <p>Show Feedback: {showFeedback ? "Yes" : "No"}</p>
           <p>Progress: {progress}</p>
         </CardFooter>

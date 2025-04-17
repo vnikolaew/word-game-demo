@@ -315,6 +315,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       isCorrect={isCorrect ?? false}
       isMobile={isMobile}
       handleResponse={handleResponse}
+      isActuallyCorrect={
+        shuffledWords[currentWordIndex].includes(currentWord)
+          ? isCorrect
+          : !isCorrect
+      }
     />
   );
 }
