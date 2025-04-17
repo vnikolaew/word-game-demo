@@ -5,39 +5,67 @@ import { useState, useEffect, useCallback } from "react";
 // components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-// Practice items - Arabic only
+// View
+import QuizCard from "./QuizCard";
+import Instructions from "./Instructions";
+
+// Practice items from provided word list
 const PRACTICE_ITEMS = [
-  { word: "كتاب", isWord: true },
-  { word: "قزت", isWord: false },
-  { word: "شجرة", isWord: true },
-  { word: "قوز", isWord: false },
-  { word: "بيت", isWord: true },
-  { word: "بنم", isWord: false },
-  { word: "سيارة", isWord: true },
-  { word: "وزي", isWord: false },
-  { word: "كلب", isWord: true },
-  { word: "جقو", isWord: false },
+  { word: "الطبيعية", isWord: true },
+  { word: "انطلق", isWord: true },
+  { word: "ترجع", isWord: true },
+  { word: "تب", isWord: true },
+  { word: "الزولن", isWord: false },
+  { word: "مرتفع", isWord: true },
+  { word: "الزولن", isWord: false },
+  { word: "مانع", isWord: false },
+  { word: "مرتع", isWord: false },
+  { word: "مرتفع", isWord: true },
 ];
 
 interface PracticeViewProps {
   onComplete: () => void;
 }
-
-type PracticeState = "intro" | "instructions" | "practice" | "completion";
-
 export function PracticeView({ onComplete }: PracticeViewProps) {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const [state, setState] = useState<PracticeState>("intro");
+
+  // States
+  const [state, setState] = useState<string>("intro");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [responses, setResponses] = useState<boolean[]>([]);
+  const [shuffledItems, setShuffledItems] = useState<typeof PRACTICE_ITEMS>([]);
+  const [showWord, setShowWord] = useState(true);
 
-  const currentItem = PRACTICE_ITEMS[currentIndex];
+  // Constants for timing
+  const FEEDBACK_DURATION = 200; // 200ms for feedback
+  const STIMULUS_DURATION = 2000; // 2000ms (2 seconds) for word display
+
+  // Shuffle items when component mounts
+  useEffect(() => {
+    const shuffled = [...PRACTICE_ITEMS]
+      .sort(() => Math.random() - 0.5)
+      .map((item, index) => ({ ...item, originalIndex: index }));
+    setShuffledItems(shuffled);
+  }, []);
+
+  const currentItem = shuffledItems[currentIndex] || PRACTICE_ITEMS[0];
   const isComplete = currentIndex >= PRACTICE_ITEMS.length;
+
+  const handleNextItem = useCallback(() => {
+    if (currentIndex + 1 >= PRACTICE_ITEMS.length) {
+      setState("completion");
+      return;
+    }
+
+    setCurrentIndex(currentIndex + 1);
+    setShowFeedback(false);
+    setIsCorrect(null);
+    setShowWord(true);
+  }, [currentIndex]);
 
   const handleResponse = useCallback(
     (response: boolean) => {
@@ -46,32 +74,33 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
       const correct = response === currentItem.isWord;
       setIsCorrect(correct);
       setShowFeedback(true);
+      setShowWord(false);
       setResponses([...responses, correct]);
+
+      // Automatically proceed to next item after feedback duration
+      setTimeout(() => {
+        handleNextItem();
+      }, FEEDBACK_DURATION);
     },
-    [currentItem.isWord, isComplete, responses, showFeedback]
+    [currentItem.isWord, isComplete, responses, showFeedback, handleNextItem]
   );
 
-  const handleNextItem = useCallback(() => {
-    if (currentIndex + 1 >= PRACTICE_ITEMS.length) {
-      onComplete();
-      return;
-    }
+  // Auto-hide word after STIMULUS_DURATION
+  useEffect(() => {
+    if (!showWord || showFeedback) return;
 
-    setCurrentIndex(currentIndex + 1);
-    setShowFeedback(false);
-    setIsCorrect(null);
-  }, [currentIndex, onComplete]);
+    const timer = setTimeout(() => {
+      handleResponse(false); // Default to "no" if no response
+    }, STIMULUS_DURATION);
+
+    return () => clearTimeout(timer);
+  }, [showWord, showFeedback, handleResponse]);
 
   useEffect(() => {
     if (isMobile) return; // Early return for mobile devices - no keyboard controls
 
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (showFeedback) {
-        if (event.key === "Enter" || event.key === " ") {
-          handleNextItem();
-        }
-        return;
-      }
+      if (showFeedback) return;
 
       if (event.key === "ArrowRight") {
         handleResponse(true);
@@ -82,7 +111,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [currentIndex, handleNextItem, handleResponse, showFeedback, isMobile]);
+  }, [handleResponse, showFeedback, isMobile]);
 
   if (state === "intro") {
     return (
@@ -108,54 +137,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
   }
 
   if (state === "instructions") {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">
-            تعليمات الجلسة التدريبية
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4 text-right">
-            <p className="text-lg">كيفية الإجابة على الاختبار:</p>
-            <ul className="list-disc list-inside space-y-2">
-              <li>ستظهر لك كلمة على الشاشة</li>
-              {isMobile ? (
-                <li>
-                  إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على زر
-                  &quot;نعم&quot;
-                </li>
-              ) : (
-                <li>
-                  إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على مفتاح السهم
-                  الأيمن (→)
-                </li>
-              )}
-              {isMobile ? (
-                <li>إذا كانت الكلمة غير حقيقية، اضغط على زر &quot;لا&quot;</li>
-              ) : (
-                <li>
-                  إذا كانت الكلمة غير حقيقية، اضغط على مفتاح السهم الأيسر (←)
-                </li>
-              )}
-              <li>ستحصل على تغذية راجعة فورية لكل إجابة</li>
-              <li>
-                اضغط على &quot;التالي&quot;{!isMobile && " أو مفتاح Enter"}{" "}
-                للانتقال إلى الكلمة التالية
-              </li>
-            </ul>
-          </div>
-          <div className="flex justify-center pt-4">
-            <Button
-              onClick={() => setState("practice")}
-              className="w-full md:w-auto"
-            >
-              ابدأ التدريب
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <Instructions isMobile={isMobile} setState={setState} />;
   }
 
   if (isComplete) {
@@ -182,7 +164,6 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
       </Card>
     );
   }
-
   if (state === "completion") {
     return (
       <Card className="w-full max-w-2xl mx-auto">
@@ -201,51 +182,14 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
-      <Card className="w-full p-6">
-        <div className="text-center">
-          <Progress
-            value={(currentIndex / PRACTICE_ITEMS.length) * 100}
-            className="mb-6"
-          />
-          <div className="flex justify-center items-center h-[200px]">
-            {!showFeedback ? (
-              <h2 className="text-4xl font-bold mb-8">{currentItem.word}</h2>
-            ) : (
-              <div className="text-center">
-                <p
-                  className={`text-xl font-semibold mb-4 ${
-                    isCorrect ? "text-green-600" : "text-red-600"
-                  }`}
-                >
-                  {isCorrect ? "إجابة صحيحة!" : "إجابة خاطئة"}
-                </p>
-                <Button onClick={handleNextItem} className="w-full md:w-auto">
-                  التالي
-                </Button>
-              </div>
-            )}
-          </div>
-          {!showFeedback && isMobile && (
-            <div className="flex flex-row justify-center gap-4">
-              <Button
-                variant="default"
-                onClick={() => handleResponse(true)}
-                className="w-full md:w-32 h-12 text-lg"
-              >
-                نعم
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => handleResponse(false)}
-                className="w-full md:w-32 h-12 text-lg text-white"
-              >
-                لا
-              </Button>
-            </div>
-          )}
-        </div>
-      </Card>
-    </div>
+    <QuizCard
+      progress={(currentIndex / PRACTICE_ITEMS.length) * 100}
+      showWord={showWord}
+      currentWord={currentItem.word}
+      showFeedback={showFeedback}
+      isCorrect={isCorrect ?? false}
+      isMobile={isMobile}
+      handleResponse={handleResponse}
+    />
   );
 }

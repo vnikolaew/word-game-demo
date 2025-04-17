@@ -42,8 +42,6 @@ export default function LandingPage() {
     },
   ];
 
-  const benefits = ["⚡ سهلة وسريعة"];
-
   return (
     <div className="py-10 w-full">
       <div className="space-y-2 text-center">
@@ -65,19 +63,6 @@ export default function LandingPage() {
           <p className="text-lg font-medium">
             مهمتك بسيطة: حدد إذا كانت الكلمات موجودة في اللغة العربية أم لا
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 + index * 0.1 }}
-                className="bg-secondary/50 px-4 py-2 rounded-lg"
-              >
-                {benefit}
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
 
         <motion.div

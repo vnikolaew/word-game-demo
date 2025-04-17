@@ -165,7 +165,9 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
               <WhatsappIcon size={32} round />
             </WhatsappShareButton>
           </div>
-          <Button onClick={handleShare}>مشاركة</Button>
+          <Button className="mt-4" onClick={handleShare}>
+            مشاركة
+          </Button>
         </div>
 
         <div className="flex justify-center gap-4 mt-8">

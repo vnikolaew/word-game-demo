@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 // components
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { Spinner } from "../ui/Spinner";
+import QuizCard from "./QuizCard";
+import Instructions from "./Instructions";
 
 // types
 import { WordListResponse } from "@/types";
@@ -24,14 +24,12 @@ interface QuizViewProps {
   onComplete: () => void;
 }
 
-type QuizState = "instructions" | "quiz";
-
 const TOTAL_WORDS = 100;
 const STIMULUS_DURATION = 2000; // 2 seconds max per word
-const INTER_STIMULUS_INTERVAL = 500; // 500ms blank screen
+const FEEDBACK_DURATION = 200; // 200ms for feedback display
 
 export default function QuizView({ onComplete }: QuizViewProps) {
-  const [state, setState] = useState<QuizState>("instructions");
+  const [state, setState] = useState<string>("instructions");
   const [currentList, setCurrentList] = useState<WordListResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,6 +38,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
   const [showWord, setShowWord] = useState(true);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Timing references
@@ -180,6 +180,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       const isCorrect = isTimeout ? false : isRealWord !== isNonWord;
       const responseTime = performance.now() - stimulusStartTime.current;
 
+      // Show feedback
+      setShowWord(false);
+      setShowFeedback(true);
+      setIsCorrect(isCorrect);
+
       const newResponse: QuizResponse = {
         word: currentWord,
         isCorrect,
@@ -191,13 +196,12 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       const newResponses = [...responses, newResponse];
       setResponses(newResponses);
 
-      // Ensure we set showWord to false before the transition
-      setShowWord(false);
-
-      // Handle inter-stimulus interval with proper cleanup
-      const handleNextWord = () => {
+      // Handle feedback and transition to next word
+      setTimeout(() => {
+        setShowFeedback(false);
         if (currentWordIndex < TOTAL_WORDS - 1) {
           setCurrentWordIndex((prev) => prev + 1);
+          setShowWord(true);
           startNewTrial();
         } else {
           // Calculate final score
@@ -215,12 +219,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
           cleanupTimeouts();
           submitQuizAttempt(newResponses, score);
         }
-      };
-
-      interStimulusTimeout.current = setTimeout(
-        handleNextWord,
-        INTER_STIMULUS_INTERVAL
-      );
+      }, FEEDBACK_DURATION);
     },
     [
       currentList,
@@ -281,48 +280,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }
 
   if (state === "instructions") {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">
-            تعليمات الاختبار
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4 text-right">
-            <p className="text-lg">كيفية الإجابة على الاختبار:</p>
-            <ul className="list-disc list-inside space-y-2">
-              <li>سيتم عرض {TOTAL_WORDS} كلمة عليك</li>
-              <li>لديك ثانيتان للإجابة على كل كلمة</li>
-              <li>
-                إذا كانت الكلمة حقيقية في اللغة العربية، اضغط على زر &quot;كلمة
-                حقيقية&quot; أو مفتاح السهم الأيمن (→)
-              </li>
-              <li>
-                إذا كانت الكلمة غير حقيقية، اضغط على زر &quot;كلمة غير
-                حقيقية&quot; أو مفتاح السهم الأيسر (←)
-              </li>
-              <li>
-                إذا لم تجب خلال ثانيتين، سيتم اعتبار إجابتك &quot;كلمة غير
-                حقيقية&quot;
-              </li>
-              <li>ستظهر شاشة فارغة لفترة قصيرة بين الكلمات</li>
-            </ul>
-          </div>
-          <div className="flex justify-center pt-4">
-            <Button
-              onClick={() => {
-                setState("quiz");
-                loadWordList();
-              }}
-              className="w-full md:w-auto"
-            >
-              ابدأ الاختبار
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <Instructions isMobile={isMobile} setState={setState} />;
   }
 
   if (isLoading || !currentList || !shuffledWords.length) {
@@ -342,44 +300,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const progress = (currentWordIndex / TOTAL_WORDS) * 100;
 
   return (
-    <div className="flex flex-col items-center justify-center p-4">
-      <Card className="w-full p-6">
-        <div className="text-center">
-          <Progress value={progress} className="mb-6" />
-          <div className="flex justify-center items-center h-[200px]">
-            {showWord ? (
-              <h2 className="text-3xl font-bold mb-8">{currentWord}</h2>
-            ) : (
-              <div className="h-full" />
-            )}
-          </div>
-
-          <p className="text-sm text-gray-500 mb-4">
-            {isMobile
-              ? "اضغط على الزر للإجابة"
-              : "استخدم مفاتيح الأسهم (← →) للإجابة"}
-          </p>
-
-          {isMobile && (
-            <div className="flex justify-center gap-4">
-              <Button
-                variant="default"
-                onClick={() => handleResponse(true)}
-                className="w-full md:w-32 h-12 text-lg"
-              >
-                نعم
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => handleResponse(false)}
-                className="w-full md:w-32 h-12 text-lg text-white"
-              >
-                لا
-              </Button>
-            </div>
-          )}
-        </div>
-      </Card>
-    </div>
+    <QuizCard
+      progress={progress}
+      showWord={showWord}
+      currentWord={currentWord}
+      showFeedback={showFeedback}
+      isCorrect={isCorrect ?? false}
+      isMobile={isMobile}
+      handleResponse={handleResponse}
+    />
   );
 }
