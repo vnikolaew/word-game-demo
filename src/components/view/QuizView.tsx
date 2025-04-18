@@ -143,7 +143,6 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
       try {
         setIsSubmitting(true);
-        // Get device info
         const deviceInfo = getDeviceInfo();
 
         // Calculate detailed statistics
@@ -290,15 +289,16 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }, [handleResponse]);
 
   useEffect(() => {
-    if (currentList) {
+    if (currentList && state === "quiz") {
       const allWords = [...currentList.words, ...currentList.nonWords];
       const selectedWords = shuffleArray(allWords).slice(0, TOTAL_WORDS);
       setShuffledWords(selectedWords);
       setCurrentWordIndex(0);
       quizStartTime.current = performance.now();
+      console.log("Quiz started at:", quizStartTime.current);
       startNewTrial();
     }
-  }, [currentList]);
+  }, [currentList, state]);
 
   useEffect(() => {
     loadWordList();
@@ -342,7 +342,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   }
 
   if (state === "instructions") {
-    return <Instructions isMobile={isMobile} setState={setState} />;
+    return (
+      <Instructions
+        isMobile={isMobile}
+        setState={() => {
+          setState("quiz");
+        }}
+      />
+    );
   }
 
   if (isLoading || !currentList || !shuffledWords.length) {

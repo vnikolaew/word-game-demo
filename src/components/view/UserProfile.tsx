@@ -32,6 +32,16 @@ export default function UserProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Add helper function for formatting completion time
+  const formatCompletionTime = (
+    duration: number | undefined | null
+  ): string => {
+    if (typeof duration !== "number" || isNaN(duration)) {
+      return "0s";
+    }
+    return `${Math.round(duration / 1000)}s`;
+  };
+
   const getUserProfile = async () => {
     try {
       setIsLoading(true);
@@ -383,7 +393,7 @@ export default function UserProfile() {
                     <div>
                       <p className="text-sm text-gray-500">Completion Time</p>
                       <p className="font-medium">
-                        {Math.round(attempt.totalQuizDuration / 1000)}s
+                        {formatCompletionTime(attempt.totalQuizDuration)}
                       </p>
                     </div>
                     <div>
