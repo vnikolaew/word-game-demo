@@ -34,6 +34,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
   const [errors, setErrors] = useState<FormErrors>({});
   const [formData, setFormData] = useState<SurveyData>({
     nativeLanguage: "",
+    otherNativeLanguage: "",
     languageAcquisition: "",
     familyLanguage: "",
     gender: "",
@@ -63,6 +64,9 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
 
     // Required field validation
     Object.keys(formData).forEach((key) => {
+      // Skip validation for optional "other" fields
+      if (key.startsWith("other")) return;
+
       if (!formData[key as keyof SurveyData]) {
         newErrors[key] = "هذا الحقل مطلوب / This field is required";
       }
@@ -74,6 +78,16 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       (isNaN(Number(formData.age)) || Number(formData.age) < 0)
     ) {
       newErrors.age = "يرجى إدخال عمر صحيح / Please enter a valid age";
+    }
+
+    // Validate other language field if needed
+    if (
+      (formData.nativeLanguage === "arabic_and_other" ||
+        formData.nativeLanguage === "other") &&
+      !formData.otherNativeLanguage
+    ) {
+      newErrors.otherNativeLanguage =
+        "يرجى تحديد اللغة / Please specify the language";
     }
 
     setErrors(newErrors);
@@ -95,18 +109,26 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
     try {
       const response = await fetch("/api/survey", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit survey");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to submit survey");
       }
 
       toast.success("تم إرسال الاستبيان بنجاح / Survey submitted successfully");
       onComplete(formData);
     } catch (error) {
       console.error("Error submitting survey:", error);
-      toast.error("فشل في إرسال الاستبيان / Failed to submit survey");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "فشل في إرسال الاستبيان / Failed to submit survey"
+      );
     } finally {
       setLoading(false);
     }
@@ -135,9 +157,14 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             </Label>
             <Select
               value={formData.nativeLanguage}
-              onValueChange={(value: string) =>
-                setFormData({ ...formData, nativeLanguage: value })
-              }
+              onValueChange={(value: string) => {
+                setFormData({
+                  ...formData,
+                  nativeLanguage: value,
+                  otherNativeLanguage:
+                    value === "arabic" ? "" : formData.otherNativeLanguage,
+                });
+              }}
             >
               <SelectTrigger>
                 <SelectValue placeholder="يرجى اختيار إجابة / Please select an answer" />
@@ -157,16 +184,18 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             )}
             {(formData.nativeLanguage === "arabic_and_other" ||
               formData.nativeLanguage === "other") && (
-              <Input
-                placeholder="يرجى تحديد اللغة / Please specify the language"
-                value={formData.otherNativeLanguage}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    otherNativeLanguage: e.target.value,
-                  })
-                }
-              />
+              <div className="mt-2">
+                <Input
+                  placeholder="يرجى تحديد اللغة / Please specify the language"
+                  value={formData.otherNativeLanguage || ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      otherNativeLanguage: e.target.value,
+                    })
+                  }
+                />
+              </div>
             )}
           </div>
 
