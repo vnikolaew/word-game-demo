@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+
+// components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -16,44 +18,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+// Types
+import { SurveyData } from "@/types";
+
 interface SurveyViewProps {
   onComplete: (data: SurveyData) => void;
-}
-
-interface SurveyData {
-  nativeLanguage: string;
-  otherNativeLanguage?: string;
-  languageAcquisition: string;
-  otherAcquisitionLanguage?: string;
-  familyLanguage: string;
-  otherFamilyLanguage?: string;
-  gender: string;
-  age: string;
-  highestEducation: string;
-  arabicDialect: string;
-  nationality: string;
-  otherNationality?: string;
-  residence: string;
-  otherResidence?: string;
-  languages: string;
-  kindergartenLanguage: string;
-  otherKindergartenLanguage?: string;
-  primaryLanguage: string;
-  otherPrimaryLanguage?: string;
-  middleLanguage: string;
-  otherMiddleLanguage?: string;
-  highSchoolLanguage: string;
-  otherHighSchoolLanguage?: string;
-  universityLanguage: string;
-  otherUniversityLanguage?: string;
-  readingHours: string;
-  listeningHours: string;
-  writingHours: string;
-  speakingHours: string;
-  attentionDisorder: string;
-  readingDisorder: string;
-  vision: string;
-  handedness: string;
 }
 
 interface FormErrors {

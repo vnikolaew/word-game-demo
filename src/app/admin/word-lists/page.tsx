@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
+
+// Components
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -19,22 +22,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+// Icons
 import { Plus, Edit, Trash2, X } from "lucide-react";
-import { toast } from "sonner";
 
-interface Word {
-  id: number;
-  word: string;
-  isNonWord: boolean;
-}
-
-interface WordList {
-  id: number;
-  words: Word[];
-  timesUsed: number;
-  lastUsedAt: string | null;
-  createdAt: string;
-}
+// Types
+import { WordList } from "@/types";
 
 export default function WordListsPage() {
   const [wordLists, setWordLists] = useState<WordList[]>([]);

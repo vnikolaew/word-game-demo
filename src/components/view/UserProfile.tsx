@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Trash2, LogOut } from "lucide-react";
 
+// Components
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
@@ -20,36 +20,15 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-interface QuizAttempt {
-  id: number;
-  score: number;
-  createdAt: string;
-  correctWords: number;
-  incorrectWords: number;
-  correctNonWords: number;
-  incorrectNonWords: number;
-  npxionTime: number;
-  totalQuizDuration: number;
-}
+// Icons
+import { Trash2, LogOut } from "lucide-react";
 
-interface UserProfile {
-  name: string | null;
-  email: string;
-  demographicSurvey?: {
-    age: string;
-    gender: string;
-    educationLevel: string;
-    nativeLanguage: string;
-    otherLanguages: string[];
-    arabicProficiency?: string;
-    yearsLearningArabic?: string;
-  };
-  quizAttempts: QuizAttempt[];
-}
+// Types
+import { UserProfile as UserProfileType } from "@/types";
 
 export default function UserProfile() {
   const router = useRouter();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [profile, setProfile] = useState<UserProfileType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -169,34 +148,202 @@ export default function UserProfile() {
         <Card className="mb-8 p-6">
           <h2 className="text-xl font-semibold mb-4">Background Information</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-500">Age</p>
-              <p className="font-medium">{profile.demographicSurvey.age}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Gender</p>
-              <p className="font-medium">{profile.demographicSurvey.gender}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Native Language</p>
-              <p className="font-medium">
-                {profile.demographicSurvey.nativeLanguage}
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Education Level</p>
-              <p className="font-medium">
-                {profile.demographicSurvey.educationLevel}
-              </p>
-            </div>
-            {profile.demographicSurvey.arabicProficiency && (
-              <div>
-                <p className="text-sm text-gray-500">Arabic Proficiency</p>
-                <p className="font-medium">
-                  {profile.demographicSurvey.arabicProficiency}
-                </p>
+            {/* Personal Information */}
+            <div className="col-span-2">
+              <h3 className="text-lg font-medium mb-2">Personal Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Age</p>
+                  <p className="font-medium">{profile.demographicSurvey.age}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Gender</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.gender}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Nationality</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.nationality}
+                    {profile.demographicSurvey.otherNationality &&
+                      ` (${profile.demographicSurvey.otherNationality})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Current Residence</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.residence}
+                    {profile.demographicSurvey.otherResidence &&
+                      ` (${profile.demographicSurvey.otherResidence})`}
+                  </p>
+                </div>
               </div>
-            )}
+            </div>
+
+            {/* Language Background */}
+            <div className="col-span-2">
+              <h3 className="text-lg font-medium mb-2">Language Background</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Native Language</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.nativeLanguage}
+                    {profile.demographicSurvey.otherNativeLanguage &&
+                      ` (${profile.demographicSurvey.otherNativeLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Language Acquisition</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.languageAcquisition}
+                    {profile.demographicSurvey.otherAcquisitionLanguage &&
+                      ` (${profile.demographicSurvey.otherAcquisitionLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Family Language</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.familyLanguage}
+                    {profile.demographicSurvey.otherFamilyLanguage &&
+                      ` (${profile.demographicSurvey.otherFamilyLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Arabic Dialect</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.arabicDialect}
+                  </p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-sm text-gray-500">Known Languages</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.languages}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Education History */}
+            <div className="col-span-2">
+              <h3 className="text-lg font-medium mb-2">Education History</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Highest Education</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.highestEducation}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Kindergarten Language</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.kindergartenLanguage}
+                    {profile.demographicSurvey.otherKindergartenLanguage &&
+                      ` (${profile.demographicSurvey.otherKindergartenLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">
+                    Primary School Language
+                  </p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.primaryLanguage}
+                    {profile.demographicSurvey.otherPrimaryLanguage &&
+                      ` (${profile.demographicSurvey.otherPrimaryLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">
+                    Middle School Language
+                  </p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.middleLanguage}
+                    {profile.demographicSurvey.otherMiddleLanguage &&
+                      ` (${profile.demographicSurvey.otherMiddleLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">High School Language</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.highSchoolLanguage}
+                    {profile.demographicSurvey.otherHighSchoolLanguage &&
+                      ` (${profile.demographicSurvey.otherHighSchoolLanguage})`}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">University Language</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.universityLanguage}
+                    {profile.demographicSurvey.otherUniversityLanguage &&
+                      ` (${profile.demographicSurvey.otherUniversityLanguage})`}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Language Usage */}
+            <div className="col-span-2">
+              <h3 className="text-lg font-medium mb-2">Daily Language Usage</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Reading Hours</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.readingHours}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Listening Hours</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.listeningHours}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Writing Hours</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.writingHours}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Speaking Hours</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.speakingHours}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Medical Information */}
+            <div className="col-span-2">
+              <h3 className="text-lg font-medium mb-2">
+                Additional Information
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Attention Disorder</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.attentionDisorder}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Reading Disorder</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.readingDisorder}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Vision</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.vision}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Handedness</p>
+                  <p className="font-medium">
+                    {profile.demographicSurvey.handedness}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </Card>
       )}

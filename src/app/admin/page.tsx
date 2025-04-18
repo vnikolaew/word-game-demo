@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+// Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, CheckCircle, Clock } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -13,17 +14,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface DashboardStats {
-  totalUsers: number;
-  completedQuizzes: number;
-  highScoreQuizzes: number;
-  averageQuizTime: number;
-  quizzesByWordList: {
-    wordListId: number;
-    totalQuizzes: number;
-    highScoreQuizzes: number;
-  }[];
-}
+// Icons
+import { Users, CheckCircle, Clock } from "lucide-react";
+
+// Types
+import { DashboardStats } from "@/types";
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);

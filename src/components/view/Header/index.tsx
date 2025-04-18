@@ -7,12 +7,13 @@ import { User, LogOut, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Components
-
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 // Jotai
 import { useAtom } from "jotai/react";
 import { isAdminAtom } from "@/lib/atoms";
+
 const Header = () => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);

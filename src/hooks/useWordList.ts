@@ -5,8 +5,6 @@ interface WordList {
   words: string[];
   nonWords: string[];
   timesUsed: number;
-  lastUsedAt: Date;
-  attemptsRemaining?: number;
 }
 
 export function useWordList() {

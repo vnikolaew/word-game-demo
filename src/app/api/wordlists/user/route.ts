@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { Word, WordList } from "@prisma/client";
+import { Word } from "@prisma/client";
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);

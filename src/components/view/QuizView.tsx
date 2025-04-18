@@ -10,23 +10,8 @@ import { Spinner } from "../ui/Spinner";
 import QuizCard from "./QuizCard";
 import Instructions from "./Instructions";
 
-interface QuizResponse {
-  word: string;
-  isCorrect: boolean;
-  isNonWord: boolean;
-  responseTime: number; // Time taken to respond
-  isTimeout: boolean;
-  responseType: "keyboard" | "buttons"; // Track how the user responded
-  pageNumber: number; // Track which page (word number) this was
-}
-
-interface DeviceInfo {
-  deviceType: string;
-  deviceOS: string;
-  deviceBrowser: string;
-  monitorSize: string;
-  viewportSize: string;
-}
+// Types
+import { QuizResponse, DeviceInfo } from "@/types";
 
 interface QuizViewProps {
   onComplete: () => void;

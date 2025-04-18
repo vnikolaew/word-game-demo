@@ -1,11 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
+// Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
 import { toast } from "sonner";
+
+// Types
 import { QuizAttempt } from "@prisma/client";
+
+// Hooks
 import { useRouter } from "next/navigation";
 import {
   TwitterShareButton,

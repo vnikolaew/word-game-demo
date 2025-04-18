@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
+// Components
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,17 +22,8 @@ import {
 import { Search, Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-interface User {
-  id: string;
-  name: string | null;
-  email: string;
-  createdAt: string;
-  quizAttempts: {
-    id: number;
-    score: number;
-    createdAt: string;
-  }[];
-}
+// Types
+import { User } from "@/types";
 
 function UsersTableSkeleton() {
   return (
