@@ -16,6 +16,16 @@ interface QuizResponse {
   isNonWord: boolean;
   responseTime: number; // Time taken to respond
   isTimeout: boolean;
+  responseType: "keyboard" | "buttons"; // Track how the user responded
+  pageNumber: number; // Track which page (word number) this was
+}
+
+interface DeviceInfo {
+  deviceType: string;
+  deviceOS: string;
+  deviceBrowser: string;
+  monitorSize: string;
+  viewportSize: string;
 }
 
 interface QuizViewProps {
@@ -36,6 +46,9 @@ export default function QuizView({ onComplete }: QuizViewProps) {
   const [showWord, setShowWord] = useState(true);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [quizStatus, setQuizStatus] = useState<"completed" | "dropped">(
+    "dropped"
+  );
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   // Use the word list hook
@@ -56,6 +69,39 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
   // Add quiz start time reference
   const quizStartTime = useRef<number>(0);
+
+  // Get device information
+  const getDeviceInfo = useCallback((): DeviceInfo => {
+    const ua = navigator.userAgent;
+    const deviceType = isMobile ? "mobile" : "desktop";
+
+    // Get OS
+    let deviceOS = "unknown";
+    if (ua.includes("Win")) deviceOS = "Windows";
+    else if (ua.includes("Mac")) deviceOS = "MacOS";
+    else if (ua.includes("Linux")) deviceOS = "Linux";
+    else if (ua.includes("Android")) deviceOS = "Android";
+    else if (ua.includes("iOS")) deviceOS = "iOS";
+
+    // Get browser
+    let deviceBrowser = "unknown";
+    if (ua.includes("Chrome")) deviceBrowser = "Chrome";
+    else if (ua.includes("Firefox")) deviceBrowser = "Firefox";
+    else if (ua.includes("Safari")) deviceBrowser = "Safari";
+    else if (ua.includes("Edge")) deviceBrowser = "Edge";
+
+    // Get screen and viewport sizes
+    const monitorSize = `${window.screen.width}x${window.screen.height}`;
+    const viewportSize = `${window.innerWidth}x${window.innerHeight}`;
+
+    return {
+      deviceType,
+      deviceOS,
+      deviceBrowser,
+      monitorSize,
+      viewportSize,
+    };
+  }, [isMobile]);
 
   const shuffleArray = (array: string[]) => {
     const shuffled = [...array];
@@ -112,6 +158,9 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
       try {
         setIsSubmitting(true);
+        // Get device info
+        const deviceInfo = getDeviceInfo();
+
         // Calculate detailed statistics
         const correctWords = newResponses.filter(
           (r) => !r.isNonWord && r.isCorrect
@@ -148,6 +197,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             incorrectNonWords,
             npxionTime,
             totalQuizDuration,
+            ...deviceInfo,
+            quizStatus,
           }),
         });
 
@@ -164,11 +215,15 @@ export default function QuizView({ onComplete }: QuizViewProps) {
         setIsSubmitting(false);
       }
     },
-    [currentList, onComplete]
+    [currentList, onComplete, getDeviceInfo, quizStatus]
   );
 
   const handleResponse = useCallback(
-    (isRealWord: boolean, isTimeout: boolean = false) => {
+    (
+      isRealWord: boolean,
+      isTimeout: boolean = false,
+      responseType: "keyboard" | "buttons" = "buttons"
+    ) => {
       if (!currentList || !shuffledWords[currentWordIndex]) return;
 
       // Clear any existing timeouts before proceeding
@@ -190,6 +245,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
         isNonWord,
         responseTime,
         isTimeout,
+        responseType,
+        pageNumber: currentWordIndex + 1,
       };
 
       const newResponses = [...responses, newResponse];
@@ -205,6 +262,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             setShowWord(true);
             startNewTrial();
           } else {
+            // Quiz completed
+            setQuizStatus("completed");
             // Simple scoring: percentage of correct answers, counting timeouts as incorrect
             const timeoutCount = newResponses.filter((r) => r.isTimeout).length;
 
@@ -275,11 +334,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       switch (event.key) {
         case "1":
         case "ArrowLeft":
-          handleResponse(true);
+          handleResponse(true, false, "keyboard");
           break;
         case "2":
         case "ArrowRight":
-          handleResponse(false);
+          handleResponse(false, false, "keyboard");
           break;
       }
     };

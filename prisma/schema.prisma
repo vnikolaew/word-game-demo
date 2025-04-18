@@ -108,6 +108,12 @@ model QuizAttempt {
   totalQuizDuration Int      @map("total_quiz_duration") // in milliseconds
   responses         Json // Array of responses
   createdAt         DateTime @default(now())
+  deviceType        String   @map("device_type") // desktop, mobile, tablet
+  deviceOS          String   @map("device_os")
+  deviceBrowser     String   @map("device_browser")
+  monitorSize       String   @map("monitor_size") // width x height
+  viewportSize      String   @map("viewport_size") // width x height
+  quizStatus        String   @map("quiz_status") // completed, dropped
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   wordList WordList @relation(fields: [wordListId], references: [id], onDelete: Cascade)

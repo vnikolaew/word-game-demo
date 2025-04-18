@@ -190,7 +190,13 @@ exports.Prisma.QuizAttemptScalarFieldEnum = {
   npxionTime: 'npxionTime',
   totalQuizDuration: 'totalQuizDuration',
   responses: 'responses',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  deviceType: 'deviceType',
+  deviceOS: 'deviceOS',
+  deviceBrowser: 'deviceBrowser',
+  monitorSize: 'monitorSize',
+  viewportSize: 'viewportSize',
+  quizStatus: 'quizStatus'
 };
 
 exports.Prisma.DemographicSurveyScalarFieldEnum = {

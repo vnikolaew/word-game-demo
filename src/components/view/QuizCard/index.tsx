@@ -1,9 +1,11 @@
 import React from "react";
+import { Button } from "@/components/ui/button";
 
 // Components
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
+
+// Assets
 import { Check, X } from "lucide-react";
 
 interface QuizCardProps {
@@ -13,7 +15,11 @@ interface QuizCardProps {
   showFeedback: boolean;
   isCorrect: boolean;
   isMobile: boolean;
-  handleResponse: (response: boolean) => void;
+  handleResponse: (
+    isRealWord: boolean,
+    isTimeout?: boolean,
+    responseType?: "keyboard" | "buttons"
+  ) => void;
 }
 
 const QuizCard = ({
@@ -46,14 +52,14 @@ const QuizCard = ({
           <div className="flex justify-center gap-4">
             <Button
               variant="default"
-              onClick={() => handleResponse(true)}
+              onClick={() => handleResponse(true, false, "buttons")}
               className="w-full md:w-32 h-12 text-lg"
             >
               نعم
             </Button>
             <Button
               variant="destructive"
-              onClick={() => handleResponse(false)}
+              onClick={() => handleResponse(false, false, "buttons")}
               className="w-full md:w-32 h-12 text-lg text-white"
             >
               لا

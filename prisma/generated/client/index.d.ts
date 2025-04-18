@@ -9644,6 +9644,12 @@ export namespace Prisma {
     npxionTime: number | null
     totalQuizDuration: number | null
     createdAt: Date | null
+    deviceType: string | null
+    deviceOS: string | null
+    deviceBrowser: string | null
+    monitorSize: string | null
+    viewportSize: string | null
+    quizStatus: string | null
   }
 
   export type QuizAttemptMaxAggregateOutputType = {
@@ -9658,6 +9664,12 @@ export namespace Prisma {
     npxionTime: number | null
     totalQuizDuration: number | null
     createdAt: Date | null
+    deviceType: string | null
+    deviceOS: string | null
+    deviceBrowser: string | null
+    monitorSize: string | null
+    viewportSize: string | null
+    quizStatus: string | null
   }
 
   export type QuizAttemptCountAggregateOutputType = {
@@ -9673,6 +9685,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: number
     createdAt: number
+    deviceType: number
+    deviceOS: number
+    deviceBrowser: number
+    monitorSize: number
+    viewportSize: number
+    quizStatus: number
     _all: number
   }
 
@@ -9713,6 +9731,12 @@ export namespace Prisma {
     npxionTime?: true
     totalQuizDuration?: true
     createdAt?: true
+    deviceType?: true
+    deviceOS?: true
+    deviceBrowser?: true
+    monitorSize?: true
+    viewportSize?: true
+    quizStatus?: true
   }
 
   export type QuizAttemptMaxAggregateInputType = {
@@ -9727,6 +9751,12 @@ export namespace Prisma {
     npxionTime?: true
     totalQuizDuration?: true
     createdAt?: true
+    deviceType?: true
+    deviceOS?: true
+    deviceBrowser?: true
+    monitorSize?: true
+    viewportSize?: true
+    quizStatus?: true
   }
 
   export type QuizAttemptCountAggregateInputType = {
@@ -9742,6 +9772,12 @@ export namespace Prisma {
     totalQuizDuration?: true
     responses?: true
     createdAt?: true
+    deviceType?: true
+    deviceOS?: true
+    deviceBrowser?: true
+    monitorSize?: true
+    viewportSize?: true
+    quizStatus?: true
     _all?: true
   }
 
@@ -9844,6 +9880,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonValue
     createdAt: Date
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
     _count: QuizAttemptCountAggregateOutputType | null
     _avg: QuizAttemptAvgAggregateOutputType | null
     _sum: QuizAttemptSumAggregateOutputType | null
@@ -9878,6 +9920,12 @@ export namespace Prisma {
     totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
+    deviceType?: boolean
+    deviceOS?: boolean
+    deviceBrowser?: boolean
+    monitorSize?: boolean
+    viewportSize?: boolean
+    quizStatus?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAttempt"]>
@@ -9895,6 +9943,12 @@ export namespace Prisma {
     totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
+    deviceType?: boolean
+    deviceOS?: boolean
+    deviceBrowser?: boolean
+    monitorSize?: boolean
+    viewportSize?: boolean
+    quizStatus?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAttempt"]>
@@ -9912,6 +9966,12 @@ export namespace Prisma {
     totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
+    deviceType?: boolean
+    deviceOS?: boolean
+    deviceBrowser?: boolean
+    monitorSize?: boolean
+    viewportSize?: boolean
+    quizStatus?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quizAttempt"]>
@@ -9929,9 +9989,15 @@ export namespace Prisma {
     totalQuizDuration?: boolean
     responses?: boolean
     createdAt?: boolean
+    deviceType?: boolean
+    deviceOS?: boolean
+    deviceBrowser?: boolean
+    monitorSize?: boolean
+    viewportSize?: boolean
+    quizStatus?: boolean
   }
 
-  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "score" | "correctWords" | "incorrectWords" | "correctNonWords" | "incorrectNonWords" | "npxionTime" | "totalQuizDuration" | "responses" | "createdAt", ExtArgs["result"]["quizAttempt"]>
+  export type QuizAttemptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordListId" | "score" | "correctWords" | "incorrectWords" | "correctNonWords" | "incorrectNonWords" | "npxionTime" | "totalQuizDuration" | "responses" | "createdAt" | "deviceType" | "deviceOS" | "deviceBrowser" | "monitorSize" | "viewportSize" | "quizStatus", ExtArgs["result"]["quizAttempt"]>
   export type QuizAttemptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     wordList?: boolean | WordListDefaultArgs<ExtArgs>
@@ -9964,6 +10030,12 @@ export namespace Prisma {
       totalQuizDuration: number
       responses: Prisma.JsonValue
       createdAt: Date
+      deviceType: string
+      deviceOS: string
+      deviceBrowser: string
+      monitorSize: string
+      viewportSize: string
+      quizStatus: string
     }, ExtArgs["result"]["quizAttempt"]>
     composites: {}
   }
@@ -10401,6 +10473,12 @@ export namespace Prisma {
     readonly totalQuizDuration: FieldRef<"QuizAttempt", 'Int'>
     readonly responses: FieldRef<"QuizAttempt", 'Json'>
     readonly createdAt: FieldRef<"QuizAttempt", 'DateTime'>
+    readonly deviceType: FieldRef<"QuizAttempt", 'String'>
+    readonly deviceOS: FieldRef<"QuizAttempt", 'String'>
+    readonly deviceBrowser: FieldRef<"QuizAttempt", 'String'>
+    readonly monitorSize: FieldRef<"QuizAttempt", 'String'>
+    readonly viewportSize: FieldRef<"QuizAttempt", 'String'>
+    readonly quizStatus: FieldRef<"QuizAttempt", 'String'>
   }
     
 
@@ -13100,7 +13178,13 @@ export namespace Prisma {
     npxionTime: 'npxionTime',
     totalQuizDuration: 'totalQuizDuration',
     responses: 'responses',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    deviceType: 'deviceType',
+    deviceOS: 'deviceOS',
+    deviceBrowser: 'deviceBrowser',
+    monitorSize: 'monitorSize',
+    viewportSize: 'viewportSize',
+    quizStatus: 'quizStatus'
   };
 
   export type QuizAttemptScalarFieldEnum = (typeof QuizAttemptScalarFieldEnum)[keyof typeof QuizAttemptScalarFieldEnum]
@@ -13716,6 +13800,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
+    deviceType?: StringFilter<"QuizAttempt"> | string
+    deviceOS?: StringFilter<"QuizAttempt"> | string
+    deviceBrowser?: StringFilter<"QuizAttempt"> | string
+    monitorSize?: StringFilter<"QuizAttempt"> | string
+    viewportSize?: StringFilter<"QuizAttempt"> | string
+    quizStatus?: StringFilter<"QuizAttempt"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     wordList?: XOR<WordListScalarRelationFilter, WordListWhereInput>
   }
@@ -13733,6 +13823,12 @@ export namespace Prisma {
     totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
+    deviceType?: SortOrder
+    deviceOS?: SortOrder
+    deviceBrowser?: SortOrder
+    monitorSize?: SortOrder
+    viewportSize?: SortOrder
+    quizStatus?: SortOrder
     user?: UserOrderByWithRelationInput
     wordList?: WordListOrderByWithRelationInput
   }
@@ -13753,6 +13849,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
+    deviceType?: StringFilter<"QuizAttempt"> | string
+    deviceOS?: StringFilter<"QuizAttempt"> | string
+    deviceBrowser?: StringFilter<"QuizAttempt"> | string
+    monitorSize?: StringFilter<"QuizAttempt"> | string
+    viewportSize?: StringFilter<"QuizAttempt"> | string
+    quizStatus?: StringFilter<"QuizAttempt"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     wordList?: XOR<WordListScalarRelationFilter, WordListWhereInput>
   }, "id">
@@ -13770,6 +13872,12 @@ export namespace Prisma {
     totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
+    deviceType?: SortOrder
+    deviceOS?: SortOrder
+    deviceBrowser?: SortOrder
+    monitorSize?: SortOrder
+    viewportSize?: SortOrder
+    quizStatus?: SortOrder
     _count?: QuizAttemptCountOrderByAggregateInput
     _avg?: QuizAttemptAvgOrderByAggregateInput
     _max?: QuizAttemptMaxOrderByAggregateInput
@@ -13793,6 +13901,12 @@ export namespace Prisma {
     totalQuizDuration?: IntWithAggregatesFilter<"QuizAttempt"> | number
     responses?: JsonWithAggregatesFilter<"QuizAttempt">
     createdAt?: DateTimeWithAggregatesFilter<"QuizAttempt"> | Date | string
+    deviceType?: StringWithAggregatesFilter<"QuizAttempt"> | string
+    deviceOS?: StringWithAggregatesFilter<"QuizAttempt"> | string
+    deviceBrowser?: StringWithAggregatesFilter<"QuizAttempt"> | string
+    monitorSize?: StringWithAggregatesFilter<"QuizAttempt"> | string
+    viewportSize?: StringWithAggregatesFilter<"QuizAttempt"> | string
+    quizStatus?: StringWithAggregatesFilter<"QuizAttempt"> | string
   }
 
   export type DemographicSurveyWhereInput = {
@@ -14389,6 +14503,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
     user: UserCreateNestedOneWithoutQuizAttemptsInput
     wordList: WordListCreateNestedOneWithoutQuizAttemptsInput
   }
@@ -14406,6 +14526,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type QuizAttemptUpdateInput = {
@@ -14418,6 +14544,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutQuizAttemptsNestedInput
     wordList?: WordListUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
@@ -14435,6 +14567,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuizAttemptCreateManyInput = {
@@ -14450,6 +14588,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type QuizAttemptUpdateManyMutationInput = {
@@ -14462,6 +14606,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuizAttemptUncheckedUpdateManyInput = {
@@ -14477,6 +14627,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type DemographicSurveyCreateInput = {
@@ -15175,6 +15331,12 @@ export namespace Prisma {
     totalQuizDuration?: SortOrder
     responses?: SortOrder
     createdAt?: SortOrder
+    deviceType?: SortOrder
+    deviceOS?: SortOrder
+    deviceBrowser?: SortOrder
+    monitorSize?: SortOrder
+    viewportSize?: SortOrder
+    quizStatus?: SortOrder
   }
 
   export type QuizAttemptAvgOrderByAggregateInput = {
@@ -15201,6 +15363,12 @@ export namespace Prisma {
     npxionTime?: SortOrder
     totalQuizDuration?: SortOrder
     createdAt?: SortOrder
+    deviceType?: SortOrder
+    deviceOS?: SortOrder
+    deviceBrowser?: SortOrder
+    monitorSize?: SortOrder
+    viewportSize?: SortOrder
+    quizStatus?: SortOrder
   }
 
   export type QuizAttemptMinOrderByAggregateInput = {
@@ -15215,6 +15383,12 @@ export namespace Prisma {
     npxionTime?: SortOrder
     totalQuizDuration?: SortOrder
     createdAt?: SortOrder
+    deviceType?: SortOrder
+    deviceOS?: SortOrder
+    deviceBrowser?: SortOrder
+    monitorSize?: SortOrder
+    viewportSize?: SortOrder
+    quizStatus?: SortOrder
   }
 
   export type QuizAttemptSumOrderByAggregateInput = {
@@ -16207,6 +16381,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
     wordList: WordListCreateNestedOneWithoutQuizAttemptsInput
   }
 
@@ -16222,6 +16402,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type QuizAttemptCreateOrConnectWithoutUserInput = {
@@ -16405,6 +16591,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFilter<"QuizAttempt"> | number
     responses?: JsonFilter<"QuizAttempt">
     createdAt?: DateTimeFilter<"QuizAttempt"> | Date | string
+    deviceType?: StringFilter<"QuizAttempt"> | string
+    deviceOS?: StringFilter<"QuizAttempt"> | string
+    deviceBrowser?: StringFilter<"QuizAttempt"> | string
+    monitorSize?: StringFilter<"QuizAttempt"> | string
+    viewportSize?: StringFilter<"QuizAttempt"> | string
+    quizStatus?: StringFilter<"QuizAttempt"> | string
   }
 
   export type DemographicSurveyUpsertWithWhereUniqueWithoutUserInput = {
@@ -16762,6 +16954,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
     user: UserCreateNestedOneWithoutQuizAttemptsInput
   }
 
@@ -16777,6 +16975,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type QuizAttemptCreateOrConnectWithoutWordListInput = {
@@ -17315,6 +17519,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type DemographicSurveyCreateManyUserInput = {
@@ -17412,6 +17622,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
     wordList?: WordListUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
 
@@ -17427,6 +17643,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuizAttemptUncheckedUpdateManyWithoutUserInput = {
@@ -17441,6 +17663,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type DemographicSurveyUpdateWithoutUserInput = {
@@ -17541,6 +17769,12 @@ export namespace Prisma {
     totalQuizDuration: number
     responses: JsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    deviceType: string
+    deviceOS: string
+    deviceBrowser: string
+    monitorSize: string
+    viewportSize: string
+    quizStatus: string
   }
 
   export type WordUpdateWithoutWordListInput = {
@@ -17587,6 +17821,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutQuizAttemptsNestedInput
   }
 
@@ -17602,6 +17842,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
   export type QuizAttemptUncheckedUpdateManyWithoutWordListInput = {
@@ -17616,6 +17862,12 @@ export namespace Prisma {
     totalQuizDuration?: IntFieldUpdateOperationsInput | number
     responses?: JsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deviceType?: StringFieldUpdateOperationsInput | string
+    deviceOS?: StringFieldUpdateOperationsInput | string
+    deviceBrowser?: StringFieldUpdateOperationsInput | string
+    monitorSize?: StringFieldUpdateOperationsInput | string
+    viewportSize?: StringFieldUpdateOperationsInput | string
+    quizStatus?: StringFieldUpdateOperationsInput | string
   }
 
 
