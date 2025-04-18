@@ -53,14 +53,14 @@ const QuizCard = ({
             <Button
               variant="default"
               onClick={() => handleResponse(true, false, "buttons")}
-              className="w-full md:w-32 h-12 text-lg"
+              className="w-full md:w-32 h-12 text-lg bg-green-500"
             >
               نعم
             </Button>
             <Button
               variant="destructive"
               onClick={() => handleResponse(false, false, "buttons")}
-              className="w-full md:w-32 h-12 text-lg text-white"
+              className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
             >
               لا
             </Button>

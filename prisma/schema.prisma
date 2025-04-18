@@ -123,16 +123,42 @@ model QuizAttempt {
 }
 
 model DemographicSurvey {
-  id                  String   @id @default(cuid())
-  userId              String   @unique @map("user_id")
-  age                 String
-  gender              String
-  educationLevel      String   @map("education_level")
-  nativeLanguage      String   @map("native_language")
-  otherLanguages      String[] @map("other_languages")
-  arabicProficiency   String?  @map("arabic_proficiency")
-  yearsLearningArabic String?  @map("years_learning_arabic")
-  createdAt           DateTime @default(now())
+  id                        String   @id @default(cuid())
+  userId                    String   @unique @map("user_id")
+  nativeLanguage            String   @map("native_language")
+  otherNativeLanguage       String?  @map("other_native_language")
+  languageAcquisition       String   @map("language_acquisition")
+  otherAcquisitionLanguage  String?  @map("other_acquisition_language")
+  familyLanguage            String   @map("family_language")
+  otherFamilyLanguage       String?  @map("other_family_language")
+  gender                    String
+  age                       String
+  highestEducation          String   @map("highest_education")
+  arabicDialect             String   @map("arabic_dialect")
+  nationality               String
+  otherNationality          String?  @map("other_nationality")
+  residence                 String
+  otherResidence            String?  @map("other_residence")
+  languages                 String
+  kindergartenLanguage      String   @map("kindergarten_language")
+  otherKindergartenLanguage String?  @map("other_kindergarten_language")
+  primaryLanguage           String   @map("primary_language")
+  otherPrimaryLanguage      String?  @map("other_primary_language")
+  middleLanguage            String   @map("middle_language")
+  otherMiddleLanguage       String?  @map("other_middle_language")
+  highSchoolLanguage        String   @map("high_school_language")
+  otherHighSchoolLanguage   String?  @map("other_high_school_language")
+  universityLanguage        String   @map("university_language")
+  otherUniversityLanguage   String?  @map("other_university_language")
+  readingHours              String   @map("reading_hours")
+  listeningHours            String   @map("listening_hours")
+  writingHours              String   @map("writing_hours")
+  speakingHours             String   @map("speaking_hours")
+  attentionDisorder         String   @map("attention_disorder")
+  readingDisorder           String   @map("reading_disorder")
+  vision                    String
+  handedness                String
+  createdAt                 DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

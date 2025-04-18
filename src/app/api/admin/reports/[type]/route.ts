@@ -2,15 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { createHash } from "crypto";
-
-// Function to generate a consistent anonymous ID for a user
-function generateAnonymousId(userId: string) {
-  return createHash("sha256")
-    .update(userId + process.env.NEXTAUTH_SECRET)
-    .digest("hex")
-    .slice(0, 8);
-}
+import { generateAnonymousId } from "@/lib/utils";
 
 // Function to convert array to CSV
 function arrayToCSV(data: any[]) {
@@ -109,13 +101,39 @@ export async function GET(
 
       data = surveys.map((survey) => ({
         anonymousUserId: generateAnonymousId(survey.user.id),
-        age: survey.age,
-        gender: survey.gender,
-        educationLevel: survey.educationLevel,
         nativeLanguage: survey.nativeLanguage,
-        otherLanguages: survey.otherLanguages,
-        arabicProficiency: survey.arabicProficiency,
-        yearsLearningArabic: survey.yearsLearningArabic,
+        otherNativeLanguage: survey.otherNativeLanguage,
+        languageAcquisition: survey.languageAcquisition,
+        otherAcquisitionLanguage: survey.otherAcquisitionLanguage,
+        familyLanguage: survey.familyLanguage,
+        otherFamilyLanguage: survey.otherFamilyLanguage,
+        gender: survey.gender,
+        age: survey.age,
+        highestEducation: survey.highestEducation,
+        arabicDialect: survey.arabicDialect,
+        nationality: survey.nationality,
+        otherNationality: survey.otherNationality,
+        residence: survey.residence,
+        otherResidence: survey.otherResidence,
+        languages: survey.languages,
+        kindergartenLanguage: survey.kindergartenLanguage,
+        otherKindergartenLanguage: survey.otherKindergartenLanguage,
+        primaryLanguage: survey.primaryLanguage,
+        otherPrimaryLanguage: survey.otherPrimaryLanguage,
+        middleLanguage: survey.middleLanguage,
+        otherMiddleLanguage: survey.otherMiddleLanguage,
+        highSchoolLanguage: survey.highSchoolLanguage,
+        otherHighSchoolLanguage: survey.otherHighSchoolLanguage,
+        universityLanguage: survey.universityLanguage,
+        otherUniversityLanguage: survey.otherUniversityLanguage,
+        readingHours: survey.readingHours,
+        listeningHours: survey.listeningHours,
+        writingHours: survey.writingHours,
+        speakingHours: survey.speakingHours,
+        attentionDisorder: survey.attentionDisorder,
+        readingDisorder: survey.readingDisorder,
+        vision: survey.vision,
+        handedness: survey.handedness,
         date: survey.createdAt,
       }));
     } else {

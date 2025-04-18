@@ -10906,37 +10906,117 @@ export namespace Prisma {
   export type DemographicSurveyMinAggregateOutputType = {
     id: string | null
     userId: string | null
-    age: string | null
-    gender: string | null
-    educationLevel: string | null
     nativeLanguage: string | null
-    arabicProficiency: string | null
-    yearsLearningArabic: string | null
+    otherNativeLanguage: string | null
+    languageAcquisition: string | null
+    otherAcquisitionLanguage: string | null
+    familyLanguage: string | null
+    otherFamilyLanguage: string | null
+    gender: string | null
+    age: string | null
+    highestEducation: string | null
+    arabicDialect: string | null
+    nationality: string | null
+    otherNationality: string | null
+    residence: string | null
+    otherResidence: string | null
+    languages: string | null
+    kindergartenLanguage: string | null
+    otherKindergartenLanguage: string | null
+    primaryLanguage: string | null
+    otherPrimaryLanguage: string | null
+    middleLanguage: string | null
+    otherMiddleLanguage: string | null
+    highSchoolLanguage: string | null
+    otherHighSchoolLanguage: string | null
+    universityLanguage: string | null
+    otherUniversityLanguage: string | null
+    readingHours: string | null
+    listeningHours: string | null
+    writingHours: string | null
+    speakingHours: string | null
+    attentionDisorder: string | null
+    readingDisorder: string | null
+    vision: string | null
+    handedness: string | null
     createdAt: Date | null
   }
 
   export type DemographicSurveyMaxAggregateOutputType = {
     id: string | null
     userId: string | null
-    age: string | null
-    gender: string | null
-    educationLevel: string | null
     nativeLanguage: string | null
-    arabicProficiency: string | null
-    yearsLearningArabic: string | null
+    otherNativeLanguage: string | null
+    languageAcquisition: string | null
+    otherAcquisitionLanguage: string | null
+    familyLanguage: string | null
+    otherFamilyLanguage: string | null
+    gender: string | null
+    age: string | null
+    highestEducation: string | null
+    arabicDialect: string | null
+    nationality: string | null
+    otherNationality: string | null
+    residence: string | null
+    otherResidence: string | null
+    languages: string | null
+    kindergartenLanguage: string | null
+    otherKindergartenLanguage: string | null
+    primaryLanguage: string | null
+    otherPrimaryLanguage: string | null
+    middleLanguage: string | null
+    otherMiddleLanguage: string | null
+    highSchoolLanguage: string | null
+    otherHighSchoolLanguage: string | null
+    universityLanguage: string | null
+    otherUniversityLanguage: string | null
+    readingHours: string | null
+    listeningHours: string | null
+    writingHours: string | null
+    speakingHours: string | null
+    attentionDisorder: string | null
+    readingDisorder: string | null
+    vision: string | null
+    handedness: string | null
     createdAt: Date | null
   }
 
   export type DemographicSurveyCountAggregateOutputType = {
     id: number
     userId: number
-    age: number
-    gender: number
-    educationLevel: number
     nativeLanguage: number
-    otherLanguages: number
-    arabicProficiency: number
-    yearsLearningArabic: number
+    otherNativeLanguage: number
+    languageAcquisition: number
+    otherAcquisitionLanguage: number
+    familyLanguage: number
+    otherFamilyLanguage: number
+    gender: number
+    age: number
+    highestEducation: number
+    arabicDialect: number
+    nationality: number
+    otherNationality: number
+    residence: number
+    otherResidence: number
+    languages: number
+    kindergartenLanguage: number
+    otherKindergartenLanguage: number
+    primaryLanguage: number
+    otherPrimaryLanguage: number
+    middleLanguage: number
+    otherMiddleLanguage: number
+    highSchoolLanguage: number
+    otherHighSchoolLanguage: number
+    universityLanguage: number
+    otherUniversityLanguage: number
+    readingHours: number
+    listeningHours: number
+    writingHours: number
+    speakingHours: number
+    attentionDisorder: number
+    readingDisorder: number
+    vision: number
+    handedness: number
     createdAt: number
     _all: number
   }
@@ -10945,37 +11025,117 @@ export namespace Prisma {
   export type DemographicSurveyMinAggregateInputType = {
     id?: true
     userId?: true
-    age?: true
-    gender?: true
-    educationLevel?: true
     nativeLanguage?: true
-    arabicProficiency?: true
-    yearsLearningArabic?: true
+    otherNativeLanguage?: true
+    languageAcquisition?: true
+    otherAcquisitionLanguage?: true
+    familyLanguage?: true
+    otherFamilyLanguage?: true
+    gender?: true
+    age?: true
+    highestEducation?: true
+    arabicDialect?: true
+    nationality?: true
+    otherNationality?: true
+    residence?: true
+    otherResidence?: true
+    languages?: true
+    kindergartenLanguage?: true
+    otherKindergartenLanguage?: true
+    primaryLanguage?: true
+    otherPrimaryLanguage?: true
+    middleLanguage?: true
+    otherMiddleLanguage?: true
+    highSchoolLanguage?: true
+    otherHighSchoolLanguage?: true
+    universityLanguage?: true
+    otherUniversityLanguage?: true
+    readingHours?: true
+    listeningHours?: true
+    writingHours?: true
+    speakingHours?: true
+    attentionDisorder?: true
+    readingDisorder?: true
+    vision?: true
+    handedness?: true
     createdAt?: true
   }
 
   export type DemographicSurveyMaxAggregateInputType = {
     id?: true
     userId?: true
-    age?: true
-    gender?: true
-    educationLevel?: true
     nativeLanguage?: true
-    arabicProficiency?: true
-    yearsLearningArabic?: true
+    otherNativeLanguage?: true
+    languageAcquisition?: true
+    otherAcquisitionLanguage?: true
+    familyLanguage?: true
+    otherFamilyLanguage?: true
+    gender?: true
+    age?: true
+    highestEducation?: true
+    arabicDialect?: true
+    nationality?: true
+    otherNationality?: true
+    residence?: true
+    otherResidence?: true
+    languages?: true
+    kindergartenLanguage?: true
+    otherKindergartenLanguage?: true
+    primaryLanguage?: true
+    otherPrimaryLanguage?: true
+    middleLanguage?: true
+    otherMiddleLanguage?: true
+    highSchoolLanguage?: true
+    otherHighSchoolLanguage?: true
+    universityLanguage?: true
+    otherUniversityLanguage?: true
+    readingHours?: true
+    listeningHours?: true
+    writingHours?: true
+    speakingHours?: true
+    attentionDisorder?: true
+    readingDisorder?: true
+    vision?: true
+    handedness?: true
     createdAt?: true
   }
 
   export type DemographicSurveyCountAggregateInputType = {
     id?: true
     userId?: true
-    age?: true
-    gender?: true
-    educationLevel?: true
     nativeLanguage?: true
-    otherLanguages?: true
-    arabicProficiency?: true
-    yearsLearningArabic?: true
+    otherNativeLanguage?: true
+    languageAcquisition?: true
+    otherAcquisitionLanguage?: true
+    familyLanguage?: true
+    otherFamilyLanguage?: true
+    gender?: true
+    age?: true
+    highestEducation?: true
+    arabicDialect?: true
+    nationality?: true
+    otherNationality?: true
+    residence?: true
+    otherResidence?: true
+    languages?: true
+    kindergartenLanguage?: true
+    otherKindergartenLanguage?: true
+    primaryLanguage?: true
+    otherPrimaryLanguage?: true
+    middleLanguage?: true
+    otherMiddleLanguage?: true
+    highSchoolLanguage?: true
+    otherHighSchoolLanguage?: true
+    universityLanguage?: true
+    otherUniversityLanguage?: true
+    readingHours?: true
+    listeningHours?: true
+    writingHours?: true
+    speakingHours?: true
+    attentionDisorder?: true
+    readingDisorder?: true
+    vision?: true
+    handedness?: true
     createdAt?: true
     _all?: true
   }
@@ -11055,13 +11215,39 @@ export namespace Prisma {
   export type DemographicSurveyGroupByOutputType = {
     id: string
     userId: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages: string[]
-    arabicProficiency: string | null
-    yearsLearningArabic: string | null
+    otherNativeLanguage: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage: string | null
+    familyLanguage: string
+    otherFamilyLanguage: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality: string | null
+    residence: string
+    otherResidence: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage: string | null
+    middleLanguage: string
+    otherMiddleLanguage: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage: string | null
+    universityLanguage: string
+    otherUniversityLanguage: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt: Date
     _count: DemographicSurveyCountAggregateOutputType | null
     _min: DemographicSurveyMinAggregateOutputType | null
@@ -11085,13 +11271,39 @@ export namespace Prisma {
   export type DemographicSurveySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    age?: boolean
-    gender?: boolean
-    educationLevel?: boolean
     nativeLanguage?: boolean
-    otherLanguages?: boolean
-    arabicProficiency?: boolean
-    yearsLearningArabic?: boolean
+    otherNativeLanguage?: boolean
+    languageAcquisition?: boolean
+    otherAcquisitionLanguage?: boolean
+    familyLanguage?: boolean
+    otherFamilyLanguage?: boolean
+    gender?: boolean
+    age?: boolean
+    highestEducation?: boolean
+    arabicDialect?: boolean
+    nationality?: boolean
+    otherNationality?: boolean
+    residence?: boolean
+    otherResidence?: boolean
+    languages?: boolean
+    kindergartenLanguage?: boolean
+    otherKindergartenLanguage?: boolean
+    primaryLanguage?: boolean
+    otherPrimaryLanguage?: boolean
+    middleLanguage?: boolean
+    otherMiddleLanguage?: boolean
+    highSchoolLanguage?: boolean
+    otherHighSchoolLanguage?: boolean
+    universityLanguage?: boolean
+    otherUniversityLanguage?: boolean
+    readingHours?: boolean
+    listeningHours?: boolean
+    writingHours?: boolean
+    speakingHours?: boolean
+    attentionDisorder?: boolean
+    readingDisorder?: boolean
+    vision?: boolean
+    handedness?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["demographicSurvey"]>
@@ -11099,13 +11311,39 @@ export namespace Prisma {
   export type DemographicSurveySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    age?: boolean
-    gender?: boolean
-    educationLevel?: boolean
     nativeLanguage?: boolean
-    otherLanguages?: boolean
-    arabicProficiency?: boolean
-    yearsLearningArabic?: boolean
+    otherNativeLanguage?: boolean
+    languageAcquisition?: boolean
+    otherAcquisitionLanguage?: boolean
+    familyLanguage?: boolean
+    otherFamilyLanguage?: boolean
+    gender?: boolean
+    age?: boolean
+    highestEducation?: boolean
+    arabicDialect?: boolean
+    nationality?: boolean
+    otherNationality?: boolean
+    residence?: boolean
+    otherResidence?: boolean
+    languages?: boolean
+    kindergartenLanguage?: boolean
+    otherKindergartenLanguage?: boolean
+    primaryLanguage?: boolean
+    otherPrimaryLanguage?: boolean
+    middleLanguage?: boolean
+    otherMiddleLanguage?: boolean
+    highSchoolLanguage?: boolean
+    otherHighSchoolLanguage?: boolean
+    universityLanguage?: boolean
+    otherUniversityLanguage?: boolean
+    readingHours?: boolean
+    listeningHours?: boolean
+    writingHours?: boolean
+    speakingHours?: boolean
+    attentionDisorder?: boolean
+    readingDisorder?: boolean
+    vision?: boolean
+    handedness?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["demographicSurvey"]>
@@ -11113,13 +11351,39 @@ export namespace Prisma {
   export type DemographicSurveySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    age?: boolean
-    gender?: boolean
-    educationLevel?: boolean
     nativeLanguage?: boolean
-    otherLanguages?: boolean
-    arabicProficiency?: boolean
-    yearsLearningArabic?: boolean
+    otherNativeLanguage?: boolean
+    languageAcquisition?: boolean
+    otherAcquisitionLanguage?: boolean
+    familyLanguage?: boolean
+    otherFamilyLanguage?: boolean
+    gender?: boolean
+    age?: boolean
+    highestEducation?: boolean
+    arabicDialect?: boolean
+    nationality?: boolean
+    otherNationality?: boolean
+    residence?: boolean
+    otherResidence?: boolean
+    languages?: boolean
+    kindergartenLanguage?: boolean
+    otherKindergartenLanguage?: boolean
+    primaryLanguage?: boolean
+    otherPrimaryLanguage?: boolean
+    middleLanguage?: boolean
+    otherMiddleLanguage?: boolean
+    highSchoolLanguage?: boolean
+    otherHighSchoolLanguage?: boolean
+    universityLanguage?: boolean
+    otherUniversityLanguage?: boolean
+    readingHours?: boolean
+    listeningHours?: boolean
+    writingHours?: boolean
+    speakingHours?: boolean
+    attentionDisorder?: boolean
+    readingDisorder?: boolean
+    vision?: boolean
+    handedness?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["demographicSurvey"]>
@@ -11127,17 +11391,43 @@ export namespace Prisma {
   export type DemographicSurveySelectScalar = {
     id?: boolean
     userId?: boolean
-    age?: boolean
-    gender?: boolean
-    educationLevel?: boolean
     nativeLanguage?: boolean
-    otherLanguages?: boolean
-    arabicProficiency?: boolean
-    yearsLearningArabic?: boolean
+    otherNativeLanguage?: boolean
+    languageAcquisition?: boolean
+    otherAcquisitionLanguage?: boolean
+    familyLanguage?: boolean
+    otherFamilyLanguage?: boolean
+    gender?: boolean
+    age?: boolean
+    highestEducation?: boolean
+    arabicDialect?: boolean
+    nationality?: boolean
+    otherNationality?: boolean
+    residence?: boolean
+    otherResidence?: boolean
+    languages?: boolean
+    kindergartenLanguage?: boolean
+    otherKindergartenLanguage?: boolean
+    primaryLanguage?: boolean
+    otherPrimaryLanguage?: boolean
+    middleLanguage?: boolean
+    otherMiddleLanguage?: boolean
+    highSchoolLanguage?: boolean
+    otherHighSchoolLanguage?: boolean
+    universityLanguage?: boolean
+    otherUniversityLanguage?: boolean
+    readingHours?: boolean
+    listeningHours?: boolean
+    writingHours?: boolean
+    speakingHours?: boolean
+    attentionDisorder?: boolean
+    readingDisorder?: boolean
+    vision?: boolean
+    handedness?: boolean
     createdAt?: boolean
   }
 
-  export type DemographicSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "age" | "gender" | "educationLevel" | "nativeLanguage" | "otherLanguages" | "arabicProficiency" | "yearsLearningArabic" | "createdAt", ExtArgs["result"]["demographicSurvey"]>
+  export type DemographicSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "nativeLanguage" | "otherNativeLanguage" | "languageAcquisition" | "otherAcquisitionLanguage" | "familyLanguage" | "otherFamilyLanguage" | "gender" | "age" | "highestEducation" | "arabicDialect" | "nationality" | "otherNationality" | "residence" | "otherResidence" | "languages" | "kindergartenLanguage" | "otherKindergartenLanguage" | "primaryLanguage" | "otherPrimaryLanguage" | "middleLanguage" | "otherMiddleLanguage" | "highSchoolLanguage" | "otherHighSchoolLanguage" | "universityLanguage" | "otherUniversityLanguage" | "readingHours" | "listeningHours" | "writingHours" | "speakingHours" | "attentionDisorder" | "readingDisorder" | "vision" | "handedness" | "createdAt", ExtArgs["result"]["demographicSurvey"]>
   export type DemographicSurveyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11156,13 +11446,39 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      age: string
-      gender: string
-      educationLevel: string
       nativeLanguage: string
-      otherLanguages: string[]
-      arabicProficiency: string | null
-      yearsLearningArabic: string | null
+      otherNativeLanguage: string | null
+      languageAcquisition: string
+      otherAcquisitionLanguage: string | null
+      familyLanguage: string
+      otherFamilyLanguage: string | null
+      gender: string
+      age: string
+      highestEducation: string
+      arabicDialect: string
+      nationality: string
+      otherNationality: string | null
+      residence: string
+      otherResidence: string | null
+      languages: string
+      kindergartenLanguage: string
+      otherKindergartenLanguage: string | null
+      primaryLanguage: string
+      otherPrimaryLanguage: string | null
+      middleLanguage: string
+      otherMiddleLanguage: string | null
+      highSchoolLanguage: string
+      otherHighSchoolLanguage: string | null
+      universityLanguage: string
+      otherUniversityLanguage: string | null
+      readingHours: string
+      listeningHours: string
+      writingHours: string
+      speakingHours: string
+      attentionDisorder: string
+      readingDisorder: string
+      vision: string
+      handedness: string
       createdAt: Date
     }, ExtArgs["result"]["demographicSurvey"]>
     composites: {}
@@ -11590,13 +11906,39 @@ export namespace Prisma {
   interface DemographicSurveyFieldRefs {
     readonly id: FieldRef<"DemographicSurvey", 'String'>
     readonly userId: FieldRef<"DemographicSurvey", 'String'>
-    readonly age: FieldRef<"DemographicSurvey", 'String'>
-    readonly gender: FieldRef<"DemographicSurvey", 'String'>
-    readonly educationLevel: FieldRef<"DemographicSurvey", 'String'>
     readonly nativeLanguage: FieldRef<"DemographicSurvey", 'String'>
-    readonly otherLanguages: FieldRef<"DemographicSurvey", 'String[]'>
-    readonly arabicProficiency: FieldRef<"DemographicSurvey", 'String'>
-    readonly yearsLearningArabic: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherNativeLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly languageAcquisition: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherAcquisitionLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly familyLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherFamilyLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly gender: FieldRef<"DemographicSurvey", 'String'>
+    readonly age: FieldRef<"DemographicSurvey", 'String'>
+    readonly highestEducation: FieldRef<"DemographicSurvey", 'String'>
+    readonly arabicDialect: FieldRef<"DemographicSurvey", 'String'>
+    readonly nationality: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherNationality: FieldRef<"DemographicSurvey", 'String'>
+    readonly residence: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherResidence: FieldRef<"DemographicSurvey", 'String'>
+    readonly languages: FieldRef<"DemographicSurvey", 'String'>
+    readonly kindergartenLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherKindergartenLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly primaryLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherPrimaryLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly middleLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherMiddleLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly highSchoolLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherHighSchoolLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly universityLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly otherUniversityLanguage: FieldRef<"DemographicSurvey", 'String'>
+    readonly readingHours: FieldRef<"DemographicSurvey", 'String'>
+    readonly listeningHours: FieldRef<"DemographicSurvey", 'String'>
+    readonly writingHours: FieldRef<"DemographicSurvey", 'String'>
+    readonly speakingHours: FieldRef<"DemographicSurvey", 'String'>
+    readonly attentionDisorder: FieldRef<"DemographicSurvey", 'String'>
+    readonly readingDisorder: FieldRef<"DemographicSurvey", 'String'>
+    readonly vision: FieldRef<"DemographicSurvey", 'String'>
+    readonly handedness: FieldRef<"DemographicSurvey", 'String'>
     readonly createdAt: FieldRef<"DemographicSurvey", 'DateTime'>
   }
     
@@ -13193,13 +13535,39 @@ export namespace Prisma {
   export const DemographicSurveyScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    age: 'age',
-    gender: 'gender',
-    educationLevel: 'educationLevel',
     nativeLanguage: 'nativeLanguage',
-    otherLanguages: 'otherLanguages',
-    arabicProficiency: 'arabicProficiency',
-    yearsLearningArabic: 'yearsLearningArabic',
+    otherNativeLanguage: 'otherNativeLanguage',
+    languageAcquisition: 'languageAcquisition',
+    otherAcquisitionLanguage: 'otherAcquisitionLanguage',
+    familyLanguage: 'familyLanguage',
+    otherFamilyLanguage: 'otherFamilyLanguage',
+    gender: 'gender',
+    age: 'age',
+    highestEducation: 'highestEducation',
+    arabicDialect: 'arabicDialect',
+    nationality: 'nationality',
+    otherNationality: 'otherNationality',
+    residence: 'residence',
+    otherResidence: 'otherResidence',
+    languages: 'languages',
+    kindergartenLanguage: 'kindergartenLanguage',
+    otherKindergartenLanguage: 'otherKindergartenLanguage',
+    primaryLanguage: 'primaryLanguage',
+    otherPrimaryLanguage: 'otherPrimaryLanguage',
+    middleLanguage: 'middleLanguage',
+    otherMiddleLanguage: 'otherMiddleLanguage',
+    highSchoolLanguage: 'highSchoolLanguage',
+    otherHighSchoolLanguage: 'otherHighSchoolLanguage',
+    universityLanguage: 'universityLanguage',
+    otherUniversityLanguage: 'otherUniversityLanguage',
+    readingHours: 'readingHours',
+    listeningHours: 'listeningHours',
+    writingHours: 'writingHours',
+    speakingHours: 'speakingHours',
+    attentionDisorder: 'attentionDisorder',
+    readingDisorder: 'readingDisorder',
+    vision: 'vision',
+    handedness: 'handedness',
     createdAt: 'createdAt'
   };
 
@@ -13915,13 +14283,39 @@ export namespace Prisma {
     NOT?: DemographicSurveyWhereInput | DemographicSurveyWhereInput[]
     id?: StringFilter<"DemographicSurvey"> | string
     userId?: StringFilter<"DemographicSurvey"> | string
-    age?: StringFilter<"DemographicSurvey"> | string
-    gender?: StringFilter<"DemographicSurvey"> | string
-    educationLevel?: StringFilter<"DemographicSurvey"> | string
     nativeLanguage?: StringFilter<"DemographicSurvey"> | string
-    otherLanguages?: StringNullableListFilter<"DemographicSurvey">
-    arabicProficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
-    yearsLearningArabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    otherNativeLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languageAcquisition?: StringFilter<"DemographicSurvey"> | string
+    otherAcquisitionLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    familyLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    gender?: StringFilter<"DemographicSurvey"> | string
+    age?: StringFilter<"DemographicSurvey"> | string
+    highestEducation?: StringFilter<"DemographicSurvey"> | string
+    arabicDialect?: StringFilter<"DemographicSurvey"> | string
+    nationality?: StringFilter<"DemographicSurvey"> | string
+    otherNationality?: StringNullableFilter<"DemographicSurvey"> | string | null
+    residence?: StringFilter<"DemographicSurvey"> | string
+    otherResidence?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languages?: StringFilter<"DemographicSurvey"> | string
+    kindergartenLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherKindergartenLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    primaryLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherPrimaryLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    middleLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherMiddleLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    highSchoolLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherHighSchoolLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    universityLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherUniversityLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    readingHours?: StringFilter<"DemographicSurvey"> | string
+    listeningHours?: StringFilter<"DemographicSurvey"> | string
+    writingHours?: StringFilter<"DemographicSurvey"> | string
+    speakingHours?: StringFilter<"DemographicSurvey"> | string
+    attentionDisorder?: StringFilter<"DemographicSurvey"> | string
+    readingDisorder?: StringFilter<"DemographicSurvey"> | string
+    vision?: StringFilter<"DemographicSurvey"> | string
+    handedness?: StringFilter<"DemographicSurvey"> | string
     createdAt?: DateTimeFilter<"DemographicSurvey"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -13929,13 +14323,39 @@ export namespace Prisma {
   export type DemographicSurveyOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    age?: SortOrder
-    gender?: SortOrder
-    educationLevel?: SortOrder
     nativeLanguage?: SortOrder
-    otherLanguages?: SortOrder
-    arabicProficiency?: SortOrderInput | SortOrder
-    yearsLearningArabic?: SortOrderInput | SortOrder
+    otherNativeLanguage?: SortOrderInput | SortOrder
+    languageAcquisition?: SortOrder
+    otherAcquisitionLanguage?: SortOrderInput | SortOrder
+    familyLanguage?: SortOrder
+    otherFamilyLanguage?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    age?: SortOrder
+    highestEducation?: SortOrder
+    arabicDialect?: SortOrder
+    nationality?: SortOrder
+    otherNationality?: SortOrderInput | SortOrder
+    residence?: SortOrder
+    otherResidence?: SortOrderInput | SortOrder
+    languages?: SortOrder
+    kindergartenLanguage?: SortOrder
+    otherKindergartenLanguage?: SortOrderInput | SortOrder
+    primaryLanguage?: SortOrder
+    otherPrimaryLanguage?: SortOrderInput | SortOrder
+    middleLanguage?: SortOrder
+    otherMiddleLanguage?: SortOrderInput | SortOrder
+    highSchoolLanguage?: SortOrder
+    otherHighSchoolLanguage?: SortOrderInput | SortOrder
+    universityLanguage?: SortOrder
+    otherUniversityLanguage?: SortOrderInput | SortOrder
+    readingHours?: SortOrder
+    listeningHours?: SortOrder
+    writingHours?: SortOrder
+    speakingHours?: SortOrder
+    attentionDisorder?: SortOrder
+    readingDisorder?: SortOrder
+    vision?: SortOrder
+    handedness?: SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -13946,13 +14366,39 @@ export namespace Prisma {
     AND?: DemographicSurveyWhereInput | DemographicSurveyWhereInput[]
     OR?: DemographicSurveyWhereInput[]
     NOT?: DemographicSurveyWhereInput | DemographicSurveyWhereInput[]
-    age?: StringFilter<"DemographicSurvey"> | string
-    gender?: StringFilter<"DemographicSurvey"> | string
-    educationLevel?: StringFilter<"DemographicSurvey"> | string
     nativeLanguage?: StringFilter<"DemographicSurvey"> | string
-    otherLanguages?: StringNullableListFilter<"DemographicSurvey">
-    arabicProficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
-    yearsLearningArabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    otherNativeLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languageAcquisition?: StringFilter<"DemographicSurvey"> | string
+    otherAcquisitionLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    familyLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    gender?: StringFilter<"DemographicSurvey"> | string
+    age?: StringFilter<"DemographicSurvey"> | string
+    highestEducation?: StringFilter<"DemographicSurvey"> | string
+    arabicDialect?: StringFilter<"DemographicSurvey"> | string
+    nationality?: StringFilter<"DemographicSurvey"> | string
+    otherNationality?: StringNullableFilter<"DemographicSurvey"> | string | null
+    residence?: StringFilter<"DemographicSurvey"> | string
+    otherResidence?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languages?: StringFilter<"DemographicSurvey"> | string
+    kindergartenLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherKindergartenLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    primaryLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherPrimaryLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    middleLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherMiddleLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    highSchoolLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherHighSchoolLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    universityLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherUniversityLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    readingHours?: StringFilter<"DemographicSurvey"> | string
+    listeningHours?: StringFilter<"DemographicSurvey"> | string
+    writingHours?: StringFilter<"DemographicSurvey"> | string
+    speakingHours?: StringFilter<"DemographicSurvey"> | string
+    attentionDisorder?: StringFilter<"DemographicSurvey"> | string
+    readingDisorder?: StringFilter<"DemographicSurvey"> | string
+    vision?: StringFilter<"DemographicSurvey"> | string
+    handedness?: StringFilter<"DemographicSurvey"> | string
     createdAt?: DateTimeFilter<"DemographicSurvey"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
@@ -13960,13 +14406,39 @@ export namespace Prisma {
   export type DemographicSurveyOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    age?: SortOrder
-    gender?: SortOrder
-    educationLevel?: SortOrder
     nativeLanguage?: SortOrder
-    otherLanguages?: SortOrder
-    arabicProficiency?: SortOrderInput | SortOrder
-    yearsLearningArabic?: SortOrderInput | SortOrder
+    otherNativeLanguage?: SortOrderInput | SortOrder
+    languageAcquisition?: SortOrder
+    otherAcquisitionLanguage?: SortOrderInput | SortOrder
+    familyLanguage?: SortOrder
+    otherFamilyLanguage?: SortOrderInput | SortOrder
+    gender?: SortOrder
+    age?: SortOrder
+    highestEducation?: SortOrder
+    arabicDialect?: SortOrder
+    nationality?: SortOrder
+    otherNationality?: SortOrderInput | SortOrder
+    residence?: SortOrder
+    otherResidence?: SortOrderInput | SortOrder
+    languages?: SortOrder
+    kindergartenLanguage?: SortOrder
+    otherKindergartenLanguage?: SortOrderInput | SortOrder
+    primaryLanguage?: SortOrder
+    otherPrimaryLanguage?: SortOrderInput | SortOrder
+    middleLanguage?: SortOrder
+    otherMiddleLanguage?: SortOrderInput | SortOrder
+    highSchoolLanguage?: SortOrder
+    otherHighSchoolLanguage?: SortOrderInput | SortOrder
+    universityLanguage?: SortOrder
+    otherUniversityLanguage?: SortOrderInput | SortOrder
+    readingHours?: SortOrder
+    listeningHours?: SortOrder
+    writingHours?: SortOrder
+    speakingHours?: SortOrder
+    attentionDisorder?: SortOrder
+    readingDisorder?: SortOrder
+    vision?: SortOrder
+    handedness?: SortOrder
     createdAt?: SortOrder
     _count?: DemographicSurveyCountOrderByAggregateInput
     _max?: DemographicSurveyMaxOrderByAggregateInput
@@ -13979,13 +14451,39 @@ export namespace Prisma {
     NOT?: DemographicSurveyScalarWhereWithAggregatesInput | DemographicSurveyScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     userId?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    age?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    gender?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    educationLevel?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     nativeLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    otherLanguages?: StringNullableListFilter<"DemographicSurvey">
-    arabicProficiency?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
-    yearsLearningArabic?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    otherNativeLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    languageAcquisition?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherAcquisitionLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    familyLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherFamilyLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    gender?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    age?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    highestEducation?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    arabicDialect?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    nationality?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherNationality?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    residence?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherResidence?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    languages?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    kindergartenLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherKindergartenLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    primaryLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherPrimaryLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    middleLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherMiddleLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    highSchoolLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherHighSchoolLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    universityLanguage?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    otherUniversityLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    readingHours?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    listeningHours?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    writingHours?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    speakingHours?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    attentionDisorder?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    readingDisorder?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    vision?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    handedness?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     createdAt?: DateTimeWithAggregatesFilter<"DemographicSurvey"> | Date | string
   }
 
@@ -14637,13 +15135,39 @@ export namespace Prisma {
 
   export type DemographicSurveyCreateInput = {
     id?: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutSurveyResponsesInput
   }
@@ -14651,25 +15175,77 @@ export namespace Prisma {
   export type DemographicSurveyUncheckedCreateInput = {
     id?: string
     userId: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
   }
 
   export type DemographicSurveyUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutSurveyResponsesNestedInput
   }
@@ -14677,51 +15253,155 @@ export namespace Prisma {
   export type DemographicSurveyUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DemographicSurveyCreateManyInput = {
     id?: string
     userId: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
   }
 
   export type DemographicSurveyUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DemographicSurveyUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -15445,48 +16125,120 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
   export type DemographicSurveyCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    age?: SortOrder
-    gender?: SortOrder
-    educationLevel?: SortOrder
     nativeLanguage?: SortOrder
-    otherLanguages?: SortOrder
-    arabicProficiency?: SortOrder
-    yearsLearningArabic?: SortOrder
+    otherNativeLanguage?: SortOrder
+    languageAcquisition?: SortOrder
+    otherAcquisitionLanguage?: SortOrder
+    familyLanguage?: SortOrder
+    otherFamilyLanguage?: SortOrder
+    gender?: SortOrder
+    age?: SortOrder
+    highestEducation?: SortOrder
+    arabicDialect?: SortOrder
+    nationality?: SortOrder
+    otherNationality?: SortOrder
+    residence?: SortOrder
+    otherResidence?: SortOrder
+    languages?: SortOrder
+    kindergartenLanguage?: SortOrder
+    otherKindergartenLanguage?: SortOrder
+    primaryLanguage?: SortOrder
+    otherPrimaryLanguage?: SortOrder
+    middleLanguage?: SortOrder
+    otherMiddleLanguage?: SortOrder
+    highSchoolLanguage?: SortOrder
+    otherHighSchoolLanguage?: SortOrder
+    universityLanguage?: SortOrder
+    otherUniversityLanguage?: SortOrder
+    readingHours?: SortOrder
+    listeningHours?: SortOrder
+    writingHours?: SortOrder
+    speakingHours?: SortOrder
+    attentionDisorder?: SortOrder
+    readingDisorder?: SortOrder
+    vision?: SortOrder
+    handedness?: SortOrder
     createdAt?: SortOrder
   }
 
   export type DemographicSurveyMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    age?: SortOrder
-    gender?: SortOrder
-    educationLevel?: SortOrder
     nativeLanguage?: SortOrder
-    arabicProficiency?: SortOrder
-    yearsLearningArabic?: SortOrder
+    otherNativeLanguage?: SortOrder
+    languageAcquisition?: SortOrder
+    otherAcquisitionLanguage?: SortOrder
+    familyLanguage?: SortOrder
+    otherFamilyLanguage?: SortOrder
+    gender?: SortOrder
+    age?: SortOrder
+    highestEducation?: SortOrder
+    arabicDialect?: SortOrder
+    nationality?: SortOrder
+    otherNationality?: SortOrder
+    residence?: SortOrder
+    otherResidence?: SortOrder
+    languages?: SortOrder
+    kindergartenLanguage?: SortOrder
+    otherKindergartenLanguage?: SortOrder
+    primaryLanguage?: SortOrder
+    otherPrimaryLanguage?: SortOrder
+    middleLanguage?: SortOrder
+    otherMiddleLanguage?: SortOrder
+    highSchoolLanguage?: SortOrder
+    otherHighSchoolLanguage?: SortOrder
+    universityLanguage?: SortOrder
+    otherUniversityLanguage?: SortOrder
+    readingHours?: SortOrder
+    listeningHours?: SortOrder
+    writingHours?: SortOrder
+    speakingHours?: SortOrder
+    attentionDisorder?: SortOrder
+    readingDisorder?: SortOrder
+    vision?: SortOrder
+    handedness?: SortOrder
     createdAt?: SortOrder
   }
 
   export type DemographicSurveyMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    age?: SortOrder
-    gender?: SortOrder
-    educationLevel?: SortOrder
     nativeLanguage?: SortOrder
-    arabicProficiency?: SortOrder
-    yearsLearningArabic?: SortOrder
+    otherNativeLanguage?: SortOrder
+    languageAcquisition?: SortOrder
+    otherAcquisitionLanguage?: SortOrder
+    familyLanguage?: SortOrder
+    otherFamilyLanguage?: SortOrder
+    gender?: SortOrder
+    age?: SortOrder
+    highestEducation?: SortOrder
+    arabicDialect?: SortOrder
+    nationality?: SortOrder
+    otherNationality?: SortOrder
+    residence?: SortOrder
+    otherResidence?: SortOrder
+    languages?: SortOrder
+    kindergartenLanguage?: SortOrder
+    otherKindergartenLanguage?: SortOrder
+    primaryLanguage?: SortOrder
+    otherPrimaryLanguage?: SortOrder
+    middleLanguage?: SortOrder
+    otherMiddleLanguage?: SortOrder
+    highSchoolLanguage?: SortOrder
+    otherHighSchoolLanguage?: SortOrder
+    universityLanguage?: SortOrder
+    otherUniversityLanguage?: SortOrder
+    readingHours?: SortOrder
+    listeningHours?: SortOrder
+    writingHours?: SortOrder
+    speakingHours?: SortOrder
+    attentionDisorder?: SortOrder
+    readingDisorder?: SortOrder
+    vision?: SortOrder
+    handedness?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -16034,19 +16786,10 @@ export namespace Prisma {
     update?: XOR<XOR<WordListUpdateToOneWithWhereWithoutQuizAttemptsInput, WordListUpdateWithoutQuizAttemptsInput>, WordListUncheckedUpdateWithoutQuizAttemptsInput>
   }
 
-  export type DemographicSurveyCreateotherLanguagesInput = {
-    set: string[]
-  }
-
   export type UserCreateNestedOneWithoutSurveyResponsesInput = {
     create?: XOR<UserCreateWithoutSurveyResponsesInput, UserUncheckedCreateWithoutSurveyResponsesInput>
     connectOrCreate?: UserCreateOrConnectWithoutSurveyResponsesInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type DemographicSurveyUpdateotherLanguagesInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutSurveyResponsesNestedInput = {
@@ -16422,25 +17165,77 @@ export namespace Prisma {
 
   export type DemographicSurveyCreateWithoutUserInput = {
     id?: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
   }
 
   export type DemographicSurveyUncheckedCreateWithoutUserInput = {
     id?: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
   }
 
@@ -16621,13 +17416,39 @@ export namespace Prisma {
     NOT?: DemographicSurveyScalarWhereInput | DemographicSurveyScalarWhereInput[]
     id?: StringFilter<"DemographicSurvey"> | string
     userId?: StringFilter<"DemographicSurvey"> | string
-    age?: StringFilter<"DemographicSurvey"> | string
-    gender?: StringFilter<"DemographicSurvey"> | string
-    educationLevel?: StringFilter<"DemographicSurvey"> | string
     nativeLanguage?: StringFilter<"DemographicSurvey"> | string
-    otherLanguages?: StringNullableListFilter<"DemographicSurvey">
-    arabicProficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
-    yearsLearningArabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    otherNativeLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languageAcquisition?: StringFilter<"DemographicSurvey"> | string
+    otherAcquisitionLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    familyLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    gender?: StringFilter<"DemographicSurvey"> | string
+    age?: StringFilter<"DemographicSurvey"> | string
+    highestEducation?: StringFilter<"DemographicSurvey"> | string
+    arabicDialect?: StringFilter<"DemographicSurvey"> | string
+    nationality?: StringFilter<"DemographicSurvey"> | string
+    otherNationality?: StringNullableFilter<"DemographicSurvey"> | string | null
+    residence?: StringFilter<"DemographicSurvey"> | string
+    otherResidence?: StringNullableFilter<"DemographicSurvey"> | string | null
+    languages?: StringFilter<"DemographicSurvey"> | string
+    kindergartenLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherKindergartenLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    primaryLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherPrimaryLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    middleLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherMiddleLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    highSchoolLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherHighSchoolLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    universityLanguage?: StringFilter<"DemographicSurvey"> | string
+    otherUniversityLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
+    readingHours?: StringFilter<"DemographicSurvey"> | string
+    listeningHours?: StringFilter<"DemographicSurvey"> | string
+    writingHours?: StringFilter<"DemographicSurvey"> | string
+    speakingHours?: StringFilter<"DemographicSurvey"> | string
+    attentionDisorder?: StringFilter<"DemographicSurvey"> | string
+    readingDisorder?: StringFilter<"DemographicSurvey"> | string
+    vision?: StringFilter<"DemographicSurvey"> | string
+    handedness?: StringFilter<"DemographicSurvey"> | string
     createdAt?: DateTimeFilter<"DemographicSurvey"> | Date | string
   }
 
@@ -17529,13 +18350,39 @@ export namespace Prisma {
 
   export type DemographicSurveyCreateManyUserInput = {
     id?: string
-    age: string
-    gender: string
-    educationLevel: string
     nativeLanguage: string
-    otherLanguages?: DemographicSurveyCreateotherLanguagesInput | string[]
-    arabicProficiency?: string | null
-    yearsLearningArabic?: string | null
+    otherNativeLanguage?: string | null
+    languageAcquisition: string
+    otherAcquisitionLanguage?: string | null
+    familyLanguage: string
+    otherFamilyLanguage?: string | null
+    gender: string
+    age: string
+    highestEducation: string
+    arabicDialect: string
+    nationality: string
+    otherNationality?: string | null
+    residence: string
+    otherResidence?: string | null
+    languages: string
+    kindergartenLanguage: string
+    otherKindergartenLanguage?: string | null
+    primaryLanguage: string
+    otherPrimaryLanguage?: string | null
+    middleLanguage: string
+    otherMiddleLanguage?: string | null
+    highSchoolLanguage: string
+    otherHighSchoolLanguage?: string | null
+    universityLanguage: string
+    otherUniversityLanguage?: string | null
+    readingHours: string
+    listeningHours: string
+    writingHours: string
+    speakingHours: string
+    attentionDisorder: string
+    readingDisorder: string
+    vision: string
+    handedness: string
     createdAt?: Date | string
   }
 
@@ -17673,37 +18520,115 @@ export namespace Prisma {
 
   export type DemographicSurveyUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DemographicSurveyUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DemographicSurveyUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    age?: StringFieldUpdateOperationsInput | string
-    gender?: StringFieldUpdateOperationsInput | string
-    educationLevel?: StringFieldUpdateOperationsInput | string
     nativeLanguage?: StringFieldUpdateOperationsInput | string
-    otherLanguages?: DemographicSurveyUpdateotherLanguagesInput | string[]
-    arabicProficiency?: NullableStringFieldUpdateOperationsInput | string | null
-    yearsLearningArabic?: NullableStringFieldUpdateOperationsInput | string | null
+    otherNativeLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    languageAcquisition?: StringFieldUpdateOperationsInput | string
+    otherAcquisitionLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    familyLanguage?: StringFieldUpdateOperationsInput | string
+    otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: StringFieldUpdateOperationsInput | string
+    age?: StringFieldUpdateOperationsInput | string
+    highestEducation?: StringFieldUpdateOperationsInput | string
+    arabicDialect?: StringFieldUpdateOperationsInput | string
+    nationality?: StringFieldUpdateOperationsInput | string
+    otherNationality?: NullableStringFieldUpdateOperationsInput | string | null
+    residence?: StringFieldUpdateOperationsInput | string
+    otherResidence?: NullableStringFieldUpdateOperationsInput | string | null
+    languages?: StringFieldUpdateOperationsInput | string
+    kindergartenLanguage?: StringFieldUpdateOperationsInput | string
+    otherKindergartenLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryLanguage?: StringFieldUpdateOperationsInput | string
+    otherPrimaryLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    middleLanguage?: StringFieldUpdateOperationsInput | string
+    otherMiddleLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    highSchoolLanguage?: StringFieldUpdateOperationsInput | string
+    otherHighSchoolLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    universityLanguage?: StringFieldUpdateOperationsInput | string
+    otherUniversityLanguage?: NullableStringFieldUpdateOperationsInput | string | null
+    readingHours?: StringFieldUpdateOperationsInput | string
+    listeningHours?: StringFieldUpdateOperationsInput | string
+    writingHours?: StringFieldUpdateOperationsInput | string
+    speakingHours?: StringFieldUpdateOperationsInput | string
+    attentionDisorder?: StringFieldUpdateOperationsInput | string
+    readingDisorder?: StringFieldUpdateOperationsInput | string
+    vision?: StringFieldUpdateOperationsInput | string
+    handedness?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
