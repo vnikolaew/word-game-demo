@@ -72,19 +72,30 @@ export async function GET(
         },
       });
 
-      data = quizzes.map((quiz) => ({
-        anonymousUserId: generateAnonymousId(quiz.user.id),
-        quizId: quiz.id,
-        wordListId: quiz.wordListId,
-        score: quiz.score,
-        correctWords: quiz.correctWords,
-        incorrectWords: quiz.incorrectWords,
-        correctNonWords: quiz.correctNonWords,
-        incorrectNonWords: quiz.incorrectNonWords,
-        completionTime: quiz.npxionTime,
-        totalWords: quiz.wordList.words.length,
-        date: quiz.createdAt,
-      }));
+      // Transform quiz data into detailed response-level data
+      data = quizzes.flatMap((quiz) => {
+        const responses = quiz.responses as any[];
+        return responses.map((response) => ({
+          "UTC Date and Time": quiz.createdAt.toISOString(),
+          "User Private ID": generateAnonymousId(quiz.user.id),
+          "User Device Type": quiz.deviceType,
+          "User OS": quiz.deviceOS,
+          "User Browser": quiz.deviceBrowser,
+          "User Monitor Size": quiz.monitorSize,
+          "User Viewport Size": quiz.viewportSize,
+          "Page number": response.pageNumber,
+          "Item shown in the page": response.word,
+          "Wordlist ID": quiz.wordListId,
+          "User Reaction Time in milliseconds": response.reactionTime,
+          "User Response": response.userResponse,
+          "Response type": response.responseType,
+          Correct: response.isCorrect ? 1 : 0,
+          Timeout: response.timeout ? 1 : 0,
+          Answer: response.isNonWord ? "nonword" : "word",
+          "Quiz score": quiz.score,
+          "Quiz status": quiz.quizStatus,
+        }));
+      });
     } else if (type === "survey") {
       const surveys = await prisma.demographicSurvey.findMany({
         include: {
