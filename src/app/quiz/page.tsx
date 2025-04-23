@@ -66,8 +66,7 @@ export default function AppPage() {
       getConsent().then((data) => {
          if (data) {
             setConsent(data);
-            // setAppState("quiz");
-            setAppState("consent");
+            setAppState("quiz");
          } else {
             setAppState("consent");
          }
