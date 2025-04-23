@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 
 // components
 import { Button } from "@/components/ui/button";
@@ -13,183 +13,229 @@ import Instructions from "./Instructions";
 
 // Practice items from provided word list
 const PRACTICE_ITEMS = [
-  { word: "الطبيعية", isWord: true },
-  { word: "انطلق", isWord: true },
-  { word: "ترجع", isWord: true },
-  { word: "تب", isWord: true },
-  { word: "الزولن", isWord: false },
-  { word: "مرتفع", isWord: true },
-  { word: "الزولن", isWord: false },
-  { word: "مانع", isWord: false },
-  { word: "مرتع", isWord: false },
-  { word: "مرتفع", isWord: true },
+   { word: "النقابية", isWord: true },
+   { word: "انطباق", isWord: true },
+   { word: "بدوي", isWord: true },
+   { word: "ترجيح", isWord: true },
+   { word: "ثاب", isWord: true },
+   { word: "لقطاقال", isWord: false },
+   { word: "أُفوقون", isWord: false },
+   { word: "بشرض", isWord: false },
+   { word: "ماتوح", isWord: false },
+   { word: "ضوء", isWord: false },
 ];
 
 interface PracticeViewProps {
-  onComplete: () => void;
+   onComplete: () => void;
 }
+
+export type AppState = `intro` | `instructions` | `completion` | `practice`;
+
 export function PracticeView({ onComplete }: PracticeViewProps) {
-  const isMobile = useMediaQuery("(max-width: 768px)");
+   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  // States
-  const [state, setState] = useState<string>("intro");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showFeedback, setShowFeedback] = useState(false);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [responses, setResponses] = useState<boolean[]>([]);
-  const [shuffledItems, setShuffledItems] = useState<typeof PRACTICE_ITEMS>([]);
-  const [showWord, setShowWord] = useState(true);
+   // States
+   const [state, setState] = useState<AppState>("intro");
+   const [currentIndex, setCurrentIndex] = useState(0);
+   const [showFeedback, setShowFeedback] = useState(false);
+   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+   const [responses, setResponses] = useState<boolean[]>([]);
 
-  // Constants for timing
-  const FEEDBACK_DURATION = 200; // 200ms for feedback
-  const STIMULUS_DURATION = 2000; // 2000ms (2 seconds) for word display
+   const [shuffledItems, setShuffledItems] = useState<typeof PRACTICE_ITEMS>(
+      []
+   );
 
-  // Shuffle items when component mounts
-  useEffect(() => {
-    const shuffled = [...PRACTICE_ITEMS]
-      .sort(() => Math.random() - 0.5)
-      .map((item, index) => ({ ...item, originalIndex: index }));
-    setShuffledItems(shuffled);
-  }, []);
+   useEffect(() => {
+      setShuffledItems(
+         [...PRACTICE_ITEMS]
+            .sort(() => Math.random() - 0.5)
+            .map((item, index) => ({ ...item, originalIndex: index }))
+      );
+   }, []);
 
-  const currentItem = shuffledItems[currentIndex] || PRACTICE_ITEMS[0];
-  const isComplete = currentIndex >= PRACTICE_ITEMS.length;
+   const [showWord, setShowWord] = useState(true);
 
-  const handleNextItem = useCallback(() => {
-    if (currentIndex + 1 >= PRACTICE_ITEMS.length) {
-      setState("completion");
-      return;
-    }
+   // Constants for timing
+   const FEEDBACK_DURATION = 200; // 200ms for feedback
+   const STIMULUS_DURATION = 2000; // 2000ms (2 seconds) for word display
 
-    setCurrentIndex(currentIndex + 1);
-    setShowFeedback(false);
-    setIsCorrect(null);
-    setShowWord(true);
-  }, [currentIndex]);
+   const currentItem = useMemo(
+      () => shuffledItems[currentIndex] || shuffledItems[0],
+      [currentIndex, shuffledItems]
+   );
+   const isComplete = useMemo(
+      () => currentIndex >= shuffledItems.length,
+      [currentIndex, shuffledItems]
+   );
 
-  const handleResponse = useCallback(
-    (response: boolean) => {
-      if (showFeedback || isComplete) return;
+   const correctCount = useMemo(
+      () => responses.filter((_) => _ === true).length,
+      [responses, shuffledItems]
+   );
+   const accuracy = useMemo(
+      () => (correctCount / shuffledItems.length) * 100,
+      [correctCount, shuffledItems]
+   );
 
-      const correct = response === currentItem.isWord;
-      setIsCorrect(correct);
-      setShowFeedback(true);
-      setShowWord(false);
-      setResponses([...responses, correct]);
-
-      // Automatically proceed to next item after feedback duration
-      setTimeout(() => {
-        handleNextItem();
-      }, FEEDBACK_DURATION);
-    },
-    [currentItem.isWord, isComplete, responses, showFeedback, handleNextItem]
-  );
-
-  // Auto-hide word after STIMULUS_DURATION
-  useEffect(() => {
-    if (!showWord || showFeedback) return;
-
-    const timer = setTimeout(() => {
-      handleResponse(false); // Default to "no" if no response
-    }, STIMULUS_DURATION);
-
-    return () => clearTimeout(timer);
-  }, [showWord, showFeedback, handleResponse]);
-
-  useEffect(() => {
-    if (isMobile) return; // Early return for mobile devices - no keyboard controls
-
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (showFeedback) return;
-
-      if (event.key === "ArrowRight") {
-        handleResponse(true);
-      } else if (event.key === "ArrowLeft") {
-        handleResponse(false);
+   const handleNextItem = useCallback(() => {
+      if (currentIndex + 1 > PRACTICE_ITEMS.length) {
+         setState("completion");
+         return;
       }
-    };
 
-    window.addEventListener("keydown", handleKeyPress);
-    return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [handleResponse, showFeedback, isMobile]);
+      setCurrentIndex(currentIndex + 1);
+      setShowFeedback(false);
+      setIsCorrect(null);
+      setShowWord(true);
+   }, [
+      currentIndex,
+      setState,
+      setCurrentIndex,
+      setShowFeedback,
+      setIsCorrect,
+      setShowWord,
+   ]);
 
-  if (state === "intro") {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">
-            مرحباً بك في جلسة التدريب
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 text-center">
-          <p className="text-lg">
-            ستبدأ أولاً بجلسة تدريبية للتعرف على كيفية الإجابة على الاختبار
-          </p>
-          <Button
-            onClick={() => setState("instructions")}
-            className="w-full md:w-auto"
-          >
-            التالي
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  }
+   const handleResponse = useCallback(
+      (response: boolean) => {
+         if (showFeedback || isComplete) return;
 
-  if (state === "instructions") {
-    return <Instructions isMobile={isMobile} setState={setState} />;
-  }
+         const correct = response === currentItem.isWord;
+         setIsCorrect(correct);
+         setShowFeedback(true);
+         setShowWord(false);
+         setResponses((r) => [...r, correct]);
 
-  if (isComplete) {
-    const correctCount = responses.filter(Boolean).length;
-    const accuracy = (correctCount / PRACTICE_ITEMS.length) * 100;
+         // Automatically proceed to next item after feedback duration
+         setTimeout(() => {
+            handleNextItem();
+         }, FEEDBACK_DURATION);
+      },
+      [currentItem, isComplete, responses, showFeedback, handleNextItem]
+   );
 
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-center">اكتمل التدريب!</CardTitle>
-        </CardHeader>
-        <CardContent className="text-center space-y-4">
-          <p className="text-lg">
-            لقد حصلت على {correctCount} من أصل {PRACTICE_ITEMS.length} صحيحة (
-            {accuracy.toFixed(1)}%)
-          </p>
-          <Button
-            onClick={() => setState("completion")}
-            className="w-full md:w-auto"
-          >
-            التالي
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  }
-  if (state === "completion") {
-    return (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">
-            لقد أكملت جلسة التدريب
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6 text-center">
-          <Button onClick={onComplete} className="w-full md:w-auto">
-            ابدأ الاختبار الرئيسي
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  }
+   // Auto-hide word after STIMULUS_DURATION
+   useEffect(() => {
+      if (!showWord || showFeedback || state !== `practice`) return;
 
-  return (
-    <QuizCard
-      progress={(currentIndex / PRACTICE_ITEMS.length) * 100}
-      showWord={showWord}
-      currentWord={currentItem.word}
-      showFeedback={showFeedback}
-      isCorrect={isCorrect ?? false}
-      isMobile={isMobile}
-      handleResponse={handleResponse}
-    />
-  );
+      const timer = setTimeout(() => {
+         handleResponse(false); // Default to "no" if no response
+      }, STIMULUS_DURATION);
+
+      return () => clearTimeout(timer);
+   }, [showWord, showFeedback, handleResponse, state]);
+
+   useEffect(() => {
+      if (isMobile) return; // Early return for mobile devices - no keyboard controls
+
+      const handleKeyPress = (event: KeyboardEvent) => {
+         if (showFeedback) return;
+
+         if (event.key === "ArrowRight") {
+            handleResponse(true);
+         } else if (event.key === "ArrowLeft") {
+            handleResponse(false);
+         }
+      };
+
+      window.addEventListener("keydown", handleKeyPress);
+      return () => window.removeEventListener("keydown", handleKeyPress);
+   }, [handleResponse, showFeedback, isMobile]);
+
+   if (state === "intro") {
+      return (
+         <Card className="w-full max-w-2xl mx-auto">
+            <CardHeader>
+               <CardTitle className="text-center text-2xl">
+                  مرحباً بك في جلسة التدريب
+               </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 text-center">
+               <p className="text-lg">
+                  ستبدأ أولاً بجلسة تدريبية للتعرف على كيفية الإجابة على
+                  الاختبار
+               </p>
+               <Button
+                  onClick={() => setState("instructions")}
+                  className="w-full md:w-auto"
+               >
+                  التالي
+               </Button>
+            </CardContent>
+         </Card>
+      );
+   }
+
+   if (state === "instructions") {
+      return <Instructions isMobile={isMobile} setState={setState} />;
+   }
+
+   if (state === "completion") {
+      return (
+         <Card className="w-full max-w-2xl mx-auto">
+            <CardHeader>
+               <CardTitle className="text-center text-2xl">
+                  لقد أكملت جلسة التدريب
+               </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 text-center">
+               <Button onClick={onComplete} className="w-full md:w-auto">
+                  ابدأ الاختبار الرئيسي
+               </Button>
+            </CardContent>
+         </Card>
+      );
+   }
+
+   if (isComplete) {
+      const score =
+         responses
+            .map<number>((r, index) => {
+               const item = shuffledItems[index];
+
+               if (r && item.isWord) return 1;
+               if (r && !item.isWord) return -1;
+               if (!r && item.isWord) return 0;
+               if (!r && !item.isWord) return 0;
+               return 0;
+            })
+            .reduce((a, b) => a + b, 0) *
+         ((100 / shuffledItems.length) * 2);
+
+      return (
+         <Card className="max-w-3/4 mx-auto">
+            <CardHeader>
+               <CardTitle className="text-center">اكتمل التدريب!</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-4 mt-8">
+               <p className="text-3xl">
+                  نقاطك هي <b>{score}</b>
+               </p>
+               <p className="text-lg">
+                  حصلت على <b>{correctCount}</b> من{" "}
+                  <b>{PRACTICE_ITEMS.length}</b> نقاط (
+                  <b>{accuracy.toFixed(1)}%</b>)
+               </p>
+               <Button
+                  onClick={() => setState("completion")}
+                  className="w-full md:w-auto !px-12 mt-4"
+               >
+                  ابدأ الاختبار الرئيسي
+               </Button>
+            </CardContent>
+         </Card>
+      );
+   }
+
+   return (
+      <QuizCard
+         progress={(currentIndex / PRACTICE_ITEMS.length) * 100}
+         showWord={showWord}
+         currentWord={currentItem.word}
+         showFeedback={showFeedback}
+         isCorrect={isCorrect ?? false}
+         isMobile={isMobile}
+         handleResponse={handleResponse}
+      />
+   );
 }

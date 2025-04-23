@@ -210,6 +210,7 @@ exports.Prisma.DemographicSurveyScalarFieldEnum = {
   otherFamilyLanguage: 'otherFamilyLanguage',
   gender: 'gender',
   age: 'age',
+  university: 'university',
   highestEducation: 'highestEducation',
   arabicDialect: 'arabicDialect',
   nationality: 'nationality',

@@ -17,115 +17,155 @@ import { SurveyView } from "@/components/view/SurveyView";
 
 // types
 import { UserConsent } from "@prisma/client";
+import QuizLimitView from "@/components/view/QuizLimitView";
 
-type AppState = "consent" | "practice" | "quiz" | "results" | "survey";
+type AppState =
+   | "consent"
+   | "practice"
+   | "quiz"
+   | "results"
+   | "survey"
+   | `limit`;
+
+export type QuizLimitInfo = {
+   message: string;
+   tryAgainIn: number;
+};
 
 export default function AppPage() {
-  const router = useRouter();
+   const router = useRouter();
 
-  // Global state
+   // Global state
 
-  const [consent, setConsent] = useState<UserConsent | null>(null);
-  const [appState, setAppState] = useState<AppState>("consent");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+   const [consent, setConsent] = useState<UserConsent | null>(null);
+   const [appState, setAppState] = useState<AppState>("quiz");
+   const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
 
-  // Get consent from database
-  const getConsent = async () => {
-    setLoading(true);
-    setError(null);
-    const response = await fetch("/api/consent");
-    const data = await response.json();
-    setLoading(false);
-    return data;
-  };
-
-  useEffect(() => {
-    getConsent().then((data) => {
-      if (data) {
-        setConsent(data);
-        setAppState("quiz");
-      } else {
-        setAppState("consent");
-      }
-    });
-  }, []);
-
-  // Handle consent submission
-  const handleConsent = async () => {
-    try {
+   // Get consent from database
+   const getConsent = async () => {
       setLoading(true);
       setError(null);
+      const response = await fetch("/api/consent");
+      const data = await response.json();
+      setLoading(false);
+      return data;
+   };
 
-      // Save consent to database or perform any other necessary actions
-      await fetch("/api/consent", {
-        method: "POST",
-        body: JSON.stringify({ consentVersion: "1.0" }),
+   const limitUserQuiz = async () => {
+      setLoading(true);
+      setError(null);
+      const response = await fetch("/api/quiz/limit");
+      const data = await response.json();
+      setLoading(false);
+      return data;
+   };
+
+   useEffect(() => {
+      getConsent().then((data) => {
+         if (data) {
+            setConsent(data);
+            // setAppState("quiz");
+            setAppState("consent");
+         } else {
+            setAppState("consent");
+         }
       });
 
-      // Move to practice state
-      setAppState("practice");
-    } catch (error) {
-      setError("حدث خطأ أثناء حفظ الموافقة");
-      console.error("Consent error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+      limitUserQuiz().then((data) => {
+         if (data) {
+            setQuizLimitInfo({
+               message: data.message,
+               tryAgainIn: data.tryAgainIn,
+            });
+            if (data.success === false) setAppState(`limit`);
+         }
+      });
+   }, []);
 
-  // Handle quiz completion
-  const handleQuizComplete = async () => {
-    if (consent) {
+   // Handle consent submission
+   const handleConsent = async () => {
+      try {
+         setLoading(true);
+         setError(null);
+
+         // Save consent to database or perform any other necessary actions
+         await fetch("/api/consent", {
+            method: "POST",
+            body: JSON.stringify({ consentVersion: "1.0" }),
+         });
+
+         // Move to practice state
+         setAppState("practice");
+      } catch (error) {
+         setError("حدث خطأ أثناء حفظ الموافقة");
+         console.error("Consent error:", error);
+      } finally {
+         setLoading(false);
+      }
+   };
+
+   // Handle quiz completion
+   const handleQuizComplete = async () => {
+      if (consent) {
+         setAppState("results");
+      } else {
+         setAppState("survey");
+      }
+   };
+
+   const handleResultsComplete = () => {
+      router.push("/");
+   };
+
+   const handleRetake = () => {
+      setAppState("quiz");
+   };
+
+   // Handle survey completion
+   const handleSurveyComplete = () => {
       setAppState("results");
-    } else {
-      setAppState("survey");
-    }
-  };
+   };
 
-  const handleResultsComplete = () => {
-    router.push("/");
-  };
-
-  const handleRetake = () => {
-    setAppState("quiz");
-  };
-
-  // Handle survey completion
-  const handleSurveyComplete = () => {
-    setAppState("results");
-  };
-
-  return (
-    <div className="mx-auto py-12">
-      {loading ? (
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <Spinner size="sm" />
-        </div>
-      ) : error ? (
-        <Card>
-          <CardContent className="text-center py-6">
-            <div className="text-red-600 mb-4">{error}</div>
-            <Button onClick={() => router.push("/")}>Return Home</Button>
-          </CardContent>
-        </Card>
-      ) : (
-        <>
-          {appState === "consent" && <ConsentView onConsent={handleConsent} />}
-          {appState === "practice" && (
-            <PracticeView onComplete={() => setAppState("quiz")} />
-          )}
-          {appState === "quiz" && <QuizView onComplete={handleQuizComplete} />}
-          {appState === "results" && (
-            <ResultsView
-              onNext={handleResultsComplete}
-              onRetake={handleRetake}
-            />
-          )}
-          {appState === "survey" && (
-            <SurveyView onComplete={handleSurveyComplete} />
-          )}
-        </>
-      )}
-    </div>
-  );
+   return (
+      <div className="mx-auto py-12">
+         {loading ? (
+            <div className="flex items-center justify-center min-h-[50vh]">
+               <Spinner size="sm" />
+            </div>
+         ) : error ? (
+            <Card>
+               <CardContent className="text-center py-6">
+                  <div className="text-red-600 mb-4">{error}</div>
+                  <Button onClick={() => router.push("/")}>Return Home</Button>
+               </CardContent>
+            </Card>
+         ) : (
+            <>
+               {appState === "consent" && (
+                  <ConsentView onConsent={handleConsent} />
+               )}
+               {appState === "practice" && (
+                  <PracticeView onComplete={() => setAppState("quiz")} />
+               )}
+               {appState === "quiz" && (
+                  <QuizView onComplete={handleQuizComplete} />
+               )}
+               {appState === "limit" && (
+                  <QuizLimitView limitInfo={quizLimitInfo} />
+               )}
+               {appState === "results" && (
+                  <ResultsView
+                     onNext={handleResultsComplete}
+                     onRetake={handleRetake}
+                  />
+               )}
+               {appState === "survey" && (
+                  <SurveyView onComplete={handleSurveyComplete} />
+               )}
+            </>
+         )}
+      </div>
+   );
 }

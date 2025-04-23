@@ -1973,7 +1973,7 @@ export namespace Prisma {
     id: string
     name: string | null
     email: string
-    password: string
+    password: string | null
     emailVerified: Date | null
     image: string | null
     createdAt: Date
@@ -2080,7 +2080,7 @@ export namespace Prisma {
       id: string
       name: string | null
       email: string
-      password: string
+      password: string | null
       emailVerified: Date | null
       image: string | null
       createdAt: Date
@@ -10914,6 +10914,7 @@ export namespace Prisma {
     otherFamilyLanguage: string | null
     gender: string | null
     age: string | null
+    university: string | null
     highestEducation: string | null
     arabicDialect: string | null
     nationality: string | null
@@ -10953,6 +10954,7 @@ export namespace Prisma {
     otherFamilyLanguage: string | null
     gender: string | null
     age: string | null
+    university: string | null
     highestEducation: string | null
     arabicDialect: string | null
     nationality: string | null
@@ -10992,6 +10994,7 @@ export namespace Prisma {
     otherFamilyLanguage: number
     gender: number
     age: number
+    university: number
     highestEducation: number
     arabicDialect: number
     nationality: number
@@ -11033,6 +11036,7 @@ export namespace Prisma {
     otherFamilyLanguage?: true
     gender?: true
     age?: true
+    university?: true
     highestEducation?: true
     arabicDialect?: true
     nationality?: true
@@ -11072,6 +11076,7 @@ export namespace Prisma {
     otherFamilyLanguage?: true
     gender?: true
     age?: true
+    university?: true
     highestEducation?: true
     arabicDialect?: true
     nationality?: true
@@ -11111,6 +11116,7 @@ export namespace Prisma {
     otherFamilyLanguage?: true
     gender?: true
     age?: true
+    university?: true
     highestEducation?: true
     arabicDialect?: true
     nationality?: true
@@ -11223,6 +11229,7 @@ export namespace Prisma {
     otherFamilyLanguage: string | null
     gender: string
     age: string
+    university: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -11279,6 +11286,7 @@ export namespace Prisma {
     otherFamilyLanguage?: boolean
     gender?: boolean
     age?: boolean
+    university?: boolean
     highestEducation?: boolean
     arabicDialect?: boolean
     nationality?: boolean
@@ -11319,6 +11327,7 @@ export namespace Prisma {
     otherFamilyLanguage?: boolean
     gender?: boolean
     age?: boolean
+    university?: boolean
     highestEducation?: boolean
     arabicDialect?: boolean
     nationality?: boolean
@@ -11359,6 +11368,7 @@ export namespace Prisma {
     otherFamilyLanguage?: boolean
     gender?: boolean
     age?: boolean
+    university?: boolean
     highestEducation?: boolean
     arabicDialect?: boolean
     nationality?: boolean
@@ -11399,6 +11409,7 @@ export namespace Prisma {
     otherFamilyLanguage?: boolean
     gender?: boolean
     age?: boolean
+    university?: boolean
     highestEducation?: boolean
     arabicDialect?: boolean
     nationality?: boolean
@@ -11427,7 +11438,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type DemographicSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "nativeLanguage" | "otherNativeLanguage" | "languageAcquisition" | "otherAcquisitionLanguage" | "familyLanguage" | "otherFamilyLanguage" | "gender" | "age" | "highestEducation" | "arabicDialect" | "nationality" | "otherNationality" | "residence" | "otherResidence" | "languages" | "kindergartenLanguage" | "otherKindergartenLanguage" | "primaryLanguage" | "otherPrimaryLanguage" | "middleLanguage" | "otherMiddleLanguage" | "highSchoolLanguage" | "otherHighSchoolLanguage" | "universityLanguage" | "otherUniversityLanguage" | "readingHours" | "listeningHours" | "writingHours" | "speakingHours" | "attentionDisorder" | "readingDisorder" | "vision" | "handedness" | "createdAt", ExtArgs["result"]["demographicSurvey"]>
+  export type DemographicSurveyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "nativeLanguage" | "otherNativeLanguage" | "languageAcquisition" | "otherAcquisitionLanguage" | "familyLanguage" | "otherFamilyLanguage" | "gender" | "age" | "university" | "highestEducation" | "arabicDialect" | "nationality" | "otherNationality" | "residence" | "otherResidence" | "languages" | "kindergartenLanguage" | "otherKindergartenLanguage" | "primaryLanguage" | "otherPrimaryLanguage" | "middleLanguage" | "otherMiddleLanguage" | "highSchoolLanguage" | "otherHighSchoolLanguage" | "universityLanguage" | "otherUniversityLanguage" | "readingHours" | "listeningHours" | "writingHours" | "speakingHours" | "attentionDisorder" | "readingDisorder" | "vision" | "handedness" | "createdAt", ExtArgs["result"]["demographicSurvey"]>
   export type DemographicSurveyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11454,6 +11465,7 @@ export namespace Prisma {
       otherFamilyLanguage: string | null
       gender: string
       age: string
+      university: string | null
       highestEducation: string
       arabicDialect: string
       nationality: string
@@ -11914,6 +11926,7 @@ export namespace Prisma {
     readonly otherFamilyLanguage: FieldRef<"DemographicSurvey", 'String'>
     readonly gender: FieldRef<"DemographicSurvey", 'String'>
     readonly age: FieldRef<"DemographicSurvey", 'String'>
+    readonly university: FieldRef<"DemographicSurvey", 'String'>
     readonly highestEducation: FieldRef<"DemographicSurvey", 'String'>
     readonly arabicDialect: FieldRef<"DemographicSurvey", 'String'>
     readonly nationality: FieldRef<"DemographicSurvey", 'String'>
@@ -13543,6 +13556,7 @@ export namespace Prisma {
     otherFamilyLanguage: 'otherFamilyLanguage',
     gender: 'gender',
     age: 'age',
+    university: 'university',
     highestEducation: 'highestEducation',
     arabicDialect: 'arabicDialect',
     nationality: 'nationality',
@@ -13717,7 +13731,7 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -13735,7 +13749,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -13756,7 +13770,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
-    password?: StringFilter<"User"> | string
+    password?: StringNullableFilter<"User"> | string | null
     emailVerified?: DateTimeNullableFilter<"User"> | Date | string | null
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -13774,7 +13788,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrderInput | SortOrder
     email?: SortOrder
-    password?: SortOrder
+    password?: SortOrderInput | SortOrder
     emailVerified?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -13792,7 +13806,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
-    password?: StringWithAggregatesFilter<"User"> | string
+    password?: StringNullableWithAggregatesFilter<"User"> | string | null
     emailVerified?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -14291,6 +14305,7 @@ export namespace Prisma {
     otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
+    university?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
     nationality?: StringFilter<"DemographicSurvey"> | string
@@ -14331,6 +14346,7 @@ export namespace Prisma {
     otherFamilyLanguage?: SortOrderInput | SortOrder
     gender?: SortOrder
     age?: SortOrder
+    university?: SortOrderInput | SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
     nationality?: SortOrder
@@ -14374,6 +14390,7 @@ export namespace Prisma {
     otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
+    university?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
     nationality?: StringFilter<"DemographicSurvey"> | string
@@ -14414,6 +14431,7 @@ export namespace Prisma {
     otherFamilyLanguage?: SortOrderInput | SortOrder
     gender?: SortOrder
     age?: SortOrder
+    university?: SortOrderInput | SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
     nationality?: SortOrder
@@ -14459,6 +14477,7 @@ export namespace Prisma {
     otherFamilyLanguage?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
     gender?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     age?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    university?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     arabicDialect?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     nationality?: StringWithAggregatesFilter<"DemographicSurvey"> | string
@@ -14546,7 +14565,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -14564,7 +14583,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -14582,7 +14601,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14600,7 +14619,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14618,7 +14637,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -14630,7 +14649,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14642,7 +14661,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15143,6 +15162,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -15183,6 +15203,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -15221,6 +15242,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -15261,6 +15283,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -15300,6 +15323,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -15338,6 +15362,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -15377,6 +15402,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -16136,6 +16162,7 @@ export namespace Prisma {
     otherFamilyLanguage?: SortOrder
     gender?: SortOrder
     age?: SortOrder
+    university?: SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
     nationality?: SortOrder
@@ -16175,6 +16202,7 @@ export namespace Prisma {
     otherFamilyLanguage?: SortOrder
     gender?: SortOrder
     age?: SortOrder
+    university?: SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
     nationality?: SortOrder
@@ -16214,6 +16242,7 @@ export namespace Prisma {
     otherFamilyLanguage?: SortOrder
     gender?: SortOrder
     age?: SortOrder
+    university?: SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
     nationality?: SortOrder
@@ -17173,6 +17202,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -17211,6 +17241,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -17424,6 +17455,7 @@ export namespace Prisma {
     otherFamilyLanguage?: StringNullableFilter<"DemographicSurvey"> | string | null
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
+    university?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
     nationality?: StringFilter<"DemographicSurvey"> | string
@@ -17509,7 +17541,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17526,7 +17558,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17559,7 +17591,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17576,7 +17608,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17593,7 +17625,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17610,7 +17642,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17643,7 +17675,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17660,7 +17692,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17898,7 +17930,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17915,7 +17947,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -17976,7 +18008,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17993,7 +18025,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18010,7 +18042,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18027,7 +18059,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18082,7 +18114,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18099,7 +18131,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18144,7 +18176,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18161,7 +18193,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18194,7 +18226,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18211,7 +18243,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18228,7 +18260,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18245,7 +18277,7 @@ export namespace Prisma {
     id?: string
     name?: string | null
     email: string
-    password: string
+    password?: string | null
     emailVerified?: Date | string | null
     image?: string | null
     createdAt?: Date | string
@@ -18278,7 +18310,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18295,7 +18327,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18358,6 +18390,7 @@ export namespace Prisma {
     otherFamilyLanguage?: string | null
     gender: string
     age: string
+    university?: string | null
     highestEducation: string
     arabicDialect: string
     nationality: string
@@ -18528,6 +18561,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -18566,6 +18600,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
@@ -18604,6 +18639,7 @@ export namespace Prisma {
     otherFamilyLanguage?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
+    university?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
     nationality?: StringFieldUpdateOperationsInput | string
