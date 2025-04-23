@@ -19,7 +19,7 @@ function QuizLimitView({
 
       if (message.includes(`{minutes}`))
          return message.replaceAll(`{minutes}`, tryAgainIn.toString());
-   }, []);
+   }, [message, tryAgainIn]);
 
    return (
       <Card className="w-full max-w-2xl mx-auto">

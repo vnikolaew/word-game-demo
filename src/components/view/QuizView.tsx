@@ -199,7 +199,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             setIsSubmitting(false);
          }
       },
-      [currentList, onComplete, getDeviceInfo, quizStatus]
+      [currentList, onComplete, getDeviceInfo]
    );
 
    const handleResponse = useCallback(
@@ -281,12 +281,13 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       },
       [
          currentList,
-         currentWordIndex,
          shuffledWords,
-         responses,
-         submitQuizAttempt,
-         startNewTrial,
+         currentWordIndex,
+         state,
          cleanupTimeouts,
+         responses,
+         startNewTrial,
+         submitQuizAttempt,
       ]
    );
 
@@ -305,7 +306,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          console.log("Quiz started at:", quizStartTime.current);
          startNewTrial();
       }
-   }, [currentList, state]);
+   }, [currentList, startNewTrial, state]);
 
    useEffect(() => {
       loadWordList();
@@ -343,7 +344,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       return (
          <div className="flex flex-col items-center justify-center min-h-screen">
             <p className="text-red-500 mb-4">{error || wordListError}</p>
-            <Button onClick={loadWordList}>Try Again</Button>
+            <Button onClick={loadWordList}>حاول ثانية</Button>
          </div>
       );
    }
@@ -360,8 +361,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             <Spinner size="sm" />
             <p className="text-sm text-gray-500">
                {isSubmitting
-                  ? "Saving quiz results..."
-                  : "please wait while we load the quiz..."}
+                  ? "حفظ نتائج الاختبار ..."
+                  : "يرجى الانتظار بينما نقوم بتحميل الاختبار ..."}
             </p>
          </div>
       );

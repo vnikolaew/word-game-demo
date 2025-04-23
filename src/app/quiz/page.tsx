@@ -137,7 +137,9 @@ export default function AppPage() {
             <Card>
                <CardContent className="text-center py-6">
                   <div className="text-red-600 mb-4">{error}</div>
-                  <Button onClick={() => router.push("/")}>Return Home</Button>
+                  <Button onClick={() => router.push("/")}>
+                     العودة إلى المنزل
+                  </Button>
                </CardContent>
             </Card>
          ) : (

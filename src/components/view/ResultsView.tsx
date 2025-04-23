@@ -132,7 +132,7 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
          <div className="flex flex-col gap-2 items-center justify-center min-h-[50vh]">
             <Spinner size="sm" />
             <p className="text-sm text-gray-500">
-               please wait while we load the results...
+               يرجى الانتظار بينما نقوم بتحميل النتائج ...
             </p>
          </div>
       );

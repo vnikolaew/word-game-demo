@@ -47,7 +47,7 @@ interface CustomDropdownProps {
    onChange: (value: string) => void;
    placeholder: string;
    error?: string;
-   className?:string
+   className?: string;
 }
 
 export const CustomDropdown = ({
@@ -56,7 +56,7 @@ export const CustomDropdown = ({
    onChange,
    placeholder,
    error,
-   className
+   className,
 }: CustomDropdownProps) => {
    const [isOpen, setIsOpen] = useState(false);
    const dropdownRef = useRef<HTMLDivElement>(null);
@@ -81,9 +81,12 @@ export const CustomDropdown = ({
    return (
       <div className="relative" ref={dropdownRef}>
          <div
-            className={cn(`w-full p-3 border rounded-lg bg-white cursor-pointer flex items-center justify-between ${
-               error ? "border-red-500" : "border-gray-300"
-            } hover:border-gray-400 transition-colors`,  className)}
+            className={cn(
+               `w-full p-3 border rounded-lg bg-white cursor-pointer flex items-center justify-between ${
+                  error ? "border-red-500" : "border-gray-300"
+               } hover:border-gray-400 transition-colors`,
+               className
+            )}
             onClick={() => setIsOpen(!isOpen)}
          >
             <span
@@ -136,11 +139,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
    const [loading, setLoading] = useState(false);
    const [errors, setErrors] = useState<FormErrors>({});
    const [formData, setFormData] = useState<SurveyData>({
-      childLanguages: ``,
-      motherLanguage: ``,
       currentUniversity: ``,
-      otherChildLanguages: ``,
-      otherMotherLanguage: ``,
       nativeLanguage: "",
       otherNativeLanguage: "",
       languageAcquisition: "",
@@ -179,11 +178,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
    const validateForm = () => {
       const newErrors: FormErrors = {};
       const requiredFields: (keyof SurveyData)[] = [
-         `childLanguages`,
-         `motherLanguage`,
          `currentUniversity`,
-         `otherChildLanguages`,
-         `otherMotherLanguage`,
          "nativeLanguage",
          "languageAcquisition",
          "familyLanguage",

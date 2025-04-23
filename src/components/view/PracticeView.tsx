@@ -70,7 +70,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
 
    const correctCount = useMemo(
       () => responses.filter((_) => _ === true).length,
-      [responses, shuffledItems]
+      [responses]
    );
    const accuracy = useMemo(
       () => (correctCount / shuffledItems.length) * 100,
@@ -111,7 +111,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
             handleNextItem();
          }, FEEDBACK_DURATION);
       },
-      [currentItem, isComplete, responses, showFeedback, handleNextItem]
+      [currentItem, isComplete, showFeedback, handleNextItem]
    );
 
    // Auto-hide word after STIMULUS_DURATION
