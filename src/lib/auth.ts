@@ -43,8 +43,8 @@ export const authOptions: NextAuthOptions = {
    },
    providers: [
       Google({
-         clientId: `64687835677-cp7jete2qrfcd6elr8vc5mq6l6sffbio.apps.googleusercontent.com`,
-         clientSecret: `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`,
+         clientId: process.env.GOOGLE_AUTH_CLIENT_ID!,
+         clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET!,
          authorization: {
             params: {
                scope: `openid email profile`,
