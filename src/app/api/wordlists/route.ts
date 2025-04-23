@@ -6,6 +6,8 @@ import { authOptions } from "@/lib/auth";
 
 const MAX_ATTEMPTS = 200;
 
+export const dynamic = "force-dynamic";
+
 // Get a word list for the current user
 export async function GET() {
    try {

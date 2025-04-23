@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { generateAnonymousId } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 // Function to convert array to CSV
 function arrayToCSV(data: any[]) {
    if (data.length === 0) return "";
