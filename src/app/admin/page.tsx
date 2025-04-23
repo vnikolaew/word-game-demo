@@ -122,7 +122,7 @@ export default function AdminDashboard() {
    );
 }
 
-export function StatCard({
+function StatCard({
    title,
    value,
    icon: Icon,
