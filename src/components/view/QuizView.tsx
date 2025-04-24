@@ -306,7 +306,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          console.log("Quiz started at:", quizStartTime.current);
          startNewTrial();
       }
-   }, [currentList, startNewTrial, state]);
+   }, [currentList, state]);
 
    useEffect(() => {
       loadWordList();

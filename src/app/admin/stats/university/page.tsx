@@ -18,7 +18,7 @@ import {
    Percent,
    Table,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 interface Data {
    totalUsers: number;
@@ -115,10 +115,48 @@ function StatCard({
       </Card>
    );
 }
+
+const OPTIONS = [
+   {
+      value: "king_saud_university",
+      label: "جامعة الملك سعود",
+   },
+   {
+      value: "princess_nora_university",
+      label: "جامعة الأميرة نورة بنت عبدالرحمن",
+   },
+   {
+      value: "imam_mohammad_university",
+      label: "جامعة الإمام محمد بن سعود الإسلامية",
+   },
+   {
+      value: "majmaah_university",
+      label: "جامعة المجمعة",
+   },
+   {
+      value: "qassim_university",
+      label: "جامعة القصيم",
+   },
+   {
+      value: "other",
+      label: "أخرى، الرجاء التحديد",
+   },
+   {
+      value: "not_applicable",
+      label: "لاينطبق",
+   },
+] as const;
+
 function Page() {
    const [data, setData] = useState<Data>(null!);
    const [error, setError] = useState(``);
    const [type, setType] = useState(``);
+
+   const uniLabel = useMemo(() => {
+      const label = OPTIONS.find((o) => o.value === type)?.label;
+      return label ? `${label}  اللهجة` : `جميع الجامعات`;
+   }, [type]);
+
    const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
@@ -156,36 +194,7 @@ function Page() {
                <CustomDropdown
                   className="!p-2"
                   placeholder="يرجى اختيار إجابة"
-                  options={[
-                     {
-                        value: "king_saud_university",
-                        label: "جامعة الملك سعود",
-                     },
-                     {
-                        value: "princess_nora_university",
-                        label: "جامعة الأميرة نورة بنت عبدالرحمن",
-                     },
-                     {
-                        value: "imam_mohammad_university",
-                        label: "جامعة الإمام محمد بن سعود الإسلامية",
-                     },
-                     {
-                        value: "majmaah_university",
-                        label: "جامعة المجمعة",
-                     },
-                     {
-                        value: "qassim_university",
-                        label: "جامعة القصيم",
-                     },
-                     {
-                        value: "other",
-                        label: "أخرى، الرجاء التحديد",
-                     },
-                     {
-                        value: "not_applicable",
-                        label: "لاينطبق",
-                     },
-                  ]}
+                  options={OPTIONS}
                   value={type}
                   onChange={(type) => setType(type)}
                />
@@ -194,32 +203,32 @@ function Page() {
 
          <div className="grid gap-4 md:grid-cols-2">
             <StatCard
-               title="إجمالي عدد المستخدمين لكل لهجة"
+               title={`إجمالي عدد المستخدمين لـ ${uniLabel}`}
                value={data.totalUsers}
                icon={Users}
                description=""
             />
             <StatCard
-               title="إجمالي عدد الاختبارات التي تم إجراؤها لكل لهجة"
+               title={`إجمالي عدد الاختبارات التي تم إجراؤها لـ ${uniLabel}`}
                value={data.totalQuizzes}
                icon={FileQuestion}
                description=""
             />
             <StatCard
-               title="إجمالي عدد الاختبارات المكتملة لكل لهجة"
+               title={`إجمالي عدد المواضيع المكتملة لـ ${uniLabel}`}
                value={data.totalCompletedQuizzes}
                icon={CheckCircle}
                description=""
             />
 
             <StatCard
-               title="إجمالي عدد الاختبارات المكتملة بدرجات 90% أو أعلى لكل لهجة"
+               title={`العدد الإجمالي للفرق المكتملة التي حصلت على درجات 90% أو أعلى لـ ${uniLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""
             />
             <StatCard
-               title="نسبة الاختبارات التي أكملها مستخدمو هذه اللهجة مقارنة بجميع الاختبارات التي تم إكمالها عبر جميع اللهجات"
+               title={`تم إكماله بالكامل من قبل مستخدمي هذه اللهجة مقارنة بجميع المستطلعة آراؤهم لـ ${uniLabel}`}
                value={`${data.totalQuizzesPercentage?.toFixed(2)}%`}
                icon={Percent}
                description=""

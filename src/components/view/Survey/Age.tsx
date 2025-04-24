@@ -11,7 +11,7 @@ interface Props {
 }
 function Age({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-1/2">
          <Label htmlFor="age">كم عمرك؟ يرجى كتابة عمرك كرقم:</Label>
          <Input
             id="age"

@@ -1,7 +1,11 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
-import { CustomDropdown, FormErrors } from "../SurveyView";
+import {
+   CustomDropdown,
+   DROPDOWN_PLACEHOLDER,
+   FormErrors,
+} from "../SurveyView";
 import { SurveyData } from "@/types";
 
 interface Props {
@@ -12,7 +16,7 @@ interface Props {
 
 function MiddleLanguage({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>في مرحلة الابتدائية، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
             options={[
@@ -33,12 +37,12 @@ function MiddleLanguage({ errors, formData, setFormData }: Props) {
                   middleLanguage: value,
                }))
             }
-            placeholder="---"
+            placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.middleLanguage}
          />
          {(formData.middleLanguage === `other` ||
             formData.middleLanguage?.includes(`two_languages`)) && (
-            <Fragment>
+            <div className="!mt-4">
                <Label>يرجى تحديد اللغة:</Label>
                <Input
                   value={formData.otherMiddleLanguage}
@@ -50,7 +54,7 @@ function MiddleLanguage({ errors, formData, setFormData }: Props) {
                   }
                   placeholder=""
                />
-            </Fragment>
+            </div>
          )}
       </div>
    );

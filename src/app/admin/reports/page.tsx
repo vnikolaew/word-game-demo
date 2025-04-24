@@ -61,11 +61,11 @@ export default function ReportsPage() {
                      تصدير جميع محاولات الاختبار مع معرفات المستخدمين المجهولة
                   </CardDescription>
                </CardHeader>
-               <CardContent>
+               <CardContent className="!mt-auto">
                   <Button
                      onClick={() => handleExport("quiz")}
                      disabled={quizLoading}
-                     className="w-full"
+                     className="w-full !cursor-pointer"
                   >
                      <FileDown className="h-4 w-4 ml-2" />
                      تصدير بيانات الاختبارات
@@ -81,11 +81,11 @@ export default function ReportsPage() {
                      المستخدمين المجهولة
                   </CardDescription>
                </CardHeader>
-               <CardContent>
+               <CardContent className="!mt-auto">
                   <Button
                      onClick={() => handleExport("survey")}
                      disabled={surveyLoading}
-                     className="w-full"
+                     className="w-full cursor-pointer"
                   >
                      <FileDown className="h-4 w-4 ml-2" />
                      تصدير بيانات الاستطلاع

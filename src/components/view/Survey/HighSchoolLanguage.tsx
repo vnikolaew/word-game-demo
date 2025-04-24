@@ -2,7 +2,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SurveyData } from "@/types";
 import React, { Dispatch, Fragment, SetStateAction } from "react";
-import { FormErrors, CustomDropdown } from "../SurveyView";
+import {
+   FormErrors,
+   CustomDropdown,
+   DROPDOWN_PLACEHOLDER,
+} from "../SurveyView";
 
 interface Props {
    formData: SurveyData;
@@ -12,7 +16,7 @@ interface Props {
 
 function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>في مرحلة الثانوية، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
             options={[
@@ -33,12 +37,12 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
                   highSchoolLanguage: value,
                }))
             }
-            placeholder="---"
+            placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.highSchoolLanguage}
          />
          {(formData.highSchoolLanguage === `other` ||
             formData.highSchoolLanguage?.includes(`two_languages`)) && (
-            <Fragment>
+            <div className="!mt-4">
                <Label>يرجى تحديد اللغة:</Label>
                <Input
                   value={formData.otherHighSchoolLanguage}
@@ -50,7 +54,7 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
                   }
                   placeholder=""
                />
-            </Fragment>
+            </div>
          )}
       </div>
    );

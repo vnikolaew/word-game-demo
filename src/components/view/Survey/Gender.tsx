@@ -1,8 +1,8 @@
 import { SurveyData } from "@/types";
 import { Label } from "@radix-ui/react-label";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import React, { Dispatch, SetStateAction } from "react";
 import { FormErrors } from "../SurveyView";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface Props {
    formData: SurveyData;
@@ -16,6 +16,8 @@ function Gender({ errors, formData, setFormData }: Props) {
          <Label>يرجى تحديد جنسك:</Label>
          <RadioGroup
             value={formData.gender}
+            dir="rtl"
+            className="!my-4"
             onValueChange={(value: string) =>
                setFormData({ ...formData, gender: value })
             }

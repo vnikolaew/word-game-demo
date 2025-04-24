@@ -20,6 +20,7 @@ export async function GET() {
          select: {
             id: true,
             name: true,
+            consent: { select: { id: true, createdAt: true } },
             email: true,
             surveyResponses: {
                select: {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
    Users,
    CheckCircle,
@@ -116,10 +116,25 @@ interface Data {
    totalHighScoreCompletedQuizzes: number;
 }
 
+const OPTONS = [
+   { value: "gulf", label: "خليجية" },
+   { value: "egyptian", label: "مصرية" },
+   { value: "levantine", label: "شامية" },
+   { value: "yemeni", label: "يمنية" },
+   { value: "iraqi", label: "عراقية" },
+   { value: "maghrebi", label: "مغربية" },
+] as const;
+
 function Page() {
    const [data, setData] = useState<Data>(null!);
    const [error, setError] = useState(``);
    const [type, setType] = useState(``);
+
+   const dialectLabel = useMemo(() => {
+      const label = OPTONS.find((o) => o.value === type)?.label;
+      return label ? `${label} اللهجة` : `جميع اللهجات`;
+   }, [type]);
+
    const [isLoading, setIsLoading] = useState(true);
 
    useEffect(() => {
@@ -153,14 +168,7 @@ function Page() {
             <div className="!w-[400px]">
                <CustomDropdown
                   className="!p-2"
-                  options={[
-                     { value: "gulf", label: "خليجية" },
-                     { value: "egyptian", label: "مصرية" },
-                     { value: "levantine", label: "شامية" },
-                     { value: "yemeni", label: "يمنية" },
-                     { value: "iraqi", label: "عراقية" },
-                     { value: "maghrebi", label: "مغربية" },
-                  ]}
+                  options={OPTONS}
                   placeholder="يرجى اختيار إجابة"
                   value={type}
                   onChange={(type) => setType(type)}
@@ -170,32 +178,32 @@ function Page() {
 
          <div className="grid gap-4 md:grid-cols-2">
             <StatCard
-               title="إجمالي عدد المستخدمين لكل لهجة"
+               title={`إجمالي عدد المستخدمين لـ ${dialectLabel}`}
                value={data.totalUsers}
                icon={Users}
                description=""
             />
             <StatCard
-               title="إجمالي عدد الاختبارات التي تم إجراؤها لكل لهجة"
+               title={`إجمالي عدد الاختبارات التي تم إجراؤها لـ ${dialectLabel}`}
                value={data.totalQuizzes}
                icon={FileQuestion}
                description=""
             />
             <StatCard
-               title="إجمالي عدد الاختبارات المكتملة لكل لهجة"
+               title={`إجمالي عدد الاختبارات المكتملة لـ ${dialectLabel}`}
                value={data.totalCompletedQuizzes}
                icon={CheckCircle}
                description=""
             />
 
             <StatCard
-               title="إجمالي عدد الاختبارات المكتملة بدرجات 90% أو أعلى لكل لهجة"
+               title={`إجمالي عدد الاختبارات المكتملة بدرجات 90% أو أعلى لـ ${dialectLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""
             />
             <StatCard
-               title="نسبة الاختبارات التي أكملها مستخدمو هذه اللهجة مقارنة بجميع الاختبارات التي تم إكمالها عبر جميع اللهجات"
+               title={`نسبة الاختبارات التي أكملها مستخدمو هذه اللهجة مقارنة بجميع الاختبارات التي تم إكمالها لـ ${dialectLabel}`}
                value={`${data.totalQuizzesPercentage?.toFixed(2)}%`}
                icon={Percent}
                description=""

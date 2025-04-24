@@ -13,17 +13,17 @@ import {
 } from "lucide-react";
 
 const navigation = [
-   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
-   { name: "Users", href: "/admin/users", icon: Users },
-   { name: "Word Lists", href: "/admin/word-lists", icon: Database },
-   { name: "Reports", href: "/admin/reports", icon: FileText },
+   { name: "لوحة القيادة", href: "/admin", icon: LayoutDashboard },
+   { name: "المستخدمون", href: "/admin/users", icon: Users },
+   { name: "قوائم الكلمات", href: "/admin/word-lists", icon: Database },
+   { name: "التقارير", href: "/admin/reports", icon: FileText },
    {
-      name: "Stastics by Dialect",
+      name: "إحصائيات حسب اللهجة",
       href: "/admin/stats/dialect",
       icon: BookType,
    },
    {
-      name: "Stastics by University",
+      name: "إحصائيات حسب الجامعة",
       href: "/admin/stats/university",
       icon: School,
    },
@@ -37,11 +37,11 @@ export default function AdminLayout({
    const pathname = usePathname();
 
    return (
-      <div className="flex h-screen">
+      <div className="flex h-screen mt-12">
          {/* Sidebar */}
-         <div className="sticky top-0 w-64 bg-gray-900 text-white rounded-lg">
+         <div className="sticky top-0 w-64 bg-gray-700 text-white rounded-lg shadow-md">
             <div className="h-16 flex items-center px-6">
-               <h1 className="text-xl font-bold">Admin Dashboard</h1>
+               <h1 className="text-xl font-bold">لوحة معلومات الإدارة</h1>
             </div>
             <nav className="mt-6">
                {navigation.map((item) => {

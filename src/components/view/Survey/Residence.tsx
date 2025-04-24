@@ -12,7 +12,7 @@ interface Props {
 
 function Residence({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>في أي دولة تعيش حالياً؟</Label>
          <CustomDropdown
             options={[
@@ -48,7 +48,7 @@ function Residence({ errors, formData, setFormData }: Props) {
             error={errors.residence}
          />
          {formData.residence === `other` && (
-            <Fragment>
+            <div className="!mt-4">
                <Label>يرجى تحديد الدولة:</Label>
                <Input
                   value={formData.otherResidence}
@@ -60,7 +60,7 @@ function Residence({ errors, formData, setFormData }: Props) {
                   }
                   placeholder=""
                />
-            </Fragment>
+            </div>
          )}
       </div>
    );

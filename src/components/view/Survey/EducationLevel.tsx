@@ -11,7 +11,7 @@ interface Props {
 
 function EducationLevel({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label htmlFor="highestEducation">
             يرجى اختيار أعلى مستوى تعليمي أكملته:
          </Label>

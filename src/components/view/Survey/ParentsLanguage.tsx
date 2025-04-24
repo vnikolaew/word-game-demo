@@ -1,9 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { SurveyData } from "@/types";
 import { Label } from "@radix-ui/react-label";
-import { RadioGroup, RadioGroupItem } from "@radix-ui/react-radio-group";
 import React, { Dispatch, SetStateAction } from "react";
 import { FormErrors } from "../SurveyView";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface Props {
    formData: SurveyData;
@@ -13,13 +13,14 @@ interface Props {
 
 function ParentsLanguage({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>
             ما هي اللغة/اللغات التي استخدمها والداك/مقدمو الرعاية في المنزل
             عندما كنت طفلاً؟
          </Label>
          <RadioGroup
             value={formData.familyLanguage}
+            dir="rtl"
             onValueChange={(value: string) =>
                setFormData({ ...formData, familyLanguage: value })
             }
@@ -46,7 +47,7 @@ function ParentsLanguage({ errors, formData, setFormData }: Props) {
             </div>
          </RadioGroup>
          {formData.familyLanguage?.toLowerCase().includes(`other`) && (
-            <div className="space-y-2">
+            <div className="space-y-2 !mt-4">
                <Label>
                   إذا كانت عائلتك تستخدم لغة/لغات غير العربية، يرجى تحديدها:
                </Label>

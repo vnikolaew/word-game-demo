@@ -1,7 +1,11 @@
 import React from "react";
 import { Label } from "@radix-ui/react-label";
 import { Dispatch, SetStateAction } from "react";
-import { CustomDropdown, FormErrors } from "../SurveyView";
+import {
+   CustomDropdown,
+   DROPDOWN_PLACEHOLDER,
+   FormErrors,
+} from "../SurveyView";
 import { SurveyData } from "@/types";
 
 interface Props {
@@ -15,9 +19,10 @@ function CurrentUniversity({ errors, formData, setFormData }: Props) {
    if (formData.residence !== SAUDI_ARABIA) return null;
 
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>إذا كنت طالب جامعي، ما اسم جامعتك؟</Label>
          <CustomDropdown
+            className=""
             options={[
                {
                   value: "king_saud_university",
@@ -55,7 +60,7 @@ function CurrentUniversity({ errors, formData, setFormData }: Props) {
                   currentUniversity: value,
                }))
             }
-            placeholder="---"
+            placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.currentUniversity}
          />
       </div>

@@ -194,6 +194,14 @@ export default function UserProfile() {
                                  ` (${profile.demographicSurvey.otherResidence})`}
                            </p>
                         </div>
+
+                        <div>
+                           <p className="text-sm text-gray-500">جامعة</p>
+                           <p className="font-medium">
+                              {profile.demographicSurvey.university ??
+                                 `غير محدد`}
+                           </p>
+                        </div>
                      </div>
                   </div>
 
@@ -472,7 +480,7 @@ export default function UserProfile() {
                <Button
                   variant="outline"
                   onClick={handleLogout}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 !cursor-pointer"
                >
                   <LogOut className="h-4 w-4" />
                   تسجيل الخروج
@@ -482,7 +490,7 @@ export default function UserProfile() {
                   <AlertDialogTrigger asChild>
                      <Button
                         variant="destructive"
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-2 !cursor-pointer"
                      >
                         <Trash2 className="h-4 w-4" />
                         حذف الحساب

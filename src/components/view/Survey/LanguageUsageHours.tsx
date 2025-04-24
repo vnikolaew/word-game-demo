@@ -11,7 +11,7 @@ interface Props {
 
 function LanguageUsageHours({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-4">
+      <div className="w-3/4 md:!w-1/2 space-y-8">
          <div className="space-y-2">
             <Label>كم ساعة تقضي في القراءة باللغة العربية يومياً؟</Label>
             <CustomDropdown

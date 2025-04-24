@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // components
@@ -18,6 +18,7 @@ import { SurveyView } from "@/components/view/SurveyView";
 // types
 import { UserConsent } from "@prisma/client";
 import QuizLimitView from "@/components/view/QuizLimitView";
+import { __IS_PROD__ } from "@/lib/consts";
 
 type AppState =
    | "consent"
@@ -36,7 +37,6 @@ export default function AppPage() {
    const router = useRouter();
 
    // Global state
-
    const [consent, setConsent] = useState<UserConsent | null>(null);
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
@@ -78,7 +78,7 @@ export default function AppPage() {
                message: data.message,
                tryAgainIn: data.tryAgainIn,
             });
-            if (data.success === false) setAppState(`limit`);
+            if (data.success === false && __IS_PROD__) setAppState(`limit`);
          }
       });
    }, []);
@@ -106,13 +106,13 @@ export default function AppPage() {
    };
 
    // Handle quiz completion
-   const handleQuizComplete = async () => {
+   const handleQuizComplete = useCallback(async () => {
       if (consent) {
          setAppState("results");
       } else {
          setAppState("survey");
       }
-   };
+   }, [consent]);
 
    const handleResultsComplete = () => {
       router.push("/");

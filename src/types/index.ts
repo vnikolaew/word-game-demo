@@ -58,6 +58,7 @@ export interface QuizAttempt {
 export interface UserProfile {
    name: string | null;
    email: string;
+   consent: { id: string; createdAt: string };
    demographicSurvey?: {
       nativeLanguage: string;
       otherNativeLanguage?: string;
@@ -83,6 +84,7 @@ export interface UserProfile {
       highSchoolLanguage: string;
       otherHighSchoolLanguage?: string;
       universityLanguage: string;
+      university?: string;
       otherUniversityLanguage?: string;
       readingHours: string;
       listeningHours: string;

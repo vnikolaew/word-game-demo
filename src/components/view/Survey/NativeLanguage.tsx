@@ -16,7 +16,7 @@ function NativeLanguage({
    setFormData,
 }: NativeLanguageProps) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label htmlFor="nativeLanguage">أي لغة تعتبرها لغتك الأم؟</Label>
          <CustomDropdown
             options={[

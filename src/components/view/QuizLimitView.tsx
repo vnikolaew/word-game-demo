@@ -15,10 +15,10 @@ function QuizLimitView({
    const formattedMessage = useMemo(() => {
       if (isNaN(tryAgainIn)) return message;
       if (message.includes(`{hours}`))
-         return message.replaceAll(`{hours}`, tryAgainIn.toString());
+         return message.replaceAll(`{hours}`, tryAgainIn.toFixed(2));
 
       if (message.includes(`{minutes}`))
-         return message.replaceAll(`{minutes}`, tryAgainIn.toString());
+         return message.replaceAll(`{minutes}`, tryAgainIn.toFixed(2));
    }, [message, tryAgainIn]);
 
    return (

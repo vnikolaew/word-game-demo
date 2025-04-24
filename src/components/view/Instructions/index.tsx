@@ -27,11 +27,16 @@ const Instructions = ({ isMobile, setState }: InstructionsProps) => {
             </CardTitle>
          </CardHeader>
          <CardContent className="space-y-6">
-            <p className="text-lg text-gray-500">{text}</p>
+            <p
+               dangerouslySetInnerHTML={{
+                  __html: text.replaceAll(`\n`, `<br /> <br />`),
+               }}
+               className="text-lg text-gray-500"
+            />
             <div className="flex justify-center pt-4">
                <Button
                   onClick={() => setState("practice")}
-                  className="w-full md:w-auto"
+                  className="w-full md:w-auto !px-12"
                >
                   ابدأ التدريب
                </Button>

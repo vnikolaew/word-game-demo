@@ -12,7 +12,7 @@ interface Props {
 
 function Languages({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>
             اذكر جميع اللغات التي تعرفها مرتبة حسب تعلمك لها (اللغة الأم أولاً)
          </Label>

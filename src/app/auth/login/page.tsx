@@ -167,7 +167,7 @@ export default function LoginPage() {
                      }
                   >
                      <GoogleIcon />
-                     Login with Google
+                     تسجيل الدخول باستخدام جوجل
                   </Button>
                </div>
                <div className="text-center text-sm text-gray-500">

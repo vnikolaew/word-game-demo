@@ -1,5 +1,9 @@
 import React, { Dispatch, Fragment, SetStateAction } from "react";
-import { CustomDropdown, FormErrors } from "../SurveyView";
+import {
+   CustomDropdown,
+   DROPDOWN_PLACEHOLDER,
+   FormErrors,
+} from "../SurveyView";
 import { SurveyData } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,7 +16,7 @@ interface Props {
 
 function KindergartenLanguage({ errors, formData, setFormData }: Props) {
    return (
-      <div className="space-y-2">
+      <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>في مرحلة الروضة، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
             options={[
@@ -33,11 +37,12 @@ function KindergartenLanguage({ errors, formData, setFormData }: Props) {
                   kindergartenLanguage: value,
                }))
             }
-            placeholder="---"
+            placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.kindergartenLanguage}
          />
-         {formData.kindergartenLanguage === `other` && (
-            <Fragment>
+         {(formData.kindergartenLanguage === `other` ||
+            formData.kindergartenLanguage === `two_languages`) && (
+            <div className="!mt-4">
                <Label>يرجى تحديد اللغة:</Label>
                <Input
                   value={formData.otherKindergartenLanguage}
@@ -49,7 +54,7 @@ function KindergartenLanguage({ errors, formData, setFormData }: Props) {
                   }
                   placeholder=""
                />
-            </Fragment>
+            </div>
          )}
       </div>
    );

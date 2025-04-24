@@ -6,35 +6,37 @@ import { Noto_Kufi_Arabic } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
+import Footer from "@/components/view/Footer";
 
 const notoSansArabic = Noto_Kufi_Arabic({
-  variable: "--font-arabic",
-  subsets: ["arabic"],
-  display: "swap",
+   variable: "--font-arabic",
+   subsets: ["arabic"],
+   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "اختبار الكلمات",
-  description: "اختبر معرفتك بالكلمات العربية",
+   title: "اختبار الكلمات",
+   description: "اختبر معرفتك بالكلمات العربية",
 };
 
 type RootLayoutProps = {
-  children: React.ReactNode;
+   children: React.ReactNode;
 };
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  return (
-    <html lang="ar" dir="rtl">
-      <body
-        className={`${notoSansArabic.className} antialiased mx-auto max-w-7xl`}
-      >
-        <AuthProvider>
-          <Toaster />
-          <Header />
+   return (
+      <html lang="ar" dir="rtl">
+         <body
+            className={`${notoSansArabic.className} antialiased mx-auto max-w-7xl`}
+         >
+            <AuthProvider>
+               <Toaster />
+               <Header />
 
-          {children}
-        </AuthProvider>
-      </body>
-    </html>
-  );
+               {children}
+               <Footer />
+            </AuthProvider>
+         </body>
+      </html>
+   );
 }

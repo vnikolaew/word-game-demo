@@ -14,7 +14,6 @@ import NativeLanguage from "./Survey/NativeLanguage";
 import Gender from "./Survey/Gender";
 import Age from "./Survey/Age";
 import EducationLevel from "./Survey/EducationLevel";
-import FamilyLanguage from "./Survey/FamilyLanguage";
 import ArabicDialect from "./Survey/ArabicDialect";
 import Nationality from "./Survey/Nationality";
 import Residence from "./Survey/Residence";
@@ -32,14 +31,13 @@ import ReadingDisorder from "./Survey/ReadingDisorder";
 import Vision from "./Survey/Vision";
 import Hands from "./Survey/Hands";
 import { cn } from "@/lib/utils";
+import ParentsLanguage from "./Survey/ParentsLanguage";
 
 interface SurveyViewProps {
    onComplete: (data: SurveyData) => void;
 }
 
-export interface FormErrors {
-   [key: string]: string;
-}
+export type FormErrors = Partial<Record<keyof SurveyData, string>>;
 
 interface CustomDropdownProps {
    options: { value: string; label: string }[];
@@ -90,6 +88,7 @@ export const CustomDropdown = ({
             onClick={() => setIsOpen(!isOpen)}
          >
             <span
+               tabIndex={0}
                className={selectedOption ? "text-gray-900" : "text-gray-500"}
             >
                {selectedOption ? selectedOption.label : placeholder}
@@ -135,6 +134,8 @@ export const CustomDropdown = ({
    );
 };
 
+export const DROPDOWN_PLACEHOLDER = `الرجاء تحديد خيار`;
+
 export function SurveyView({ onComplete }: SurveyViewProps) {
    const [loading, setLoading] = useState(false);
    const [errors, setErrors] = useState<FormErrors>({});
@@ -178,7 +179,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
    const validateForm = () => {
       const newErrors: FormErrors = {};
       const requiredFields: (keyof SurveyData)[] = [
-         `currentUniversity`,
+         // `currentUniversity`,
          "nativeLanguage",
          "languageAcquisition",
          "familyLanguage",
@@ -214,18 +215,70 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             formData[field as keyof SurveyData] === ""
          ) {
             newErrors[field] = "هذا الحقل مطلوب";
-            console.log(`Missing field: ${field}`);
+            console.warn(`Missing field: ${field}`);
          }
       });
 
-      // Special validation for otherNativeLanguage
+      const SAUDI_ARABIA = `saudi_arabia`;
+      if (
+         formData.residence === SAUDI_ARABIA &&
+         !formData.currentUniversity?.length
+      ) {
+         newErrors.currentUniversity = `يرجى تحديد الجامعة.`;
+      }
+
       if (
          (formData.nativeLanguage === "arabic_and_other" ||
             formData.nativeLanguage === "other") &&
          !formData.otherNativeLanguage
       ) {
-         newErrors.otherNativeLanguage = "يرجى تحديد اللغة";
+         newErrors.nativeLanguage = `يرجى تحديد اللغة.`;
       }
+
+      if (
+         formData.languageAcquisition?.toLowerCase().includes("other") &&
+         !formData.otherAcquisitionLanguage
+      ) {
+         newErrors.languageAcquisition = `يرجى تحديد اللغة.`;
+      }
+
+      if (
+         formData.familyLanguage?.toLowerCase()?.includes("other") &&
+         !formData.otherFamilyLanguage
+      ) {
+         newErrors.familyLanguage = `يرجى تحديد اللغة.`;
+      }
+
+      if (
+         formData.nationality?.toLowerCase() === "other" &&
+         !formData.otherNationality
+      ) {
+         newErrors.nationality = `يرجى تحديد الجنسية.`;
+      }
+
+      if (
+         formData.residence?.toLowerCase() === "other" &&
+         !formData.otherResidence
+      ) {
+         newErrors.residence = "يرجى تحديد اللغة";
+      }
+
+      const pairKeys: [keyof SurveyData, keyof SurveyData][] = [
+         [`kindergartenLanguage`, `otherKindergartenLanguage`],
+         [`primaryLanguage`, `otherPrimaryLanguage`],
+         [`middleLanguage`, `otherMiddleLanguage`],
+         [`highSchoolLanguage`, `otherHighSchoolLanguage`],
+         [`universityLanguage`, `otherUniversityLanguage`],
+      ];
+      pairKeys.forEach(([key, otherKey]) => {
+         if (
+            (formData[key]?.toLowerCase() === "other" ||
+               formData[key]?.toLowerCase() === `two_languages`) &&
+            !formData[otherKey]
+         ) {
+            newErrors[key] = `يرجى تحديد اللغة.`;
+         }
+      });
 
       // Age validation
       if (formData.age) {
@@ -244,11 +297,10 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       console.log("Form submission attempted");
 
       if (!validateForm()) {
-         console.log("Form validation failed");
+         console.log("Form validation failed", { errors });
          toast.error("يرجى ملء جميع الحقول المطلوبة");
          return;
       }
-
       setLoading(true);
 
       try {
@@ -292,10 +344,10 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
             <CardTitle>استبيان المشارك / Participant Survey</CardTitle>
          </CardHeader>
          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
                <NativeLanguage {...props} />
                <ChildLanguages {...props} />
-               <FamilyLanguage {...props} />
+               <ParentsLanguage {...props} />
 
                <Gender {...props} />
                <Age {...props} />
@@ -318,9 +370,11 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                <Vision {...props} />
                <Hands {...props} />
 
-               <Button type="submit" className="w-full">
-                  إرسال
-               </Button>
+               <div className="w-full flex items-center justify-center !mt-4">
+                  <Button type="submit" className="w-1/2 !mx-auto">
+                     إرسال
+                  </Button>
+               </div>
             </form>
          </CardContent>
       </Card>
