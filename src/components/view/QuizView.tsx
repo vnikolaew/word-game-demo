@@ -250,7 +250,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                   setCurrentWordIndex((prev) => prev + 1);
                   setShowWord(true);
                   startNewTrial();
-               } else if (currentWordIndex === TOTAL_WORDS) {
+               } else if (currentWordIndex === TOTAL_WORDS - 1) {
                   // Quiz completed
                   setQuizStatus("completed");
 
