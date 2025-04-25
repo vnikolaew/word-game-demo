@@ -250,9 +250,10 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                   setCurrentWordIndex((prev) => prev + 1);
                   setShowWord(true);
                   startNewTrial();
-               } else {
+               } else if (currentWordIndex === TOTAL_WORDS) {
                   // Quiz completed
                   setQuizStatus("completed");
+
                   // Simple scoring: percentage of correct answers, counting timeouts as incorrect
                   const timeoutCount = newResponses.filter(
                      (r) => r.isTimeout

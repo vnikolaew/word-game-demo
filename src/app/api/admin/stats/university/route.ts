@@ -24,7 +24,12 @@ export async function GET(req: NextRequest) {
                ? {
                     user: {
                        surveyResponses: {
-                          some: { universityLanguage: uni },
+                          some: {
+                             universityLanguage: {
+                                contains: uni,
+                                mode: `insensitive`,
+                             },
+                          },
                        },
                     },
                  }
@@ -32,7 +37,7 @@ export async function GET(req: NextRequest) {
          },
       });
 
-      const totalUsers = new Set(...quizzes.map((q) => q.user.id)).size;
+      const totalUsers = new Set(quizzes.map((q) => q.userId)).size;
       const totalQuizzes = quizzes.length;
       const totalQuizzesPercentage =
          quizzes.length > 0 ? 100 * (quizzes.length / total) : 0;
