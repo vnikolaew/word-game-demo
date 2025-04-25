@@ -71,6 +71,7 @@ export async function GET() {
                   incorrectWords: true,
                   correctNonWords: true,
                   incorrectNonWords: true,
+                  totalQuizDuration: true,
                   npxionTime: true,
                   createdAt: true,
                },

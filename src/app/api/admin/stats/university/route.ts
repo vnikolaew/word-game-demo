@@ -20,11 +20,15 @@ export async function GET(req: NextRequest) {
       const quizzes = await prisma.quizAttempt.findMany({
          include: { user: { select: { id: true, name: true } } },
          where: {
-            user: {
-               surveyResponses: {
-                  some: uni?.length ? { universityLanguage: uni } : {},
-               },
-            },
+            ...(uni?.length
+               ? {
+                    user: {
+                       surveyResponses: {
+                          some: { universityLanguage: uni },
+                       },
+                    },
+                 }
+               : {}),
          },
       });
 

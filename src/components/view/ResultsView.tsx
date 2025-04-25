@@ -19,6 +19,7 @@ import {
    TwitterIcon,
    WhatsappIcon,
 } from "react-share";
+import { motion } from "framer-motion";
 
 interface ResultsViewProps {
    onNext: () => void;
@@ -58,7 +59,7 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
       fetchResults();
    }, []);
 
-   const getFeedbackMessage = (score: number, total: number): string => {
+   const getFeedbackMessage = (score: number): string => {
       const feedbackMessages = [
          {
             range: [-100, 0],
@@ -96,20 +97,10 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
       return feedbackMessages[0].message;
    };
 
-   const getTotalQuestions = (results: QuizAttempt) => {
-      return (
-         results.correctWords +
-         results.incorrectWords +
-         results.correctNonWords +
-         results.incorrectNonWords
-      );
-   };
-
    const handleShare = async () => {
       if (!results) return;
 
-      const totalQuestions = getTotalQuestions(results);
-      const shareText = `I scored ${results.score} out of ${totalQuestions} on the Lexical Decision Task! Try it yourself!`;
+      const shareText = `I scored ${results.score} out of ${100} on the Lexical Decision Task! Try it yourself!`;
 
       try {
          if (navigator.share) {
@@ -151,9 +142,7 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
       );
    }
 
-   const totalQuestions = getTotalQuestions(results);
-   const shareText = `I scored ${results.score} out of ${totalQuestions} on the Lexical Decision Task! Try it yourself!`;
-   console.log({ results });
+   const shareText = `I scored ${results.score} out of ${100} on the Lexical Decision Task! Try it yourself!`;
 
    return (
       <Card>
@@ -162,13 +151,30 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
          </CardHeader>
          <CardContent className="space-y-6">
             <div className="text-center">
-               <p className="text-sm text-gray-500">الدرجة النهائية:</p>
-               <p className="mt-1 text-4xl font-extrabold text-indigo-600">
+               <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.0 }}
+                  className="text-sm text-gray-500"
+               >
+                  الدرجة النهائية:
+               </motion.p>
+               <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.0 }}
+                  className="mt-1 text-4xl font-extrabold text-indigo-600"
+               >
                   {results.score?.toFixed(2)}%
-               </p>
-               <p className="mt-2 text-lg text-gray-700">
-                  {getFeedbackMessage(results.score, totalQuestions)}
-               </p>
+               </motion.p>
+               <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
+                  className="mt-2 text-lg text-gray-700"
+               >
+                  {getFeedbackMessage(results.score)}
+               </motion.p>
             </div>
 
             <div className="text-center">

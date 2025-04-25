@@ -143,6 +143,7 @@ export async function GET(
             otherNationality: survey.otherNationality,
             residence: survey.residence,
             otherResidence: survey.otherResidence,
+            university: survey.university,
             languages: survey.languages,
             kindergartenLanguage: survey.kindergartenLanguage,
             otherKindergartenLanguage: survey.otherKindergartenLanguage,
@@ -161,7 +162,11 @@ export async function GET(
             attentionDisorder: survey.attentionDisorder,
             readingDisorder: survey.readingDisorder,
             vision: survey.vision,
-            handedness: survey.handedness,
+            handedness: [`yes`, `no`].includes(survey.handedness)
+               ? survey.handedness === `yes`
+                  ? `left`
+                  : `right`
+               : survey.handedness,
             date: survey.createdAt,
          }));
       } else {

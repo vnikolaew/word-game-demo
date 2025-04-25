@@ -46,7 +46,8 @@ function ParentsLanguage({ errors, formData, setFormData }: Props) {
                </Label>
             </div>
          </RadioGroup>
-         {formData.familyLanguage?.toLowerCase().includes(`other`) && (
+         {(formData.familyLanguage?.toLowerCase().includes(`other`) ||
+            formData.familyLanguage?.toLowerCase().includes(`mix`)) && (
             <div className="space-y-2 !mt-4">
                <Label>
                   إذا كانت عائلتك تستخدم لغة/لغات غير العربية، يرجى تحديدها:

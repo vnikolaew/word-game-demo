@@ -6,6 +6,33 @@ import { SurveyData } from "@/types";
 
 export const dynamic = "force-dynamic";
 
+export async function GET() {
+   try {
+      const session = await getServerSession(authOptions);
+      if (!session?.user?.id) {
+         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
+
+      const survey = await prisma.demographicSurvey.findUnique({
+         where: {
+            userId: session.user.id,
+         },
+      });
+
+      if (!survey) {
+         return NextResponse.json(null, { status: 200 });
+      }
+
+      return NextResponse.json(survey, { status: 200 });
+   } catch (error) {
+      console.error("Error fetching user survey:", error);
+      return NextResponse.json(
+         { message: "Internal server error" },
+         { status: 500 }
+      );
+   }
+}
+
 export async function POST(req: Request) {
    try {
       const session = await getServerSession(authOptions);

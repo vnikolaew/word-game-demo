@@ -324,6 +324,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       if (isMobile) return; // Early return for mobile devices - no keyboard controls
 
       const handleKeyPress = (event: KeyboardEvent) => {
+         if (showFeedback) return;
+
          switch (event.key) {
             case "1":
             case "ArrowLeft":
@@ -338,7 +340,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
       window.addEventListener("keydown", handleKeyPress);
       return () => window.removeEventListener("keydown", handleKeyPress);
-   }, [isMobile, handleResponse]);
+   }, [isMobile, handleResponse, showFeedback]);
 
    if (error || wordListError) {
       return (

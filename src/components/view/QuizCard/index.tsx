@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Noto_Sans_Arabic } from "next/font/google";
 
 // Components
 import { Card } from "@/components/ui/card";
@@ -7,6 +8,14 @@ import { Progress } from "@/components/ui/progress";
 
 // Assets
 import { Check, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+const notoSans = Noto_Sans_Arabic({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
 
 interface QuizCardProps {
    progress: number;
@@ -40,7 +49,7 @@ const QuizCard = ({
    }, [handleResponse]);
 
    return (
-      <Card className="w-full p-6">
+      <Card className={cn("w-full p-6", notoSans.className)}>
          <div className="text-center">
             <Progress value={progress} className="mb-6" />
             <div className="flex flex-col justify-center items-center h-[400px] gap-y-2 relative">

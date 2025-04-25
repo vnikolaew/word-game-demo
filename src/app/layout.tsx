@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Noto_Kufi_Arabic } from "next/font/google";
+import { Tajawal } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
 import Footer from "@/components/view/Footer";
 
-const notoSansArabic = Noto_Kufi_Arabic({
+const tajawal = Tajawal({
    variable: "--font-arabic",
+   weight: "400",
    subsets: ["arabic"],
    display: "swap",
 });
@@ -26,9 +27,7 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
    return (
       <html lang="ar" dir="rtl">
-         <body
-            className={`${notoSansArabic.className} antialiased mx-auto max-w-7xl`}
-         >
+         <body className={`${tajawal.className} antialiased mx-auto max-w-7xl`}>
             <AuthProvider>
                <Toaster />
                <Header />

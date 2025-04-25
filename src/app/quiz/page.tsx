@@ -38,6 +38,8 @@ export default function AppPage() {
 
    // Global state
    const [consent, setConsent] = useState<UserConsent | null>(null);
+   const [survey, setSurvey] = useState<any | null>(null);
+
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
    const [loading, setLoading] = useState(true);
@@ -48,6 +50,15 @@ export default function AppPage() {
       setLoading(true);
       setError(null);
       const response = await fetch("/api/consent");
+      const data = await response.json();
+      setLoading(false);
+      return data;
+   };
+
+   const getSurvey = async () => {
+      setLoading(true);
+      setError(null);
+      const response = await fetch("/api/survey");
       const data = await response.json();
       setLoading(false);
       return data;
@@ -72,6 +83,7 @@ export default function AppPage() {
          }
       });
 
+      getSurvey().then((data) => setSurvey(data));
       limitUserQuiz().then((data) => {
          if (data) {
             setQuizLimitInfo({
@@ -107,12 +119,12 @@ export default function AppPage() {
 
    // Handle quiz completion
    const handleQuizComplete = useCallback(async () => {
-      if (consent) {
+      if (consent && !!survey) {
          setAppState("results");
       } else {
          setAppState("survey");
       }
-   }, [consent]);
+   }, [consent, survey]);
 
    const handleResultsComplete = () => {
       router.push("/");

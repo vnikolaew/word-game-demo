@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Jotai
 import { useAtom } from "jotai/react";
 import { isAdminAtom } from "@/lib/atoms";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
    const { data: session } = useSession();
@@ -62,7 +63,7 @@ const Header = () => {
                   <>
                      <Link href="/quiz">
                         <Button variant="outline" size="sm">
-                           اختبار
+                           ابدأ الاختبار
                         </Button>
                      </Link>
 
@@ -70,18 +71,26 @@ const Header = () => {
                         <Button
                            variant="ghost"
                            size="sm"
-                           className="relative h-8 w-8 rounded-full cursor-pointer"
+                           className={cn(
+                              "relative h-8 w-8 rounded-full cursor-pointer",
+                              !session?.user?.image && `!w-24`
+                           )}
                            onClick={() => setIsOpen(!isOpen)}
                         >
-                           <Avatar className="h-8 w-8">
+                           <Avatar
+                              className={cn(
+                                 session.user?.image ? "h-8 w-8" : `w-24`
+                              )}
+                           >
                               <AvatarImage
                                  src={session.user?.image || ""}
                                  alt={session.user?.name || ""}
                               />
-                              <AvatarFallback>
-                                 {session.user?.name?.charAt(0) || (
+                              <AvatarFallback className="!w-24">
+                                 {/* {session.user?.name?.charAt(0) || (
                                     <User className="h-4 w-4" />
-                                 )}
+                                 )} */}
+                                 الملف الشخصي
                               </AvatarFallback>
                            </Avatar>
                         </Button>

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 // Components
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ const formatCompletionTime = (duration: number | undefined | null): string => {
    if (typeof duration !== "number" || isNaN(duration)) {
       return "0s";
    }
-   return `${Math.round(duration / 1000)}s`;
+   return `${Math.round(duration / 1000)} ثانية ${duration % 1000} مللي ثانية`;
 };
 
 // Icons
@@ -32,6 +31,7 @@ import { Trash2, LogOut } from "lucide-react";
 
 // Types
 import { UserProfile as UserProfileType } from "@/types";
+import { NATIONALITY_OPTIONS } from "./Survey/Nationality";
 
 const AccountManagement = ({}) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -158,15 +158,15 @@ const QuizHistory = ({
                         </div>
                         <div>
                            <p className="text-sm text-gray-500">وقت الإكمال</p>
-                           <p className="font-medium">
+                           <span className="font-medium">
                               {formatCompletionTime(attempt.totalQuizDuration)}
-                           </p>
+                           </span>
                         </div>
                         <div>
                            <p className="text-sm text-gray-500">التاريخ</p>
-                           <p className="font-medium">
+                           <time className="font-medium">
                               {new Date(attempt.createdAt).toLocaleDateString()}
-                           </p>
+                           </time>
                         </div>
                      </div>
                   </div>
@@ -183,184 +183,55 @@ const DemographicInformation = ({
    info,
 }: {
    info: NonNullable<UserProfileType["demographicSurvey"]>;
-}) => (
-   <Card className="mb-8 p-6">
-      <h2 className="text-xl font-semibold mb-4">معلومات أساسية</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-         {/* Personal Information */}
-         <div className="col-span-2">
-            <h3 className="text-lg font-medium mb-2">معلومات شخصية</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-                  <p className="text-sm text-gray-500">عمر</p>
-                  <p className="font-medium">{info.age}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">جنس</p>
-                  <p className="font-medium">{info.gender}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">جنسية</p>
-                  <p className="font-medium">
-                     {info.nationality}
-                     {info.otherNationality && ` (${info.otherNationality})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">محل الإقامة الحالي</p>
-                  <p className="font-medium">
-                     {info.residence}
-                     {info.otherResidence && ` (${info.otherResidence})`}
-                  </p>
-               </div>
+}) => {
+   const gender =
+      info.gender === `male`
+         ? `ذكر`
+         : info.gender === `female`
+           ? `أنثى`
+           : `أفضل عدم قول ذلك`;
 
-               <div>
-                  <p className="text-sm text-gray-500">جامعة</p>
-                  <p className="font-medium">{info.university ?? `غير محدد`}</p>
+   return (
+      <Card className="mb-8 p-6">
+         <h2 className="text-xl font-semibold mb-4">معلومات أساسية</h2>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Personal Information */}
+            <div className="col-span-2">
+               <h3 className="text-lg font-medium mb-2">معلومات شخصية</h3>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                     <p className="text-sm text-gray-500">عمر</p>
+                     <p className="font-medium">{info.age}</p>
+                  </div>
+                  <div>
+                     <p className="text-sm text-gray-500">جنس</p>
+                     <p className="font-medium">{gender}</p>
+                  </div>
+                  <div>
+                     <p className="text-sm text-gray-500">جنسية</p>
+                     <p className="font-medium">
+                        {
+                           NATIONALITY_OPTIONS.find(
+                              (o) => o.value === info.nationality
+                           )?.label
+                        }
+                        {info.otherNationality && ` (${info.otherNationality})`}
+                     </p>
+                  </div>
                </div>
             </div>
-         </div>
 
-         {/* Language Background */}
-         <div className="col-span-2">
-            <h3 className="text-lg font-medium mb-2">الخلفية اللغوية</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-                  <p className="text-sm text-gray-500">اللغة الأم</p>
-                  <p className="font-medium">
-                     {info.nativeLanguage}
-                     {info.otherNativeLanguage &&
-                        ` (${info.otherNativeLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">اكتساب اللغة</p>
-                  <p className="font-medium">
-                     {info.languageAcquisition}
-                     {info.otherAcquisitionLanguage &&
-                        ` (${info.otherAcquisitionLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">لغة العائلة</p>
-                  <p className="font-medium">
-                     {info.familyLanguage}
-                     {info.otherFamilyLanguage &&
-                        ` (${info.otherFamilyLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">اللهجة العربية</p>
-                  <p className="font-medium">{info.arabicDialect}</p>
-               </div>
-               <div className="col-span-2">
-                  <p className="text-sm text-gray-500">اللغات المعروفة</p>
-                  <p className="font-medium">{info.languages}</p>
-               </div>
-            </div>
-         </div>
+            {/* Language Background */}
 
-         {/* Education History */}
-         <div className="col-span-2">
-            <h3 className="text-lg font-medium mb-2">تاريخ التعليم</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-                  <p className="text-sm text-gray-500">أعلى مستوى تعليمي</p>
-                  <p className="font-medium">{info.highestEducation}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">لغة رياض الأطفال</p>
-                  <p className="font-medium">
-                     {info.kindergartenLanguage}
-                     {info.otherKindergartenLanguage &&
-                        ` (${info.otherKindergartenLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">
-                     لغة المدرسة الابتدائية
-                  </p>
-                  <p className="font-medium">
-                     {info.primaryLanguage}
-                     {info.otherPrimaryLanguage &&
-                        ` (${info.otherPrimaryLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">لغة المدرسة المتوسطة</p>
-                  <p className="font-medium">
-                     {info.middleLanguage}
-                     {info.otherMiddleLanguage &&
-                        ` (${info.otherMiddleLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">لغة المدرسة الثانوية</p>
-                  <p className="font-medium">
-                     {info.highSchoolLanguage}
-                     {info.otherHighSchoolLanguage &&
-                        ` (${info.otherHighSchoolLanguage})`}
-                  </p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">لغة الجامعة</p>
-                  <p className="font-medium">
-                     {info.universityLanguage}
-                     {info.otherUniversityLanguage &&
-                        ` (${info.otherUniversityLanguage})`}
-                  </p>
-               </div>
-            </div>
-         </div>
+            {/* Education History */}
 
-         {/* Language Usage */}
-         <div className="col-span-2">
-            <h3 className="text-lg font-medium mb-2">الاستخدام اليومي للغة</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-                  <p className="text-sm text-gray-500">ساعات القراءة</p>
-                  <p className="font-medium">{info.readingHours}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">ساعات الاستماع</p>
-                  <p className="font-medium">{info.listeningHours}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">ساعات الكتابة</p>
-                  <p className="font-medium">{info.writingHours}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">ساعات التحدث</p>
-                  <p className="font-medium">{info.speakingHours}</p>
-               </div>
-            </div>
-         </div>
+            {/* Language Usage */}
 
-         {/* Medical Information */}
-         <div className="col-span-2">
-            <h3 className="text-lg font-medium mb-2">معلومات إضافية</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-               <div>
-                  <p className="text-sm text-gray-500">اضطراب الانتباه</p>
-                  <p className="font-medium">{info.attentionDisorder}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">اضطراب القراءة</p>
-                  <p className="font-medium">{info.readingDisorder}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">النظر</p>
-                  <p className="font-medium">{info.vision}</p>
-               </div>
-               <div>
-                  <p className="text-sm text-gray-500">اليد المسيطرة</p>
-                  <p className="font-medium">{info.handedness}</p>
-               </div>
-            </div>
+            {/* Medical Information */}
          </div>
-      </div>
-   </Card>
-);
+      </Card>
+   );
+};
 
 const PersonalInfo = ({ profile }: { profile: UserProfileType }) => (
    <Card className="mb-8 p-6">

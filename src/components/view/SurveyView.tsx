@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { match } from "ts-pattern";
 
 // components
 import { Button } from "@/components/ui/button";
@@ -32,6 +33,11 @@ import Vision from "./Survey/Vision";
 import Hands from "./Survey/Hands";
 import { cn } from "@/lib/utils";
 import ParentsLanguage from "./Survey/ParentsLanguage";
+import {
+   AlignVerticalDistributeStart,
+   ChevronLeft,
+   ChevronRight,
+} from "lucide-react";
 
 interface SurveyViewProps {
    onComplete: (data: SurveyData) => void;
@@ -135,9 +141,47 @@ export const CustomDropdown = ({
 };
 
 export const DROPDOWN_PLACEHOLDER = `الرجاء تحديد خيار`;
+const FIELDS_BY_PAGE: (keyof SurveyData)[][] = [
+   [
+      `age`,
+      `gender`,
+      `highestEducation`,
+      `nationality`,
+      `otherNationality`,
+      `residence`,
+      `otherResidence`,
+      `currentUniversity`,
+   ],
+   [
+      `nativeLanguage`,
+      `otherNativeLanguage`,
+      `languageAcquisition`,
+      `otherAcquisitionLanguage`,
+      `familyLanguage`,
+      `otherFamilyLanguage`,
+      `languages`,
+      `arabicDialect`,
+   ],
+   [
+      `kindergartenLanguage`,
+      `otherKindergartenLanguage`,
+      `primaryLanguage`,
+      `otherPrimaryLanguage`,
+      `middleLanguage`,
+      `otherMiddleLanguage`,
+      `highSchoolLanguage`,
+      `otherHighSchoolLanguage`,
+      `universityLanguage`,
+      `otherUniversityLanguage`,
+   ],
+   [`readingHours`, `listeningHours`, `writingHours`, `speakingHours`],
+   [`attentionDisorder`, `readingDisorder`, `vision`, `handedness`],
+];
 
 export function SurveyView({ onComplete }: SurveyViewProps) {
    const [loading, setLoading] = useState(false);
+   const [page, setPage] = useState(1);
+
    const [errors, setErrors] = useState<FormErrors>({});
    const [formData, setFormData] = useState<SurveyData>({
       currentUniversity: ``,
@@ -176,7 +220,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       handedness: "",
    });
 
-   const validateForm = () => {
+   const validateForm = (_: boolean = false) => {
       const newErrors: FormErrors = {};
       const requiredFields: (keyof SurveyData)[] = [
          // `currentUniversity`,
@@ -243,7 +287,8 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       }
 
       if (
-         formData.familyLanguage?.toLowerCase()?.includes("other") &&
+         (formData.familyLanguage?.toLowerCase().includes(`other`) ||
+            formData.familyLanguage?.toLowerCase().includes(`mix`)) &&
          !formData.otherFamilyLanguage
       ) {
          newErrors.familyLanguage = `يرجى تحديد اللغة.`;
@@ -289,14 +334,15 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       }
 
       setErrors(newErrors);
-      return Object.keys(newErrors).length === 0;
+      return newErrors;
    };
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       console.log("Form submission attempted");
 
-      if (!validateForm()) {
+      const new_errors = validateForm(true);
+      if (Object.keys(new_errors).length > 0) {
          console.log("Form validation failed", { errors });
          toast.error("يرجى ملء جميع الحقول المطلوبة");
          return;
@@ -341,40 +387,98 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
    return (
       <Card>
          <CardHeader>
-            <CardTitle>استبيان المشارك / Participant Survey</CardTitle>
+            <CardTitle>استبيان المشارك </CardTitle>
          </CardHeader>
          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8">
-               <NativeLanguage {...props} />
-               <ChildLanguages {...props} />
-               <ParentsLanguage {...props} />
+               {match(page)
+                  .with(1, (_) => (
+                     <>
+                        <Age {...props} />
+                        <Gender {...props} />
+                        <EducationLevel {...props} />
+                        <Nationality {...props} />
+                        <Residence {...props} />
+                        <CurrentUniversity {...props} />
+                     </>
+                  ))
+                  .with(2, (_) => (
+                     <>
+                        <NativeLanguage {...props} />
+                        <ChildLanguages {...props} />
+                        <ParentsLanguage {...props} />
+                        <Languages {...props} />
+                        <ArabicDialect {...props} />
+                     </>
+                  ))
+                  .with(3, (_) => (
+                     <>
+                        <KindergartenLanguage {...props} />
+                        <PrimaryLanguage {...props} />
+                        <MiddleLanguage {...props} />
+                        <HighSchoolLanguage {...props} />
+                        <UniversityLanguage {...props} />
+                     </>
+                  ))
+                  .with(4, (_) => <LanguageUsageHours {...props} />)
+                  .with(5, (_) => (
+                     <>
+                        <AttentionDisorder {...props} />
+                        <ReadingDisorder {...props} />
+                        <Vision {...props} />
+                        <Hands {...props} />
+                     </>
+                  ))
+                  .otherwise((_) => null)}
 
-               <Gender {...props} />
-               <Age {...props} />
-               <CurrentUniversity {...props} />
+               {page < 5 ? (
+                  <div className="w-full flex items-center !mt-4 gap-4 justify-end">
+                     <Button
+                        disabled={page === 1}
+                        onClick={(_) => setPage((p) => p - 1)}
+                        type="button"
+                        className="w-fit !px-12 flex items-center gap-2"
+                     >
+                        سابق
+                        <ChevronRight size={18} />
+                     </Button>
+                     <Button
+                        disabled={page === 5}
+                        onClick={(e) => {
+                           e.preventDefault();
+                           const new_errors = validateForm();
+                           if (
+                              !!Object.keys(new_errors).length &&
+                              FIELDS_BY_PAGE[page - 1].some(
+                                 (f) => !!new_errors[f]?.length
+                              )
+                           ) {
+                              return;
+                           }
 
-               <EducationLevel {...props} />
-               <ArabicDialect {...props} />
-               <Nationality {...props} />
-               <Residence {...props} />
-               <Languages {...props} />
-               <KindergartenLanguage {...props} />
-               <PrimaryLanguage {...props} />
-               <MiddleLanguage {...props} />
-               <HighSchoolLanguage {...props} />
-               <UniversityLanguage {...props} />
-               <LanguageUsageHours {...props} />
-
-               <AttentionDisorder {...props} />
-               <ReadingDisorder {...props} />
-               <Vision {...props} />
-               <Hands {...props} />
-
-               <div className="w-full flex items-center justify-center !mt-4">
-                  <Button type="submit" className="w-1/2 !mx-auto">
-                     إرسال
-                  </Button>
-               </div>
+                           setPage((p) => p + 1);
+                           setErrors((e) => {
+                              const new_errors = { ...e };
+                              FIELDS_BY_PAGE[page].forEach((f) => {
+                                 delete new_errors[f];
+                              });
+                              return new_errors;
+                           });
+                        }}
+                        type="button"
+                        className="w-fit !px-12 flex items-center gap-2"
+                     >
+                        التالي
+                        <ChevronLeft size={18} />
+                     </Button>
+                  </div>
+               ) : (
+                  <div className="w-full flex items-center justify-center !mt-4">
+                     <Button type="submit" className="w-1/2 !mx-auto">
+                        إرسال
+                     </Button>
+                  </div>
+               )}
             </form>
          </CardContent>
       </Card>
