@@ -22,7 +22,7 @@ const PRACTICE_ITEMS = [
    { word: "أُفوقون", isWord: false },
    { word: "بشرض", isWord: false },
    { word: "ماتوح", isWord: false },
-   { word: "ضوء", isWord: false },
+   { word: "ضرء", isWord: false },
 ];
 
 interface PracticeViewProps {
