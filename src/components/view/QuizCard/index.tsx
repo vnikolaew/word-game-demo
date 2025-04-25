@@ -9,6 +9,7 @@ import { Progress } from "@/components/ui/progress";
 // Assets
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const notoSans = Noto_Sans_Arabic({
    variable: "--font-arabic",
@@ -67,7 +68,7 @@ const QuizCard = ({
                )}
             </div>
 
-            {isMobile && (
+            {isMobile ? (
                <div className="flex justify-center gap-4">
                   <Button
                      variant="default"
@@ -84,6 +85,16 @@ const QuizCard = ({
                      لا
                   </Button>
                </div>
+            ) : (
+               <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex justify-center gap-1 text-sm text-neutral-400 drop-shadow-sm"
+               >
+                  <b>تلميح:</b> استخدم أسهم لوحة المفاتيح (<b>اليسار</b> و
+                  <b>اليمين</b>) لإدخال اختيارك
+               </motion.p>
             )}
          </div>
       </Card>
