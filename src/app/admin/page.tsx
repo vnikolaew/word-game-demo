@@ -90,7 +90,7 @@ export default function AdminDashboard() {
                            إجمالي الاختبارات
                         </TableHead>
                         <TableHead className="text-right">
-                           الدرجات العالية (&gt;70%)
+                           الدرجات العالية (&gt;90%)
                         </TableHead>
                         <TableHead className="text-right">
                            معدل النجاح

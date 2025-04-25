@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
+const HIGH_SCORE_THRESHOLD = 90;
+
 export async function GET() {
    try {
       const session = await getServerSession(authOptions);
@@ -32,7 +34,7 @@ export async function GET() {
       });
       const completedQuizzes = quizzes.length;
       const highScoreQuizzes = quizzes.filter(
-         (quiz) => quiz.score >= 70
+         (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
       ).length;
 
       // Calculate average quiz time
@@ -54,7 +56,7 @@ export async function GET() {
          wordListId: wordList.id,
          totalQuizzes: wordList.quizAttempts.length,
          highScoreQuizzes: wordList.quizAttempts.filter(
-            (quiz) => quiz.score >= 70
+            (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
          ).length,
       }));
 

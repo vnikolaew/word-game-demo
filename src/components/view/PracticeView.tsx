@@ -157,7 +157,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
                </p>
                <Button
                   onClick={() => setState("instructions")}
-                  className="w-full md:w-auto"
+                  className="w-full md:w-auto !px-12 mt-8"
                >
                   التالي
                </Button>
@@ -167,58 +167,24 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
    }
 
    if (state === "instructions") {
-      return <Instructions isMobile={isMobile} setState={setState} />;
-   }
-
-   if (state === "completion") {
-      return (
-         <Card className="w-full max-w-2xl mx-auto">
-            <CardHeader>
-               <CardTitle className="text-center text-2xl">
-                  لقد أكملت جلسة التدريب
-               </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 text-center">
-               <Button onClick={onComplete} className="w-full md:w-auto">
-                  ابدأ الاختبار الرئيسي
-               </Button>
-            </CardContent>
-         </Card>
-      );
+      return <Instructions practice isMobile={isMobile} setState={setState} />;
    }
 
    if (isComplete) {
-      const score =
-         responses
-            .map<number>((r, index) => {
-               const item = shuffledItems[index];
-
-               if (r && item.isWord) return 1;
-               if (r && !item.isWord) return -1;
-               if (!r && item.isWord) return 0;
-               if (!r && !item.isWord) return 0;
-               return 0;
-            })
-            .reduce((a, b) => a + b, 0) *
-         ((100 / shuffledItems.length) * 2);
-
       return (
          <Card className="max-w-3/4 mx-auto">
             <CardHeader>
                <CardTitle className="text-center">اكتمل التدريب!</CardTitle>
             </CardHeader>
             <CardContent className="text-center space-y-4 mt-8">
-               <p className="text-3xl">
-                  نقاطك هي <b>{score}</b>
-               </p>
-               <p className="text-lg">
+               <p className="text-2xl">
                   حصلت على <b>{correctCount}</b> من{" "}
                   <b>{PRACTICE_ITEMS.length}</b> نقاط (
                   <b>{accuracy.toFixed(1)}%</b>)
                </p>
                <Button
-                  onClick={() => setState("completion")}
-                  className="w-full md:w-auto !px-12 mt-4"
+                  onClick={onComplete}
+                  className="w-full md:w-auto !px-12 mt-8"
                >
                   ابدأ الاختبار الرئيسي
                </Button>

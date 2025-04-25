@@ -7,10 +7,11 @@ import { AppState } from "../PracticeView";
 
 interface InstructionsProps {
    isMobile: boolean;
+   practice?: boolean;
    setState: React.Dispatch<React.SetStateAction<AppState>>;
 }
 
-const Instructions = ({ isMobile, setState }: InstructionsProps) => {
+const Instructions = ({ isMobile, practice = false, setState }: InstructionsProps) => {
    const text = useMemo(
       () =>
          isMobile
@@ -23,7 +24,7 @@ const Instructions = ({ isMobile, setState }: InstructionsProps) => {
       <Card className="w-full max-w-2xl mx-auto">
          <CardHeader>
             <CardTitle className="text-center text-2xl">
-               تعليمات الجلسة التدريبية
+               {practice ? `تعليمات الجلسة التدريبية` : `تعليمات الجلسة الرئيسية`}
             </CardTitle>
          </CardHeader>
          <CardContent className="space-y-6">
