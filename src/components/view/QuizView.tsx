@@ -327,11 +327,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          switch (event.key) {
             case "1":
             case "ArrowLeft":
-               handleResponse(true, false, "keyboard");
+               handleResponse(false, false, "keyboard");
                break;
             case "2":
             case "ArrowRight":
-               handleResponse(false, false, "keyboard");
+               handleResponse(true, false, "keyboard");
                break;
          }
       };
