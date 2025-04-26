@@ -2,7 +2,7 @@
 import { DemographicSurvey, UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__ } from "@/lib/consts";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 export type QuizLimitInfo = {
    message: string;
@@ -13,6 +13,7 @@ type AppState = "consent" | "practice" | "quiz" | `limit`;
 
 export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
+   const router = useRouter();
 
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
