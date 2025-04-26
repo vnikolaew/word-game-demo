@@ -9,8 +9,6 @@ import { Spinner } from "@/components/ui/Spinner";
 import { ConsentView } from "@/components/view/ConsentView";
 import { PracticeView } from "@/components/view/PracticeView";
 import QuizView from "@/components/view/QuizView";
-import ResultsView from "@/components/view/ResultsView";
-import { SurveyView } from "@/components/view/SurveyView";
 
 // types
 import QuizLimitView from "@/components/view/QuizLimitView";
@@ -29,9 +27,6 @@ export default function AppPage({ survey }: Props) {
       error,
       handleConsent,
       handleQuizComplete,
-      handleResultsComplete,
-      handleRetake,
-      handleSurveyComplete,
       loading,
       quizLimitInfo,
       setAppState,
@@ -65,15 +60,6 @@ export default function AppPage({ survey }: Props) {
                )}
                {appState === "limit" && (
                   <QuizLimitView limitInfo={quizLimitInfo} />
-               )}
-               {appState === "results" && (
-                  <ResultsView
-                     onNext={handleResultsComplete}
-                     onRetake={handleRetake}
-                  />
-               )}
-               {appState === "survey" && (
-                  <SurveyView onComplete={handleSurveyComplete} />
                )}
             </>
          )}

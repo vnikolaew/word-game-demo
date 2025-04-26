@@ -1,6 +1,6 @@
 "use client";
 import { DemographicSurvey, UserConsent } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__ } from "@/lib/consts";
 import router from "next/router";
 
@@ -9,13 +9,7 @@ export type QuizLimitInfo = {
    tryAgainIn: number;
 };
 
-type AppState =
-   | "consent"
-   | "practice"
-   | "quiz"
-   | "results"
-   | "survey"
-   | `limit`;
+type AppState = "consent" | "practice" | "quiz" | `limit`;
 
 export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
@@ -68,15 +62,19 @@ export function useQuiz(survey?: DemographicSurvey | null) {
    }, []);
 
    // Handle consent submission
-   const handleConsent = async () => {
+   const handleConsent = useCallback(async () => {
       try {
          setLoading(true);
          setError(null);
 
+         const newVersion = `${Number(consent?.consentVersion?.split(`.`)?.at(0)) + 1}.0`;
+
          // Save consent to database or perform any other necessary actions
          await fetch("/api/consent", {
             method: "POST",
-            body: JSON.stringify({ consentVersion: "1.0" }),
+            body: JSON.stringify({
+               consentVersion: newVersion,
+            }),
          });
 
          // Move to practice state
@@ -87,31 +85,15 @@ export function useQuiz(survey?: DemographicSurvey | null) {
       } finally {
          setLoading(false);
       }
-   };
+   }, [consent?.consentVersion]);
 
    // Handle quiz completion
    const handleQuizComplete = async () => {
-      setAppState(survey ? `results` : `survey`);
-   };
-
-   const handleResultsComplete = () => {
-      router.push("/");
-   };
-
-   const handleRetake = () => {
-      setAppState("quiz");
-   };
-
-   // Handle survey completion
-   const handleSurveyComplete = () => {
-      setAppState("results");
+      router.push(survey ? `/quiz/result` : `/quiz/survey`);
    };
 
    return {
       handleConsent,
-      handleSurveyComplete,
-      handleResultsComplete,
-      handleRetake,
       handleQuizComplete,
       loading,
       error,

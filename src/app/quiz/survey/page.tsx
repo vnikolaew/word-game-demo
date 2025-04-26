@@ -6,11 +6,11 @@ import React from "react";
 
 function Page() {
    const router = useRouter();
-   if (__IS_PROD__) return null;
+   const onComplete = () => router.push(`/quiz/result`);
 
    return (
       <div className="mx-auto py-12">
-         <SurveyView onComplete={(_) => router.push(`/`)} />
+         <SurveyView onComplete={onComplete} />
       </div>
    );
 }
