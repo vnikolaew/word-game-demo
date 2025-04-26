@@ -14,12 +14,12 @@ import {
    FormLabel,
    FormControl,
    FormMessage,
+   Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "lucide-react";
 import React from "react";
-import { Form } from "react-hook-form";
 import { useSignUp } from "./hooks";
+import Link from "next/link";
 
 function RegisterClient() {
    const { error, form, isLoading, onSubmit } = useSignUp();

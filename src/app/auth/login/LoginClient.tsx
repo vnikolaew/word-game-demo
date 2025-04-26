@@ -20,8 +20,8 @@ import {
    Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "lucide-react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 function LoginClient() {
    const { error, form, isLoading, onSubmit } = useSignIn();
