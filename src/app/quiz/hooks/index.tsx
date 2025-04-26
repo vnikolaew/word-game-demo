@@ -1,6 +1,6 @@
 "use client";
 import { DemographicSurvey, UserConsent } from "@prisma/client";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { __IS_PROD__ } from "@/lib/consts";
 import router from "next/router";
 
@@ -90,10 +90,9 @@ export function useQuiz(survey?: DemographicSurvey | null) {
    };
 
    // Handle quiz completion
-   const handleQuizComplete = useCallback(async () => {
-      const skipSurvey = !!survey;
-      setAppState(skipSurvey ? `results` : `survey`);
-   }, [survey]);
+   const handleQuizComplete = async () => {
+      setAppState(survey ? `results` : `survey`);
+   };
 
    const handleResultsComplete = () => {
       router.push("/");
