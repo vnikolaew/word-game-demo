@@ -139,7 +139,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    const submitQuizAttempt = useCallback(
       async (newResponses: QuizResponse[], score: number) => {
-         if (!currentList) return;
+         if (!currentList || quizStatus === `completed`) return;
 
          try {
             setIsSubmitting(true);
@@ -199,7 +199,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             setIsSubmitting(false);
          }
       },
-      [currentList, onComplete, getDeviceInfo]
+      [currentList, quizStatus, getDeviceInfo, onComplete]
    );
 
    const handleResponse = useCallback(
