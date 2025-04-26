@@ -19,11 +19,6 @@ import QuizLimitView from "@/components/view/QuizLimitView";
 import { __IS_PROD__ } from "@/lib/consts";
 import { useQuiz } from "./hooks";
 
-export type QuizLimitInfo = {
-   message: string;
-   tryAgainIn: number;
-};
-
 export default function AppPage() {
    const router = useRouter();
    const {

@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { QuizLimitInfo } from "@/app/quiz/page";
+import { QuizLimitInfo } from "@/app/quiz/hooks";
 
 export interface QuizLimitViewProps {
    limitInfo: QuizLimitInfo;

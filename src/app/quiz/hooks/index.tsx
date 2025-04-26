@@ -1,8 +1,13 @@
+"use client";
 import { UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
-import { QuizLimitInfo } from "../page";
 import { __IS_PROD__ } from "@/lib/consts";
 import router from "next/router";
+
+export type QuizLimitInfo = {
+   message: string;
+   tryAgainIn: number;
+};
 
 type AppState =
    | "consent"
@@ -49,25 +54,29 @@ export function useQuiz() {
    };
 
    useEffect(() => {
-      getConsent().then((data) => {
-         if (data) {
-            setConsent(data);
+      (async () => {
+         const [apiConsent, apiSurvey, apiLimit] = await Promise.all([
+            getConsent(),
+            getSurvey(),
+            limitUserQuiz(),
+         ]);
+
+         setSurvey(apiSurvey);
+         if (apiConsent) {
+            setConsent(apiConsent);
             setAppState("quiz");
          } else {
             setAppState("consent");
          }
-      });
 
-      getSurvey().then((data) => setSurvey(data));
-      limitUserQuiz().then((data) => {
-         if (data) {
+         if (apiLimit) {
             setQuizLimitInfo({
-               message: data.message,
-               tryAgainIn: data.tryAgainIn,
+               message: apiLimit.message,
+               tryAgainIn: apiLimit.tryAgainIn,
             });
-            if (data.success === false && __IS_PROD__) setAppState(`limit`);
+            if (apiLimit.success === false && __IS_PROD__) setAppState(`limit`);
          }
-      });
+      })();
    }, []);
 
    // Handle consent submission
@@ -94,10 +103,9 @@ export function useQuiz() {
 
    // Handle quiz completion
    const handleQuizComplete = useCallback(async () => {
-      console.log({ consent, survey });
-      const skipSurvey = consent && survey;
+      const skipSurvey = !!survey;
       setAppState(skipSurvey ? `results` : `survey`);
-   }, [consent, survey]);
+   }, [survey]);
 
    const handleResultsComplete = () => {
       router.push("/");
