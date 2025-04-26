@@ -2,10 +2,12 @@ import { Metadata } from "next";
 import UserProfile from "@/components/view/UserProfile";
 
 export const metadata: Metadata = {
-   title: "Profile | Arabic Word Recognition",
-   description: "View and manage your profile",
+   title: `الملف الشخصي | التعرف على الكلمات العربية`,
+   description: `عرض وإدارة ملفك الشخصي`,
 };
 
-export default function ProfilePage() {
+export const dynamic = "force-dynamic";
+
+export default async function ProfilePage() {
    return <UserProfile />;
 }

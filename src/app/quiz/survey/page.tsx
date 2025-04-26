@@ -1,18 +1,15 @@
-"use client";
-import { SurveyView } from "@/components/view/SurveyView";
 import { __IS_PROD__ } from "@/lib/consts";
-import { useRouter } from "next/navigation";
+import { Metadata } from "next";
 import React from "react";
+import SurveyClient from "./SurveyClient";
 
-function Page() {
-   const router = useRouter();
-   const onComplete = () => router.push(`/quiz/result`);
+export const metadata: Metadata = {
+   title: `استطلاع رأي حول خلفية الاختبار`,
+   description: `قم بإجراء استطلاع سريع للخلفية`,
+};
 
-   return (
-      <div className="mx-auto py-12">
-         <SurveyView onComplete={onComplete} />
-      </div>
-   );
+async function Page() {
+   return <SurveyClient />;
 }
 
 export default Page;
