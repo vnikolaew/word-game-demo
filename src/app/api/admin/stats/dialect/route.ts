@@ -37,7 +37,20 @@ export async function GET(req: NextRequest) {
          },
       });
 
-      const totalUsers = new Set(quizzes.map((q) => q.userId)).size;
+      const totalUsers = await prisma.user.count({
+         where: dialect?.length
+            ? {
+                 surveyResponses: {
+                    some: {
+                       arabicDialect: {
+                          contains: dialect,
+                          mode: `insensitive`,
+                       },
+                    },
+                 },
+              }
+            : {},
+      });
       const totalQuizzes = quizzes.length;
       const totalQuizzesPercentage =
          quizzes.length > 0 ? 100 * (quizzes.length / total) : 0;
