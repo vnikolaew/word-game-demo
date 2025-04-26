@@ -1,5 +1,5 @@
 "use client";
-import { UserConsent } from "@prisma/client";
+import { DemographicSurvey, UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__ } from "@/lib/consts";
 import router from "next/router";
@@ -17,9 +17,8 @@ type AppState =
    | "survey"
    | `limit`;
 
-export function useQuiz() {
+export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
-   const [survey, setSurvey] = useState<any | null>(null);
 
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
@@ -30,15 +29,6 @@ export function useQuiz() {
       setLoading(true);
       setError(null);
       const response = await fetch("/api/consent");
-      const data = await response.json();
-      setLoading(false);
-      return data;
-   };
-
-   const getSurvey = async () => {
-      setLoading(true);
-      setError(null);
-      const response = await fetch("/api/survey");
       const data = await response.json();
       setLoading(false);
       return data;
@@ -55,13 +45,11 @@ export function useQuiz() {
 
    useEffect(() => {
       (async () => {
-         const [apiConsent, apiSurvey, apiLimit] = await Promise.all([
+         const [apiConsent, apiLimit] = await Promise.all([
             getConsent(),
-            getSurvey(),
             limitUserQuiz(),
          ]);
 
-         setSurvey(apiSurvey);
          if (apiConsent) {
             setConsent(apiConsent);
             setAppState("quiz");

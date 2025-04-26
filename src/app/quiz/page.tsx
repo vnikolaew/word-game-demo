@@ -1,79 +1,27 @@
-"use client";
+import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import React from "react";
+import AppPage from "./QuizPageClient";
+import { DemographicSurvey } from "@prisma/client";
 
-import { useRouter } from "next/navigation";
+export const dynamic = "force-dynamic";
 
-// components
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Spinner } from "@/components/ui/Spinner";
+async function Page() {
+   const session = await getServerSession(authOptions);
+   if (!session?.user?.id) {
+      redirect(`/`);
+   }
 
-// views
-import { ConsentView } from "@/components/view/ConsentView";
-import { PracticeView } from "@/components/view/PracticeView";
-import QuizView from "@/components/view/QuizView";
-import ResultsView from "@/components/view/ResultsView";
-import { SurveyView } from "@/components/view/SurveyView";
+   const survey = await prisma.demographicSurvey.findUnique({
+      select: { id: true, userId: true },
+      where: {
+         userId: session.user.id,
+      },
+   });
 
-// types
-import QuizLimitView from "@/components/view/QuizLimitView";
-import { __IS_PROD__ } from "@/lib/consts";
-import { useQuiz } from "./hooks";
-
-export default function AppPage() {
-   const router = useRouter();
-   const {
-      appState,
-      error,
-      handleConsent,
-      handleQuizComplete,
-      handleResultsComplete,
-      handleRetake,
-      handleSurveyComplete,
-      loading,
-      quizLimitInfo,
-      setAppState,
-   } = useQuiz();
-
-   return (
-      <div className="mx-auto py-12">
-         {loading ? (
-            <div className="flex items-center justify-center min-h-[50vh]">
-               <Spinner size="sm" />
-            </div>
-         ) : error ? (
-            <Card>
-               <CardContent className="text-center py-6">
-                  <div className="text-red-600 mb-4">{error}</div>
-                  <Button onClick={() => router.push("/")}>
-                     العودة إلى المنزل
-                  </Button>
-               </CardContent>
-            </Card>
-         ) : (
-            <>
-               {appState === "consent" && (
-                  <ConsentView onConsent={handleConsent} />
-               )}
-               {appState === "practice" && (
-                  <PracticeView onComplete={() => setAppState("quiz")} />
-               )}
-               {appState === "quiz" && (
-                  <QuizView onComplete={handleQuizComplete} />
-               )}
-               {appState === "limit" && (
-                  <QuizLimitView limitInfo={quizLimitInfo} />
-               )}
-               {appState === "results" && (
-                  <ResultsView
-                     onNext={handleResultsComplete}
-                     onRetake={handleRetake}
-                  />
-               )}
-               {appState === "survey" && (
-                  <SurveyView onComplete={handleSurveyComplete} />
-               )}
-            </>
-         )}
-      </div>
-   );
+   return <AppPage survey={survey as DemographicSurvey} />;
 }
+
+export default Page;
