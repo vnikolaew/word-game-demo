@@ -141,6 +141,7 @@ export const CustomDropdown = ({
 };
 
 export const DROPDOWN_PLACEHOLDER = `الرجاء تحديد خيار`;
+
 const FIELDS_BY_PAGE: (keyof SurveyData)[][] = [
    [
       `age`,

@@ -18,27 +18,26 @@ interface ConsentViewProps {
    onConsent: () => void;
 }
 
+const consentItems = [
+   {
+      id: "statement1",
+      text: "أفهم أن المشاركة في هذه الدراسة طوعية.",
+   },
+   {
+      id: "statement2",
+      text: "أفهم أن بياناتي ستظل مجهولة المصدر ولن تُستخدم إلا لأغراض البحث العلمي.",
+   },
+   {
+      id: "statement3",
+      text: "أوافق على المشاركة في هذه الدراسة.",
+   },
+];
+
 export function ConsentView({ onConsent }: ConsentViewProps) {
    const [checkedItems, setCheckedItems] = useState<string[]>([]);
    const [submitting, setSubmitting] = useState(false);
 
-   const consentItems = [
-      {
-         id: "statement1",
-         text: "أفهم أن المشاركة في هذه الدراسة طوعية.",
-      },
-      {
-         id: "statement2",
-         text: "أفهم أن بياناتي ستظل مجهولة المصدر ولن تُستخدم إلا لأغراض البحث العلمي.",
-      },
-      {
-         id: "statement3",
-         text: "أوافق على المشاركة في هذه الدراسة.",
-      },
-   ];
-
    const allChecked = checkedItems.length === consentItems.length;
-
    const handleSubmitConsent = async () => {
       if (!allChecked || submitting) return;
 

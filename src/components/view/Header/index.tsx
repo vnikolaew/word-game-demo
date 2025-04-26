@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React from "react";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { User, LogOut, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -11,40 +11,11 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 // Jotai
-import { useAtom } from "jotai/react";
-import { isAdminAtom } from "@/lib/atoms";
 import { cn } from "@/lib/utils";
+import useHeader from "@/hooks/useHeader";
 
 const Header = () => {
-   const { data: session } = useSession();
-   const [isOpen, setIsOpen] = useState(false);
-   const dropdownRef = useRef<HTMLDivElement>(null);
-   const [isAdmin, setIsAdmin] = useAtom<boolean>(isAdminAtom as any);
-
-   const getAdmin = useCallback(async () => {
-      const res = await fetch("/api/admin/users/isAdmin");
-      const data = await res.json();
-      setIsAdmin(data.isAdmin);
-   }, [setIsAdmin]);
-
-   useEffect(() => {
-      getAdmin();
-   }, [getAdmin, session]);
-
-   useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-         if (
-            dropdownRef.current &&
-            !dropdownRef.current.contains(event.target as Node)
-         ) {
-            setIsOpen(false);
-         }
-      };
-
-      document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-         document.removeEventListener("mousedown", handleClickOutside);
-   }, []);
+   const { dropdownRef, isAdmin, session, isOpen, setIsOpen } = useHeader();
 
    return (
       <header className="bg-white z-10 shadow-sm rounded-full my-2 sticky top-2 border border-gray-200">

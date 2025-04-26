@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
 import Footer from "@/components/view/Footer";
+import { APP_NAME } from "@/lib/consts";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -18,6 +19,7 @@ const tajawal = Tajawal({
 export const metadata: Metadata = {
    title: "اختبار الكلمات",
    description: "اختبر معرفتك بالكلمات العربية",
+   applicationName: APP_NAME,
 };
 
 type RootLayoutProps = {
