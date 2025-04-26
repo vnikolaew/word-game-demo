@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { authOptions } from "@/lib/auth";
 import { SurveyData } from "@/types";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -172,6 +173,7 @@ export async function POST(req: Request) {
          },
       });
 
+      revalidatePath(`/quiz`);
       return NextResponse.json(
          {
             message: "تم حفظ الاستبيان بنجاح / Survey saved successfully",
