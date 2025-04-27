@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { Table, Search, Eye } from "lucide-react";
-import { User } from "@/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useUsersStats } from "./hooks";
 
 function UsersTableSkeleton() {
    return (
@@ -59,34 +59,14 @@ function UsersTableSkeleton() {
 }
 
 function Users() {
-   const [users, setUsers] = useState<User[]>([]);
-   const [searchTerm, setSearchTerm] = useState("");
-   const [isLoading, setIsLoading] = useState(true);
-   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
-   useEffect(() => {
-      fetchUsers();
-   }, []);
-
-   const fetchUsers = async () => {
-      try {
-         setIsLoading(true);
-         const response = await fetch("/api/admin/users");
-         if (!response.ok) throw new Error("فشل في جلب بيانات المستخدمين");
-         const data = await response.json();
-         setUsers(data);
-      } catch (error) {
-         console.error("خطأ في جلب بيانات المستخدمين:", error);
-      } finally {
-         setIsLoading(false);
-      }
-   };
-
-   const filteredUsers = users.filter(
-      (user) =>
-         user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-         user.id.toLowerCase().includes(searchTerm.toLowerCase())
-   );
+   const {
+      filteredUsers,
+      isLoading,
+      searchTerm,
+      selectedUser,
+      setSearchTerm,
+      setSelectedUser,
+   } = useUsersStats();
 
    return (
       <div className="space-y-6">

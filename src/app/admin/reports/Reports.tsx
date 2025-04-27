@@ -7,6 +7,7 @@ import {
    CardDescription,
    CardContent,
 } from "@/components/ui/card";
+import { downloadFile } from "@/lib/utils";
 import { FileDown } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
@@ -29,14 +30,10 @@ function Reports() {
          if (!response.ok) throw new Error(`فشل في تصدير بيانات ${type}`);
 
          const blob = await response.blob();
-         const url = window.URL.createObjectURL(blob);
-         const a = document.createElement("a");
-         a.href = url;
-         a.download = `${type}_data_${new Date().toISOString().split("T")[0]}.csv`;
-         document.body.appendChild(a);
-         a.click();
-         window.URL.revokeObjectURL(url);
-         document.body.removeChild(a);
+         await downloadFile(
+            `${type}_data_${new Date().toISOString().split("T")[0]}.csv`,
+            blob
+         );
 
          toast.success(`تم تصدير بيانات ${type} بنجاح`);
       } catch (error) {

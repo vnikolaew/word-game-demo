@@ -1,18 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
 // Components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
-import { toast } from "sonner";
 
-// Types
-import { QuizAttempt } from "@prisma/client";
-
-// Hooks
-import { useRouter } from "next/navigation";
 import {
    TwitterShareButton,
    WhatsappShareButton,
@@ -20,6 +12,7 @@ import {
    WhatsappIcon,
 } from "react-share";
 import { motion } from "framer-motion";
+import { useQuizResult } from "@/hooks/useQuizResult";
 
 interface ResultsViewProps {
    onNext: () => void;
@@ -27,96 +20,14 @@ interface ResultsViewProps {
 }
 
 export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
-   const [results, setResults] = useState<QuizAttempt | null>(null);
-   const [loading, setLoading] = useState(true);
-   const [error, setError] = useState<string | null>(null);
-   const shareUrl = window.location.origin;
-   const router = useRouter();
-
-   useEffect(() => {
-      const fetchResults = async () => {
-         try {
-            const response = await fetch("/api/quiz/attempts/latest");
-            if (!response.ok) {
-               if (response.status === 404) {
-                  toast.error("لم يتم العثور على نتائج");
-                  setError("لم يتم العثور على نتائج");
-               }
-               toast.error("فشل في تحميل النتائج");
-            }
-            const data = await response.json();
-            setResults(data);
-         } catch (error) {
-            setError(
-               error instanceof Error ? error.message : "فشل في تحميل النتائج"
-            );
-            toast.error("فشل في تحميل النتائج");
-         } finally {
-            setLoading(false);
-         }
-      };
-
-      fetchResults();
-   }, []);
-
-   const getFeedbackMessage = (score: number): string => {
-      const feedbackMessages = [
-         {
-            range: [-100, 0],
-            message: "تحتاج إلى تحسين معرفتك بالكلمات العربية.",
-         },
-         {
-            range: [1, 25],
-            message: "معرفتك بالكلمات العربية محدودة، واصل التعلم.",
-         },
-         { range: [26, 50], message: "مستوى متواضع في تمييز الكلمات العربية." },
-         { range: [51, 70], message: "مستوى جيد في معرفة الكلمات العربية." },
-         {
-            range: [71, 80],
-            message: "مستوى جيد جداً في تمييز الكلمات العربية.",
-         },
-         { range: [81, 90], message: "مستوى ممتاز في معرفة الكلمات العربية." },
-         {
-            range: [91, 95],
-            message: "مستوى متقدم جداً في معرفة الكلمات العربية.",
-         },
-         {
-            range: [96, 100],
-            message: "معرفة استثنائية بالكلمات العربية. أحسنت!",
-         },
-      ];
-
-      for (const {
-         range: [min, max],
-         message,
-      } of feedbackMessages) {
-         if (score >= min && score <= max) {
-            return message;
-         }
-      }
-      return feedbackMessages[0].message;
-   };
-
-   const handleShare = async () => {
-      if (!results) return;
-
-      const shareText = `I scored ${results.score} out of ${100} on the Lexical Decision Task! Try it yourself!`;
-
-      try {
-         if (navigator.share) {
-            await navigator.share({
-               title: "My Quiz Results",
-               text: shareText,
-               url: shareUrl,
-            });
-         } else {
-            await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
-            toast.success("تم نسخ النتائج إلى الحافظة!");
-         }
-      } catch (error) {
-         console.error("Error sharing:", error);
-      }
-   };
+   const {
+      error,
+      getFeedbackMessage,
+      handleShare,
+      loading,
+      results,
+      shareUrl,
+   } = useQuizResult();
 
    if (loading || !results) {
       return (

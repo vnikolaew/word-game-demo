@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 // Components
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -18,28 +16,10 @@ import {
 import { Users, CheckCircle, Clock } from "lucide-react";
 
 // Types
-import { DashboardStats } from "@/types";
+import { useAdminStats } from "./hooks";
 
 export default function AdminDashboard() {
-   const [stats, setStats] = useState<DashboardStats | null>(null);
-   const [isLoading, setIsLoading] = useState(true);
-
-   useEffect(() => {
-      const fetchStats = async () => {
-         try {
-            const response = await fetch("/api/admin/stats");
-            if (!response.ok) throw new Error("فشل في جلب الإحصائيات");
-            const data = await response.json();
-            setStats(data);
-         } catch (error) {
-            console.error("خطأ في جلب الإحصائيات:", error);
-         } finally {
-            setIsLoading(false);
-         }
-      };
-
-      fetchStats();
-   }, []);
+   const { isLoading, stats } = useAdminStats();
 
    if (isLoading || !stats) {
       return <DashboardSkeleton />;
