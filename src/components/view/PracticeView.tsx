@@ -42,6 +42,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
       correctCount,
       accuracy,
       handleResponse,
+      setState,
    } = usePracticeQuiz();
 
    if (state === "intro") {

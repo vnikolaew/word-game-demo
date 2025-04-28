@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+import { NextAuthOptions, SessionOptions } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -6,6 +6,7 @@ import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
+import { Provider } from "next-auth/providers/index";
 
 interface ExtendedToken extends JWT {
    id: string;
@@ -23,78 +24,77 @@ interface ExtendedSession extends Session {
    user: ExtendedUser;
 }
 
+const credentials = CredentialsProvider({
+   name: "credentials",
+   credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+   },
+   type: `credentials`,
+   async authorize(credentials) {
+      if (!credentials?.email || !credentials?.password) {
+         return null;
+      }
+
+      const user = await prisma.user.findFirst({
+         where: {
+            email: credentials.email,
+         },
+      });
+      if (!user) {
+         return null;
+      }
+
+      const passwordsMatch = await bcrypt.compare(
+         credentials.password,
+         user.password!
+      );
+
+      if (!passwordsMatch) {
+         return null;
+      }
+
+      return {
+         id: user.id,
+         email: user.email,
+         name: user.name,
+      };
+   },
+});
+
+const google = Google({
+   clientId: process.env.GOOGLE_AUTH_CLIENT_ID!,
+   clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET!,
+   authorization: {
+      params: {
+         scope: `openid email profile`,
+         access_type: `offline`,
+         response_type: `code`,
+         prompt: `consent`,
+      },
+   },
+   allowDangerousEmailAccountLinking: true,
+});
+
+const providers: Provider[] = [google, credentials] as const;
+
+const session: Partial<SessionOptions> = {
+   strategy: "jwt",
+   maxAge: 30 * 24 * 60 * 60, // 30 days
+};
+
 export const authOptions: NextAuthOptions = {
-   adapter: {
-      ...PrismaAdapter(prisma),
-   },
+   adapter: PrismaAdapter(prisma),
    theme: { colorScheme: `auto`, brandColor: `white` },
-   session: {
-      strategy: "jwt",
-      maxAge: 30 * 24 * 60 * 60, // 30 days
-   },
+   session,
    secret: process.env.NEXTAUTH_SECRET ?? `wesfwee12131242`,
    pages: {
       signIn: "/login",
-      error: "/login", // Add error page
+      error: "/login",
    },
-   events: {
-      session: ({ session, token }) => {},
-      signIn({ account, user, profile }) {},
-   },
-   providers: [
-      Google({
-         clientId: process.env.GOOGLE_AUTH_CLIENT_ID!,
-         clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET!,
-         authorization: {
-            params: {
-               scope: `openid email profile`,
-               access_type: `offline`,
-               response_type: `code`,
-               prompt: `consent`,
-            },
-         },
-         allowDangerousEmailAccountLinking: true,
-      }),
-      CredentialsProvider({
-         name: "credentials",
-         credentials: {
-            email: { label: "Email", type: "email" },
-            password: { label: "Password", type: "password" },
-         },
-         type: `credentials`,
-         async authorize(credentials) {
-            if (!credentials?.email || !credentials?.password) {
-               return null;
-            }
-
-            const user = await prisma.user.findFirst({
-               where: {
-                  email: credentials.email,
-               },
-            });
-            if (!user) {
-               return null;
-            }
-
-            const passwordsMatch = await bcrypt.compare(
-               credentials.password,
-               user.password
-            );
-
-            if (!passwordsMatch) {
-               return null;
-            }
-
-            return {
-               id: user.id,
-               email: user.email,
-               name: user.name,
-            };
-         },
-      }),
-   ],
+   providers,
    callbacks: {
-      async signIn({ user, profile, credentials }) {
+      async signIn({ user, profile }) {
          if (!user?.email) {
             user.email =
                profile?.email ??
@@ -119,12 +119,7 @@ export const authOptions: NextAuthOptions = {
          }
          return token as ExtendedToken;
       },
-      async session({
-         session,
-         token,
-         user,
-         newSession,
-      }): Promise<ExtendedSession> {
+      async session({ session, token, user }): Promise<ExtendedSession> {
          // @ts-ignore
          session.user ??= {};
 

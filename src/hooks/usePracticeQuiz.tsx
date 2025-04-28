@@ -144,5 +144,6 @@ export function usePracticeQuiz() {
       accuracy,
       handleNextItem,
       handleResponse,
+      setState,
    };
 }

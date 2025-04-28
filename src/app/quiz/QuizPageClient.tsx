@@ -4,6 +4,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/Spinner";
+import { match } from "ts-pattern";
 
 // views
 import { ConsentView } from "@/components/view/ConsentView";
@@ -48,20 +49,20 @@ export default function AppPage({ survey }: Props) {
                </CardContent>
             </Card>
          ) : (
-            <>
-               {appState === "consent" && (
+            match(appState)
+               .with(`consent`, (_) => (
                   <ConsentView onConsent={handleConsent} />
-               )}
-               {appState === "practice" && (
-                  <PracticeView onComplete={() => setAppState("quiz")} />
-               )}
-               {appState === "quiz" && (
+               ))
+               .with(`practice`, (_) => (
+                  <PracticeView onComplete={() => setAppState(`quiz`)} />
+               ))
+               .with(`quiz`, (_) => (
                   <QuizView onComplete={handleQuizComplete} />
-               )}
-               {appState === "limit" && (
+               ))
+               .with(`limit`, (_) => (
                   <QuizLimitView limitInfo={quizLimitInfo} />
-               )}
-            </>
+               ))
+               .otherwise((_) => null)
          )}
       </div>
    );
