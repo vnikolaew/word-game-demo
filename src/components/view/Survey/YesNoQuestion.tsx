@@ -18,7 +18,6 @@ interface Props {
 function YesNoQuestion({
    errors,
    description,
-   category,
    question,
    formData,
    setFormData,
@@ -27,7 +26,6 @@ function YesNoQuestion({
 }: Props) {
    return (
       <div className="space-y-2">
-         <h2>{category}</h2>
          <Label>{question}</Label>
          <p className="text-neutral-500 text-sm drop-shadow-sm">
             {description.trim()}
@@ -52,7 +50,7 @@ function YesNoQuestion({
                <Fragment>
                   <div className="flex items-center space-x-2">
                      <RadioGroupItem value="yes" id={`${key}-yes`} />
-                     <Label htmlFor={`${key}-yes`}>ع</Label>
+                     <Label htmlFor={`${key}-yes`}>نعم</Label>
                   </div>
                   <div className="flex items-center space-x-2">
                      <RadioGroupItem value="no" id={`${key}-no`} />

@@ -19,8 +19,8 @@ function Footer() {
             </Link>
             <div className="text-center !mb-2">
                <p className="drop-shadow-sm">
-                  © <b>{new Date().getFullYear()}</b> اختبر حروفنا. جميع الحقوق
-                  محفوظة.
+                  © <b>{new Date().getFullYear()}</b> اختبار حروفنا. جميع
+                  الحقوق محفوظة.
                </p>
             </div>
          </div>
