@@ -8,10 +8,11 @@ import {
    TableRow,
    TableHead,
    TableBody,
+   Table,
    TableCell,
 } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
-import { Table, Search, Eye } from "lucide-react";
+import { Search, Eye } from "lucide-react";
 import React from "react";
 import { useUsersStats } from "./hooks";
 

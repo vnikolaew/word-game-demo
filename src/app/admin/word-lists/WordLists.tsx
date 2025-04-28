@@ -8,11 +8,12 @@ import {
    TableHead,
    TableBody,
    TableCell,
+   Table,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-label";
-import { Plus, Table, Edit, Trash2, X } from "lucide-react";
+import { Plus, Edit, Trash2, X } from "lucide-react";
 import React from "react";
 import { useWordListsStats } from "./hooks";
 
