@@ -3,7 +3,6 @@ import { QuizResponse, DeviceInfo } from "@/types";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { useMediaQuery } from "./useMediaQuery";
 import { useWordList } from "./useWordList";
-import { handleWebpackExternalForEdgeRuntime } from "next/dist/build/webpack/plugins/middleware-plugin";
 
 const TOTAL_WORDS = 100;
 const STIMULUS_DURATION = 2000; // 2 seconds max per word
@@ -352,6 +351,7 @@ export function useQuiz({ onComplete }: QuizViewProps) {
       shuffledWords,
       isLoading,
       isSubmitting,
-      showWord,isCorrect
+      showWord,
+      isCorrect,
    };
 }

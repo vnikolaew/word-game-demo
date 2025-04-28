@@ -106,7 +106,7 @@ export async function GET(
                   "User Response": userResponse,
                   "Response type": response.responseType,
                   Correct: response.isCorrect ? 1 : 0,
-                  Timeout: response.timeout ? 1 : 0,
+                  Timeout: response.isTimeout ? 1 : 0,
                   Answer: response.isNonWord ? "nonword" : "word",
                   "Quiz score": quiz.score,
                   "Quiz status": quiz.quizStatus,

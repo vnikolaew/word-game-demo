@@ -76,17 +76,17 @@ export function useQuizResult() {
    const handleShare = async () => {
       if (!results) return;
 
-      const shareText = `I scored ${results.score} out of ${100} on the Lexical Decision Task! Try it yourself!`;
+      const shareTextAr = `حصلت على درجة ${results.score} من ${100} في اختبار حروفنا! جرب الاختبار #اختبار_حروفنا #الكلمات_العربية`;
 
       try {
          if (navigator.share) {
             await navigator.share({
                title: "My Quiz Results",
-               text: shareText,
+               text: shareTextAr,
                url: shareUrl,
             });
          } else {
-            await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+            await navigator.clipboard.writeText(`${shareTextAr}\n${shareUrl}`);
             toast.success("تم نسخ النتائج إلى الحافظة!");
          }
       } catch (error) {

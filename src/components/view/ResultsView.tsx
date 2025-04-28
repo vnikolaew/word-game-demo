@@ -53,7 +53,7 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
       );
    }
 
-   const shareText = `I scored ${results.score} out of ${100} on the Lexical Decision Task! Try it yourself!`;
+   const shareTextAr = `حصلت على درجة ${results.score} من ${100} في اختبار حروفنا! جرب الاختبار #اختبار_حروفنا #الكلمات_العربية`;
 
    return (
       <Card>
@@ -91,10 +91,10 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
             <div className="text-center">
                <p className="text-sm text-gray-500">شارك نتيجتك مع الآخرين!</p>
                <div className="mt-4 flex justify-center space-x-4">
-                  <TwitterShareButton url={shareUrl} title={shareText}>
+                  <TwitterShareButton url={shareUrl} title={shareTextAr}>
                      <TwitterIcon size={32} round />
                   </TwitterShareButton>
-                  <WhatsappShareButton url={shareUrl} title={shareText}>
+                  <WhatsappShareButton url={shareUrl} title={shareTextAr}>
                      <WhatsappIcon size={32} round />
                   </WhatsappShareButton>
                </div>

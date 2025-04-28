@@ -86,15 +86,7 @@ const QuizCard = ({
                   </Button>
                </div>
             ) : (
-               <motion.p
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="flex justify-center gap-1 text-sm text-neutral-400 drop-shadow-sm"
-               >
-                  <b>تلميح:</b> استخدم أسهم لوحة المفاتيح (<b>اليسار</b> و
-                  <b>اليمين</b>) لإدخال اختيارك
-               </motion.p>
+               <span />
             )}
          </div>
       </Card>
