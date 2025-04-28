@@ -9,20 +9,23 @@ interface Props {
    setFormData: Dispatch<SetStateAction<SurveyData>>;
 }
 
+const OPTIONS = [
+   { value: "0", label: `0` },
+   { value: "1", label: `ساعة واحدة` },
+   { value: "2", label: `ساعتان` },
+   { value: "3", label: `3 ساعات` },
+   { value: "4", label: `4 ساعات` },
+   { value: "5", label: `5 ساعات` },
+   { value: "6", label: `6 ساعات أو أكثر` },
+] as const;
+
 function LanguageUsageHours({ errors, formData, setFormData }: Props) {
    return (
       <div className="w-3/4 md:!w-1/2 space-y-8">
          <div className="space-y-2">
-            <Label>كم ساعة تقضي في القراءة باللغة العربية يومياً؟</Label>
+            <Label>كم ساعة تقضي يومياً في قراءة اللغة العربية الفصحى؟</Label>
             <CustomDropdown
-               options={[
-                  { value: "0", label: "لا أقرأ بالعربية" },
-                  { value: "1", label: "ساعة واحدة" },
-                  { value: "2", label: "ساعتان" },
-                  { value: "3", label: "3 ساعات" },
-                  { value: "4", label: "4 ساعات" },
-                  { value: "5", label: "5 ساعات أو أكثر" },
-               ]}
+               options={OPTIONS}
                value={formData.readingHours}
                onChange={(value) =>
                   setFormData((prev) => ({
@@ -36,16 +39,11 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
          </div>
 
          <div className="space-y-2">
-            <Label>كم ساعة تقضي في الاستماع باللغة العربية يومياً؟</Label>
+            <Label>
+               كم ساعة تقضي يومياً في الاستماع إلى اللغة العربية الفصحى؟
+            </Label>
             <CustomDropdown
-               options={[
-                  { value: "0", label: "لا أستمع للعربية" },
-                  { value: "1", label: "ساعة واحدة" },
-                  { value: "2", label: "ساعتان" },
-                  { value: "3", label: "3 ساعات" },
-                  { value: "4", label: "4 ساعات" },
-                  { value: "5", label: "5 ساعات أو أكثر" },
-               ]}
+               options={OPTIONS}
                value={formData.listeningHours}
                onChange={(value) =>
                   setFormData((prev) => ({
@@ -59,16 +57,9 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
          </div>
 
          <div className="space-y-2">
-            <Label>كم ساعة تقضي في الكتابة باللغة العربية يومياً؟</Label>
+            <Label>كم ساعة تقضي يومياً في الكتابة باللغة العربية الفصحى؟</Label>
             <CustomDropdown
-               options={[
-                  { value: "0", label: "لا أكتب بالعربية" },
-                  { value: "1", label: "ساعة واحدة" },
-                  { value: "2", label: "ساعتان" },
-                  { value: "3", label: "3 ساعات" },
-                  { value: "4", label: "4 ساعات" },
-                  { value: "5", label: "5 ساعات أو أكثر" },
-               ]}
+               options={OPTIONS}
                value={formData.writingHours}
                onChange={(value) =>
                   setFormData((prev) => ({
@@ -82,16 +73,9 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
          </div>
 
          <div className="space-y-2">
-            <Label>كم ساعة تقضي في التحدث باللغة العربية يومياً؟</Label>
+            <Label>كم ساعة تقضي يومياً في التحدث باللغة العربية الفصحى؟</Label>
             <CustomDropdown
-               options={[
-                  { value: "0", label: "لا أتحدث العربية" },
-                  { value: "1", label: "ساعة واحدة" },
-                  { value: "2", label: "ساعتان" },
-                  { value: "3", label: "3 ساعات" },
-                  { value: "4", label: "4 ساعات" },
-                  { value: "5", label: "5 ساعات أو أكثر" },
-               ]}
+               options={OPTIONS}
                value={formData.speakingHours}
                onChange={(value) =>
                   setFormData((prev) => ({

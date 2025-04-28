@@ -27,7 +27,7 @@ function ParentsLanguage({ errors, formData, setFormData }: Props) {
          >
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="arabic_only" id="arabic_only" />
-               <Label htmlFor="arabic_only">لعربية فقط من كلا الوالدين</Label>
+               <Label htmlFor="arabic_only">العربية فقط من كلا الوالدين</Label>
             </div>
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="other_only" id="other_only" />

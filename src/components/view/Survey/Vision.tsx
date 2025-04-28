@@ -14,11 +14,11 @@ function Vision({ errors, formData, setFormData }: Props) {
       <YesNoQuestion
          prop="vision"
          category="الرؤية الطبيعية أو المُصححة"
-         description="الرؤية الطبيعية أو المُصححة تعني أنك تستطيع رؤية الأشياء بوضوح، إما بعينيك فحسب أو بمساعدة النظارات."
+         description={`الرؤية الطبيعية أو المُصححة تعني أنك تستطيع رؤية الأشياء بوضوح، إما بعينيك فحسب أو بمساعدة النظارات`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}
-         question="هل رؤيتك طبيعية أو مُصححة (باستخدام النظارات أو العدسات اللاصقة)؟"
+         question={`هل رؤيتك طبيعية أو مُصححة (باستخدام النظارات أو العدسات اللاصقة)؟`}
       />
    );
 }

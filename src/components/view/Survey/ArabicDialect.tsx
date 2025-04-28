@@ -16,11 +16,11 @@ function ArabicDialect({ errors, formData, setFormData }: Props) {
          <CustomDropdown
             options={[
                { value: "gulf", label: "خليجية" },
-               { value: "egyptian", label: "مصرية" },
-               { value: "levantine", label: "شامية" },
-               { value: "yemeni", label: "يمنية" },
-               { value: "iraqi", label: "عراقية" },
-               { value: "maghrebi", label: "مغربية" },
+               { value: "egyptian", label: `مصرية` },
+               { value: "levantine", label: `شامية` },
+               { value: "yemeni", label: `يمنية` },
+               { value: "iraqi", label: `عراقية` },
+               { value: "maghrebi", label: `مغربية` },
             ]}
             value={formData.arabicDialect}
             onChange={(value) =>

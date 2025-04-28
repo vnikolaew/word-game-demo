@@ -206,7 +206,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8">
                {match(page)
-                  .with(1, (_) => (
+                  .with(1, () => (
                      <>
                         <Age {...props} />
                         <Gender {...props} />
@@ -216,7 +216,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <CurrentUniversity {...props} />
                      </>
                   ))
-                  .with(2, (_) => (
+                  .with(2, () => (
                      <>
                         <NativeLanguage {...props} />
                         <ChildLanguages {...props} />
@@ -225,7 +225,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <ArabicDialect {...props} />
                      </>
                   ))
-                  .with(3, (_) => (
+                  .with(3, () => (
                      <>
                         <KindergartenLanguage {...props} />
                         <PrimaryLanguage {...props} />
@@ -234,8 +234,8 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <UniversityLanguage {...props} />
                      </>
                   ))
-                  .with(4, (_) => <LanguageUsageHours {...props} />)
-                  .with(5, (_) => (
+                  .with(4, () => <LanguageUsageHours {...props} />)
+                  .with(5, () => (
                      <>
                         <AttentionDisorder {...props} />
                         <ReadingDisorder {...props} />

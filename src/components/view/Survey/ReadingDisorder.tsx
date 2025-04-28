@@ -14,11 +14,11 @@ function ReadingDisorder({ errors, formData, setFormData }: Props) {
       <YesNoQuestion
          prop="readingDisorder"
          category="اضطراب القراءة"
-         description="اضطراب القراءة هو صعوبة في التعرف على الكلمات وفهمها رغم القدرات الذهنية الطبيعية."
+         description={`اضطراب القراءة هو صعوبة في التعرف على الكلمات وفهمها رغم القدرات الذهنية الطبيعية.`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}
-         question="هل تم تشخيصك باضطراب القراءة (الديسلكسيا) أو صعوبات مماثلة في القراءة؟"
+         question={`هل تم تشخيصك باضطراب القراءة (الديسلكسيا) أو صعوبات مماثلة في القراءة؟`}
       />
    );
 }

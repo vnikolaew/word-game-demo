@@ -14,14 +14,11 @@ function AttentionDisorder({ errors, formData, setFormData }: Props) {
       <YesNoQuestion
          prop="attentionDisorder"
          category="اضطراب الانتباه"
-         description="
-         اضطراب الانتباه هو حالة تجعل الشخص يواجه صعوبة في التركيز والبقاء
-            منظماً وإكمال المهام.
-         "
+         description={`اضطراب الانتباه هو حالة تجعل الشخص يواجه صعوبة في التركيز والبقاء منظماً وإكمال المهام.`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}
-         question="هل تم تشخيصك باضطراب الانتباه وفرط الحركة أو اضطراب مشابه؟"
+         question={`هل تم تشخيصك باضطراب الانتباه وفرط الحركة أو اضطراب مشابه؟`}
       />
    );
 }

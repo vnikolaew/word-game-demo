@@ -17,18 +17,18 @@ interface Props {
 function PrimaryLanguage({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>في مرحلة الابتدائية، ماذا كانت لغة التدريس؟</Label>
+         <Label>عندما كنت في مرحلة الابتدائية، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
             options={[
-               { value: "", label: "يرجى اختيار إجابة" },
-               { value: "arabic", label: "العربية" },
-               { value: "english", label: "الإنجليزية" },
-               { value: "french", label: "الفرنسية" },
+               { value: "", label: `يرجى اختيار إجابة` },
+               { value: "arabic", label: `العربية` },
+               { value: "english", label: `الإنجليزية` },
+               { value: "french", label: `الفرنسية` },
                {
                   value: "two_languages",
-                  label: "العربية ولغة أخرى (الرجاء التحديد)",
+                  label: `العربية ولغة أخرى (الرجاء التحديد)`,
                },
-               { value: "other", label: "أخرى، يرجى التحديد" },
+               { value: "other", label: `أخرى، يرجى التحديد` },
             ]}
             value={formData.primaryLanguage ?? ``}
             onChange={(value) =>

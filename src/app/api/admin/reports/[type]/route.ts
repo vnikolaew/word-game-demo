@@ -164,8 +164,8 @@ export async function GET(
             vision: survey.vision,
             handedness: [`yes`, `no`].includes(survey.handedness)
                ? survey.handedness === `yes`
-                  ? `left`
-                  : `right`
+                  ? `Left-handed`
+                  : `Right-handed`
                : survey.handedness,
             date: survey.createdAt,
          }));
