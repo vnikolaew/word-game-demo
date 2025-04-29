@@ -1,22 +1,15 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
-import { Spinner } from "../ui/Spinner";
-import Instructions from "./Instructions";
-
-import { useExperiment } from "@/app/test/hooks";
-import { cn } from "@/lib/utils";
+import Head from "next/head";
+import { TOTAL_WORDS, useExperiment } from "./hooks";
+import { Progress } from "@/components/ui/progress";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment } from "react";
-import { Card } from "../ui/card";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Noto_Sans_Arabic } from "next/font/google";
-import { Progress } from "../ui/progress";
-
-interface QuizViewProps {
-   onComplete: () => void;
-}
-
-const TOTAL_WORDS = 100;
+import { Spinner } from "@/components/ui/Spinner";
+import Instructions from "@/components/view/Instructions";
 
 const notoSans = Noto_Sans_Arabic({
    variable: "--font-arabic",
@@ -25,10 +18,11 @@ const notoSans = Noto_Sans_Arabic({
    display: "swap",
 });
 
-export default function QuizView({ onComplete }: QuizViewProps) {
+export default function Experiment() {
    const [state, setState] = useState<string>("instructions");
    const {
       responses,
+      show,
       submitQuizAttempt,
       error,
       isSubmitting,
@@ -46,11 +40,11 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       if (responses.length >= TOTAL_WORDS) {
          submitQuizAttempt().then((success) => {
             if (success) {
-               onComplete();
+               router.push(`/quiz/result`);
             }
          });
       }
-   }, [onComplete, responses.length, router, submitQuizAttempt]);
+   }, [responses.length, router, submitQuizAttempt]);
 
    if (error || wordListError) {
       return (
@@ -82,18 +76,25 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    return (
       <Fragment>
+         <Head>
+            <link
+               href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
+               rel="stylesheet"
+               type="text/css"
+            />
+         </Head>
+         <div className="flex flex-col items-center gap-2 mt-12">
+            <Progress value={responses.length} className="mb-6" />
+         </div>
          <Card
             className={cn(
-               "w-full p-2 !min-h-[50vh] relative",
+               "w-full p-6 !min-h-[30vh] relative",
                notoSans.className
             )}
          >
-            <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
-               <Progress value={responses.length} className="mb-6 " />
-            </div>
             <div
                id="jspsych-experiment"
-               className="!w-full !min-h-[50vh] !h-full !border-none outline-none flex flex-col items-center justify-center"
+               className="!w-full !min-h-[30vh] !h-full !border-none outline-none flex flex-col items-center justify-center"
             >
                {isMobile ? (
                   <div className="flex justify-center items-center gap-4 absolute w-3/4 bottom-4">

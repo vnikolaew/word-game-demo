@@ -120,3 +120,52 @@
 [dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
    --tw-space-x-reverse: 1;
 }
+
+.jspsych-content-wrapper {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+#jspsych-html-keyboard-response-stimulus {
+}
+
+#jspsych-html-keyboard-response-stimulus p {
+   width: auto !important;
+   font-weight: normal !important;
+   font-size: 1rem;
+}
+
+@keyframes slide-in {
+   from {
+      translate: 20px;
+      opacity: 0%;
+   }
+
+   to {
+      translate: 0px;
+      opacity: 100%;
+   }
+}
+
+#jspsych-html-button-response-stimulus h1 {
+   width: auto !important;
+   font-weight: bold !important;
+   font-size: 2rem;
+
+   text-align: center;
+   animation-duration: 0.5s;
+   animation-name: slide-in;
+   animation-direction: normal;
+}
+
+#jspsych-html-keyboard-response-stimulus h1 {
+   width: auto !important;
+   font-weight: bold !important;
+   font-size: 2rem;
+
+   text-align: center;
+   animation-duration: 0.5s;
+   animation-name: slide-in;
+   animation-direction: normal;
+}

@@ -134,7 +134,7 @@ function Users() {
             open={!!selectedUser}
             onOpenChange={() => setSelectedUser(null)}
          >
-            <DialogContent className="max-w-2xl">
+            <DialogContent className="max-w-2xl mt-12">
                <DialogHeader>
                   <DialogTitle>تفاصيل المستخدم</DialogTitle>
                </DialogHeader>
@@ -142,19 +142,19 @@ function Users() {
                   <div className="space-y-6">
                      <div className="grid grid-cols-2 gap-4">
                         <div>
-                           <h3 className="font-medium">الاسم</h3>
+                           <h3 className="font-semibold">الاسم</h3>
                            <p>{selectedUser.name || "غير متوفر"}</p>
                         </div>
                         <div>
-                           <h3 className="font-medium">البريد الإلكتروني</h3>
+                           <h3 className="font-semibold ">البريد الإلكتروني</h3>
                            <p>{selectedUser.email}</p>
                         </div>
                         <div>
-                           <h3 className="font-medium">معرف المستخدم</h3>
+                           <h3 className="font-semibold">معرف المستخدم</h3>
                            <p className="font-mono">{selectedUser.id}</p>
                         </div>
                         <div>
-                           <h3 className="font-medium">تاريخ الانضمام</h3>
+                           <h3 className="font-semibold">تاريخ الانضمام</h3>
                            <p>
                               {new Date(
                                  selectedUser.createdAt
@@ -177,14 +177,18 @@ function Users() {
                               <TableBody>
                                  {selectedUser.quizAttempts.map((quiz) => (
                                     <TableRow key={quiz.id}>
-                                       <TableCell>#{quiz.id}</TableCell>
+                                       <TableCell className="font-semibold">
+                                          #{quiz.id}
+                                       </TableCell>
                                        <TableCell>
                                           {quiz.score.toFixed(1)}%
                                        </TableCell>
                                        <TableCell>
-                                          {new Date(
-                                             quiz.createdAt
-                                          ).toLocaleDateString()}
+                                          <time>
+                                             {new Date(
+                                                quiz.createdAt
+                                             ).toLocaleDateString()}
+                                          </time>
                                        </TableCell>
                                     </TableRow>
                                  ))}

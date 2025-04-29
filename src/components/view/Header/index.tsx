@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { User, LogOut, Settings } from "lucide-react";
+import { User, LogOut, Settings, FlaskConical } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Components
@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // Jotai
 import { cn } from "@/lib/utils";
 import useHeader from "@/hooks/useHeader";
+import { __IS_DEV__ } from "@/lib/consts";
 
 const Header = () => {
    const { dropdownRef, isAdmin, session, isOpen, setIsOpen } = useHeader();
@@ -30,6 +31,18 @@ const Header = () => {
                      من نحن
                   </Button>
                </Link>
+               {__IS_DEV__ && (
+                  <Link href="/test">
+                     <Button
+                        className="inline-flex gap-2 items-center"
+                        variant="ghost"
+                        size="sm"
+                     >
+                        <FlaskConical size={12} />
+                        امتحان
+                     </Button>
+                  </Link>
+               )}
                {session ? (
                   <>
                      <Link href="/quiz">

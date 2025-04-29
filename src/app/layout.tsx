@@ -8,6 +8,7 @@ import Header from "@/components/view/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
 import Footer from "@/components/view/Footer";
 import { APP_NAME } from "@/lib/consts";
+import Head from "next/head";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -29,6 +30,13 @@ type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
    return (
       <html lang="ar" dir="rtl">
+         <Head>
+            <link
+               href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
+               rel="stylesheet"
+               type="text/css"
+            />
+         </Head>
          <body className={`${tajawal.className} antialiased mx-auto max-w-7xl`}>
             <AuthProvider>
                <Toaster />

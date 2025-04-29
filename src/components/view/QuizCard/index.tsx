@@ -9,7 +9,6 @@ import { Progress } from "@/components/ui/progress";
 // Assets
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 const notoSans = Noto_Sans_Arabic({
    variable: "--font-arabic",
