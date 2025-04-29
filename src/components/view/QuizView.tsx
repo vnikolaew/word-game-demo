@@ -70,7 +70,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
    if (isLoading || !currentList || !shuffledWords.length || !loaded) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
-            <Spinner size="sm" />
+            <Spinner className="animate-spin" size="sm" />
             <p className="text-sm text-gray-500">
                {isSubmitting
                   ? "حفظ نتائج الاختبار ..."

@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
-import { KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface JsPsychTrialData {
    correct: boolean;
@@ -18,6 +18,8 @@ export interface JsPsychTrialData {
 }
 
 export const TOTAL_WORDS = 100;
+export const ANSWER_TIMEOUT = 2_000;
+export const FIXATION_TIMEOUT = 500;
 
 const loadScript = (src: string) => {
    return new Promise((resolve, reject) => {
@@ -39,6 +41,12 @@ const shuffleArray = (array: string[]) => {
 };
 
 export const MAX_MOBILE_WIDTH = 768;
+
+const WORD = `word`;
+const NON_WORD = `non-word`;
+
+const ARROW_LEFT = `ArrowLeft`;
+const ARROW_RIGHT = `ArrowRight`;
 
 export function useExperiment(state: string) {
    const run = useRef(false);
@@ -120,15 +128,15 @@ export function useExperiment(state: string) {
    useEffect(() => {
       const listener = (e: KeyboardEvent) => {
          const btnOne = document.getElementById(
-            `choice-ArrowLeft`
+            `choice-${ARROW_LEFT}`
          ) as HTMLButtonElement;
          const btnTwo = document.getElementById(
-            `choice-ArrowRight`
+            `choice-${ARROW_RIGHT}`
          ) as HTMLButtonElement;
 
-         if (e.key === `ArrowLeft`) {
+         if (e.key === ARROW_LEFT) {
             btnOne?.click();
-         } else if (e.key === `ArrowRight`) {
+         } else if (e.key === ARROW_RIGHT) {
             btnTwo?.click();
          }
       };
@@ -178,8 +186,8 @@ export function useExperiment(state: string) {
          const test_stimuli = shuffledWords.map((word) => ({
             stimulus: `<h1 className="text-3xl font-bold">${word}</h1>`,
             correct_response: currentList?.words.includes(word)
-               ? `ArrowLeft`
-               : `ArrowRight`,
+               ? WORD
+               : NON_WORD,
          }));
 
          /* define fixation and test trials */
@@ -188,7 +196,7 @@ export function useExperiment(state: string) {
             stimulus: "<span id='correct'></span>",
             choices: "NO_KEYS",
             trial_duration: function () {
-               return 500;
+               return FIXATION_TIMEOUT;
             },
             data: {
                task: "fixation",
@@ -198,28 +206,23 @@ export function useExperiment(state: string) {
          const test = {
             type: jsPsychHtmlButtonResponse,
             stimulus: jsPsych.timelineVariable("stimulus"),
-            choices: ["ArrowLeft", "ArrowRight"], // Accept left and right arrow keysk
+            choices: [ARROW_LEFT, ARROW_RIGHT], // Accept left and right arrow keys
             prompt: "",
             button_html: (choice: any) =>
                `<button id="choice-${choice}" style="width: 0px; height: 0px; margin: 20px; cursor: pointer; display:none;">${choice}</button>`,
             trial_duration: function () {
-               return 3_000;
+               return ANSWER_TIMEOUT;
             },
 
             data: {
                task: "response",
                correct_response: jsPsych.timelineVariable("correct_response"),
             },
-            on_timeline_start: function () {
-            },
-            on_timeline_finish: function () {
-            },
             on_start: function () {
                setCorrect(null!);
             },
-            on_finish: function (data) {
-               const response =
-                  data.response === 0 ? `ArrowLeft` : `ArrowRight`;
+            on_finish: function (data: any) {
+               const response = data.response === 0 ? WORD : NON_WORD;
 
                const correct_ =
                   data.response === null
