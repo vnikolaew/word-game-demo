@@ -94,7 +94,7 @@ export default function LandingPage() {
             >
                الأسئلة الشائعة
             </motion.h2>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-3/4 mx-auto">
                {faqs.map((faq, index) => (
                   <motion.div
                      key={index}
