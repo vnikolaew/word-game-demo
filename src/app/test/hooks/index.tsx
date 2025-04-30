@@ -308,15 +308,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
          };
          timeline.push(test_procedure);
 
-         /* define debrief */
-         const debrief_block = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: function () {
-               return ``;
-            },
-         };
-         timeline.push(debrief_block);
-
          /* start the experiment */
          jsPsych.run(timeline);
       };
