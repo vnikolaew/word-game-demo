@@ -9,7 +9,13 @@ import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, Fragment, useMemo } from "react";
 import { Card } from "../ui/card";
-import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from "next/font/google";
+import {
+   IBM_Plex_Sans_Arabic,
+   Noto_Kufi_Arabic,
+   Noto_Sans_Arabic,
+   Rubik,
+   Tajawal,
+} from "next/font/google";
 import { Progress } from "../ui/progress";
 import { RefreshCw } from "lucide-react";
 import Script from "next/script";
@@ -28,6 +34,27 @@ const notoSans = Noto_Sans_Arabic({
 });
 
 const ibm = IBM_Plex_Sans_Arabic({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const rubik = Rubik({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const tajawal = Tajawal({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const notoKufi = Noto_Kufi_Arabic({
    variable: "--font-arabic",
    weight: "400",
    subsets: ["arabic"],
@@ -73,6 +100,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       isLoading,
       wordListError,
       getNewWordList,
+      handleChoice,
    } = useExperiment(state, allScriptsLoaded);
    const router = useRouter();
 
@@ -176,12 +204,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                         <Button
                            variant="default"
                            onClick={(_) => {
-                              const btn = document.getElementById(
-                                 `choice-ArrowLeft`
-                              ) as HTMLButtonElement;
-                              if (btn) {
-                                 btn.click();
-                              }
+                              handleChoice(`ArrowLeft`);
                            }}
                            className="w-full md:w-32 h-12 text-lg bg-green-500"
                         >
@@ -190,12 +213,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                         <Button
                            variant="destructive"
                            onClick={(_) => {
-                              const btn = document.getElementById(
-                                 `choice-ArrowRight`
-                              ) as HTMLButtonElement;
-                              if (btn) {
-                                 btn.click();
-                              }
+                              handleChoice(`ArrowRight`);
                            }}
                            className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
                         >

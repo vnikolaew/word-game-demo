@@ -120,26 +120,17 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
       content.appendChild(feedbackContainer);
    }, [loaded, scriptsLoaded]);
 
-   useEffect(() => {
-      const listener = (e: KeyboardEvent) => {
-         if (![ARROW_LEFT, ARROW_RIGHT].includes(e.key)) return;
-
-         const btnOne = document.getElementById(
-            `choice-${ARROW_LEFT}`
-         ) as HTMLButtonElement;
-
-         const btnTwo = document.getElementById(
-            `choice-${ARROW_RIGHT}`
-         ) as HTMLButtonElement;
-
+   const handleChoice = useCallback(
+      (choice: typeof ARROW_LEFT | typeof ARROW_RIGHT) => {
          // ARROW-LEFT  = WORD
          // ARROW-RIGHT  = NON-WORD
          const normalizedResponses = responses.filter(
             (r) => r.task === `response`
          );
          const index = normalizedResponses.length;
+
          const correct =
-            e.key === ARROW_RIGHT
+            choice === ARROW_RIGHT
                ? currentList?.nonWords.includes(shuffledWords[index])
                : currentList?.words.includes(shuffledWords[index]);
 
@@ -165,21 +156,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             content.insertAdjacentHTML(`beforeend`, svg);
          }
 
-         setTimeout(() => {
-            if (e.key === ARROW_RIGHT) {
-               btnOne?.click();
-            } else if (e.key === ARROW_LEFT) {
-               btnTwo?.click();
-            }
-         }, FEEDBACK_DURATION);
-      };
-
-      window.addEventListener(`keydown`, listener);
-      return () => window.removeEventListener(`keydown`, listener);
-   }, [currentList?.nonWords, currentList?.words, responses, shuffledWords]);
-
-   useEffect(() => {
-      const listener = (e: KeyboardEvent) => {
          const btnOne = document.getElementById(
             `choice-${ARROW_LEFT}`
          ) as HTMLButtonElement;
@@ -188,13 +164,28 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             `choice-${ARROW_RIGHT}`
          ) as HTMLButtonElement;
 
-         if (e.key === ARROW_RIGHT) {
-            btnOne?.click();
-         } else if (e.key === ARROW_LEFT) {
-            btnTwo?.click();
-         }
+         setTimeout(() => {
+            if (choice === ARROW_RIGHT) {
+               btnOne?.click();
+            } else if (choice === ARROW_LEFT) {
+               btnTwo?.click();
+            }
+         }, FEEDBACK_DURATION);
+      },
+      [currentList?.nonWords, currentList?.words, responses, shuffledWords]
+   );
+
+   useEffect(() => {
+      const listener = (e: KeyboardEvent) => {
+         if (![ARROW_LEFT, ARROW_RIGHT].includes(e.key)) return;
+         handleChoice(e.key as any);
       };
 
+      window.addEventListener(`keydown`, listener);
+      return () => window.removeEventListener(`keydown`, listener);
+   }, [handleChoice, responses, shuffledWords]);
+
+   useEffect(() => {
       const initExperiment = () => {
          if (run.current || state !== `quiz`) return;
          run.current = true;
@@ -204,10 +195,12 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             display_element: `jspsych-experiment`,
             on_data_update: function (data) {
                const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
-               setResponses((r) => [
-                  ...r,
-                  { ...data, is_mobile } as JsPsychTrialData,
-               ]);
+               if (data.task === `response`) {
+                  setResponses((r) => [
+                     ...r,
+                     { ...data, is_mobile } as JsPsychTrialData,
+                  ]);
+               }
             },
             on_finish: function () {
                setShow(true);
@@ -376,20 +369,18 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
          const body = {
             wordListId: currentList.id,
-            responses: responses
-               .filter((r) => r.task === `response`)
-               .map<QuizResponse>((r, index) => {
-                  const word = shuffledWords.at(index)!;
-                  return {
-                     isCorrect: r.correct,
-                     isNonWord: !currentList.words.includes(word),
-                     isTimeout: !r.response,
-                     pageNumber: index + 1,
-                     responseTime: r.rt,
-                     responseType: r.is_mobile ? `buttons` : `keyboard`,
-                     word,
-                  };
-               }),
+            responses: responses.map<QuizResponse>((r, index) => {
+               const word = shuffledWords.at(index)!;
+               return {
+                  isCorrect: r.correct,
+                  isNonWord: !currentList.words.includes(word),
+                  isTimeout: !r.response,
+                  pageNumber: index + 1,
+                  responseTime: r.rt,
+                  responseType: r.is_mobile ? `buttons` : `keyboard`,
+                  word,
+               };
+            }),
             score: responses.filter((r) => r.correct).length,
             correctWords,
             incorrectWords,
@@ -440,5 +431,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
       setLoaded,
       isLoading,
       wordListError,
+      handleChoice,
    };
 }
