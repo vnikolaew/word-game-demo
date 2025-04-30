@@ -207,7 +207,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                         <Button
                            variant="default"
                            onClick={(_) => {
-                              handleChoice(`ArrowLeft`);
+                              handleChoice(`ArrowRight`);
                            }}
                            className="w-full md:w-32 h-12 text-lg bg-green-500"
                         >
@@ -216,7 +216,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                         <Button
                            variant="destructive"
                            onClick={(_) => {
-                              handleChoice(`ArrowRight`);
+                              handleChoice(`ArrowLeft`);
                            }}
                            className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
                         >

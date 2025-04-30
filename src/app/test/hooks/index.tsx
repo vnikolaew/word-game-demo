@@ -195,7 +195,10 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             display_element: `jspsych-experiment`,
             on_data_update: function (data) {
                const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
+
                if (data.task === `response`) {
+                  console.log({ data });
+
                   setResponses((r) => [
                      ...r,
                      { ...data, is_mobile } as JsPsychTrialData,
@@ -265,6 +268,8 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                           response,
                           data.correct_response
                        );
+
+               console.log({ response, correct: correct_ });
 
                data.correct = correct_;
                setCorrect(correct_);
@@ -374,7 +379,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                return {
                   isCorrect: r.correct,
                   isNonWord: !currentList.words.includes(word),
-                  isTimeout: !r.response,
+                  isTimeout: r.response === null,
                   pageNumber: index + 1,
                   responseTime: r.rt,
                   responseType: r.is_mobile ? `buttons` : `keyboard`,
