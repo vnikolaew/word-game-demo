@@ -1,7 +1,7 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export interface JsPsychTrialData {
    correct: boolean;
@@ -85,7 +85,12 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
       isLoading,
       error: wordListError,
    } = useWordList();
-   const [shuffledWords, setShuffledWords] = useState<string[]>([]);
+   const [shuffledWords, setShuffledWords] = useState<string[]>(null!);
+   const [currentIndex, setCurrentIndex] = useState(0);
+   const currentWord = useMemo(
+      () => shuffledWords?.at(currentIndex) ?? ``,
+      [currentIndex, shuffledWords]
+   );
 
    const [correct, setCorrect] = useState(false);
    const [error, setError] = useState<string>(null!);
@@ -124,16 +129,13 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
       (choice: typeof ARROW_LEFT | typeof ARROW_RIGHT) => {
          // ARROW-LEFT  = WORD
          // ARROW-RIGHT  = NON-WORD
-         const normalizedResponses = responses.filter(
-            (r) => r.task === `response`
-         );
-         const index = normalizedResponses.length;
-
+         const word = currentWord;
          const correct =
             choice === ARROW_RIGHT
-               ? currentList?.nonWords.includes(shuffledWords[index])
-               : currentList?.words.includes(shuffledWords[index]);
+               ? currentList?.words.includes(word)
+               : currentList?.nonWords.includes(word);
 
+         console.log({ word, responses, correct, currentIndex, currentWord });
          const content = document.querySelector(
             `.jspsych-content-wrapper #feedback`
          ) as HTMLDivElement;
@@ -172,7 +174,13 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             }
          }, FEEDBACK_DURATION);
       },
-      [currentList?.nonWords, currentList?.words, responses, shuffledWords]
+      [
+         currentIndex,
+         currentList?.nonWords,
+         currentList?.words,
+         currentWord,
+         responses,
+      ]
    );
 
    useEffect(() => {
@@ -197,7 +205,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
 
                if (data.task === `response`) {
-                  console.log({ data });
+                  console.log(data.correct);
 
                   setResponses((r) => [
                      ...r,
@@ -235,6 +243,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
          /* define trial stimuli array for timeline variables */
          const test_stimuli = shuffledWords.map((word) => ({
             stimulus: `<h1 className="text-3xl font-bold">${word}</h1>`,
+            word,
             correct_response: currentList?.words.includes(word)
                ? WORD
                : NON_WORD,
@@ -260,19 +269,15 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             },
             on_finish: function (data: any) {
                const response = data.response === 0 ? WORD : NON_WORD;
+               const c =
+                  data.response !== null
+                     ? data.correct_response === response
+                     : false;
 
-               const correct_ =
-                  data.response === null
-                     ? false
-                     : jsPsych.pluginAPI.compareKeys(
-                          response,
-                          data.correct_response
-                       );
+               data.correct = c;
 
-               console.log({ response, correct: correct_ });
-
-               data.correct = correct_;
-               setCorrect(correct_);
+               setCorrect(c);
+               setCurrentIndex((i) => i + 1);
             },
          };
 
@@ -376,17 +381,26 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             wordListId: currentList.id,
             responses: responses.map<QuizResponse>((r, index) => {
                const word = shuffledWords.at(index)!;
+               const correct =
+                  (r.correct_response === WORD &&
+                     r.response?.toString() === `0`) ||
+                  (r.correct_response === NON_WORD &&
+                     r.response?.toString() === `1`);
+
                return {
-                  isCorrect: r.correct,
-                  isNonWord: !currentList.words.includes(word),
+                  isCorrect: correct,
+                  isNonWord: r.correct_response === NON_WORD,
                   isTimeout: r.response === null,
                   pageNumber: index + 1,
                   responseTime: r.rt,
+                  response: r.response,
                   responseType: r.is_mobile ? `buttons` : `keyboard`,
                   word,
                };
             }),
-            score: responses.filter((r) => r.correct).length,
+            score: responses.filter((r) => {
+               return r.correct;
+            }).length,
             correctWords,
             incorrectWords,
             correctNonWords,
@@ -396,6 +410,8 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             ...deviceInfo,
             quizStatus: `completed`,
          };
+
+         console.log({ body, responses, shuffledWords });
 
          const submitResponse = await fetch("/api/quiz/attempts", {
             method: "POST",

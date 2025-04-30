@@ -82,13 +82,18 @@ export async function GET(
                const isNonWord = response.isNonWord;
 
                const userResponse =
-                  isNonWord && isCorrect
-                     ? `nonword`
-                     : isNonWord && !isCorrect
-                       ? `word`
-                       : !isNonWord && isCorrect
-                         ? `word`
-                         : `nonword`;
+                  response.response === 0
+                     ? `word`
+                     : response.response === null
+                       ? ``
+                       : `nonword`;
+               // isNonWord && isCorrect
+               //    ? `nonword`
+               //    : isNonWord && !isCorrect
+               //      ? `word`
+               //      : !isNonWord && isCorrect
+               //        ? `word`
+               //        : `nonword`;
 
                return {
                   "UTC Date and Time": quiz.createdAt.toISOString(),
