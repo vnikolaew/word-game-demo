@@ -39,7 +39,7 @@ const rubik = Rubik({
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
-   weight: "400",
+   weight: "300",
    subsets: ["arabic"],
    display: "swap",
 });
@@ -83,7 +83,7 @@ const QuizCard = ({
    }, [handleResponse]);
 
    return (
-      <Card className={cn("w-full p-6", notoKufi.className)}>
+      <Card className={cn("w-full p-6", tajawal.className)}>
          <div className="text-center">
             <Progress value={progress} className="mb-6" />
             <div className="flex flex-col justify-center items-center h-[400px] gap-y-2 relative">

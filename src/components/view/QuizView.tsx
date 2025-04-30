@@ -49,7 +49,7 @@ const rubik = Rubik({
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
-   weight: "400",
+   weight: "300",
    subsets: ["arabic"],
    display: "swap",
 });
@@ -181,7 +181,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          <Card
             className={cn(
                "w-full p-2 !min-h-[50vh] relative !border-none !outline-none !shadow-none",
-               notoKufi.className
+               tajawal.className
             )}
          >
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
