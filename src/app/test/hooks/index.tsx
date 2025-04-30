@@ -144,7 +144,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             `#jspsych-content`
          ) as HTMLDivElement;
 
-         if (content && wrapper.children.length > 0) {
+         if (content && wrapper?.children?.length > 0) {
             const feedbackSvg = content.querySelector(`svg`);
             if (feedbackSvg) content.removeChild(feedbackSvg);
 
@@ -343,7 +343,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
-      if (!currentList || responses.length < 100) return false;
+      if (!currentList || responses?.length < 100) return false;
 
       try {
          setIsSubmitting(true);
@@ -399,7 +399,12 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                };
             }),
             score: responses.filter((r) => {
-               return r.correct;
+               const correct =
+                  (r.correct_response === WORD &&
+                     r.response?.toString() === `0`) ||
+                  (r.correct_response === NON_WORD &&
+                     r.response?.toString() === `1`);
+               return correct;
             }).length,
             correctWords,
             incorrectWords,

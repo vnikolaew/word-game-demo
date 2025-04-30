@@ -123,14 +123,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
    }, [state]);
 
    useEffect(() => {
-      if (responses.length >= TOTAL_WORDS) {
+      if (responses?.length >= TOTAL_WORDS) {
          submitQuizAttempt().then((success) => {
             if (success) {
                onComplete();
             }
          });
       }
-   }, [onComplete, responses.length, router, submitQuizAttempt]);
+   }, [onComplete, responses?.length, router, submitQuizAttempt]);
 
    if (error || wordListError) {
       return (
@@ -156,7 +156,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       );
    }
 
-   if (isLoading || !currentList || !shuffledWords.length) {
+   if (isLoading || !currentList || !shuffledWords?.length) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
             <Spinner className="animate-spin" size="sm" />
@@ -185,7 +185,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             )}
          >
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
-               <Progress value={responses.length} className="mb-6 " />
+               <Progress value={responses?.length} className="mb-6 " />
             </div>
             <pre>{error}</pre>
             {!allScriptsLoaded ? (
