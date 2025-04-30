@@ -18,20 +18,11 @@ export interface JsPsychTrialData {
 }
 
 export const TOTAL_WORDS = 100;
-export const ANSWER_TIMEOUT = 2_000;
+export const FEEDBACK_DURATION = 200;
+export const ANSWER_TIMEOUT = 2_000 + FEEDBACK_DURATION;
 
 export const FIXATION_TIMEOUT = 500;
 export const FIXATION_TIMEOUT_MOBILE = 2_000;
-
-const loadScript = (src: string) => {
-   return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-   });
-};
 
 const shuffleArray = (array: string[]) => {
    const shuffled = [...array];
@@ -105,27 +96,87 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
    }, []);
 
    useEffect(() => {
-      const content = document.getElementById(
-         `jspsych-content`
-      ) as HTMLDivElement;
-
-      if (!content || correct === null) return;
-
-      setTimeout(() => {
-         if (correct)
-            content.innerHTML = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-700"><path d="M20 6 9 17l-5-5"/></svg>`;
-         else
-            content.innerHTML = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-700"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
-      }, 0);
-   }, [correct]);
-
-   useEffect(() => {
       if (currentList) {
          const allWords = [...currentList.words, ...currentList.nonWords];
          const selectedWords = shuffleArray(allWords).slice(0, TOTAL_WORDS);
          setShuffledWords(selectedWords);
       }
    }, [currentList]);
+
+   useEffect(() => {
+      if (!loaded || !scriptsLoaded) return;
+
+      const content = document.querySelector(
+         `.jspsych-content-wrapper`
+      ) as HTMLDivElement;
+
+      if (!content || content.querySelector(`#feedback`)) return;
+
+      const feedbackContainer = document.createElement(`div`) as HTMLDivElement;
+      feedbackContainer.id = `feedback`;
+      feedbackContainer.style.minHeight = `2rem`;
+      feedbackContainer.style.visibility = `hidden`;
+
+      content.appendChild(feedbackContainer);
+   }, [loaded, scriptsLoaded]);
+
+   useEffect(() => {
+      const listener = (e: KeyboardEvent) => {
+         if (![ARROW_LEFT, ARROW_RIGHT].includes(e.key)) return;
+
+         const btnOne = document.getElementById(
+            `choice-${ARROW_LEFT}`
+         ) as HTMLButtonElement;
+
+         const btnTwo = document.getElementById(
+            `choice-${ARROW_RIGHT}`
+         ) as HTMLButtonElement;
+
+         // ARROW-LEFT  = WORD
+         // ARROW-RIGHT  = NON-WORD
+         const normalizedResponses = responses.filter(
+            (r) => r.task === `response`
+         );
+         const index = normalizedResponses.length;
+         const correct =
+            e.key === ARROW_RIGHT
+               ? currentList?.nonWords.includes(shuffledWords[index])
+               : currentList?.words.includes(shuffledWords[index]);
+
+         const content = document.querySelector(
+            `.jspsych-content-wrapper #feedback`
+         ) as HTMLDivElement;
+
+         const wrapper = document.querySelector(
+            `#jspsych-content`
+         ) as HTMLDivElement;
+
+         if (content && wrapper.children.length > 0) {
+            const feedbackSvg = content.querySelector(`svg`);
+            if (feedbackSvg) content.removeChild(feedbackSvg);
+
+            let svg = ``;
+            if (correct)
+               svg = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-700"><path d="M20 6 9 17l-5-5"/></svg>`;
+            else
+               svg = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-700"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+            content.style.visibility = `visible`;
+            content.insertAdjacentHTML(`beforeend`, svg);
+         }
+
+         setTimeout(() => {
+            if (e.key === ARROW_RIGHT) {
+               btnOne?.click();
+            } else if (e.key === ARROW_LEFT) {
+               btnTwo?.click();
+            }
+         }, FEEDBACK_DURATION);
+      };
+
+      window.addEventListener(`keydown`, listener);
+      return () => window.removeEventListener(`keydown`, listener);
+   }, [currentList?.nonWords, currentList?.words, responses, shuffledWords]);
 
    useEffect(() => {
       const listener = (e: KeyboardEvent) => {
@@ -194,29 +245,16 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
          }));
 
          /* define fixation and test trials */
-         const fixation = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: "<span id='correct'></span>",
-            choices: "NO_KEYS",
-            trial_duration: function () {
-               return FIXATION_TIMEOUT;
-            },
-            data: {
-               task: "fixation",
-            },
-         };
-
          const test = {
             type: jsPsychHtmlButtonResponse,
             stimulus: jsPsych.timelineVariable("stimulus"),
-            choices: [ARROW_LEFT, ARROW_RIGHT], // Accept left and right arrow keys
+            choices: [ARROW_LEFT, ARROW_RIGHT],
             prompt: "",
             button_html: (choice: any) =>
                `<button id="choice-${choice}" style="width: 0px; height: 0px; margin: 20px; cursor: pointer; display:none;">${choice}</button>`,
             trial_duration: function () {
                return ANSWER_TIMEOUT;
             },
-
             data: {
                task: "response",
                correct_response: jsPsych.timelineVariable("correct_response"),
@@ -226,7 +264,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             },
             on_finish: function (data: any) {
                const response = data.response === 0 ? WORD : NON_WORD;
-               console.log({ response, correct: data.correct_response });
 
                const correct_ =
                   data.response === null
@@ -238,6 +275,24 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
                data.correct = correct_;
                setCorrect(correct_);
+            },
+         };
+
+         const fixation = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: "",
+            choices: "NO_KEYS",
+            on_start: function () {
+               const content = document.querySelector(
+                  `.jspsych-content-wrapper #feedback`
+               ) as HTMLDivElement;
+               if (content) content.style.visibility = `hidden`;
+            },
+            trial_duration: function () {
+               return FIXATION_TIMEOUT;
+            },
+            data: {
+               task: "fixation",
             },
          };
 
@@ -271,12 +326,9 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             initExperiment();
             setLoaded(true);
          }, 500);
-         window.addEventListener(`keydown`, listener);
       } catch (error) {
          setError(error instanceof Error ? error.message : (error as string));
       }
-
-      return () => window.removeEventListener(`keydown`, listener);
    }, [
       getNewWordList,
       shuffledWords,

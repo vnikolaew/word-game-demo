@@ -7,13 +7,12 @@ import Instructions from "./Instructions";
 import { useExperiment } from "@/app/test/hooks";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment, useCallback, useMemo } from "react";
+import { useState, useEffect, Fragment, useMemo } from "react";
 import { Card } from "../ui/card";
-import { Noto_Sans_Arabic } from "next/font/google";
+import { IBM_Plex_Sans_Arabic, Noto_Sans_Arabic } from "next/font/google";
 import { Progress } from "../ui/progress";
 import { RefreshCw } from "lucide-react";
 import Script from "next/script";
-import { number } from "zod";
 
 interface QuizViewProps {
    onComplete: () => void;
@@ -27,6 +26,31 @@ const notoSans = Noto_Sans_Arabic({
    subsets: ["arabic"],
    display: "swap",
 });
+
+const ibm = IBM_Plex_Sans_Arabic({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const scriptSources = [
+   {
+      url: "https://unpkg.com/jspsych@8.2.1",
+   },
+   {
+      url: "https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0",
+   },
+   {
+      url: "https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0",
+   },
+   {
+      url: "https://unpkg.com/@jspsych/plugin-preload@2.1.0",
+   },
+   {
+      url: "https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0",
+   },
+] as const;
 
 export default function QuizView({ onComplete }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
@@ -59,6 +83,16 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          return newLoaded;
       });
    };
+
+   useEffect(() => {
+      if (state !== `quiz`) return;
+
+      const elements = [`header`, `footer`];
+      elements.forEach((e) => {
+         const element = document.querySelector(e) as HTMLElement;
+         element.style.visibility = `hidden`;
+      });
+   }, [state]);
 
    useEffect(() => {
       if (responses.length >= TOTAL_WORDS) {
@@ -109,32 +143,15 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    return (
       <Fragment>
-         <Script
-            src={`https://unpkg.com/jspsych@8.2.1`}
-            onReady={() => updateLoaded(0)}
-         />
-         <Script
-            src={`https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0`}
-            onReady={() => updateLoaded(1)}
-         />
-         <Script
-            src={`https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0`}
-            onReady={() => updateLoaded(2)}
-         />
-         <Script
-            src={`https://unpkg.com/@jspsych/plugin-preload@2.1.0`}
-            onReady={() => updateLoaded(3)}
-         />
-         <Script
-            src={`https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0`}
-            onReady={() => updateLoaded(4)}
-         />
-
+         {scriptSources.map(({ url }, index) => (
+            <Script
+               key={url + index}
+               src={url}
+               onReady={() => updateLoaded(index)}
+            />
+         ))}
          <Card
-            className={cn(
-               "w-full p-2 !min-h-[50vh] relative",
-               notoSans.className
-            )}
+            className={cn("w-full p-2 !min-h-[50vh] relative", ibm.className)}
          >
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
                <Progress value={responses.length} className="mb-6 " />
