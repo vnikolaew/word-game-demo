@@ -66,13 +66,10 @@ const scriptSources = [
       url: "https://unpkg.com/jspsych@8.2.1",
    },
    {
-      url: "https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0",
-   },
-   {
-      url: "https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0",
-   },
-   {
       url: "https://unpkg.com/@jspsych/plugin-preload@2.1.0",
+   },
+   {
+      url: "https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0",
    },
    {
       url: "https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0",
