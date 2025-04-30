@@ -18,7 +18,7 @@ function ClientPage() {
       const elements = [`header`, `footer`];
       elements.forEach((e) => {
          const element = document.querySelector(e) as HTMLElement;
-         element.style.visibility = `hidden`;
+         element.style.visibility = `visible`;
       });
    }, []);
 
