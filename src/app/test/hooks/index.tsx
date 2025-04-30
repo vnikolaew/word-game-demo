@@ -1,7 +1,6 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
-import { ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface JsPsychTrialData {
@@ -51,7 +50,7 @@ const NON_WORD = `non-word`;
 const ARROW_LEFT = `ArrowLeft`;
 const ARROW_RIGHT = `ArrowRight`;
 
-export function useExperiment(state: string) {
+export function useExperiment(state: string, scriptsLoaded: boolean) {
    const run = useRef(false);
    const isMobile = useMediaQuery(`(max-width: ${MAX_MOBILE_WIDTH}px)`);
    const [loaded, setLoaded] = useState(false);
@@ -160,19 +159,7 @@ export function useExperiment(state: string) {
                ]);
             },
             on_finish: function () {
-               // jsPsych.data.displayData();
-               const all = jsPsych.data.results?.trials;
-               const res = all?.filter((t) => t.task === `response`);
-
                setShow(true);
-               const wrapper = document.querySelector(
-                  `jspsych-content-wrapper`
-               ) as HTMLDivElement;
-
-               if (wrapper) {
-                  wrapper.style.height = `0px`;
-                  wrapper.style.minHeight = `0px`;
-               }
             },
          });
 
@@ -277,30 +264,27 @@ export function useExperiment(state: string) {
       };
 
       // Load jsPsych scripts dynamically
-      if (!shuffledWords?.length || !currentList) return;
+      if (!shuffledWords?.length || !currentList || !scriptsLoaded) return;
 
-      // Load all required scripts
-      const scripts = [
-         "https://unpkg.com/jspsych@8.2.1",
-         `https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0`,
-         `https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0`,
-         `https://unpkg.com/@jspsych/plugin-preload@2.1.0`,
-         `https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0`,
-      ];
-
-      Promise.all(scripts.map(loadScript))
-         .then(async () => {
-            setTimeout(() => {
-               initExperiment();
-               setLoaded(true);
-            }, 500);
-
-            window.addEventListener(`keydown`, listener);
-         })
-         .catch((e) => setError(e));
+      try {
+         setTimeout(() => {
+            initExperiment();
+            setLoaded(true);
+         }, 500);
+         window.addEventListener(`keydown`, listener);
+      } catch (error) {
+         setError(error instanceof Error ? error.message : (error as string));
+      }
 
       return () => window.removeEventListener(`keydown`, listener);
-   }, [getNewWordList, shuffledWords, currentList, state]);
+   }, [
+      getNewWordList,
+      shuffledWords,
+      currentList,
+      state,
+      scriptsLoaded,
+      isMobile,
+   ]);
 
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
@@ -401,6 +385,7 @@ export function useExperiment(state: string) {
       isMobile,
       getNewWordList,
       loaded,
+      setLoaded,
       isLoading,
       wordListError,
    };

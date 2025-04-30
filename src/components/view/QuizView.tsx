@@ -7,11 +7,13 @@ import Instructions from "./Instructions";
 import { useExperiment } from "@/app/test/hooks";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useCallback, useMemo } from "react";
 import { Card } from "../ui/card";
 import { Noto_Sans_Arabic } from "next/font/google";
 import { Progress } from "../ui/progress";
-import { RefreshCcw, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
+import Script from "next/script";
+import { number } from "zod";
 
 interface QuizViewProps {
    onComplete: () => void;
@@ -28,20 +30,35 @@ const notoSans = Noto_Sans_Arabic({
 
 export default function QuizView({ onComplete }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
+   const [scriptsLoaded, setScriptsLoaded] = useState<boolean[]>(
+      Array.from({ length: 5 }).map((_) => false)
+   );
+   const allScriptsLoaded = useMemo(
+      () => scriptsLoaded.every((x) => x),
+      [scriptsLoaded]
+   );
+
    const {
       responses,
       submitQuizAttempt,
       error,
       isSubmitting,
       isMobile,
-      loaded,
       shuffledWords,
       currentList,
       isLoading,
       wordListError,
       getNewWordList,
-   } = useExperiment(state);
+   } = useExperiment(state, allScriptsLoaded);
    const router = useRouter();
+
+   const updateLoaded = (index: number) => {
+      setScriptsLoaded((l) => {
+         const newLoaded = [...l];
+         newLoaded[index] = true;
+         return newLoaded;
+      });
+   };
 
    useEffect(() => {
       if (responses.length >= TOTAL_WORDS) {
@@ -77,7 +94,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       );
    }
 
-   if (isLoading || !currentList || !shuffledWords.length || !loaded) {
+   if (isLoading || !currentList || !shuffledWords.length) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
             <Spinner className="animate-spin" size="sm" />
@@ -92,6 +109,27 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    return (
       <Fragment>
+         <Script
+            src={`https://unpkg.com/jspsych@8.2.1`}
+            onReady={() => updateLoaded(0)}
+         />
+         <Script
+            src={`https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0`}
+            onReady={() => updateLoaded(1)}
+         />
+         <Script
+            src={`https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.1.0`}
+            onReady={() => updateLoaded(2)}
+         />
+         <Script
+            src={`https://unpkg.com/@jspsych/plugin-preload@2.1.0`}
+            onReady={() => updateLoaded(3)}
+         />
+         <Script
+            src={`https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0`}
+            onReady={() => updateLoaded(4)}
+         />
+
          <Card
             className={cn(
                "w-full p-2 !min-h-[50vh] relative",
@@ -102,45 +140,56 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                <Progress value={responses.length} className="mb-6 " />
             </div>
             <pre>{error}</pre>
-            <div
-               id="jspsych-experiment"
-               className="!w-full !min-h-[50vh] !h-full !border-none outline-none flex flex-col items-center justify-center"
-            >
-               {isMobile ? (
-                  <div className="flex justify-center items-center gap-4 absolute w-3/4 bottom-4">
-                     <Button
-                        variant="default"
-                        onClick={(_) => {
-                           const btn = document.getElementById(
-                              `choice-ArrowLeft`
-                           ) as HTMLButtonElement;
-                           if (btn) {
-                              btn.click();
-                           }
-                        }}
-                        className="w-full md:w-32 h-12 text-lg bg-green-500"
-                     >
-                        نعم
-                     </Button>
-                     <Button
-                        variant="destructive"
-                        onClick={(_) => {
-                           const btn = document.getElementById(
-                              `choice-ArrowRight`
-                           ) as HTMLButtonElement;
-                           if (btn) {
-                              btn.click();
-                           }
-                        }}
-                        className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
-                     >
-                        لا
-                     </Button>
-                  </div>
-               ) : (
-                  <span />
-               )}
-            </div>
+            {!allScriptsLoaded ? (
+               <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
+                  <Spinner className="animate-spin" size="sm" />
+                  <p className="text-sm text-gray-500">
+                     {isSubmitting
+                        ? "حفظ نتائج الاختبار ..."
+                        : "يرجى الانتظار بينما نقوم بتحميل الاختبار ..."}
+                  </p>
+               </div>
+            ) : (
+               <div
+                  id="jspsych-experiment"
+                  className="!w-full !min-h-[50vh] !h-full !border-none outline-none flex flex-col items-center justify-center"
+               >
+                  {isMobile ? (
+                     <div className="flex justify-center items-center gap-4 absolute w-3/4 bottom-4">
+                        <Button
+                           variant="default"
+                           onClick={(_) => {
+                              const btn = document.getElementById(
+                                 `choice-ArrowLeft`
+                              ) as HTMLButtonElement;
+                              if (btn) {
+                                 btn.click();
+                              }
+                           }}
+                           className="w-full md:w-32 h-12 text-lg bg-green-500"
+                        >
+                           نعم
+                        </Button>
+                        <Button
+                           variant="destructive"
+                           onClick={(_) => {
+                              const btn = document.getElementById(
+                                 `choice-ArrowRight`
+                              ) as HTMLButtonElement;
+                              if (btn) {
+                                 btn.click();
+                              }
+                           }}
+                           className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
+                        >
+                           لا
+                        </Button>
+                     </div>
+                  ) : (
+                     <span />
+                  )}
+               </div>
+            )}
          </Card>
       </Fragment>
    );
