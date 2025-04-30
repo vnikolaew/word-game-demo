@@ -11,6 +11,7 @@ import { useState, useEffect, Fragment } from "react";
 import { Card } from "../ui/card";
 import { Noto_Sans_Arabic } from "next/font/google";
 import { Progress } from "../ui/progress";
+import { RefreshCcw, RefreshCw } from "lucide-react";
 
 interface QuizViewProps {
    onComplete: () => void;
@@ -54,9 +55,18 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    if (error || wordListError) {
       return (
-         <div className="flex flex-col items-center justify-center min-h-screen">
-            <p className="text-red-500 mb-4">{error || wordListError}</p>
-            <Button onClick={getNewWordList}>حاول ثانية</Button>
+         <div className="flex flex-col items-center justify-center min-h-[50vh]">
+            <p className="text-red-500 mb-4 text-lg">
+               {(error instanceof Error ? error.message : error) ||
+                  wordListError}
+            </p>
+            <Button
+               className="mt-12 !px-12 inline-flex items-center gap-2"
+               onClick={getNewWordList}
+            >
+               <RefreshCw size={18} />
+               حاول ثانية
+            </Button>
          </div>
       );
    }
@@ -91,6 +101,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
                <Progress value={responses.length} className="mb-6 " />
             </div>
+            <pre>{error}</pre>
             <div
                id="jspsych-experiment"
                className="!w-full !min-h-[50vh] !h-full !border-none outline-none flex flex-col items-center justify-center"

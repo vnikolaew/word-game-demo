@@ -1,6 +1,7 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
+import { ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface JsPsychTrialData {
@@ -111,9 +112,9 @@ export function useExperiment(state: string) {
 
       setTimeout(() => {
          if (correct)
-            content.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-700"><path d="M20 6 9 17l-5-5"/></svg>`;
+            content.innerHTML = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-700"><path d="M20 6 9 17l-5-5"/></svg>`;
          else
-            content.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-700"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+            content.innerHTML = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-700"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
       }, 0);
    }, [correct]);
 
@@ -130,13 +131,14 @@ export function useExperiment(state: string) {
          const btnOne = document.getElementById(
             `choice-${ARROW_LEFT}`
          ) as HTMLButtonElement;
+
          const btnTwo = document.getElementById(
             `choice-${ARROW_RIGHT}`
          ) as HTMLButtonElement;
 
-         if (e.key === ARROW_LEFT) {
+         if (e.key === ARROW_RIGHT) {
             btnOne?.click();
-         } else if (e.key === ARROW_RIGHT) {
+         } else if (e.key === ARROW_LEFT) {
             btnTwo?.click();
          }
       };
@@ -223,6 +225,7 @@ export function useExperiment(state: string) {
             },
             on_finish: function (data: any) {
                const response = data.response === 0 ? WORD : NON_WORD;
+               console.log({ response, correct: data.correct_response });
 
                const correct_ =
                   data.response === null
@@ -273,9 +276,12 @@ export function useExperiment(state: string) {
 
       Promise.all(scripts.map(loadScript))
          .then(async () => {
-            initExperiment();
+            setTimeout(() => {
+               initExperiment();
+               setLoaded(true);
+            }, 500);
+
             window.addEventListener(`keydown`, listener);
-            setLoaded(true);
          })
          .catch((e) => setError(e));
 
