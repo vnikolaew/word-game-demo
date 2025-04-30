@@ -76,7 +76,7 @@ const scriptSources = [
 export default function QuizView({ onComplete }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
    const [scriptsLoaded, setScriptsLoaded] = useState<boolean[]>(
-      Array.from({ length: 5 }).map((_) => false)
+      Array.from({ length: scriptSources.length }).map((_) => false)
    );
    const allScriptsLoaded = useMemo(
       () => scriptsLoaded.every((x) => x),
