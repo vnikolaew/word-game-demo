@@ -20,7 +20,9 @@ export interface JsPsychTrialData {
 
 export const TOTAL_WORDS = 100;
 export const ANSWER_TIMEOUT = 2_000;
+
 export const FIXATION_TIMEOUT = 500;
+export const FIXATION_TIMEOUT_MOBILE = 2_000;
 
 const loadScript = (src: string) => {
    return new Promise((resolve, reject) => {
@@ -178,10 +180,22 @@ export function useExperiment(state: string) {
          const timeline = [];
 
          /* define welcome message trial */
-         const welcome = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: "أهلاً بك في الاختبار. اضغط أي مفتاح للمتابعة.",
-         };
+         const welcome = isMobile
+            ? {
+                 type: jsPsychHtmlKeyboardResponse,
+                 stimulus: `أهلاً بكم في الاختبار. سيبدأ الاختبار قريباً.`,
+                 choices: "NO_KEYS",
+                 trial_duration: function () {
+                    return FIXATION_TIMEOUT_MOBILE;
+                 },
+                 data: {
+                    task: "fixation",
+                 },
+              }
+            : {
+                 type: jsPsychHtmlKeyboardResponse,
+                 stimulus: "أهلاً بك في الاختبار. اضغط أي مفتاح للمتابعة.",
+              };
          timeline.push(welcome);
 
          /* define trial stimuli array for timeline variables */
