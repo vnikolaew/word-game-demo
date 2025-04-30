@@ -181,7 +181,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
          <Card
             className={cn(
                "w-full p-2 !min-h-[50vh] relative !border-none !outline-none !shadow-none",
-               ibm.className
+               rubik.className
             )}
          >
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">

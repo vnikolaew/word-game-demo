@@ -1,6 +1,12 @@
 import React, { useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Noto_Sans_Arabic } from "next/font/google";
+import {
+   IBM_Plex_Sans_Arabic,
+   Noto_Kufi_Arabic,
+   Noto_Sans_Arabic,
+   Rubik,
+   Tajawal,
+} from "next/font/google";
 
 // Components
 import { Card } from "@/components/ui/card";
@@ -11,6 +17,34 @@ import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const notoSans = Noto_Sans_Arabic({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const ibm = IBM_Plex_Sans_Arabic({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const rubik = Rubik({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const tajawal = Tajawal({
+   variable: "--font-arabic",
+   weight: "400",
+   subsets: ["arabic"],
+   display: "swap",
+});
+
+const notoKufi = Noto_Kufi_Arabic({
    variable: "--font-arabic",
    weight: "400",
    subsets: ["arabic"],
@@ -49,7 +83,7 @@ const QuizCard = ({
    }, [handleResponse]);
 
    return (
-      <Card className={cn("w-full p-6", notoSans.className)}>
+      <Card className={cn("w-full p-6", rubik.className)}>
          <div className="text-center">
             <Progress value={progress} className="mb-6" />
             <div className="flex flex-col justify-center items-center h-[400px] gap-y-2 relative">
