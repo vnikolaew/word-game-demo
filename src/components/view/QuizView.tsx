@@ -165,13 +165,25 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    return (
       <Fragment>
-         {scriptSources.map(({ url }, index) => (
-            <Script
-               key={url + index}
-               src={url}
-               onReady={() => updateLoaded(index)}
-            />
-         ))}
+         {scriptSources
+            .filter(
+               (_, i) =>
+                  // Loaded script
+                  scriptsLoaded[i] ||
+                  // First script
+                  i === 0 ||
+                  // Next script that has not loaded yet
+                  (i >= 1 && scriptsLoaded[i - 1])
+            )
+            .map(({ url }, index) => (
+               <Script
+                  strategy="afterInteractive"
+                  async
+                  key={url + index}
+                  src={url}
+                  onReady={() => updateLoaded(index)}
+               />
+            ))}
          <Card
             className={cn(
                "w-full p-2 !min-h-[50vh] relative !border-none !outline-none !shadow-none",
