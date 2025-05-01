@@ -1,7 +1,8 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import "@/types/next-auth";
 
 export interface JsPsychTrialData {
    correct: boolean;
@@ -333,7 +334,14 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
-      if (!currentList || responses?.length < 100) return false;
+      if (!currentList || responses?.length < TOTAL_WORDS) return false;
+
+      const isCorrect = (r: JsPsychTrialData) => {
+         const correct =
+            (r.correct_response === WORD && r.response?.toString() === `0`) ||
+            (r.correct_response === NON_WORD && r.response?.toString() === `1`);
+         return correct;
+      };
 
       try {
          setIsSubmitting(true);
@@ -342,22 +350,24 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
          // Calculate detailed statistics
          const correctWords = shuffledWords.filter(
             (w, index) =>
-               currentList.words.includes(w) && responses.at(index)!.correct
+               currentList.words.includes(w) && isCorrect(responses.at(index)!)
          ).length;
 
          const incorrectWords = shuffledWords.filter(
             (w, index) =>
-               currentList.words.includes(w) && !responses.at(index)!.correct
+               currentList.words.includes(w) && !isCorrect(responses.at(index)!)
          ).length;
 
          const correctNonWords = shuffledWords.filter(
             (w, index) =>
-               currentList.nonWords.includes(w) && responses.at(index)!.correct
+               currentList.nonWords.includes(w) &&
+               isCorrect(responses.at(index)!)
          ).length;
 
          const incorrectNonWords = shuffledWords.filter(
             (w, index) =>
-               currentList.nonWords.includes(w) && !responses.at(index)!.correct
+               currentList.nonWords.includes(w) &&
+               !isCorrect(responses.at(index)!)
          ).length;
 
          const npxionTime = Math.round(
@@ -371,14 +381,8 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             wordListId: currentList.id,
             responses: responses.map<QuizResponse>((r, index) => {
                const word = shuffledWords.at(index)!;
-               const correct =
-                  (r.correct_response === WORD &&
-                     r.response?.toString() === `0`) ||
-                  (r.correct_response === NON_WORD &&
-                     r.response?.toString() === `1`);
-
                return {
-                  isCorrect: correct,
+                  isCorrect: isCorrect(r),
                   isNonWord: r.correct_response === NON_WORD,
                   isTimeout: r.response === null,
                   pageNumber: index + 1,
@@ -388,14 +392,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                   word,
                };
             }),
-            score: responses.filter((r) => {
-               const correct =
-                  (r.correct_response === WORD &&
-                     r.response?.toString() === `0`) ||
-                  (r.correct_response === NON_WORD &&
-                     r.response?.toString() === `1`);
-               return correct;
-            }).length,
+            score: responses.filter((r) => isCorrect(r)).length,
             correctWords,
             incorrectWords,
             correctNonWords,
