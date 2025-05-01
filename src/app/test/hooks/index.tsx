@@ -2,7 +2,6 @@ import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useWordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
 import { useCallback, useEffect, useRef, useState } from "react";
-import "@/types/next-auth";
 
 export interface JsPsychTrialData {
    correct: boolean;
