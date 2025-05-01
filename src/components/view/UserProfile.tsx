@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { signOut } from "next-auth/react";
 
 // Components
@@ -27,12 +27,22 @@ const formatCompletionTime = (duration: number | undefined | null): string => {
 };
 
 // Icons
-import { Trash2, LogOut } from "lucide-react";
+import { Trash2, LogOut, Ban, CircleSlash, Key } from "lucide-react";
 
 // Types
 import { UserProfile as UserProfileType } from "@/types";
 import { NATIONALITY_OPTIONS } from "./Survey/Nationality";
 import { useProfile } from "@/hooks/useProfile";
+import {
+   Tooltip,
+   TooltipContent,
+   TooltipProvider,
+   TooltipTrigger,
+} from "../ui/tooltip";
+import AuthProvider from "../providers/AuthProvider";
+import { match } from "ts-pattern";
+import { Provider } from "jotai/react";
+import GoogleIcon from "../icons/GoogleIcon";
 
 const AccountManagement = ({}) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -89,9 +99,9 @@ const AccountManagement = ({}) => {
                <AlertDialogTrigger asChild>
                   <Button
                      variant="destructive"
-                     className="flex items-center gap-2 !cursor-pointer"
+                     className="flex items-center gap-2 !cursor-pointer text-white"
                   >
-                     <Trash2 className="h-4 w-4" />
+                     <Trash2 className="h-4 w-4 text-white" />
                      حذف الحساب
                   </Button>
                </AlertDialogTrigger>
@@ -174,7 +184,10 @@ const QuizHistory = ({
                ))}
             </div>
          ) : (
-            <p className="text-gray-500">لم يتم إكمال أي اختبارات بعد</p>
+            <div className="inline-flex items-center gap-2 mt-4">
+               <CircleSlash className="text-gray-500" size={18} />
+               <p className="text-gray-500">لم يتم إكمال أي اختبارات بعد</p>
+            </div>
          )}
       </div>
    </Card>
@@ -234,21 +247,67 @@ const DemographicInformation = ({
    );
 };
 
-const PersonalInfo = ({ profile }: { profile: UserProfileType }) => (
-   <Card className="mb-8 p-6">
-      <h2 className="text-xl font-semibold mb-4">معلومات شخصية</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-         <div>
-            <p className="text-sm text-gray-500">اسم</p>
-            <p className="font-medium">{profile.name || "غير متوفر"}</p>
+const PersonalInfo = ({ profile }: { profile: UserProfileType }) => {
+   const auth_provider = profile.accounts[0]?.provider ?? `credentials`;
+
+   return (
+      <Card className="mb-8 p-6">
+         <h2 className="text-xl font-semibold mb-4">معلومات شخصية</h2>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+               <p className="text-sm text-gray-500">اسم</p>
+               <TooltipProvider>
+                  <Tooltip>
+                     <TooltipTrigger>
+                        <p className="font-medium">
+                           {profile.name || "غير متوفر"}
+                        </p>
+                     </TooltipTrigger>
+                     <TooltipContent
+                        className="inline-flex items-center gap-2 !px-4"
+                        side="left"
+                     >
+                        <span>انضم</span>
+                        <time dateTime={profile.createdAt}>
+                           {new Date(profile.createdAt).toISOString()}
+                        </time>
+                     </TooltipContent>
+                  </Tooltip>
+               </TooltipProvider>
+            </div>
+            <div>
+               <p className="text-sm text-gray-500">بريد إلكتروني</p>
+               <TooltipProvider>
+                  <Tooltip>
+                     <TooltipTrigger>
+                        <p className="font-medium">{profile.email}</p>
+                     </TooltipTrigger>
+                     <TooltipContent
+                        className="inline-flex items-center gap-2 !px-4"
+                        side="left"
+                     >
+                        <span>
+                           {match(auth_provider.toLowerCase())
+                              .with(`google`, (_) => (
+                                 <GoogleIcon width={12} height={12} />
+                              ))
+                              .otherwise((_) => (
+                                 <Key size={12} />
+                              ))}
+                        </span>
+                        <span>
+                           تم المصادقة عبر{" "}
+                           {auth_provider[0].toUpperCase() +
+                              auth_provider.slice(1)}
+                        </span>
+                     </TooltipContent>
+                  </Tooltip>
+               </TooltipProvider>
+            </div>
          </div>
-         <div>
-            <p className="text-sm text-gray-500">بريد إلكتروني</p>
-            <p className="font-medium">{profile.email}</p>
-         </div>
-      </div>
-   </Card>
-);
+      </Card>
+   );
+};
 
 export default function UserProfile() {
    const { error, getUserProfile, isLoading, profile } = useProfile();

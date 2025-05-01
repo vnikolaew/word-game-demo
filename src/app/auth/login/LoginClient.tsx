@@ -27,7 +27,7 @@ function LoginClient() {
    const { error, form, isLoading, onSubmit } = useSignIn();
 
    return (
-      <div className="container flex h-full w-full flex-col items-center justify-center">
+      <div className="container flex h-full w-full flex-col items-center justify-center mt-12">
          <Card className="w-[400px]">
             <CardHeader>
                <CardTitle>تسجيل الدخول</CardTitle>
@@ -109,7 +109,7 @@ function LoginClient() {
                   <Button
                      variant={`outline`}
                      type="button"
-                     className="w-full"
+                     className="w-full inline-flex items-center gap-2"
                      disabled={isLoading}
                      onClick={(_) =>
                         signIn(`google`, {
@@ -121,8 +121,8 @@ function LoginClient() {
                      تسجيل الدخول باستخدام جوجل
                   </Button>
                </div>
-               <div className="text-center text-sm text-gray-500">
-                  ليس لديك حساب؟{" "}
+               <div className="text-center text-sm text-gray-500 inline-flex items-center gap-1">
+                  <span>ليس لديك حساب؟ </span>
                   <Link
                      href="/auth/register"
                      className="text-primary hover:underline"

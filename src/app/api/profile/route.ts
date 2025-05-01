@@ -22,6 +22,8 @@ export async function GET() {
             name: true,
             consent: { select: { id: true, createdAt: true } },
             email: true,
+            createdAt: true,
+            accounts: { select: { provider: true, type: true } },
             surveyResponses: {
                select: {
                   nativeLanguage: true,

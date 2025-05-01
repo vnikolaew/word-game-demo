@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
    return (
-      <div className="min-h-screen bg-white" dir={pageData.metadata.direction}>
+      <div className="min-h-[70vh] bg-white" dir={pageData.metadata.direction}>
          <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
             <div className="text-center">
                <h1 className="text-4xl font-bold text-gray-900 mb-2">
@@ -44,7 +44,7 @@ export default function AboutPage() {
                   {pageData.pageContent.description}
                </p>
 
-               <div className="mt-2">
+               <div className="mt-2 mb-12">
                   <div className="grid grid-cols-1 gap-8">
                      {pageData.pageContent.affiliations.map(
                         (affiliation, index) => (
@@ -75,13 +75,13 @@ export default function AboutPage() {
                   </div>
                </div>
 
-               <div className="mt-2 p-8 bg-gray-50 rounded-lg">
+               <div className="mt-2 p-8 bg-gray-50 rounded-lg shadow-md">
                   <p className="text-lg text-gray-600 mb-4">
                      {pageData.pageContent.contact.welcomeMessage}
                   </p>
                   <a
                      href={`mailto:${pageData.pageContent.contact.email}`}
-                     className="text-lg text-blue-600 hover:text-blue-800 transition-colors"
+                     className="text-lg text-blue-600 hover:text-blue-800 transition-colors font-semibold"
                   >
                      {pageData.pageContent.contact.email}
                   </a>

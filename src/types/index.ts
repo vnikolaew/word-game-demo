@@ -58,7 +58,9 @@ export interface QuizAttempt {
 export interface UserProfile {
    name: string | null;
    email: string;
+   createdAt: string;
    consent: { id: string; createdAt: string };
+   accounts: { provider: string; type: string }[];
    demographicSurvey?: {
       nativeLanguage: string;
       otherNativeLanguage?: string;
