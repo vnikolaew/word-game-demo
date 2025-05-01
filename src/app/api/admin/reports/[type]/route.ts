@@ -78,22 +78,12 @@ export async function GET(
          data = quizzes.flatMap((quiz) => {
             const responses = quiz.responses as any[];
             return responses.map((response) => {
-               const isCorrect = response.isCorrect;
-               const isNonWord = response.isNonWord;
-
                const userResponse =
                   response.response === 0
                      ? `word`
                      : response.response === null
                        ? ``
                        : `nonword`;
-               // isNonWord && isCorrect
-               //    ? `nonword`
-               //    : isNonWord && !isCorrect
-               //      ? `word`
-               //      : !isNonWord && isCorrect
-               //        ? `word`
-               //        : `nonword`;
 
                return {
                   "UTC Date and Time": quiz.createdAt.toISOString(),
@@ -107,6 +97,8 @@ export async function GET(
                   "Item shown in the page": response.word,
                   "Wordlist ID": quiz.wordListId,
                   "Quiz ID": quiz.id,
+                  "Quiz Duration in milliseconds":
+                     quiz.totalQuizDuration ?? `Unknown`,
                   "User Reaction Time in milliseconds": response.responseTime,
                   "User Response": userResponse,
                   "Response type": response.responseType,

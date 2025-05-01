@@ -68,7 +68,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          setLoading(true);
          setError(null);
 
-         const newVersion = `${Number(consent?.consentVersion?.split(`.`)?.at(0)) + 1}.0`;
+         const newVersion = `${Number(consent?.consentVersion?.split(`.`)?.at(0) ?? 0) + 1}.0`;
 
          // Save consent to database or perform any other necessary actions
          await fetch("/api/consent", {

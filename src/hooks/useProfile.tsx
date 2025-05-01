@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { UserProfile as UserProfileType } from "@/types";
-import { Island_Moments } from "next/font/google";
 
 export function useProfile() {
    const [profile, setProfile] = useState<UserProfileType | null>(null);

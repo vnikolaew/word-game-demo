@@ -127,7 +127,7 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                   </li>
                </ul>
             </div>
-            <div className="space-y-4 mt-12">
+            <div className="space-y-6 mt-12">
                {consentItems.map((item) => (
                   <div key={item.id} className="flex items-start space-x-3">
                      <Checkbox
