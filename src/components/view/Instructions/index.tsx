@@ -11,12 +11,16 @@ interface InstructionsProps {
    setState: React.Dispatch<React.SetStateAction<AppState>>;
 }
 
-const Instructions = ({ isMobile, practice = false, setState }: InstructionsProps) => {
+const Instructions = ({
+   isMobile,
+   practice = false,
+   setState,
+}: InstructionsProps) => {
    const text = useMemo(
       () =>
          isMobile
-            ? 'في هذا الاختبار، سترى 100 سلسة من الحروف\nالمطلوب منك أن تحكم ما إذا كانت سلسة الحروف هي كلمة عربية فصيحة حقيقية أم كلمة غير حقيقيةأنقر خانة"نعم" للكلمات الحقيقية وخانة"لا" للكلمات غير الحقيقية\nيرجى الاستجابة بأسرع وأدق ما يمكن'
-            : "في هذا الاختبار، سترى 100 سلسة من الحروف\nالمطلوب منك أن تحكم ما إذا كانت سلسة الحروف هي كلمة عربية فصيحة حقيقية أم كلمة غير حقيقية\nاضغط السهم الأيمن للكلمات الحقيقية والسهم الأيسر للكلمات غير الحقيقية\nيرجى الاستجابة بأسرع وأدق ما يمكن",
+            ? `في هذا الاختبار، سترى  10 سلاسل من الحروف\nالمطلوب منك أن تحكم ما إذا كانت سلسة الحروف هي كلمة عربية فصيحة حقيقية أم كلمة غير حقيقية أنقر خانة "نعم" للكلمات الحقيقية وخانة "لا" للكلمات غير الحقيقية\nيرجى الاستجابة بأسرع وأدق ما يمكن`
+            : `في هذا الاختبار، سترى  10 سلاسل من الحروف\nالمطلوب منك أن تحكم ما إذا كانت سلسة الحروف هي كلمة عربية فصيحة حقيقية أم كلمة غير حقيقية\nاضغط السهم الأيمن للكلمات الحقيقية والسهم الأيسر للكلمات غير الحقيقية\nيرجى الاستجابة بأسرع وأدق ما يمكن`,
       [isMobile]
    );
 
@@ -24,7 +28,9 @@ const Instructions = ({ isMobile, practice = false, setState }: InstructionsProp
       <Card className="w-full max-w-2xl mx-auto">
          <CardHeader>
             <CardTitle className="text-center text-2xl">
-               {practice ? `تعليمات الجلسة التدريبية` : `تعليمات الجلسة الرئيسية`}
+               {practice
+                  ? `تعليمات الجلسة التدريبية`
+                  : `تعليمات الجلسة الرئيسية`}
             </CardTitle>
          </CardHeader>
          <CardContent className="space-y-6">
