@@ -16,37 +16,9 @@ import { Progress } from "@/components/ui/progress";
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const notoSans = Noto_Sans_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const ibm = IBM_Plex_Sans_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const rubik = Rubik({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
 const tajawal = Tajawal({
    variable: "--font-arabic",
    weight: "300",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const notoKufi = Noto_Kufi_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
    subsets: ["arabic"],
    display: "swap",
 });
