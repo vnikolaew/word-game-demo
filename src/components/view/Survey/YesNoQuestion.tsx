@@ -49,12 +49,12 @@ function YesNoQuestion({
             ) : (
                <Fragment>
                   <div className="flex items-center space-x-2">
-                     <RadioGroupItem value="yes" id={`${key}-yes`} />
-                     <Label htmlFor={`${key}-yes`}>نعم</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
                      <RadioGroupItem value="no" id={`${key}-no`} />
                      <Label htmlFor={`${key}-no`}>لا</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                     <RadioGroupItem value="yes" id={`${key}-yes`} />
+                     <Label htmlFor={`${key}-yes`}>نعم</Label>
                   </div>
                </Fragment>
             )}

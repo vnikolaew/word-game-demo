@@ -1,5 +1,6 @@
 "use client";
 import ResultsView from "@/components/view/ResultsView";
+import { showHeaderAndFooter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
@@ -15,11 +16,8 @@ function ClientPage() {
    };
 
    useEffect(() => {
-      const elements = [`header`, `footer`];
-      elements.forEach((e) => {
-         const element = document.querySelector(e) as HTMLElement;
-         element.style.visibility = `visible`;
-      });
+      document.body.classList.add(`!bg-transparent`);
+      showHeaderAndFooter();
    }, []);
 
    return (

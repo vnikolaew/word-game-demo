@@ -13,6 +13,8 @@ import {
    CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import Link from "next/link";
+import { Check, Copy } from "lucide-react";
 
 interface ConsentViewProps {
    onConsent: () => void;
@@ -21,21 +23,22 @@ interface ConsentViewProps {
 const consentItems = [
    {
       id: "statement1",
-      text: "أفهم أن المشاركة في هذه الدراسة طوعية.",
+      text: `أفهم أن المشاركة في هذه الدراسة طوعية.`,
    },
    {
       id: "statement2",
-      text: "أفهم أن بياناتي ستظل مجهولة المصدر ولن تُستخدم إلا لأغراض البحث العلمي.",
+      text: `أفهم أن بياناتي ستظل مجهولة المصدر ولن تُستخدم إلا لأغراض البحث العلمي.`,
    },
    {
       id: "statement3",
-      text: "أوافق على المشاركة في هذه الدراسة.",
+      text: `أوافق على المشاركة في هذه الدراسة.`,
    },
 ];
 
 export function ConsentView({ onConsent }: ConsentViewProps) {
    const [checkedItems, setCheckedItems] = useState<string[]>([]);
    const [submitting, setSubmitting] = useState(false);
+   const [copied, setCopied] = useState(false);
 
    const allChecked = checkedItems.length === consentItems.length;
    const handleSubmitConsent = async () => {
@@ -90,7 +93,7 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
 
                <h2 className="text-lg font-medium mt-6">كم مدة الدراسة؟</h2>
                <p>
-                  10-15 دقيقة.
+                  7-10 دقائق.
                   <br />
                </p>
 
@@ -100,7 +103,8 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                <p>
                   ستقرأ 100 كلمة والمطلوب أن تحدد ما إذا الكلمة هي كلمة عربية
                   فصيحة أم لا.
-                  <br /> ستُكمل استبيان المعلومات الشخصية.
+                  <br />
+                  ستُكمل استبيان المعلومات الشخصية.
                   <br />
                </p>
 
@@ -109,11 +113,12 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                </h2>
                <p>
                   سيتم ترميز جميع الإجابات المقدمة في هذه التجربة لضمان{" "}
-                  <b>سرية المشاركين</b>،<br /> ولن تُستخدم بيانات المشاركين إلا
-                  لأغراض البحث العلمي.
+                  <b>سرية المشاركين</b>،<br />
+                  ولن تُستخدم بيانات المشاركين إلا لأغراض البحث العلمي.
                   <br />
                </p>
-               <h2 className="text-lg font-medium mt-6">الباحثون</h2>
+
+               {/* <h2 className="text-lg font-medium mt-6">الباحثون</h2>
 
                <ul>
                   <li>
@@ -125,7 +130,7 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                   <li>
                      د. آلاء الزهراني، <b>باحثة مستقلة</b>
                   </li>
-               </ul>
+               </ul> */}
             </div>
             <div className="space-y-6 mt-12">
                {consentItems.map((item) => (
@@ -151,6 +156,48 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                      </label>
                   </div>
                ))}
+            </div>
+            <div>
+               <h2 className="text-lg font-medium mt-6">موافقة البحث</h2>
+               <p>
+                  رقم موافقة لجنة أخلاقيات البحث العلمي:{" "}
+                  <span className="inline-flex items-center gap-2">
+                     <b>KSU-HE-25-495</b>{" "}
+                     <span title={copied ? `تم النسخ!` : `ينسخ`}>
+                        {copied ? (
+                           <Check className="" size={14} />
+                        ) : (
+                           <Copy
+                              onClick={async () => {
+                                 await window.navigator.clipboard.writeText(
+                                    `KSU-HE-25-495`
+                                 );
+                                 setCopied(true);
+                                 setTimeout(() => {
+                                    setCopied(false);
+                                 }, 3000);
+                              }}
+                              className="cursor-pointer"
+                              size={14}
+                           />
+                        )}
+                     </span>
+                  </span>
+                  <br />
+                  تمت الموافقة على هذه الدراسة من قبل لجنة أخلاقيات البحث العلمي
+                  بجامعة الملك سعود.
+               </p>
+               <h2 className="text-lg font-medium mt-6">تواصل معنا</h2>
+               <p>
+                  لأي استفسارات حول الدراسة، يسرنا تواصلك معنا عبر البريد
+                  الإلكتروني: <br />
+                  <Link
+                     className={`text-lg text-blue-600 hover:text-blue-800 transition-colors font-semibold`}
+                     href={`mailto:alzahrani.alaaa@gmail.com`}
+                  >
+                     alzahrani.alaaa@gmail.com
+                  </Link>
+               </p>
             </div>
          </CardContent>
          <CardFooter className="flex justify-end !mt-4">

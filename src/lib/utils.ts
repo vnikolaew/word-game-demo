@@ -28,3 +28,19 @@ export async function downloadFile(file: string, blob: Blob) {
    window.URL.revokeObjectURL(url);
    document.body.removeChild(a);
 }
+
+export function hideHeaderAndFooter() {
+   const elements = [`header`, `footer`];
+   elements.forEach((e) => {
+      const element = document.querySelector(e) as HTMLElement;
+      element.style.visibility = `hidden`;
+   });
+}
+
+export function showHeaderAndFooter() {
+   const elements = [`header`, `footer`];
+   elements.forEach((e) => {
+      const element = document.querySelector(e) as HTMLElement;
+      element.style.visibility = `visible`;
+   });
+}

@@ -83,9 +83,14 @@ const QuizCard = ({
    }, [handleResponse]);
 
    return (
-      <Card className={cn("w-full p-6", tajawal.className)}>
+      <Card
+         className={cn(
+            "w-full p-6 !bg-gray-700 !text-white !border-none",
+            tajawal.className
+         )}
+      >
          <div className="text-center">
-            <Progress value={progress} className="mb-6" />
+            <Progress value={progress} className="mb-6 !bg-white" />
             <div className="flex flex-col justify-center items-center h-[400px] gap-y-2 relative">
                {showWord && (
                   <h2 className="text-3xl font-bold">{currentWord}</h2>
@@ -104,13 +109,15 @@ const QuizCard = ({
             {isMobile ? (
                <div className="flex justify-center gap-4">
                   <Button
+                     title="هذه الكلمة هي كلمة حقيقية"
                      variant="default"
                      onClick={handleWord}
-                     className="w-full md:w-32 h-12 text-lg bg-green-500"
+                     className="w-full md:w-32 h-12 text-lg bg-green-500 text-white"
                   >
                      نعم
                   </Button>
                   <Button
+                     title="هذه الكلمة ليست كلمة حقيقية"
                      variant="destructive"
                      onClick={handleNonWord}
                      className="w-full md:w-32 h-12 text-lg text-white bg-red-500"

@@ -17,9 +17,16 @@ import { Users, CheckCircle, Clock } from "lucide-react";
 
 // Types
 import { useAdminStats } from "./hooks";
+import { showHeaderAndFooter } from "@/lib/utils";
+import { useEffect } from "react";
 
 export default function AdminDashboard() {
    const { isLoading, stats } = useAdminStats();
+
+   useEffect(() => {
+      document.body.classList.add(`!bg-transparent`);
+      showHeaderAndFooter();
+   }, []);
 
    if (isLoading || !stats) {
       return <DashboardSkeleton />;

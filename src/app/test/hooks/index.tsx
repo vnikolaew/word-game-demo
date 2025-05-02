@@ -148,9 +148,9 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
             let svg = ``;
             if (correct)
-               svg = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-700"><path d="M20 6 9 17l-5-5"/></svg>`;
+               svg = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-500"><path d="M20 6 9 17l-5-5"/></svg>`;
             else
-               svg = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-700"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+               svg = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-500"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
 
             content.style.visibility = `visible`;
             content.insertAdjacentHTML(`beforeend`, svg);
@@ -172,7 +172,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
             }
          }, FEEDBACK_DURATION);
       },
-      [currentIndex, currentList?.nonWords, currentList?.words, responses]
+      [currentList?.nonWords, currentList?.words]
    );
 
    useEffect(() => {
@@ -197,6 +197,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
 
                if (data.task === `response`) {
+                  console.log(data);
                   setResponses((r) => [
                      ...r,
                      { ...data, is_mobile } as JsPsychTrialData,

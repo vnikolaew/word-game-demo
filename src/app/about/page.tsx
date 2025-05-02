@@ -31,7 +31,7 @@ export const metadata: Metadata = {
    description: "صفحة حول المنصة",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
    return (
       <div className="min-h-[70vh] bg-white" dir={pageData.metadata.direction}>
          <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">

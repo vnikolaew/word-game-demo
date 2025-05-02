@@ -8,6 +8,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import QuizCard from "./QuizCard";
 import Instructions from "./Instructions";
 import { usePracticeQuiz } from "@/hooks/usePracticeQuiz";
+import { useEffect } from "react";
+import { hideHeaderAndFooter, showHeaderAndFooter } from "@/lib/utils";
+import InstuctionsPicture from "./Instructions/InstuctionsPicture";
 
 // Practice items from provided word list
 const PRACTICE_ITEMS = [
@@ -27,7 +30,12 @@ interface PracticeViewProps {
    onComplete: () => void;
 }
 
-export type AppState = `intro` | `instructions` | `completion` | `practice`;
+export type AppState =
+   | `intro`
+   | `instructions`
+   | `instructions-picture`
+   | `completion`
+   | `practice`;
 
 export function PracticeView({ onComplete }: PracticeViewProps) {
    const {
@@ -44,6 +52,24 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
       handleResponse,
       setState,
    } = usePracticeQuiz();
+
+   useEffect(() => {
+      document.body.classList.add(`!transition-all`, `duration-200`);
+
+      if (isComplete) {
+         showHeaderAndFooter();
+         const DARK_BG_CLASSNAME = "!bg-gray-700";
+
+         document.body.classList.remove(DARK_BG_CLASSNAME);
+      } else {
+         hideHeaderAndFooter();
+
+         const DARK_BG_CLASSNAME = "!bg-gray-700";
+         if (state === `practice`) {
+            document.body.classList.add(DARK_BG_CLASSNAME);
+         }
+      }
+   }, [isComplete, state]);
 
    if (state === "intro") {
       return (
@@ -70,7 +96,17 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
    }
 
    if (state === "instructions") {
-      return <Instructions practice isMobile={isMobile} setState={setState} />;
+      return (
+         <Instructions
+            practice
+            isMobile={isMobile}
+            setState={(_) => setState(`instructions-picture`)}
+         />
+      );
+   }
+
+   if (state === "instructions-picture") {
+      return <InstuctionsPicture onClick={() => setState(`practice`)} />;
    }
 
    if (isComplete) {

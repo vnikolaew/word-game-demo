@@ -9,8 +9,15 @@ import {
    AccordionItem,
    AccordionTrigger,
 } from "@/components/ui/accordion";
+import { showHeaderAndFooter } from "@/lib/utils";
+import { useEffect } from "react";
 
 export default function LandingPage() {
+   useEffect(() => {
+      document.body.classList.add(`!bg-transparent`);
+      showHeaderAndFooter();
+   }, []);
+
    const faqs = [
       {
          question: "ما هو هدف هذا الاختبار؟",

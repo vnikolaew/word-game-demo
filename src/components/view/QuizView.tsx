@@ -5,20 +5,15 @@ import { Spinner } from "../ui/Spinner";
 import Instructions from "./Instructions";
 
 import { useExperiment } from "@/app/test/hooks";
-import { cn } from "@/lib/utils";
+import { cn, hideHeaderAndFooter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, Fragment, useMemo } from "react";
 import { Card } from "../ui/card";
-import {
-   IBM_Plex_Sans_Arabic,
-   Noto_Kufi_Arabic,
-   Noto_Sans_Arabic,
-   Rubik,
-   Tajawal,
-} from "next/font/google";
+import { Tajawal } from "next/font/google";
 import { Progress } from "../ui/progress";
 import { RefreshCw } from "lucide-react";
 import Script from "next/script";
+import InstuctionsPicture from "./Instructions/InstuctionsPicture";
 
 interface QuizViewProps {
    onComplete: () => void;
@@ -26,37 +21,9 @@ interface QuizViewProps {
 
 const TOTAL_WORDS = 100;
 
-const notoSans = Noto_Sans_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const ibm = IBM_Plex_Sans_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const rubik = Rubik({
-   variable: "--font-arabic",
-   weight: "400",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
 const tajawal = Tajawal({
    variable: "--font-arabic",
    weight: "300",
-   subsets: ["arabic"],
-   display: "swap",
-});
-
-const notoKufi = Noto_Kufi_Arabic({
-   variable: "--font-arabic",
-   weight: "400",
    subsets: ["arabic"],
    display: "swap",
 });
@@ -73,6 +40,8 @@ const scriptSources = [
    },
 ] as const;
 
+const DARK_BG_CLASSNAME = "!bg-gray-700";
+
 export default function QuizView({ onComplete }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
    const [scriptsLoaded, setScriptsLoaded] = useState<boolean[]>(
@@ -82,6 +51,14 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       () => scriptsLoaded.every((x) => x),
       [scriptsLoaded]
    );
+
+   useEffect(() => {
+      document.body.classList.add(`!transition-all`, `duration-200`);
+
+      if (state === `quiz`) {
+         document.body.classList.add(DARK_BG_CLASSNAME);
+      }
+   }, [state]);
 
    const {
       responses,
@@ -108,12 +85,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    useEffect(() => {
       if (state !== `quiz`) return;
-
-      const elements = [`header`, `footer`];
-      elements.forEach((e) => {
-         const element = document.querySelector(e) as HTMLElement;
-         element.style.visibility = `hidden`;
-      });
+      hideHeaderAndFooter();
    }, [state]);
 
    useEffect(() => {
@@ -146,15 +118,22 @@ export default function QuizView({ onComplete }: QuizViewProps) {
 
    if (state === "instructions") {
       return (
-         <Instructions isMobile={isMobile} setState={() => setState("quiz")} />
+         <Instructions
+            isMobile={isMobile}
+            setState={() => setState("instructions-picture")}
+         />
       );
+   }
+
+   if (state === "instructions-picture") {
+      return <InstuctionsPicture onClick={() => setState(`quiz`)} />;
    }
 
    if (isLoading || !currentList || !shuffledWords?.length) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
             <Spinner className="animate-spin" size="sm" />
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-white">
                {isSubmitting
                   ? "حفظ نتائج الاختبار ..."
                   : "يرجى الانتظار بينما نقوم بتحميل الاختبار ..."}
@@ -186,18 +165,22 @@ export default function QuizView({ onComplete }: QuizViewProps) {
             ))}
          <Card
             className={cn(
-               "w-full p-2 !min-h-[50vh] relative !border-none !outline-none !shadow-none",
+               "w-full p-2 !min-h-[50vh] relative !border-none !outline-none !shadow-none !text-white",
+               DARK_BG_CLASSNAME,
                tajawal.className
             )}
          >
             <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
-               <Progress value={responses?.length} className="mb-6 " />
+               <Progress
+                  value={responses?.length}
+                  className="mb-6 !bg-white "
+               />
             </div>
             <pre>{error}</pre>
             {!allScriptsLoaded ? (
                <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
                   <Spinner className="animate-spin" size="sm" />
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-white">
                      {isSubmitting
                         ? "حفظ نتائج الاختبار ..."
                         : "يرجى الانتظار بينما نقوم بتحميل الاختبار ..."}
@@ -212,19 +195,21 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                      <div className="flex justify-center items-center gap-4 absolute w-3/4 bottom-4">
                         <Button
                            variant="default"
+                           title="هذه الكلمة هي كلمة حقيقية"
                            onClick={(_) => {
                               handleChoice(`ArrowRight`);
                            }}
-                           className="w-full md:w-32 h-12 text-lg bg-green-500"
+                           className="w-full md:w-32 h-12 text-lg bg-green-500 text-white font-semibold"
                         >
                            نعم
                         </Button>
                         <Button
+                           title="هذه الكلمة ليست كلمة حقيقية"
                            variant="destructive"
                            onClick={(_) => {
                               handleChoice(`ArrowLeft`);
                            }}
-                           className="w-full md:w-32 h-12 text-lg text-white bg-red-500"
+                           className="w-full md:w-32 h-12 text-lg text-white bg-red-500 font-semibold"
                         >
                            لا
                         </Button>
