@@ -197,7 +197,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
 
                if (data.task === `response`) {
-                  console.log(data);
                   setResponses((r) => [
                      ...r,
                      { ...data, is_mobile } as JsPsychTrialData,
