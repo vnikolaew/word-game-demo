@@ -12,7 +12,7 @@ const PRACTICE_ITEMS = [
    { word: "ترجيح", isWord: true },
    { word: "ثاب", isWord: true },
    { word: "لقطاقال", isWord: false },
-   { word: "أُفوقون", isWord: false },
+   { word: "افوقون", isWord: false },
    { word: "بشرض", isWord: false },
    { word: "ماتوح", isWord: false },
    { word: "ضرء", isWord: false },

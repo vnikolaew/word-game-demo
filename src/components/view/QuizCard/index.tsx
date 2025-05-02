@@ -1,12 +1,6 @@
 import React, { useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import {
-   IBM_Plex_Sans_Arabic,
-   Noto_Kufi_Arabic,
-   Noto_Sans_Arabic,
-   Rubik,
-   Tajawal,
-} from "next/font/google";
+import { Tajawal } from "next/font/google";
 
 // Components
 import { Card } from "@/components/ui/card";
