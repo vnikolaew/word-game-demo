@@ -91,39 +91,14 @@ function Users() {
          ) : (
             <div className="rounded-md border">
                <Table>
-                  <TableHeader>
-                     <TableRow>
-                        <TableHead>الاسم</TableHead>
-                        <TableHead>البريد الإلكتروني</TableHead>
-                        <TableHead>معرف المستخدم</TableHead>
-                        <TableHead>تاريخ الانضمام</TableHead>
-                        <TableHead>الاختبارات المنجزة</TableHead>
-                        <TableHead>الإجراءات</TableHead>
-                     </TableRow>
-                  </TableHeader>
+                  <Headings />
                   <TableBody>
                      {filteredUsers.map((user) => (
-                        <TableRow key={user.id}>
-                           <TableCell>{user.name || "غير متوفر"}</TableCell>
-                           <TableCell>{user.email}</TableCell>
-                           <TableCell className="font-mono">
-                              {user.id}
-                           </TableCell>
-                           <TableCell>
-                              {new Date(user.createdAt!).toLocaleDateString()}
-                           </TableCell>
-                           <TableCell>{user.quizAttempts.length}</TableCell>
-                           <TableCell>
-                              <Button
-                                 className="!cursor-pointer"
-                                 variant="ghost"
-                                 size="sm"
-                                 onClick={() => setSelectedUser(user)}
-                              >
-                                 <Eye className="h-4 w-4" />
-                              </Button>
-                           </TableCell>
-                        </TableRow>
+                        <Row
+                           key={user.id}
+                           user={user}
+                           setSelectedUser={setSelectedUser}
+                        />
                      ))}
                   </TableBody>
                </Table>
@@ -203,5 +178,44 @@ function Users() {
       </div>
    );
 }
+
+const Headings = () => (
+   <TableHeader>
+      <TableRow>
+         <TableHead>الاسم</TableHead>
+         <TableHead>البريد الإلكتروني</TableHead>
+         <TableHead>معرف المستخدم</TableHead>
+         <TableHead>تاريخ الانضمام</TableHead>
+         <TableHead>الاختبارات المنجزة</TableHead>
+         <TableHead>الإجراءات</TableHead>
+      </TableRow>
+   </TableHeader>
+);
+
+const Row = ({
+   user,
+   setSelectedUser,
+}: {
+   user: any;
+   setSelectedUser: any;
+}) => (
+   <TableRow key={user.id}>
+      <TableCell>{user.name || "غير متوفر"}</TableCell>
+      <TableCell>{user.email}</TableCell>
+      <TableCell className="font-mono">{user.id}</TableCell>
+      <TableCell>{new Date(user.createdAt!).toLocaleDateString()}</TableCell>
+      <TableCell>{user.quizAttempts.length}</TableCell>
+      <TableCell>
+         <Button
+            className="!cursor-pointer"
+            variant="ghost"
+            size="sm"
+            onClick={() => setSelectedUser(user)}
+         >
+            <Eye className="h-4 w-4" />
+         </Button>
+      </TableCell>
+   </TableRow>
+);
 
 export default Users;

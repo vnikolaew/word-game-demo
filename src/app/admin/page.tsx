@@ -61,38 +61,13 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold mb-4">إحصائيات قائمة الكلمات</h2>
             <div className="rounded-md border">
                <Table>
-                  <TableHeader>
-                     <TableRow>
-                        <TableHead className="text-right">
-                           معرف قائمة الكلمات
-                        </TableHead>
-                        <TableHead className="text-right">
-                           إجمالي الاختبارات
-                        </TableHead>
-                        <TableHead className="text-right">
-                           الدرجات العالية (&gt;90%)
-                        </TableHead>
-                        <TableHead className="text-right">
-                           معدل النجاح
-                        </TableHead>
-                     </TableRow>
-                  </TableHeader>
+                  <Headings />
                   <TableBody>
                      {stats.quizzesByWordList.map((wordList) => (
-                        <TableRow key={wordList.wordListId}>
-                           <TableCell>#{wordList.wordListId}</TableCell>
-                           <TableCell>{wordList.totalQuizzes}</TableCell>
-                           <TableCell>{wordList.highScoreQuizzes}</TableCell>
-                           <TableCell>
-                              {(wordList.totalQuizzes === 0
-                                 ? 0
-                                 : (wordList.highScoreQuizzes /
-                                      wordList.totalQuizzes) *
-                                   100
-                              ).toFixed(1)}
-                              %
-                           </TableCell>
-                        </TableRow>
+                        <WordListRow
+                           key={wordList.wordListId}
+                           wordList={wordList}
+                        />
                      ))}
                   </TableBody>
                </Table>
@@ -101,6 +76,32 @@ export default function AdminDashboard() {
       </div>
    );
 }
+
+const WordListRow = ({ wordList }: { wordList: any }) => (
+   <TableRow key={wordList.wordListId}>
+      <TableCell>#{wordList.wordListId}</TableCell>
+      <TableCell>{wordList.totalQuizzes}</TableCell>
+      <TableCell>{wordList.highScoreQuizzes}</TableCell>
+      <TableCell>
+         {(wordList.totalQuizzes === 0
+            ? 0
+            : (wordList.highScoreQuizzes / wordList.totalQuizzes) * 100
+         ).toFixed(1)}
+         %
+      </TableCell>
+   </TableRow>
+);
+
+const Headings = () => (
+   <TableHeader>
+      <TableRow>
+         <TableHead className="text-right">معرف قائمة الكلمات</TableHead>
+         <TableHead className="text-right">إجمالي الاختبارات</TableHead>
+         <TableHead className="text-right">الدرجات العالية (&gt;90%)</TableHead>
+         <TableHead className="text-right">معدل النجاح</TableHead>
+      </TableRow>
+   </TableHeader>
+);
 
 function StatCard({
    title,

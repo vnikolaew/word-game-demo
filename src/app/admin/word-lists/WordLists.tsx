@@ -52,57 +52,15 @@ function WordLists() {
          ) : (
             <div className="rounded-md border">
                <Table>
-                  <TableHeader>
-                     <TableRow>
-                        <TableHead className="text-right">المعرف</TableHead>
-                        <TableHead className="text-right">الكلمات</TableHead>
-                        <TableHead className="text-right">
-                           عدد مرات الاستخدام
-                        </TableHead>
-                        <TableHead className="text-right">
-                           آخر استخدام
-                        </TableHead>
-                        <TableHead className="text-right">
-                           تاريخ الإنشاء
-                        </TableHead>
-                        <TableHead className="text-right">الإجراءات</TableHead>
-                     </TableRow>
-                  </TableHeader>
+                  <Headings />
                   <TableBody>
                      {wordLists.map((list) => (
-                        <TableRow key={list.id}>
-                           <TableCell>#{list.id}</TableCell>
-                           <TableCell>{list.words.length} كلمة</TableCell>
-                           <TableCell>{list.timesUsed}</TableCell>
-                           <TableCell>
-                              {list.lastUsedAt
-                                 ? new Date(
-                                      list.lastUsedAt
-                                   ).toLocaleDateString()
-                                 : "لم يتم الاستخدام"}
-                           </TableCell>
-                           <TableCell>
-                              {new Date(list.createdAt).toLocaleDateString()}
-                           </TableCell>
-                           <TableCell className="space-x-2">
-                              <Button
-                                 className="!cursor-pointer"
-                                 variant="ghost"
-                                 size="sm"
-                                 onClick={() => handleEditClick(list)}
-                              >
-                                 <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                 variant="ghost"
-                                 className="!cursor-pointer"
-                                 size="sm"
-                                 onClick={() => handleDeleteWordList(list.id)}
-                              >
-                                 <Trash2 className="h-4 w-4" />
-                              </Button>
-                           </TableCell>
-                        </TableRow>
+                        <Row
+                           key={list.id}
+                           handleEditClick={handleEditClick}
+                           handleDeleteWordList={handleDeleteWordList}
+                           list={list}
+                        />
                      ))}
                   </TableBody>
                </Table>
@@ -201,5 +159,58 @@ function WordLists() {
       </div>
    );
 }
+
+const Headings = () => (
+   <TableHeader>
+      <TableRow>
+         <TableHead className="text-right">المعرف</TableHead>
+         <TableHead className="text-right">الكلمات</TableHead>
+         <TableHead className="text-right">عدد مرات الاستخدام</TableHead>
+         <TableHead className="text-right">آخر استخدام</TableHead>
+         <TableHead className="text-right">تاريخ الإنشاء</TableHead>
+         <TableHead className="text-right">الإجراءات</TableHead>
+      </TableRow>
+   </TableHeader>
+);
+
+const Row = ({
+   list,
+   handleEditClick,
+   handleDeleteWordList,
+}: {
+   list: any;
+   handleEditClick: any;
+   handleDeleteWordList: any;
+}) => (
+   <TableRow key={list.id}>
+      <TableCell>#{list.id}</TableCell>
+      <TableCell>{list.words.length} كلمة</TableCell>
+      <TableCell>{list.timesUsed}</TableCell>
+      <TableCell>
+         {list.lastUsedAt
+            ? new Date(list.lastUsedAt).toLocaleDateString()
+            : "لم يتم الاستخدام"}
+      </TableCell>
+      <TableCell>{new Date(list.createdAt).toLocaleDateString()}</TableCell>
+      <TableCell className="space-x-2">
+         <Button
+            className="!cursor-pointer"
+            variant="ghost"
+            size="sm"
+            onClick={() => handleEditClick(list)}
+         >
+            <Edit className="h-4 w-4" />
+         </Button>
+         <Button
+            variant="ghost"
+            className="!cursor-pointer"
+            size="sm"
+            onClick={() => handleDeleteWordList(list.id)}
+         >
+            <Trash2 className="h-4 w-4" />
+         </Button>
+      </TableCell>
+   </TableRow>
+);
 
 export default WordLists;
