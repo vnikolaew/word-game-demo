@@ -56,6 +56,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       document.body.classList.add(`!transition-all`, `duration-200`);
 
       if (state === `quiz`) {
+         document.body.classList.remove(`!bg-transparent`);
          document.body.classList.add(DARK_BG_CLASSNAME);
       }
    }, [state]);
@@ -170,10 +171,10 @@ export default function QuizView({ onComplete }: QuizViewProps) {
                tajawal.className
             )}
          >
-            <div className="absolute top-4 left-2 gap-2 w-[98%] text-center mx-auto">
+            <div className="absolute top-0 left-0 gap-2 w-full text-center mx-auto">
                <Progress
                   value={responses?.length}
-                  className="mb-6 !bg-white "
+                  className="mb-6 !bg-white w-3/4 mx-auto"
                />
             </div>
             <pre>{error}</pre>

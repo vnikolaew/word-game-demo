@@ -132,31 +132,6 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                   </li>
                </ul> */}
             </div>
-            <div className="space-y-6 mt-12">
-               {consentItems.map((item) => (
-                  <div key={item.id} className="flex items-start space-x-3">
-                     <Checkbox
-                        id={item.id}
-                        checked={checkedItems.includes(item.id)}
-                        onCheckedChange={(checked) => {
-                           if (checked) {
-                              setCheckedItems([...checkedItems, item.id]);
-                           } else {
-                              setCheckedItems(
-                                 checkedItems.filter((id) => id !== item.id)
-                              );
-                           }
-                        }}
-                     />
-                     <label
-                        htmlFor={item.id}
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                     >
-                        {item.text}
-                     </label>
-                  </div>
-               ))}
-            </div>
             <div>
                <h2 className="text-lg font-medium mt-6">موافقة البحث</h2>
                <p>
@@ -198,6 +173,31 @@ export function ConsentView({ onConsent }: ConsentViewProps) {
                      alzahrani.alaaa@gmail.com
                   </Link>
                </p>
+               <div className="space-y-6 mt-12">
+                  {consentItems.map((item) => (
+                     <div key={item.id} className="flex items-start space-x-3">
+                        <Checkbox
+                           id={item.id}
+                           checked={checkedItems.includes(item.id)}
+                           onCheckedChange={(checked) => {
+                              if (checked) {
+                                 setCheckedItems([...checkedItems, item.id]);
+                              } else {
+                                 setCheckedItems(
+                                    checkedItems.filter((id) => id !== item.id)
+                                 );
+                              }
+                           }}
+                        />
+                        <label
+                           htmlFor={item.id}
+                           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                           {item.text}
+                        </label>
+                     </div>
+                  ))}
+               </div>
             </div>
          </CardContent>
          <CardFooter className="flex justify-end !mt-4">

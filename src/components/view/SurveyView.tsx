@@ -30,7 +30,7 @@ import AttentionDisorder from "./Survey/AttentionDisorder";
 import ReadingDisorder from "./Survey/ReadingDisorder";
 import Vision from "./Survey/Vision";
 import Hands from "./Survey/Hands";
-import { cn } from "@/lib/utils";
+import { cn, showHeaderAndFooter } from "@/lib/utils";
 import ParentsLanguage from "./Survey/ParentsLanguage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSurvey } from "@/hooks/useSurvey";
@@ -64,6 +64,9 @@ export const CustomDropdown = ({
    const selectedOption = options.find((opt) => opt.value === value);
 
    useEffect(() => {
+      document.body.classList.add(`!bg-transparent`);
+      showHeaderAndFooter();
+
       const handleClickOutside = (event: MouseEvent) => {
          if (
             dropdownRef.current &&

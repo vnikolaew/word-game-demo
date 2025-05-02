@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import React from "react";
-import desktopImage from "@/../public/images/thumb_desktop_instruction_pic.jpg";
-import mobileImage from "@/../public/images/thumb_phone_instruction_pic.png";
+import desktopImage from "@/../public/images/desktop_instruction_pic_ver2.png";
+import mobileImage from "@/../public/images/phone_instruction_pic_ver2.png";
 import Image from "next/image";
 
 const IMAGE_SIZE = 400;
@@ -24,6 +24,8 @@ function InstuctionsPicture({ onClick }: { onClick: any }) {
                </p>
                {isMobile ? (
                   <Image
+                     loading="eager"
+                     placeholder="blur"
                      height={64}
                      width={IMAGE_SIZE}
                      alt="instructions"
@@ -31,6 +33,7 @@ function InstuctionsPicture({ onClick }: { onClick: any }) {
                   />
                ) : (
                   <Image
+                     placeholder="blur"
                      height={64}
                      width={IMAGE_SIZE}
                      alt="instructions"
