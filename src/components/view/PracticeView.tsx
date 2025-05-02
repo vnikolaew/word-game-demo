@@ -57,14 +57,15 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
       document.body.classList.add(`!transition-all`, `duration-200`);
 
       const DARK_BG_CLASSNAME = "!bg-gray-700";
+      const TRANSPARENT_BG_CLASSNAME = "!bg-transparent";
+
       if (isComplete) {
          showHeaderAndFooter();
-
          document.body.classList.remove(DARK_BG_CLASSNAME);
+         document.body.classList.add(TRANSPARENT_BG_CLASSNAME);
       } else {
          hideHeaderAndFooter();
 
-         const TRANSPARENT_BG_CLASSNAME = "!bg-transparent";
          if (state === `practice`) {
             document.body.classList.remove(TRANSPARENT_BG_CLASSNAME);
             document.body.classList.add(DARK_BG_CLASSNAME);
