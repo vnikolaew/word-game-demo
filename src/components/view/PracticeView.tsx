@@ -56,16 +56,17 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
    useEffect(() => {
       document.body.classList.add(`!transition-all`, `duration-200`);
 
+      const DARK_BG_CLASSNAME = "!bg-gray-700";
       if (isComplete) {
          showHeaderAndFooter();
-         const DARK_BG_CLASSNAME = "!bg-gray-700";
 
          document.body.classList.remove(DARK_BG_CLASSNAME);
       } else {
          hideHeaderAndFooter();
 
-         const DARK_BG_CLASSNAME = "!bg-gray-700";
+         const TRANSPARENT_BG_CLASSNAME = "!bg-transparent";
          if (state === `practice`) {
+            document.body.classList.remove(TRANSPARENT_BG_CLASSNAME);
             document.body.classList.add(DARK_BG_CLASSNAME);
          }
       }
