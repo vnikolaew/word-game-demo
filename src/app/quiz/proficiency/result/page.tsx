@@ -13,6 +13,8 @@ interface QuizResult {
    timeTaken: number;
 }
 
+export const dynamic = "force-dynamic";
+
 function Page() {
    const router = useRouter();
    const [result, setResult] = useState<QuizResult | null>(null);

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
    FacebookShareButton,
    FacebookIcon,
@@ -26,7 +26,11 @@ interface ShareButtonsProps {
 }
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ title }) => {
-   const url = window.location.href;
+   const [url, setUrl] = useState(``);
+   useEffect(() => {
+      const url_ = new URL(window.location.href);
+      setUrl(`${url_.protocol}//${url_.hostname}`);
+   }, []);
 
    return (
       <div className="flex flex-wrap gap-2 justify-center">
