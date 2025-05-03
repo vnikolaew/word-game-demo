@@ -18,6 +18,7 @@ import { useQuiz } from "./hooks";
 import Link from "next/link";
 import { DemographicSurvey } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import ProficiencyTestLimitView from "@/components/view/ProficiencyTestLimitView";
 
 interface Props {
    survey?: DemographicSurvey | null;
@@ -65,6 +66,9 @@ export default function AppPage({ survey }: Props) {
                ))
                .with(`limit`, (_) => (
                   <QuizLimitView limitInfo={quizLimitInfo} />
+               ))
+               .with(`proficiency-limit`, (_) => (
+                  <ProficiencyTestLimitView limitInfo={quizLimitInfo} />
                ))
                .otherwise((_) => null)
          )}

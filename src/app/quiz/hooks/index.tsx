@@ -9,7 +9,13 @@ export type QuizLimitInfo = {
    tryAgainIn: number;
 };
 
-type AppState = "consent" | "proficiency" | "practice" | "quiz" | `limit`;
+type AppState =
+   | "consent"
+   | "proficiency"
+   | "proficiency-limit"
+   | "practice"
+   | "quiz"
+   | `limit`;
 
 export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
@@ -68,11 +74,19 @@ export function useQuiz(survey?: DemographicSurvey | null) {
             const hasFinishedMoreThanDayAgo =
                now - proficiencyFinishedDate >= ONE_DAY_MS;
 
-            if (
-               Boolean(hasFinishedProficiencyTest) &&
-               hasFinishedMoreThanDayAgo
-            ) {
-               setAppState("quiz");
+            if (Boolean(hasFinishedProficiencyTest)) {
+               if (hasFinishedMoreThanDayAgo) {
+                  setAppState("quiz");
+               } else {
+                  const tryAgainIn = Math.floor(
+                     Math.abs(now - proficiencyFinishedDate) / (1000 * 60 * 60)
+                  );
+                  setQuizLimitInfo({
+                     message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
+                     tryAgainIn,
+                  });
+                  setAppState("proficiency-limit");
+               }
             } else {
                setAppState("proficiency");
             }
