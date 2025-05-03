@@ -127,7 +127,12 @@ export default function QuizView({ onComplete }: QuizViewProps) {
    }
 
    if (state === "instructions-picture") {
-      return <InstuctionsPicture onClick={() => setState(`quiz`)} />;
+      return (
+         <InstuctionsPicture
+            practice={false}
+            onClick={() => setState(`quiz`)}
+         />
+      );
    }
 
    if (isLoading || !currentList || !shuffledWords?.length) {

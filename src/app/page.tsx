@@ -110,10 +110,10 @@ export default function LandingPage() {
                      transition={{ duration: 0.3, delay: 0.8 + index * 0.1 }}
                   >
                      <AccordionItem value={`item-${index}`}>
-                        <AccordionTrigger className="!cursor-pointer">
+                        <AccordionTrigger className="!cursor-pointer !text-right">
                            {faq.question}
                         </AccordionTrigger>
-                        <AccordionContent className="text-neutral-600 drop-shadow-sm">
+                        <AccordionContent className="text-neutral-600 drop-shadow-sm !text-right">
                            {faq.answer}
                         </AccordionContent>
                      </AccordionItem>

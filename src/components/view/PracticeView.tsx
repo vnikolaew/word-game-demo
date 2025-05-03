@@ -108,7 +108,7 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
    }
 
    if (state === "instructions-picture") {
-      return <InstuctionsPicture onClick={() => setState(`practice`)} />;
+      return <InstuctionsPicture practice onClick={() => setState(`practice`)} />;
    }
 
    if (isComplete) {

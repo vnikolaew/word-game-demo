@@ -34,7 +34,7 @@ const Instructions = ({
             <CardTitle className="text-center text-2xl">
                {practice
                   ? `تعليمات الجلسة التدريبية`
-                  : `تعليمات الجلسة التدريبية`}
+                  : `تعليمات الجلسة الرئيسية`}
             </CardTitle>
          </CardHeader>
          <CardContent className="space-y-6">
@@ -49,7 +49,7 @@ const Instructions = ({
                   onClick={() => setState("practice")}
                   className="w-full md:w-auto !px-12"
                >
-                  ابدأ التدريب
+                  {practice ? `ابدأ التدريب` : `ابدأ الاختبار`}
                </Button>
             </div>
          </CardContent>

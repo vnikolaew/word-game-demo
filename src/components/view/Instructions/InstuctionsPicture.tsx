@@ -9,7 +9,13 @@ import Image from "next/image";
 
 const IMAGE_SIZE = 400;
 
-function InstuctionsPicture({ onClick }: { onClick: any }) {
+function InstuctionsPicture({
+   onClick,
+   practice = false,
+}: {
+   onClick: any;
+   practice?: boolean;
+}) {
    const isMobile = useMediaQuery("(max-width: 768px)");
 
    return (
@@ -43,7 +49,7 @@ function InstuctionsPicture({ onClick }: { onClick: any }) {
             </div>
             <div className="flex justify-center pt-12">
                <Button onClick={onClick} className="w-full md:w-auto !px-12">
-                  ابدأ التدريب
+                  {practice ? `ابدأ التدريب` : `ابدأ الاختبار`}
                </Button>
             </div>
          </CardContent>
