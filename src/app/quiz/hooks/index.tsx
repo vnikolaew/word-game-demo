@@ -9,7 +9,7 @@ export type QuizLimitInfo = {
    tryAgainIn: number;
 };
 
-type AppState = "consent" | "proficiency" | "practice" | "quiz" | `limit`;
+type AppState = "consent" | "practice" | "quiz" | `limit`;
 
 export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
@@ -29,15 +29,6 @@ export function useQuiz(survey?: DemographicSurvey | null) {
       return data;
    };
 
-   const getProficiencyTestInfo = async () => {
-      setLoading(true);
-      setError(null);
-      const response = await fetch("/api/quiz/proficiency");
-      const data = await response.json();
-      setLoading(false);
-      return data;
-   };
-
    const limitUserQuiz = async () => {
       setLoading(true);
       setError(null);
@@ -49,33 +40,14 @@ export function useQuiz(survey?: DemographicSurvey | null) {
 
    useEffect(() => {
       (async () => {
-         const [apiConsent, apiLimit, proficiencyTestInfo] = await Promise.all([
+         const [apiConsent, apiLimit] = await Promise.all([
             getConsent(),
             limitUserQuiz(),
-            getProficiencyTestInfo(),
          ]);
 
          if (apiConsent) {
             setConsent(apiConsent);
-            const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =
-               proficiencyTestInfo;
-
-            const now = Date.now();
-            const proficiencyFinishedDate = Date.parse(
-               proficiencyQuizFinishedAt
-            );
-            const ONE_DAY_MS = 1000 * 60 * 60 * 24;
-            const hasFinishedMoreThanDayAgo =
-               now - proficiencyFinishedDate >= ONE_DAY_MS;
-
-            if (
-               Boolean(hasFinishedProficiencyTest) &&
-               hasFinishedMoreThanDayAgo
-            ) {
-               setAppState("quiz");
-            } else {
-               setAppState("proficiency");
-            }
+            setAppState("quiz");
          } else {
             setAppState("consent");
          }

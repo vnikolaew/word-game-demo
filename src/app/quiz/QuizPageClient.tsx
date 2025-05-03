@@ -33,9 +33,6 @@ export default function AppPage({ survey }: Props) {
       quizLimitInfo,
       setAppState,
    } = useQuiz(survey);
-   const router = useRouter();
-
-   if (appState === `proficiency`) router.push(`/quiz/proficiency`);
 
    return (
       <div className="mx-auto py-12">

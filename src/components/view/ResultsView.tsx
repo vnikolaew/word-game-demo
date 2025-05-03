@@ -24,18 +24,18 @@ export interface ProlificCodeProps {
 
 const PROLIFIC_BASE_URL = `https://app.prolific.com/submissions/complete`;
 
-const PROLIFIC_URL_50_AND_ABOVE_CODE =
-   process.env.NEXT_PUBLIC_PROLIFIC_URL_70_AND_ABOVE_CODE ?? `C15I0O1U`;
+const PROLIFIC_URL_80_AND_BELOW_CODE =
+   process.env.NEXT_PUBLIC_PROLIFIC_URL_80_AND_BELOW_CODE ?? `C15I0O1U`;
 
-const PROLIFIC_URL_0_AND_BELOW_CODE =
-   process.env.NEXT_PUBLIC_PROLIFIC_URL_70_AND_BELOW_CODE ?? `CLMSPQ2F`;
+const PROLIFIC_URL_80_AND_ABOVE_CODE =
+   process.env.NEXT_PUBLIC_PROLIFIC_URL_80_AND_ABOVE_CODE ?? `CLMSPQ2F`;
 
 const ProlificCode = ({ score }: ProlificCodeProps) => {
    const [copied, setCopied] = useState(false);
 
    const prolificUrl = useMemo(
       () =>
-         `${PROLIFIC_BASE_URL}?cc=${score >= 50 ? PROLIFIC_URL_50_AND_ABOVE_CODE : score < 0 ? PROLIFIC_URL_0_AND_BELOW_CODE : ``}`,
+         `${PROLIFIC_BASE_URL}?cc=${score < 80 ? PROLIFIC_URL_80_AND_BELOW_CODE : score >= 80 ? PROLIFIC_URL_80_AND_ABOVE_CODE : ``}`,
       [score]
    );
    const textToBeCopied = useMemo(() => prolificUrl, [prolificUrl]);
