@@ -1,28 +1,14 @@
-"use client";
 import ResultsView from "@/components/view/ResultsView";
-import { showHeaderAndFooter } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
+import { getCurrentUser } from "../queries";
 
-function ClientPage() {
-   const router = useRouter();
-
-   const handleResultsComplete = () => {
-      router.push("/");
-   };
-
-   const handleRetake = () => {
-      router.push(`/quiz`);
-   };
-
-   useEffect(() => {
-      document.body.classList.add(`!bg-transparent`);
-      showHeaderAndFooter();
-   }, []);
+async function ClientPage() {
+   const user = await getCurrentUser();
+   const hasProlificEmail = user?.hasProlificEmail ?? false;
 
    return (
       <div className="mx-auto py-12">
-         <ResultsView onNext={handleResultsComplete} onRetake={handleRetake} />
+         <ResultsView hasProlificEmail={hasProlificEmail} />
       </div>
    );
 }

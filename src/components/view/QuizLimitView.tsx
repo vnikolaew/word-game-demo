@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { QuizLimitInfo } from "@/app/quiz/hooks";
+import Link from "next/link";
 
 export interface QuizLimitViewProps {
    limitInfo: QuizLimitInfo;
@@ -45,9 +46,11 @@ function QuizLimitView({
                <span className="">{formattedMessage}</span>
             </motion.p>
             <div className="flex justify-center pt-12">
-               <Button className="w-full md:w-auto px-12">
-                  انتقل إلى الصفحة الرئيسية
-               </Button>
+               <Link href={`/`}>
+                  <Button className="w-full md:w-auto px-12">
+                     انتقل إلى الصفحة الرئيسية
+                  </Button>
+               </Link>
             </div>
          </CardContent>
       </Card>

@@ -61,6 +61,9 @@ export async function GET(
                user: {
                   select: {
                      id: true,
+                     metadata: true,
+                     score: true,
+                     hasFinishedProficiencyTest: true,
                   },
                },
                wordList: {
@@ -91,6 +94,11 @@ export async function GET(
                   "User Device Type": quiz.deviceType,
                   "User OS": quiz.deviceOS,
                   "User Browser": quiz.deviceBrowser,
+                  "User Domain": process.env.WEB_DOMAIN!,
+                  "User Proficiency Score":
+                     !quiz.user.score || !quiz.user.hasFinishedProficiencyTest
+                        ? `مجهول`
+                        : quiz.user.score?.toString(),
                   "User Monitor Size": quiz.monitorSize,
                   "User Viewport Size": quiz.viewportSize,
                   "Page number": response.pageNumber,

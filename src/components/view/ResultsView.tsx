@@ -13,13 +13,101 @@ import {
 } from "react-share";
 import { motion } from "framer-motion";
 import { useQuizResult } from "@/hooks/useQuizResult";
+import { useRouter } from "next/navigation";
+import { showHeaderAndFooter } from "@/lib/utils";
+import { Fragment, useEffect, useMemo, useState } from "react";
+import { Clipboard, ClipboardCheck } from "lucide-react";
 
-interface ResultsViewProps {
-   onNext: () => void;
-   onRetake: () => void;
+export interface ProlificCodeProps {
+   score: number;
 }
 
-export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
+const PROLIFIC_BASE_URL = `https://app.prolific.com/submissions/complete`;
+
+const PROLIFIC_URL_50_AND_ABOVE_CODE =
+   process.env.NEXT_PUBLIC_PROLIFIC_URL_70_AND_ABOVE_CODE ?? `C15I0O1U`;
+
+const PROLIFIC_URL_0_AND_BELOW_CODE =
+   process.env.NEXT_PUBLIC_PROLIFIC_URL_70_AND_BELOW_CODE ?? `CLMSPQ2F`;
+
+const ProlificCode = ({ score }: ProlificCodeProps) => {
+   const [copied, setCopied] = useState(false);
+
+   const prolificUrl = useMemo(
+      () =>
+         `${PROLIFIC_BASE_URL}?cc=${score >= 50 ? PROLIFIC_URL_50_AND_ABOVE_CODE : score < 0 ? PROLIFIC_URL_0_AND_BELOW_CODE : ``}`,
+      [score]
+   );
+   const textToBeCopied = useMemo(() => prolificUrl, [prolificUrl]);
+
+   async function handleCopy() {
+      await navigator.clipboard.writeText(textToBeCopied);
+
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+   }
+
+   return (
+      <div
+         className={`w-full text-center flex flex-col items-center gap-2 !mb-12 `}
+      >
+         <label
+            htmlFor={`prolificCode`}
+            className={`text-3xl font-semibold drop-shadow-sm`}
+         >
+            كود غزير الإنتاج
+         </label>
+         <div className={`w-full flex items-center justify-center mt-4`}>
+            <div className={`relative !w-[90%] md:!w-[620px]`}>
+               <input
+                  readOnly
+                  name={`prolificCode`}
+                  id={`prolificCode`}
+                  value={prolificUrl}
+                  title={prolificUrl}
+                  type="text"
+                  placeholder={`اكتب هنا`}
+                  className="text-base input-primary input-md input md:!text-lg input-bordered !bg-white  !pr-0 !mr-0 !w-full text-primary font-semibold"
+               />
+               <div
+                  className={`absolute right-0 top-1/2 -translate-y-1/2 !ml-2 !h-full !w-fit`}
+               >
+                  <button
+                     disabled={copied}
+                     onClick={() => handleCopy()}
+                     title={
+                        copied ? (`تم نسخها` as string) : (`ينسخ` as string)
+                     }
+                     className="btn btn-primary !text-white !bg-primary btn-md !h-full !rounded-md !px-8 disabled:!opacity-90 !min-w-[80px] md:!min-w-[120px] !text-center md:!text-base disabled:!cursor-none inline-flex items-center gap-2 hover:!opacity-80 duration-200 transition-all"
+                  >
+                     {copied ? (
+                        <Fragment>
+                           <ClipboardCheck size={14} />
+                           <span
+                              className={`hidden md:block`}
+                           >{`تم نسخها`}</span>
+                        </Fragment>
+                     ) : (
+                        <Fragment>
+                           <Clipboard size={14} />
+                           <span className={`hidden md:block`}>{`ينسخ`}</span>
+                        </Fragment>
+                     )}
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+   );
+};
+
+interface ResultsViewProps {
+   hasProlificEmail: boolean;
+}
+
+export default function ResultsView({
+   hasProlificEmail = false,
+}: ResultsViewProps) {
    const {
       error,
       getFeedbackMessage,
@@ -28,6 +116,21 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
       results,
       shareUrl,
    } = useQuizResult();
+
+   const router = useRouter();
+
+   const handleResultsComplete = () => {
+      router.push("/");
+   };
+
+   const handleRetake = () => {
+      router.push(`/quiz`);
+   };
+
+   useEffect(() => {
+      document.body.classList.add(`!bg-transparent`);
+      showHeaderAndFooter();
+   }, []);
 
    if (loading || !results) {
       return (
@@ -87,6 +190,7 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
                   {getFeedbackMessage(results.score)}
                </motion.p>
             </div>
+            {hasProlificEmail && <ProlificCode score={results.score} />}
 
             <div className="text-center">
                <p className="text-sm text-gray-500">شارك نتيجتك مع الآخرين!</p>
@@ -104,10 +208,12 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
             </div>
 
             <div className="flex justify-center gap-4 mt-8">
-               <Button onClick={onRetake} variant="outline">
+               <Button onClick={handleRetake} variant="outline">
                   إعادة الاختبار
                </Button>
-               <Button onClick={onNext}>العودة للصفحة الرئيسية</Button>
+               <Button onClick={handleResultsComplete}>
+                  العودة للصفحة الرئيسية
+               </Button>
             </div>
          </CardContent>
       </Card>

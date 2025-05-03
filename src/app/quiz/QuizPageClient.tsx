@@ -17,6 +17,7 @@ import { __IS_PROD__ } from "@/lib/consts";
 import { useQuiz } from "./hooks";
 import Link from "next/link";
 import { DemographicSurvey } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 interface Props {
    survey?: DemographicSurvey | null;
@@ -32,6 +33,9 @@ export default function AppPage({ survey }: Props) {
       quizLimitInfo,
       setAppState,
    } = useQuiz(survey);
+   const router = useRouter();
+
+   if (appState === `proficiency`) router.push(`/quiz/proficiency`);
 
    return (
       <div className="mx-auto py-12">

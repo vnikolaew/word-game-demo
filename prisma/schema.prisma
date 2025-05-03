@@ -21,6 +21,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
+  metadata Json? @default("null")
+
   // Quiz related fields
   quizAttempts        QuizAttempt[]
   surveyResponses     DemographicSurvey[]

@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 
 const LIMITS = {
    ONE_HOUR: {
-      limit: 4,
+      limit: 2,
       message: `لقد أجريتَ الاختبار ٤ مرات أو أكثر خلال الساعة الماضية. يُرجى المحاولة مرة أخرى خلال {minutes} دقيقة.`,
    },
    ONE_DAY: {
-      limit: 20,
+      limit: 5,
       message: `لقد أجريتَ الاختبار ٢٠ مرة أو أكثر خلال الـ ٢٤ ساعة الماضية. يُرجى المحاولة مرة أخرى خلال {hours} ساعة.`,
    },
    NOT_LIMITED: `أنت لست محدودا`,

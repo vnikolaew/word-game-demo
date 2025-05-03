@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import ProlificSignInButton from "./ProlificSignInButton ";
 
 function LoginClient() {
    const { error, form, isLoading, onSubmit } = useSignIn();
@@ -120,6 +121,7 @@ function LoginClient() {
                      <GoogleIcon />
                      تسجيل الدخول باستخدام جوجل
                   </Button>
+                  <ProlificSignInButton />
                </div>
                <div className="text-center text-sm text-gray-500 inline-flex items-center gap-1">
                   <span>ليس لديك حساب؟ </span>

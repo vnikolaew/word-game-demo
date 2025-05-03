@@ -1856,6 +1856,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     isAdmin: number
+    metadata: number
     _all: number
   }
 
@@ -1894,6 +1895,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     isAdmin?: true
+    metadata?: true
     _all?: true
   }
 
@@ -1979,6 +1981,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     isAdmin: boolean
+    metadata: JsonValue | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -2008,6 +2011,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     isAdmin?: boolean
+    metadata?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     quizAttempts?: boolean | User$quizAttemptsArgs<ExtArgs>
@@ -2027,6 +2031,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     isAdmin?: boolean
+    metadata?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2039,6 +2044,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     isAdmin?: boolean
+    metadata?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2051,9 +2057,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     isAdmin?: boolean
+    metadata?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "isAdmin", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "isAdmin" | "metadata", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -2086,6 +2093,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       isAdmin: boolean
+      metadata: Prisma.JsonValue | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2524,6 +2532,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly isAdmin: FieldRef<"User", 'Boolean'>
+    readonly metadata: FieldRef<"User", 'Json'>
   }
     
 
@@ -13448,7 +13457,8 @@ export namespace Prisma {
     image: 'image',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    isAdmin: 'isAdmin'
+    isAdmin: 'isAdmin',
+    metadata: 'metadata'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -13607,6 +13617,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const JsonNullValueInput: {
     JsonNull: typeof JsonNull
   };
@@ -13622,14 +13640,6 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -13637,6 +13647,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -13680,6 +13698,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -13705,20 +13737,6 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
   /**
    * Deep Input Types
    */
@@ -13737,6 +13755,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     isAdmin?: BoolFilter<"User"> | boolean
+    metadata?: JsonNullableFilter<"User">
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
@@ -13755,6 +13774,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     isAdmin?: SortOrder
+    metadata?: SortOrderInput | SortOrder
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     quizAttempts?: QuizAttemptOrderByRelationAggregateInput
@@ -13776,6 +13796,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     isAdmin?: BoolFilter<"User"> | boolean
+    metadata?: JsonNullableFilter<"User">
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     quizAttempts?: QuizAttemptListRelationFilter
@@ -13794,6 +13815,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     isAdmin?: SortOrder
+    metadata?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -13812,6 +13834,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     isAdmin?: BoolWithAggregatesFilter<"User"> | boolean
+    metadata?: JsonNullableWithAggregatesFilter<"User">
   }
 
   export type AccountWhereInput = {
@@ -14571,6 +14594,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -14589,6 +14613,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -14607,6 +14632,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -14625,6 +14651,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -14643,6 +14670,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UserUpdateManyMutationInput = {
@@ -14655,6 +14683,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -14667,6 +14696,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AccountCreateInput = {
@@ -15542,6 +15572,29 @@ export namespace Prisma {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type AccountListRelationFilter = {
     every?: AccountWhereInput
@@ -15618,6 +15671,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     isAdmin?: SortOrder
+    metadata?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -15714,6 +15768,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -16989,6 +17069,29 @@ export namespace Prisma {
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
@@ -17547,6 +17650,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -17564,6 +17668,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -17597,6 +17702,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -17614,6 +17720,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -17631,6 +17738,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -17648,6 +17756,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -17681,6 +17790,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -17698,6 +17808,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -17936,6 +18047,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -17953,6 +18065,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -18014,6 +18127,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -18031,6 +18145,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -18048,6 +18163,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyCreateNestedManyWithoutUserInput
@@ -18065,6 +18181,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     surveyResponses?: DemographicSurveyUncheckedCreateNestedManyWithoutUserInput
@@ -18120,6 +18237,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUpdateManyWithoutUserNestedInput
@@ -18137,6 +18255,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     surveyResponses?: DemographicSurveyUncheckedUpdateManyWithoutUserNestedInput
@@ -18182,6 +18301,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -18199,6 +18319,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -18232,6 +18353,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -18249,6 +18371,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput
@@ -18266,6 +18389,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptCreateNestedManyWithoutUserInput
@@ -18283,6 +18407,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     isAdmin?: boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     quizAttempts?: QuizAttemptUncheckedCreateNestedManyWithoutUserInput
@@ -18316,6 +18441,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUpdateManyWithoutUserNestedInput
@@ -18333,6 +18459,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     isAdmin?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: NullableJsonNullValueInput | InputJsonValue
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     quizAttempts?: QuizAttemptUncheckedUpdateManyWithoutUserNestedInput

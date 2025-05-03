@@ -29,36 +29,52 @@ const credentials = CredentialsProvider({
    credentials: {
       email: { label: "Email", type: "email" },
       password: { label: "Password", type: "password" },
+      type: {
+         type: "text",
+      },
    },
    type: `credentials`,
    async authorize(credentials) {
-      if (!credentials?.email || !credentials?.password) {
-         return null;
+      if (!credentials) return null;
+
+      if (credentials.type === `prolific`) {
+         const user = await prisma.user.prolificSignIn(
+            {
+               email: credentials.email as string,
+               username: credentials.email as string,
+            },
+            { metadata: true }
+         );
+
+         return user!;
+      } else {
+         if (!credentials?.email || !credentials?.password) {
+            return null;
+         }
+         const user = await prisma.user.findFirst({
+            where: {
+               email: credentials.email,
+            },
+         });
+         if (!user) {
+            return null;
+         }
+
+         const passwordsMatch = await bcrypt.compare(
+            credentials.password,
+            user.password!
+         );
+
+         if (!passwordsMatch) {
+            return null;
+         }
+
+         return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+         };
       }
-
-      const user = await prisma.user.findFirst({
-         where: {
-            email: credentials.email,
-         },
-      });
-      if (!user) {
-         return null;
-      }
-
-      const passwordsMatch = await bcrypt.compare(
-         credentials.password,
-         user.password!
-      );
-
-      if (!passwordsMatch) {
-         return null;
-      }
-
-      return {
-         id: user.id,
-         email: user.email,
-         name: user.name,
-      };
    },
 });
 
