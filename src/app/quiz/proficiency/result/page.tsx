@@ -30,7 +30,6 @@ function Page() {
       );
    }
 
-   const shareUrl = window.location.href;
    const shareTitle = `حصلت على ${result.score}٪ في اختبار كَلِم (${APP_NAME})!`;
 
    const formatTime = (seconds: number) => {
@@ -77,7 +76,7 @@ function Page() {
             <p className="mb-4 text-gray-600">
                أخبر أصدقاءك عن أدائك في اختبار كَلِم!
             </p>
-            <ShareButtons url={shareUrl} title={shareTitle} />
+            <ShareButtons title={shareTitle} />
          </div>
 
          <Button

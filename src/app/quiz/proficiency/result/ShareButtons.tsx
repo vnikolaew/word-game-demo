@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
    FacebookShareButton,
@@ -21,11 +22,12 @@ import {
 } from "next-share";
 
 interface ShareButtonsProps {
-   url: string;
    title: string;
 }
 
-const ShareButtons: React.FC<ShareButtonsProps> = ({ url, title }) => {
+const ShareButtons: React.FC<ShareButtonsProps> = ({ title }) => {
+   const url = window.location.href;
+
    return (
       <div className="flex flex-wrap gap-2 justify-center">
          <FacebookShareButton url={url} quote={title}>
