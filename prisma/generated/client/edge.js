@@ -306,7 +306,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://kalimat-game-learners-db_owner:npg_OWxpgUsHI62M@ep-ancient-shadow-a28yni20-pooler.eu-central-1.aws.neon.tech/kalimat-game-learners-db?sslmode=require"
+        "value": "postgresql://kalimat-game-crowdsource-db_owner:npg_5MQp3ydUGHiA@ep-rapid-queen-a26xdo0i-pooler.eu-central-1.aws.neon.tech/kalimat-game-crowdsource-db?sslmode=require"
       }
     }
   },

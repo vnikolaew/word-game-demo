@@ -17,7 +17,6 @@ import { __IS_PROD__ } from "@/lib/consts";
 import { useQuiz } from "./hooks";
 import Link from "next/link";
 import { DemographicSurvey } from "@prisma/client";
-import { useRouter } from "next/navigation";
 
 interface Props {
    survey?: DemographicSurvey | null;
