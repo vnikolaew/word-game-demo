@@ -20,9 +20,11 @@ function Page() {
    const [result, setResult] = useState<QuizResult | null>(null);
 
    useEffect(() => {
-      const storedResult = localStorage.getItem("quizResult");
-      if (storedResult) {
-         setResult(JSON.parse(storedResult));
+      if (typeof window !== `undefined`) {
+         const storedResult = localStorage.getItem("quizResult");
+         if (storedResult) {
+            setResult(JSON.parse(storedResult));
+         }
       }
    }, []);
 

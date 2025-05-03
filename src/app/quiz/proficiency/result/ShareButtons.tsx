@@ -27,9 +27,12 @@ interface ShareButtonsProps {
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ title }) => {
    const [url, setUrl] = useState(``);
+
    useEffect(() => {
-      const url_ = new URL(window.location.href);
-      setUrl(`${url_.protocol}//${url_.hostname}`);
+      if (typeof window !== `undefined`) {
+         const url_ = new URL(window.location.href);
+         setUrl(`${url_.protocol}//${url_.hostname}`);
+      }
    }, []);
 
    return (
