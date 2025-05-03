@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
+import prolificLogo from "@/../public/Prolific_Icon_Prolific_Blue.png";
 
 // Components
 import { Button } from "@/components/ui/button";
@@ -39,10 +40,9 @@ import {
    TooltipProvider,
    TooltipTrigger,
 } from "../ui/tooltip";
-import AuthProvider from "../providers/AuthProvider";
 import { match } from "ts-pattern";
-import { Provider } from "jotai/react";
 import GoogleIcon from "../icons/GoogleIcon";
+import Image from "next/image";
 
 const AccountManagement = ({}) => {
    const [isLoading, setIsLoading] = useState(false);
@@ -290,6 +290,14 @@ const PersonalInfo = ({ profile }: { profile: UserProfileType }) => {
                            {match(auth_provider.toLowerCase())
                               .with(`google`, (_) => (
                                  <GoogleIcon width={12} height={12} />
+                              ))
+                              .with(`prolific`, (_) => (
+                                 <Image
+                                    alt="prolific"
+                                    src={prolificLogo}
+                                    width={12}
+                                    height={12}
+                                 />
                               ))
                               .otherwise((_) => (
                                  <Key size={12} />
