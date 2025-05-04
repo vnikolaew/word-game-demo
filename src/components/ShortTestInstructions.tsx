@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { ShortTestInstructions as InstructionsArray } from "@/app/quiz/proficiency/words";
 

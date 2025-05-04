@@ -1,3 +1,5 @@
+"use client";
+
 /// Page 1 prof test instructions ///
 export const MainFirstInstructions = [
    "ستقرأ 90 كلمة في الاختبار.",

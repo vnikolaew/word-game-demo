@@ -1,3 +1,4 @@
+"use client";
 import { Word } from "@/app/quiz/proficiency/words";
 
 export function shuffleArray<T>(array: T[]): T[] {

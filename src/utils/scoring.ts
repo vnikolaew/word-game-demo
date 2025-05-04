@@ -1,3 +1,5 @@
+"use client";
+
 interface QuizResponse {
    answer: number; // 1 for selected, 0 for not selected
    wordType: "word" | "nonword";
