@@ -19,6 +19,7 @@ import Link from "next/link";
 import { DemographicSurvey } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import ProficiencyTestLimitView from "@/components/view/ProficiencyTestLimitView";
+import { useQueryState, parseAsString } from "nuqs";
 
 interface Props {
    survey?: DemographicSurvey | null;
@@ -35,6 +36,8 @@ export default function AppPage({ survey }: Props) {
       setAppState,
    } = useQuiz(survey);
    const router = useRouter();
+   const [, setScreen] = useQueryState(`screen`, parseAsString);
+
    if (appState === `proficiency`) router.push(`/quiz/proficiency`);
 
    return (
@@ -58,7 +61,11 @@ export default function AppPage({ survey }: Props) {
                   <ConsentView onConsent={handleConsent} />
                ))
                .with(`practice`, (_) => (
-                  <PracticeView onComplete={() => setAppState(`quiz`)} />
+                  <PracticeView
+                     onComplete={() => {
+                        setScreen(``).then(() => setAppState(`quiz`));
+                     }}
+                  />
                ))
                .with(`quiz`, (_) => (
                   <QuizView onComplete={handleQuizComplete} />
