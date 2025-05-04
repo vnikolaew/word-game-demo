@@ -64,6 +64,7 @@ export async function GET(
                      metadata: true,
                      score: true,
                      hasFinishedProficiencyTest: true,
+                     proficiencyQuizFinishedAt: true,
                   },
                },
                wordList: {
@@ -96,7 +97,8 @@ export async function GET(
                   "User Browser": quiz.deviceBrowser,
                   "User Domain": process.env.WEB_DOMAIN!,
                   "User Proficiency Score":
-                     !quiz.user.score || !quiz.user.hasFinishedProficiencyTest
+                     quiz.user.score === null ||
+                     !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
                         ? `مجهول`
                         : quiz.user.score?.toString(),
                   "User Monitor Size": quiz.monitorSize,
@@ -134,6 +136,7 @@ export async function GET(
 
          data = surveys.map((survey) => ({
             anonymousUserId: generateAnonymousId(survey.user.id),
+            userDomain: process.env.WEB_DOMAIN!,
             nativeLanguage: survey.nativeLanguage,
             otherNativeLanguage: survey.otherNativeLanguage,
             languageAcquisition: survey.languageAcquisition,
