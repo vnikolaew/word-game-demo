@@ -1,4 +1,3 @@
-import React from "react";
 import ClientPage from "./ClientPage";
 
 export const dynamic = "force-dynamic";

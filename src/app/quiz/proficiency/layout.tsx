@@ -1,5 +1,5 @@
 import { Spinner } from "@/components/ui/Spinner";
-import React, { PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren, Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
