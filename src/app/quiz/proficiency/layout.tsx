@@ -1,6 +1,8 @@
 import { Spinner } from "@/components/ui/Spinner";
 import React, { PropsWithChildren, Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 async function Layout({ children }: PropsWithChildren) {
    return (
       <section className="w-full mt-12">
