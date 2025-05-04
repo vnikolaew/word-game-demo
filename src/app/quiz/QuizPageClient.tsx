@@ -35,7 +35,6 @@ export default function AppPage({ survey }: Props) {
       setAppState,
    } = useQuiz(survey);
    const router = useRouter();
-
    if (appState === `proficiency`) router.push(`/quiz/proficiency`);
 
    return (
@@ -68,7 +67,11 @@ export default function AppPage({ survey }: Props) {
                   <QuizLimitView limitInfo={quizLimitInfo} />
                ))
                .with(`proficiency-limit`, (_) => (
-                  <ProficiencyTestLimitView limitInfo={quizLimitInfo} />
+                  <ProficiencyTestLimitView
+                     limitInfo={
+                        quizLimitInfo ?? { message: ``, tryAgainIn: 10 }
+                     }
+                  />
                ))
                .otherwise((_) => null)
          )}

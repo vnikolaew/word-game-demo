@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Tajawal } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
@@ -42,7 +43,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                <Toaster />
                <Header />
 
-               {children}
+               <NuqsAdapter>{children}</NuqsAdapter>
                <Footer />
             </AuthProvider>
          </body>

@@ -12,18 +12,21 @@ export interface QuizLimitViewProps {
 }
 
 function ProficiencyTestLimitView({
-   limitInfo: { message, tryAgainIn },
+   limitInfo: { message, tryAgainIn } = { message: ``, tryAgainIn: 10 },
 }: QuizLimitViewProps) {
    const formattedMessage = useMemo(() => {
-      if (isNaN(tryAgainIn)) return message;
+      const x_message = message;
+      const x_tryAgainIn = tryAgainIn;
 
-      if (message.includes(`{hours}`))
-         return message.replaceAll(`{hours}`, tryAgainIn.toFixed(2));
+      if (isNaN(x_tryAgainIn)) return message;
 
-      if (message.includes(`{minutes}`))
-         return message.replaceAll(`{minutes}`, tryAgainIn.toFixed(2));
+      if (x_message.includes(`{hours}`))
+         return x_message.replaceAll(`{hours}`, x_tryAgainIn.toFixed(0));
 
-      return message;
+      if (x_message.includes(`{minutes}`))
+         return x_message.replaceAll(`{minutes}`, x_tryAgainIn.toFixed(0));
+
+      return x_message;
    }, [message, tryAgainIn]);
 
    return (
@@ -44,7 +47,7 @@ function ProficiencyTestLimitView({
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
                transition={{ duration: 0.2, delay: 0.3 }}
-               className="text-lg text-red-500 inline-flex gap-2 items-center drop-shadow-sm"
+               className="text-lg text-red-500 inline-flex gap-2 items-center drop-shadow-sm text-center w-full justify-center"
             >
                <AlertCircle size={18} />
                <span className="">{formattedMessage}</span>

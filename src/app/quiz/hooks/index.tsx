@@ -61,26 +61,37 @@ export function useQuiz(survey?: DemographicSurvey | null) {
             getProficiencyTestInfo(),
          ]);
 
+         const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =
+            proficiencyTestInfo;
+
+         const now = Date.now();
+         const proficiencyFinishedDate = Date.parse(proficiencyQuizFinishedAt);
+
+         const ONE_DAY_MS = 1000 * 60 * 60 * 24;
+         const ONE_HOUR_MS = 1000 * 60 * 60;
+
+         const hasFinishedMoreThanDayAgo =
+            now - proficiencyFinishedDate >= ONE_DAY_MS;
+
          if (apiConsent) {
             setConsent(apiConsent);
-            const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =
-               proficiencyTestInfo;
 
-            const now = Date.now();
-            const proficiencyFinishedDate = Date.parse(
-               proficiencyQuizFinishedAt
-            );
-            const ONE_DAY_MS = 1000 * 60 * 60 * 24;
-            const hasFinishedMoreThanDayAgo =
-               now - proficiencyFinishedDate >= ONE_DAY_MS;
+            console.log({
+               now,
+               proficiencyFinishedDate,
+               hasFinishedMoreThanDayAgo,
+               hasFinishedProficiencyTest,
+            });
 
             if (Boolean(hasFinishedProficiencyTest)) {
                if (hasFinishedMoreThanDayAgo) {
                   setAppState("quiz");
                } else {
                   const tryAgainIn = Math.floor(
-                     Math.abs(now - proficiencyFinishedDate) / (1000 * 60 * 60)
+                     Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
+                        ONE_HOUR_MS
                   );
+
                   setQuizLimitInfo({
                      message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
                      tryAgainIn,
@@ -94,7 +105,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
             setAppState("consent");
          }
 
-         if (apiLimit) {
+         if (apiLimit && hasFinishedMoreThanDayAgo) {
             setQuizLimitInfo({
                message: apiLimit.message,
                tryAgainIn: apiLimit.tryAgainIn,

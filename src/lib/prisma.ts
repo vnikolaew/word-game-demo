@@ -21,7 +21,9 @@ const getPrismaClient = () =>
             hasFinishedProficiencyTest: {
                needs: { metadata: true, id: true },
                compute({ metadata }: { metadata: any }) {
-                  const date_regex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD
+                  const date_regex = /^\d{4}-\d{2}-\d{2}/; // YYYY-MM-DD
+                  console.log({ metadata });
+
                   try {
                      return (
                         !isNaN(metadata?.score) &&

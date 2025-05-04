@@ -49,7 +49,7 @@ function Page() {
          <div className="mb-10 flex justify-center">
             <Lottie
                animationData={animationData}
-               style={{ width: 300, height: 300 }}
+               style={{ width: 200, height: 200 }}
                loop={true}
                autoplay={true}
             />
@@ -83,7 +83,7 @@ function Page() {
 
          <Button
             onClick={() => router.push("/")}
-            className="text-lg py-3 px-12  text-white rounded-full transition duration-300 ease-in-out transform hover:scale-105"
+            className="text-lg py-3 px-12  text-white rounded-full transition duration-300 ease-in-out transform "
          >
             العودة إلى الصفحة الرئيسية
          </Button>
