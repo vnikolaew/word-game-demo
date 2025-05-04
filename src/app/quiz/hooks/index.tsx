@@ -1,7 +1,7 @@
 "use client";
 import { DemographicSurvey, UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
-import { __IS_PROD__ } from "@/lib/consts";
+import { __IS_PROD__, __IS_TEST__ } from "@/lib/consts";
 import { useRouter } from "next/navigation";
 
 export type QuizLimitInfo = {
@@ -76,30 +76,26 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          if (apiConsent) {
             setConsent(apiConsent);
 
-            console.log({
-               now,
-               proficiencyFinishedDate,
-               hasFinishedMoreThanDayAgo,
-               hasFinishedProficiencyTest,
-            });
+            if (__IS_TEST__) setAppState(`quiz`);
+            else {
+               if (Boolean(hasFinishedProficiencyTest)) {
+                  if (hasFinishedMoreThanDayAgo) {
+                     setAppState("quiz");
+                  } else {
+                     const tryAgainIn = Math.floor(
+                        Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
+                           ONE_HOUR_MS
+                     );
 
-            if (Boolean(hasFinishedProficiencyTest)) {
-               if (hasFinishedMoreThanDayAgo) {
-                  setAppState("quiz");
+                     setQuizLimitInfo({
+                        message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
+                        tryAgainIn,
+                     });
+                     setAppState("proficiency-limit");
+                  }
                } else {
-                  const tryAgainIn = Math.floor(
-                     Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
-                        ONE_HOUR_MS
-                  );
-
-                  setQuizLimitInfo({
-                     message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
-                     tryAgainIn,
-                  });
-                  setAppState("proficiency-limit");
+                  setAppState("proficiency");
                }
-            } else {
-               setAppState("proficiency");
             }
          } else {
             setAppState("consent");
@@ -110,7 +106,8 @@ export function useQuiz(survey?: DemographicSurvey | null) {
                message: apiLimit.message,
                tryAgainIn: apiLimit.tryAgainIn,
             });
-            if (apiLimit.success === false && __IS_PROD__) setAppState(`limit`);
+            if (apiLimit.success === false && (__IS_PROD__ || __IS_TEST__))
+               setAppState(`limit`);
          }
       })();
    }, []);
