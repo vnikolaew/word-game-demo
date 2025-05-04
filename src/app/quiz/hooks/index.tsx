@@ -79,7 +79,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          });
 
          // Move to practice state
-         setAppState("proficiency");
+         setAppState("practice");
       } catch (error) {
          setError("حدث خطأ أثناء حفظ الموافقة");
          console.error("Consent error:", error);
