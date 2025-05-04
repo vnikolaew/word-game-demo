@@ -4,7 +4,6 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { generateAnonymousId } from "@/lib/utils";
 import { DemographicSurvey, QuizAttempt, User } from "@prisma/client";
-import { SurveyData } from "@/types";
 
 export const dynamic = "force-dynamic";
 
@@ -143,6 +142,7 @@ function quizSurveyToCsvRow(
       otherResidence: survey.otherResidence,
       university: survey.university,
       languages: survey.languages,
+      userDomain: process.env.WEB_DOMAIN!,
       kindergartenLanguage: survey.kindergartenLanguage,
       otherKindergartenLanguage: survey.otherKindergartenLanguage,
       primaryLanguage: survey.primaryLanguage,
@@ -182,7 +182,7 @@ function quizResponseToCsvRow(
 
    return {
       "UTC Date and Time": quiz.createdAt.toISOString(),
-      "User Private ID": generateAnonymousId(quiz.user.id),
+      "User Private ID": generateAnonymousId(quiz.user.id!),
       "User Device Type": quiz.deviceType,
       "User OS": quiz.deviceOS,
       "User Browser": quiz.deviceBrowser,

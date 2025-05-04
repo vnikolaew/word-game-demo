@@ -36,7 +36,7 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
 
    const prolificUrl = useMemo(
       () =>
-         `${PROLIFIC_BASE_URL}?cc=${score >= 50 ? PROLIFIC_URL_50_AND_ABOVE_CODE : score < 0 ? PROLIFIC_URL_0_AND_BELOW_CODE : ``}`,
+         `${PROLIFIC_BASE_URL}?cc=${score < 60 ? PROLIFIC_URL_50_AND_ABOVE_CODE : score >= 60 ? PROLIFIC_URL_0_AND_BELOW_CODE : ``}`,
       [score]
    );
    const textToBeCopied = useMemo(() => prolificUrl, [prolificUrl]);
