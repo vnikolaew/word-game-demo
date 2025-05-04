@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo } from "react";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
