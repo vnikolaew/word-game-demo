@@ -96,6 +96,7 @@ export async function GET(
                   "Page number": response.pageNumber,
                   "Item shown in the page": response.word,
                   "Wordlist ID": quiz.wordListId,
+                  "User Domain": process.env.WEB_DOMAIN!,
                   "Quiz ID": quiz.id,
                   "Quiz Duration in milliseconds":
                      quiz.totalQuizDuration ?? `Unknown`,
@@ -150,6 +151,7 @@ export async function GET(
             otherMiddleLanguage: survey.otherMiddleLanguage,
             highSchoolLanguage: survey.highSchoolLanguage,
             otherHighSchoolLanguage: survey.otherHighSchoolLanguage,
+            userDomain: process.env.WEB_DOMAIN!,
             universityLanguage: survey.universityLanguage,
             otherUniversityLanguage: survey.otherUniversityLanguage,
             readingHours: survey.readingHours,
