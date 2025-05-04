@@ -188,7 +188,7 @@ function quizResponseToCsvRow(
       "User Browser": quiz.deviceBrowser,
       "User Domain": process.env.WEB_DOMAIN!,
       "User Proficiency Score":
-         !quiz.user.score ||
+         quiz.user.score === null ||
          !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
             ? `مجهول`
             : quiz.user.score?.toString(),

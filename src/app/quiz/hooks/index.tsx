@@ -66,6 +66,9 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          if (screen === `practice`) {
             setAppState(`practice`);
             return;
+         } else if (screen === `main`) {
+            setAppState(`quiz`);
+            return;
          }
 
          const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =

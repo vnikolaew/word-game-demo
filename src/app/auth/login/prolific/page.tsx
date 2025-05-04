@@ -120,7 +120,9 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
                      <ErrorMessage error={error || errors?.email?.message} />
                   </div>
                ))}
-            <div className={`w-full flex items-center justify-end mt-8 gap-4`}>
+            <div
+               className={`w-full flex items-center justify-start mt-8 gap-4`}
+            >
                <Link href={`/auth/login`}>
                   <Button
                      variant={`outline`}
