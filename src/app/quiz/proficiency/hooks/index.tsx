@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 
 export type QuizState = `instructions` | `instructions-2` | `quiz`;
 

@@ -6,6 +6,8 @@ import InstructionsTwo from "./InstructionsTwo";
 import QuizPage from "./QuizPage";
 import { match } from "ts-pattern";
 
+export const dynamic = "force-dynamic";
+
 function Page() {
    const { setState, state } = useProficiencyQuiz();
 
