@@ -76,7 +76,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          if (apiConsent) {
             setConsent(apiConsent);
 
-            if (__IS_TEST__) setAppState(`quiz`);
+            if (true) setAppState(`quiz`);
             else {
                if (Boolean(hasFinishedProficiencyTest)) {
                   if (hasFinishedMoreThanDayAgo) {
