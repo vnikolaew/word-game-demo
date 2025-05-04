@@ -82,7 +82,7 @@ function Page() {
          </div>
 
          <Button
-            onClick={() => router.push("/quiz")}
+            onClick={() => router.push("/quiz?screen=practice")}
             className="text-lg py-3 px-12  text-white rounded-full transition duration-300 ease-in-out transform "
          >
             انتقل إلى الاختبار الرئيسي

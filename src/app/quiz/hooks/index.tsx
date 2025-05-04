@@ -3,6 +3,7 @@ import { DemographicSurvey, UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__, __IS_TEST__ } from "@/lib/consts";
 import { useRouter } from "next/navigation";
+import { parseAsString, useQueryState } from "nuqs";
 
 export type QuizLimitInfo = {
    message: string;
@@ -20,6 +21,7 @@ type AppState =
 export function useQuiz(survey?: DemographicSurvey | null) {
    const [consent, setConsent] = useState<UserConsent | null>(null);
    const router = useRouter();
+   const [screen] = useQueryState(`screen`, parseAsString);
 
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
@@ -61,6 +63,11 @@ export function useQuiz(survey?: DemographicSurvey | null) {
             getProficiencyTestInfo(),
          ]);
 
+         if (screen === `practice`) {
+            setAppState(`practice`);
+            return;
+         }
+
          const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =
             proficiencyTestInfo;
 
@@ -76,26 +83,23 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          if (apiConsent) {
             setConsent(apiConsent);
 
-            if (true) setAppState(`quiz`);
-            else {
-               if (Boolean(hasFinishedProficiencyTest)) {
-                  if (hasFinishedMoreThanDayAgo) {
-                     setAppState("quiz");
-                  } else {
-                     const tryAgainIn = Math.floor(
-                        Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
-                           ONE_HOUR_MS
-                     );
-
-                     setQuizLimitInfo({
-                        message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
-                        tryAgainIn,
-                     });
-                     setAppState("proficiency-limit");
-                  }
+            if (Boolean(hasFinishedProficiencyTest)) {
+               if (hasFinishedMoreThanDayAgo || __IS_TEST__) {
+                  setAppState("quiz");
                } else {
-                  setAppState("proficiency");
+                  const tryAgainIn = Math.floor(
+                     Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
+                        ONE_HOUR_MS
+                  );
+
+                  setQuizLimitInfo({
+                     message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
+                     tryAgainIn,
+                  });
+                  setAppState("proficiency-limit");
                }
+            } else {
+               setAppState("proficiency");
             }
          } else {
             setAppState("consent");
@@ -110,7 +114,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
                setAppState(`limit`);
          }
       })();
-   }, []);
+   }, [screen]);
 
    // Handle consent submission
    const handleConsent = useCallback(async () => {
