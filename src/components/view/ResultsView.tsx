@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { showHeaderAndFooter } from "@/lib/utils";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Clipboard, ClipboardCheck } from "lucide-react";
+import { Input } from "../ui/input";
 
 export interface ProlificCodeProps {
    score: number;
@@ -49,17 +50,17 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
 
    return (
       <div
-         className={`w-full text-center flex flex-col items-center gap-2 !mb-12 `}
+         className={`w-full text-center flex flex-col items-center gap-2 !my-12 `}
       >
          <label
             htmlFor={`prolificCode`}
-            className={`text-3xl font-semibold drop-shadow-sm`}
+            className={`text-xl font-semibold drop-shadow-sm`}
          >
             كود غزير الإنتاج
          </label>
          <div className={`w-full flex items-center justify-center mt-4`}>
-            <div className={`relative !w-[90%] md:!w-[620px]`}>
-               <input
+            <div className={`relative !w-[90%] md:!w-fit mx-auto`}>
+               <Input
                   readOnly
                   name={`prolificCode`}
                   id={`prolificCode`}
@@ -67,14 +68,14 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
                   title={prolificUrl}
                   type="text"
                   placeholder={`اكتب هنا`}
-                  className="text-base input-primary input-md input md:!text-lg input-bordered !bg-white  !pr-0 !mr-0 !w-full text-primary font-semibold"
+                  className="text-base input-primary input-md input md:!text-base input-bordered !bg-white  !pr-0 !mr-0 !w-[500px] text-primary"
                />
                <div
                   className={`absolute right-0 top-1/2 -translate-y-1/2 !ml-2 !h-full !w-fit`}
                >
-                  <button
+                  <Button
                      disabled={copied}
-                     onClick={() => handleCopy()}
+                     onClick={handleCopy}
                      title={
                         copied ? (`تم نسخها` as string) : (`ينسخ` as string)
                      }
@@ -93,7 +94,7 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
                            <span className={`hidden md:block`}>{`ينسخ`}</span>
                         </Fragment>
                      )}
-                  </button>
+                  </Button>
                </div>
             </div>
          </div>
@@ -103,6 +104,7 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
 
 interface ResultsViewProps {
    hasProlificEmail: boolean;
+   user?: any;
 }
 
 export default function ResultsView({
@@ -161,7 +163,7 @@ export default function ResultsView({
    return (
       <Card>
          <CardHeader>
-            <CardTitle>نتيجة الاختبار</CardTitle>
+            <CardTitle className="text-2xl">نتيجة الاختبار</CardTitle>
          </CardHeader>
          <CardContent className="space-y-6">
             <div className="text-center">
@@ -208,10 +210,14 @@ export default function ResultsView({
             </div>
 
             <div className="flex justify-center gap-4 mt-8">
-               <Button onClick={handleRetake} variant="outline">
+               <Button
+                  className="!px-12"
+                  onClick={handleRetake}
+                  variant="outline"
+               >
                   إعادة الاختبار
                </Button>
-               <Button onClick={handleResultsComplete}>
+               <Button className="!px-12" onClick={handleResultsComplete}>
                   العودة للصفحة الرئيسية
                </Button>
             </div>

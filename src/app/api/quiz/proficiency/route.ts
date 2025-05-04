@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
    const session = await getServerSession(authOptions);
    if (!session?.user) {
@@ -22,16 +24,12 @@ export async function GET() {
    if (!user)
       return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-   console.log({ user });
-
-   return NextResponse.json(
-      {
-         userId: user.id,
-         score: user.score,
-         hasFinishedProficiencyTest:
-            user.proficiencyQuizFinishedAt instanceof Date,
-         proficiencyQuizFinishedAt: user.proficiencyQuizFinishedAt,
-      },
-      { status: 200 }
-   );
+   const body = {
+      userId: user.id,
+      score: user.score,
+      hasFinishedProficiencyTest:
+         user.proficiencyQuizFinishedAt instanceof Date,
+      proficiencyQuizFinishedAt: user.proficiencyQuizFinishedAt,
+   };
+   return NextResponse.json(body, { status: 200 });
 }
