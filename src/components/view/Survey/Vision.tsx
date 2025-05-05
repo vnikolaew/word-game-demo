@@ -14,7 +14,7 @@ function Vision({ errors, formData, setFormData }: Props) {
       <YesNoQuestion
          prop="vision"
          category="الرؤية الطبيعية أو المُصححة"
-         description={`الرؤية الطبيعية أو المُصححة تعني أنك تستطيع رؤية الأشياء بوضوح، إما بعينيك فحسب أو بمساعدة النظارات`}
+         description={`إذا كنت ترى بوضوح بدون مساعدة أو إذا كنت ترى بوضوح باستخدام نظارات/عدسات، اختر "نعم". إذا كنت لا ترى بوضوح وأنت أيضًا لا تستخدم نظارات/عدسات، اختر "لا".`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}

@@ -56,10 +56,12 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
             htmlFor={`prolificCode`}
             className={`text-xl font-semibold drop-shadow-sm`}
          >
-            كود غزير الإنتاج
+            Prolific completion code
          </label>
          <div className={`w-full flex items-center justify-center mt-4`}>
-            <div className={`relative !w-[90%] md:!w-fit mx-auto`}>
+            <div
+               className={`flex flex-col items-center justify-center !w-full md:!w-fit mx-auto sm:!flex-row gap-2 sm:!gap-0`}
+            >
                <Input
                   readOnly
                   name={`prolificCode`}
@@ -68,18 +70,16 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
                   title={prolificUrl}
                   type="text"
                   placeholder={`اكتب هنا`}
-                  className="text-base input-primary input-md input md:!text-base input-bordered !bg-white  !pr-0 !mr-0 !w-[500px] text-primary"
+                  className="text-base input-primary input-md input md:!text-base input-bordered !bg-white  !pr-0 !mr-0 !w-[400px] sm:!w-[500px] text-primary !mx-auto !px-2"
                />
-               <div
-                  className={`absolute right-0 top-1/2 -translate-y-1/2 !ml-2 !h-full !w-fit`}
-               >
+               <div className={`ml-2 !h-full !w-fit`}>
                   <Button
                      disabled={copied}
                      onClick={handleCopy}
                      title={
                         copied ? (`تم نسخها` as string) : (`ينسخ` as string)
                      }
-                     className="btn btn-primary !text-white !bg-primary btn-md !h-full !rounded-md !px-8 disabled:!opacity-90 !min-w-[80px] md:!min-w-[120px] !text-center md:!text-base disabled:!cursor-none inline-flex items-center gap-2 hover:!opacity-80 duration-200 transition-all"
+                     className="btn btn-primary !text-white !bg-primary btn-md !h-full !rounded-md !px-8 disabled:!opacity-90 !min-w-[80px] md:!min-w-[120px] !text-center md:!text-base disabled:!cursor-none inline-flex items-center gap-2 hover:!opacity-80 duration-200 transition-all !py-2.5"
                   >
                      {copied ? (
                         <Fragment>
@@ -126,7 +126,7 @@ export default function ResultsView({
    };
 
    const handleRetake = () => {
-      router.push(`/quiz`);
+      router.push(`/quiz?screen=main`);
    };
 
    useEffect(() => {

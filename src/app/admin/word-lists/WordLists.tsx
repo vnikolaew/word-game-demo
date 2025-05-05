@@ -1,6 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import {
+   DialogHeader,
+   DialogFooter,
+   Dialog,
+   DialogContent,
+   DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
    TableHeader,
@@ -11,11 +17,11 @@ import {
    Table,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-label";
 import { Plus, Edit, Trash2, X } from "lucide-react";
-import React from "react";
+import React, { Fragment } from "react";
 import { useWordListsStats } from "./hooks";
+import { WordList } from "@prisma/client";
 
 function WordLists() {
    const {
@@ -38,35 +44,7 @@ function WordLists() {
    } = useWordListsStats();
 
    return (
-      <div className="space-y-6">
-         <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold">قوائم الكلمات</h1>
-            <Button onClick={handleAddClick}>
-               <Plus className="h-4 w-4 mr-2" />
-               إضافة قائمة كلمات
-            </Button>
-         </div>
-
-         {isLoading ? (
-            <div className="text-center py-4">جاري التحميل...</div>
-         ) : (
-            <div className="rounded-md border">
-               <Table>
-                  <Headings />
-                  <TableBody>
-                     {wordLists.map((list) => (
-                        <Row
-                           key={list.id}
-                           handleEditClick={handleEditClick}
-                           handleDeleteWordList={handleDeleteWordList}
-                           list={list}
-                        />
-                     ))}
-                  </TableBody>
-               </Table>
-            </div>
-         )}
-
+      <Fragment>
          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogContent className="max-w-2xl">
                <DialogHeader>
@@ -156,7 +134,38 @@ function WordLists() {
                </DialogFooter>
             </DialogContent>
          </Dialog>
-      </div>
+         <div className="space-y-6">
+            <div className="flex justify-between items-center">
+               <h1 className="text-3xl font-bold">قوائم الكلمات</h1>
+               <Button onClick={handleAddClick}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  إضافة قائمة كلمات
+               </Button>
+            </div>
+
+            {isLoading ? (
+               <div className="text-center py-4">جاري التحميل...</div>
+            ) : (
+               <div className="rounded-md border">
+                  <Table>
+                     <Headings />
+                     <TableBody>
+                        {wordLists
+                           .sort((a, b) => a.original_id - b.original_id)
+                           .map((list) => (
+                              <Row
+                                 key={list.id}
+                                 handleEditClick={handleEditClick}
+                                 handleDeleteWordList={handleDeleteWordList}
+                                 list={list as any}
+                              />
+                           ))}
+                     </TableBody>
+                  </Table>
+               </div>
+            )}
+         </div>
+      </Fragment>
    );
 }
 
@@ -178,12 +187,12 @@ const Row = ({
    handleEditClick,
    handleDeleteWordList,
 }: {
-   list: any;
+   list: WordList & { words: any[] };
    handleEditClick: any;
    handleDeleteWordList: any;
 }) => (
    <TableRow key={list.id}>
-      <TableCell>#{list.id}</TableCell>
+      <TableCell>#{list.original_id}</TableCell>
       <TableCell>{list.words.length} كلمة</TableCell>
       <TableCell>{list.timesUsed}</TableCell>
       <TableCell>
