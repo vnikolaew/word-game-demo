@@ -1,6 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
+import {
+   DialogHeader,
+   DialogFooter,
+   Dialog,
+   DialogContent,
+   DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
    TableHeader,
@@ -11,7 +17,6 @@ import {
    Table,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
 import { Label } from "@radix-ui/react-label";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import React from "react";
@@ -54,14 +59,16 @@ function WordLists() {
                <Table>
                   <Headings />
                   <TableBody>
-                     {wordLists.map((list) => (
-                        <Row
-                           key={list.id}
-                           handleEditClick={handleEditClick}
-                           handleDeleteWordList={handleDeleteWordList}
-                           list={list}
-                        />
-                     ))}
+                     {wordLists
+                        .sort((a, b) => a.original_id - b.original_id)
+                        .map((list) => (
+                           <Row
+                              key={list.id}
+                              handleEditClick={handleEditClick}
+                              handleDeleteWordList={handleDeleteWordList}
+                              list={list}
+                           />
+                        ))}
                   </TableBody>
                </Table>
             </div>
@@ -183,7 +190,7 @@ const Row = ({
    handleDeleteWordList: any;
 }) => (
    <TableRow key={list.id}>
-      <TableCell>#{list.id}</TableCell>
+      <TableCell>#{list.original_id}</TableCell>
       <TableCell>{list.words.length} كلمة</TableCell>
       <TableCell>{list.timesUsed}</TableCell>
       <TableCell>

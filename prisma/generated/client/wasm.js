@@ -166,6 +166,7 @@ exports.Prisma.WordScalarFieldEnum = {
 
 exports.Prisma.WordListScalarFieldEnum = {
   id: 'id',
+  original_id: 'original_id',
   createdAt: 'createdAt',
   timesUsed: 'timesUsed',
   lastUsedAt: 'lastUsedAt'
