@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "../ui/Spinner";
 import Instructions from "./Instructions";
 
-import { useExperiment } from "@/app/test/hooks";
 import { cn, hideHeaderAndFooter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, Fragment, useMemo } from "react";
@@ -14,6 +13,7 @@ import { Progress } from "../ui/progress";
 import { RefreshCw } from "lucide-react";
 import Script from "next/script";
 import InstuctionsPicture from "./Instructions/InstuctionsPicture";
+import { useExperiment } from "@/app/test/hooks";
 
 interface QuizViewProps {
    onComplete: () => void;
