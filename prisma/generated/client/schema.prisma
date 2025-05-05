@@ -76,7 +76,9 @@ model Word {
 }
 
 model WordList {
-  id              Int            @id @default(autoincrement())
+  id          Int @id @default(autoincrement())
+  original_id Int @default(0)
+
   createdAt       DateTime       @default(now())
   timesUsed       Int            @default(0)
   lastUsedAt      DateTime?

@@ -74,7 +74,7 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
             exit={{ opacity: 0, translateX: 20 }}
             transition={{ duration: 0.4 }}
             key={`screen-end`}
-            className={`flex flex-col items-start w-full gap-2 mt-12`}
+            className={`flex flex-col items-start w-full gap-2 mt-12 px-4 `}
          >
             <h2
                className={`text-3xl font-semibold drop-shadow-md inline-flex items-center gap-4 `}
@@ -92,7 +92,7 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
             </h2>
          </motion.div>
          <form
-            className={`flex flex-col items-start gap-2 !w-1/2`}
+            className={`flex flex-col items-start gap-2 !w-1/2 px-4`}
             onSubmit={handleSubmit(onSubmit, onError)}
          >
             <div className={`w-full mt-12`}>
@@ -109,7 +109,7 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
                      id={`email`}
                      type="email"
                      placeholder={`أدخل بريدك الإلكتروني هنا`}
-                     className="w-full !bg-white input-primary grow pl-2 !min-w-[400px]"
+                     className="w-full !bg-white input-primary grow pl-2 !min-w-[300px] sm:!min-w-[400px]"
                      {...register(`email`)}
                   />
                </label>
@@ -121,7 +121,7 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
                   </div>
                ))}
             <div
-               className={`w-full flex items-center justify-start mt-8 gap-4`}
+               className={`w-full flex flex-col items-start justify-start mt-8 gap-4 sm:!flex-row`}
             >
                <Link href={`/auth/login`}>
                   <Button

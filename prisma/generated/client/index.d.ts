@@ -7377,16 +7377,19 @@ export namespace Prisma {
 
   export type WordListAvgAggregateOutputType = {
     id: number | null
+    original_id: number | null
     timesUsed: number | null
   }
 
   export type WordListSumAggregateOutputType = {
     id: number | null
+    original_id: number | null
     timesUsed: number | null
   }
 
   export type WordListMinAggregateOutputType = {
     id: number | null
+    original_id: number | null
     createdAt: Date | null
     timesUsed: number | null
     lastUsedAt: Date | null
@@ -7394,6 +7397,7 @@ export namespace Prisma {
 
   export type WordListMaxAggregateOutputType = {
     id: number | null
+    original_id: number | null
     createdAt: Date | null
     timesUsed: number | null
     lastUsedAt: Date | null
@@ -7401,6 +7405,7 @@ export namespace Prisma {
 
   export type WordListCountAggregateOutputType = {
     id: number
+    original_id: number
     createdAt: number
     timesUsed: number
     lastUsedAt: number
@@ -7410,16 +7415,19 @@ export namespace Prisma {
 
   export type WordListAvgAggregateInputType = {
     id?: true
+    original_id?: true
     timesUsed?: true
   }
 
   export type WordListSumAggregateInputType = {
     id?: true
+    original_id?: true
     timesUsed?: true
   }
 
   export type WordListMinAggregateInputType = {
     id?: true
+    original_id?: true
     createdAt?: true
     timesUsed?: true
     lastUsedAt?: true
@@ -7427,6 +7435,7 @@ export namespace Prisma {
 
   export type WordListMaxAggregateInputType = {
     id?: true
+    original_id?: true
     createdAt?: true
     timesUsed?: true
     lastUsedAt?: true
@@ -7434,6 +7443,7 @@ export namespace Prisma {
 
   export type WordListCountAggregateInputType = {
     id?: true
+    original_id?: true
     createdAt?: true
     timesUsed?: true
     lastUsedAt?: true
@@ -7528,6 +7538,7 @@ export namespace Prisma {
 
   export type WordListGroupByOutputType = {
     id: number
+    original_id: number
     createdAt: Date
     timesUsed: number
     lastUsedAt: Date | null
@@ -7554,6 +7565,7 @@ export namespace Prisma {
 
   export type WordListSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    original_id?: boolean
     createdAt?: boolean
     timesUsed?: boolean
     lastUsedAt?: boolean
@@ -7565,6 +7577,7 @@ export namespace Prisma {
 
   export type WordListSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    original_id?: boolean
     createdAt?: boolean
     timesUsed?: boolean
     lastUsedAt?: boolean
@@ -7572,6 +7585,7 @@ export namespace Prisma {
 
   export type WordListSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    original_id?: boolean
     createdAt?: boolean
     timesUsed?: boolean
     lastUsedAt?: boolean
@@ -7579,12 +7593,13 @@ export namespace Prisma {
 
   export type WordListSelectScalar = {
     id?: boolean
+    original_id?: boolean
     createdAt?: boolean
     timesUsed?: boolean
     lastUsedAt?: boolean
   }
 
-  export type WordListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "timesUsed" | "lastUsedAt", ExtArgs["result"]["wordList"]>
+  export type WordListOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "original_id" | "createdAt" | "timesUsed" | "lastUsedAt", ExtArgs["result"]["wordList"]>
   export type WordListInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     words?: boolean | WordList$wordsArgs<ExtArgs>
     userAssignments?: boolean | WordList$userAssignmentsArgs<ExtArgs>
@@ -7603,6 +7618,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      original_id: number
       createdAt: Date
       timesUsed: number
       lastUsedAt: Date | null
@@ -8033,6 +8049,7 @@ export namespace Prisma {
    */
   interface WordListFieldRefs {
     readonly id: FieldRef<"WordList", 'Int'>
+    readonly original_id: FieldRef<"WordList", 'Int'>
     readonly createdAt: FieldRef<"WordList", 'DateTime'>
     readonly timesUsed: FieldRef<"WordList", 'Int'>
     readonly lastUsedAt: FieldRef<"WordList", 'DateTime'>
@@ -13513,6 +13530,7 @@ export namespace Prisma {
 
   export const WordListScalarFieldEnum: {
     id: 'id',
+    original_id: 'original_id',
     createdAt: 'createdAt',
     timesUsed: 'timesUsed',
     lastUsedAt: 'lastUsedAt'
@@ -14080,6 +14098,7 @@ export namespace Prisma {
     OR?: WordListWhereInput[]
     NOT?: WordListWhereInput | WordListWhereInput[]
     id?: IntFilter<"WordList"> | number
+    original_id?: IntFilter<"WordList"> | number
     createdAt?: DateTimeFilter<"WordList"> | Date | string
     timesUsed?: IntFilter<"WordList"> | number
     lastUsedAt?: DateTimeNullableFilter<"WordList"> | Date | string | null
@@ -14090,6 +14109,7 @@ export namespace Prisma {
 
   export type WordListOrderByWithRelationInput = {
     id?: SortOrder
+    original_id?: SortOrder
     createdAt?: SortOrder
     timesUsed?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
@@ -14103,6 +14123,7 @@ export namespace Prisma {
     AND?: WordListWhereInput | WordListWhereInput[]
     OR?: WordListWhereInput[]
     NOT?: WordListWhereInput | WordListWhereInput[]
+    original_id?: IntFilter<"WordList"> | number
     createdAt?: DateTimeFilter<"WordList"> | Date | string
     timesUsed?: IntFilter<"WordList"> | number
     lastUsedAt?: DateTimeNullableFilter<"WordList"> | Date | string | null
@@ -14113,6 +14134,7 @@ export namespace Prisma {
 
   export type WordListOrderByWithAggregationInput = {
     id?: SortOrder
+    original_id?: SortOrder
     createdAt?: SortOrder
     timesUsed?: SortOrder
     lastUsedAt?: SortOrderInput | SortOrder
@@ -14128,6 +14150,7 @@ export namespace Prisma {
     OR?: WordListScalarWhereWithAggregatesInput[]
     NOT?: WordListScalarWhereWithAggregatesInput | WordListScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"WordList"> | number
+    original_id?: IntWithAggregatesFilter<"WordList"> | number
     createdAt?: DateTimeWithAggregatesFilter<"WordList"> | Date | string
     timesUsed?: IntWithAggregatesFilter<"WordList"> | number
     lastUsedAt?: DateTimeNullableWithAggregatesFilter<"WordList"> | Date | string | null
@@ -14939,6 +14962,7 @@ export namespace Prisma {
   }
 
   export type WordListCreateInput = {
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -14949,6 +14973,7 @@ export namespace Prisma {
 
   export type WordListUncheckedCreateInput = {
     id?: number
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -14958,6 +14983,7 @@ export namespace Prisma {
   }
 
   export type WordListUpdateInput = {
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14968,6 +14994,7 @@ export namespace Prisma {
 
   export type WordListUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14978,12 +15005,14 @@ export namespace Prisma {
 
   export type WordListCreateManyInput = {
     id?: number
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
   }
 
   export type WordListUpdateManyMutationInput = {
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -14991,6 +15020,7 @@ export namespace Prisma {
 
   export type WordListUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -16005,6 +16035,7 @@ export namespace Prisma {
 
   export type WordListCountOrderByAggregateInput = {
     id?: SortOrder
+    original_id?: SortOrder
     createdAt?: SortOrder
     timesUsed?: SortOrder
     lastUsedAt?: SortOrder
@@ -16012,11 +16043,13 @@ export namespace Prisma {
 
   export type WordListAvgOrderByAggregateInput = {
     id?: SortOrder
+    original_id?: SortOrder
     timesUsed?: SortOrder
   }
 
   export type WordListMaxOrderByAggregateInput = {
     id?: SortOrder
+    original_id?: SortOrder
     createdAt?: SortOrder
     timesUsed?: SortOrder
     lastUsedAt?: SortOrder
@@ -16024,6 +16057,7 @@ export namespace Prisma {
 
   export type WordListMinOrderByAggregateInput = {
     id?: SortOrder
+    original_id?: SortOrder
     createdAt?: SortOrder
     timesUsed?: SortOrder
     lastUsedAt?: SortOrder
@@ -16031,6 +16065,7 @@ export namespace Prisma {
 
   export type WordListSumOrderByAggregateInput = {
     id?: SortOrder
+    original_id?: SortOrder
     timesUsed?: SortOrder
   }
 
@@ -17817,6 +17852,7 @@ export namespace Prisma {
   }
 
   export type WordListCreateWithoutWordsInput = {
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -17826,6 +17862,7 @@ export namespace Prisma {
 
   export type WordListUncheckedCreateWithoutWordsInput = {
     id?: number
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -17850,6 +17887,7 @@ export namespace Prisma {
   }
 
   export type WordListUpdateWithoutWordsInput = {
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -17859,6 +17897,7 @@ export namespace Prisma {
 
   export type WordListUncheckedUpdateWithoutWordsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18016,6 +18055,7 @@ export namespace Prisma {
   }
 
   export type WordListCreateWithoutUserAssignmentsInput = {
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -18025,6 +18065,7 @@ export namespace Prisma {
 
   export type WordListUncheckedCreateWithoutUserAssignmentsInput = {
     id?: number
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -18090,6 +18131,7 @@ export namespace Prisma {
   }
 
   export type WordListUpdateWithoutUserAssignmentsInput = {
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18099,6 +18141,7 @@ export namespace Prisma {
 
   export type WordListUncheckedUpdateWithoutUserAssignmentsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18195,6 +18238,7 @@ export namespace Prisma {
   }
 
   export type WordListCreateWithoutQuizAttemptsInput = {
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -18204,6 +18248,7 @@ export namespace Prisma {
 
   export type WordListUncheckedCreateWithoutQuizAttemptsInput = {
     id?: number
+    original_id?: number
     createdAt?: Date | string
     timesUsed?: number
     lastUsedAt?: Date | string | null
@@ -18275,6 +18320,7 @@ export namespace Prisma {
   }
 
   export type WordListUpdateWithoutQuizAttemptsInput = {
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -18284,6 +18330,7 @@ export namespace Prisma {
 
   export type WordListUncheckedUpdateWithoutQuizAttemptsInput = {
     id?: IntFieldUpdateOperationsInput | number
+    original_id?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     timesUsed?: IntFieldUpdateOperationsInput | number
     lastUsedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

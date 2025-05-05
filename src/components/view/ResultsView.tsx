@@ -55,7 +55,7 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
             htmlFor={`prolificCode`}
             className={`text-3xl font-semibold drop-shadow-sm`}
          >
-            كود غزير الإنتاج
+            Prolific completion code
          </label>
          <div className={`w-full flex items-center justify-center mt-4`}>
             <div className={`relative !w-[90%] md:!w-[620px]`}>
@@ -124,7 +124,7 @@ export default function ResultsView({
    };
 
    const handleRetake = () => {
-      router.push(`/quiz`);
+      router.push(`/quiz?screen=main`);
    };
 
    useEffect(() => {
