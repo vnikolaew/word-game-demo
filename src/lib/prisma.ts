@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { InternalArgs } from "../../prisma/generated/client/runtime/library";
 import { PROLIFIC_EMAIL_REGEX, PROLIFIC_USER_IMAGE } from "./utils";
+import { __IS_PROD__ } from "./consts";
 
 const globalForPrisma = globalThis as unknown as {
    prisma: ReturnType<typeof getPrismaClient> | undefined;
@@ -8,7 +9,7 @@ const globalForPrisma = globalThis as unknown as {
 
 const getPrismaClient = () =>
    new PrismaClient({
-      log: ["query"],
+      log: [__IS_PROD__ ? `error` : "query"],
    }).$extends({
       result: {
          user: {
@@ -22,8 +23,6 @@ const getPrismaClient = () =>
                needs: { metadata: true, id: true },
                compute({ metadata }: { metadata: any }) {
                   const date_regex = /^\d{4}-\d{2}-\d{2}/; // YYYY-MM-DD
-                  console.log({ metadata });
-
                   try {
                      return (
                         !isNaN(metadata?.score) &&

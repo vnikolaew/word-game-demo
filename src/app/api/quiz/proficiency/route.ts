@@ -28,6 +28,7 @@ export async function GET() {
       userId: user.id,
       score: user.score,
       hasFinishedProficiencyTest:
+         user.hasFinishedProficiencyTest ||
          user.proficiencyQuizFinishedAt instanceof Date,
       proficiencyQuizFinishedAt: user.proficiencyQuizFinishedAt,
    };
