@@ -16,13 +16,10 @@ import QuizLimitView from "@/components/view/QuizLimitView";
 import { __IS_PROD__ } from "@/lib/consts";
 import { useQuiz } from "./hooks";
 import Link from "next/link";
-import { DemographicSurvey } from "@prisma/client";
 
-interface Props {
-   survey?: DemographicSurvey | null;
-}
+interface Props {}
 
-export default function AppPage({ survey }: Props) {
+export default function AppPage({}: Props) {
    const {
       appState,
       error,
@@ -31,7 +28,7 @@ export default function AppPage({ survey }: Props) {
       loading,
       quizLimitInfo,
       setAppState,
-   } = useQuiz(survey);
+   } = useQuiz();
 
    return (
       <div className="mx-auto py-12">
