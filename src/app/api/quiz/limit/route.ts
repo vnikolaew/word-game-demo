@@ -15,6 +15,8 @@ const LIMITS = {
    NOT_LIMITED: `أنت لست محدودا`,
 } as const;
 
+export const dynamic = "force-dynamic";
+
 const ONE_HOUR_MS = 1000 * 60 * 60;
 const ONE_DAY_MS = 1000 * 60 * 60 * 24;
 
