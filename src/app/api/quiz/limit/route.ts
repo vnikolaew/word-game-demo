@@ -18,6 +18,8 @@ const LIMITS = {
 const ONE_HOUR_MS = 1000 * 60 * 60;
 const ONE_DAY_MS = 1000 * 60 * 60 * 24;
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
    const session = await getServerSession(authOptions);
    if (!session?.user) {
