@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { showHeaderAndFooter } from "@/lib/utils";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { Clipboard, ClipboardCheck } from "lucide-react";
+import { Input } from "../ui/input";
 
 export interface ProlificCodeProps {
    score: number;
@@ -58,8 +59,10 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
             Prolific completion code
          </label>
          <div className={`w-full flex items-center justify-center mt-4`}>
-            <div className={`relative !w-[90%] md:!w-[620px]`}>
-               <input
+            <div
+               className={`flex flex-col items-center justify-center !w-full md:!w-fit mx-auto sm:!flex-row gap-2 sm:!gap-0`}
+            >
+               <Input
                   readOnly
                   name={`prolificCode`}
                   id={`prolificCode`}
@@ -67,18 +70,16 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
                   title={prolificUrl}
                   type="text"
                   placeholder={`اكتب هنا`}
-                  className="text-base input-primary input-md input md:!text-lg input-bordered !bg-white  !pr-0 !mr-0 !w-full text-primary font-semibold"
+                  className="text-base input-primary input-md input md:!text-base input-bordered !bg-white  !pr-0 !mr-0 !w-[400px] sm:!w-[500px] text-primary !mx-auto !px-2"
                />
-               <div
-                  className={`absolute right-0 top-1/2 -translate-y-1/2 !ml-2 !h-full !w-fit`}
-               >
-                  <button
+               <div className={`ml-2 !h-full !w-fit`}>
+                  <Button
                      disabled={copied}
-                     onClick={() => handleCopy()}
+                     onClick={handleCopy}
                      title={
                         copied ? (`تم نسخها` as string) : (`ينسخ` as string)
                      }
-                     className="btn btn-primary !text-white !bg-primary btn-md !h-full !rounded-md !px-8 disabled:!opacity-90 !min-w-[80px] md:!min-w-[120px] !text-center md:!text-base disabled:!cursor-none inline-flex items-center gap-2 hover:!opacity-80 duration-200 transition-all"
+                     className="btn btn-primary !text-white !bg-primary btn-md !h-full !rounded-md !px-8 disabled:!opacity-90 !min-w-[80px] md:!min-w-[120px] !text-center md:!text-sm disabled:!cursor-none inline-flex items-center gap-2 hover:!opacity-80 duration-200 transition-all !py-2.5"
                   >
                      {copied ? (
                         <Fragment>
@@ -93,7 +94,7 @@ const ProlificCode = ({ score }: ProlificCodeProps) => {
                            <span className={`hidden md:block`}>{`ينسخ`}</span>
                         </Fragment>
                      )}
-                  </button>
+                  </Button>
                </div>
             </div>
          </div>
