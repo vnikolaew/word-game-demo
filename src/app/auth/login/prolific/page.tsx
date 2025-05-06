@@ -123,6 +123,12 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
             <div
                className={`w-full flex flex-col items-start justify-start mt-8 gap-4 sm:!flex-row`}
             >
+               <Button
+                  type="submit"
+                  className={`btn btn-primary text-md btn-lg shadow-md !px-12 !py-3.5 rounded-md bg-primary text-white hover:!bg-opacity-90 transition-opacity duration-200`}
+               >
+                  تسجيل الدخول
+               </Button>
                <Link href={`/auth/login`}>
                   <Button
                      variant={`outline`}
@@ -132,12 +138,6 @@ const SignInForm = ({ prolific = true }: SignInFormProps) => {
                      <span className={`mr-2`}>&larr;</span>
                   </Button>
                </Link>
-               <Button
-                  type="submit"
-                  className={`btn btn-primary text-md btn-lg shadow-md !px-12 !py-3.5 rounded-md bg-primary text-white hover:!bg-opacity-90 transition-opacity duration-200`}
-               >
-                  تسجيل الدخول
-               </Button>
             </div>
          </form>
       </Fragment>
