@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/accordion";
 import { showHeaderAndFooter } from "@/lib/utils";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function LandingPage() {
+   const { data } = useSession();
    useEffect(() => {
       document.body.classList.add(`!bg-transparent`);
       showHeaderAndFooter();
@@ -80,7 +82,10 @@ export default function LandingPage() {
                className="flex justify-center"
             >
                <Button asChild size="lg">
-                  <Link className="!px-12" href="/auth/login">
+                  <Link
+                     className="!px-12"
+                     href={data?.user?.id ? `/quiz` : "/auth/login"}
+                  >
                      ابدأ الآن
                   </Link>
                </Button>

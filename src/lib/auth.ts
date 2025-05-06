@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
 import { Provider } from "next-auth/providers/index";
+import { revalidatePath } from "next/cache";
 
 interface ExtendedToken extends JWT {
    id: string;
@@ -46,6 +47,7 @@ const credentials = CredentialsProvider({
             { metadata: true }
          );
 
+         revalidatePath(`/`);
          return user!;
       } else {
          if (!credentials?.email || !credentials?.password) {
