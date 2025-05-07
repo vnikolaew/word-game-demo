@@ -143,13 +143,13 @@ function quizSurveyToCsvRow(
       age_of_acquiring_arabic: survey.age_of_acquiring_arabic,
       years_living_in_arabic_countries:
          !survey.years_living_in_arabic_countries_months
-            ? `${survey.years_living_in_arabic_countries_years} سنة`
-            : `${survey.years_living_in_arabic_countries_years} سنة ${survey.years_living_in_arabic_countries_months} شهر`,
+            ? `${survey.years_living_in_arabic_countries_years} years`
+            : `${survey.years_living_in_arabic_countries_years} years ${survey.years_living_in_arabic_countries_months} months`,
 
       years_living_in_arabic_environments:
          !survey.years_living_in_arabic_environments_months
-            ? `${survey.years_living_in_arabic_environments_years} سنة`
-            : `${survey.years_living_in_arabic_environments_years} سنة ${survey.years_living_in_arabic_environments_months} شهر`,
+            ? `${survey.years_living_in_arabic_environments_years} years`
+            : `${survey.years_living_in_arabic_environments_years} years ${survey.years_living_in_arabic_environments_months} months`,
 
       kindergartenLanguage: survey.kindergartenLanguage,
       otherKindergartenLanguage: survey.otherKindergartenLanguage,
