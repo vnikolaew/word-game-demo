@@ -10,6 +10,15 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
 
    const [errors, setErrors] = useState<FormErrors>({});
    const [formData, setFormData] = useState<SurveyData>({
+      age_of_acquiring_arabic: ``,
+      listening_proficiency: ``,
+      reading_proficiency: ``,
+      speaking_proficiency: ``,
+      writing_proficiency: ``,
+      years_living_in_arabic_countries_months: ``,
+      years_living_in_arabic_countries_years: ``,
+      years_living_in_arabic_environments_months: ``,
+      years_living_in_arabic_environments_years: ``,
       currentUniversity: ``,
       nativeLanguage: "",
       otherNativeLanguage: "",
@@ -21,7 +30,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       age: "",
       highestEducation: "",
       arabicDialect: "",
-      nationality: "",
+      nationality: "saudi",
       otherNationality: "",
       residence: "",
       otherResidence: "",
@@ -49,26 +58,37 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
    const validateForm = (_: boolean = false) => {
       const newErrors: FormErrors = {};
       const requiredFields: (keyof SurveyData)[] = [
-         // `currentUniversity`,
+         "age",
+         "gender",
+         "highestEducation",
+         "nationality",
+
          "nativeLanguage",
          "languageAcquisition",
-         "familyLanguage",
-         "gender",
-         "age",
-         "highestEducation",
-         "arabicDialect",
-         "nationality",
-         "residence",
          "languages",
+
+         `age_of_acquiring_arabic`,
+         `years_living_in_arabic_countries_years`,
+         // `years_living_in_arabic_countries_months`,
+         `years_living_in_arabic_environments_years`,
+         // `years_living_in_arabic_environments_months`,
+
          "kindergartenLanguage",
          "primaryLanguage",
          "middleLanguage",
          "highSchoolLanguage",
          "universityLanguage",
+
+         `speaking_proficiency`,
+         `listening_proficiency`,
+         `reading_proficiency`,
+         `writing_proficiency`,
+
          "readingHours",
          "listeningHours",
          "writingHours",
          "speakingHours",
+
          "attentionDisorder",
          "readingDisorder",
          "vision",
@@ -76,8 +96,6 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       ];
 
       // Debug log
-      console.log("Current form data:", formData);
-
       // Check each required field
       requiredFields.forEach((field) => {
          if (
@@ -88,14 +106,6 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             console.warn(`Missing field: ${field}`);
          }
       });
-
-      const SAUDI_ARABIA = `saudi_arabia`;
-      if (
-         formData.residence === SAUDI_ARABIA &&
-         !formData.currentUniversity?.length
-      ) {
-         newErrors.currentUniversity = `يرجى تحديد الجامعة.`;
-      }
 
       if (
          (formData.nativeLanguage === "arabic_and_other" ||
@@ -142,11 +152,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
          [`universityLanguage`, `otherUniversityLanguage`],
       ];
       pairKeys.forEach(([key, otherKey]) => {
-         if (
-            (formData[key]?.toLowerCase() === "other" ||
-               formData[key]?.toLowerCase() === `two_languages`) &&
-            !formData[otherKey]
-         ) {
+         if (formData[key]?.toLowerCase() === "other" && !formData[otherKey]) {
             newErrors[key] = `يرجى تحديد اللغة.`;
          }
       });
@@ -156,6 +162,51 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
          const ageNum = Number(formData.age);
          if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
             newErrors.age = "يرجى إدخال عمر صحيح";
+         }
+      }
+
+      if (formData.age_of_acquiring_arabic) {
+         const ageNum = Number(formData.age_of_acquiring_arabic);
+         if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
+            newErrors.age_of_acquiring_arabic = "يرجى إدخال عمر صحيح";
+         }
+      }
+
+      if (formData.years_living_in_arabic_countries_years) {
+         const yearsNum = Number(
+            formData.years_living_in_arabic_countries_years
+         );
+         const monthsNum = Number(
+            formData.years_living_in_arabic_countries_months
+         );
+
+         if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
+            newErrors.years_living_in_arabic_countries_years =
+               "يرجى إدخال عمر صحيح";
+         }
+
+         if (isNaN(monthsNum) || monthsNum < 0 || monthsNum > 11) {
+            newErrors.years_living_in_arabic_countries_months =
+               "يرجى إدخال عمر صحيح";
+         }
+      }
+
+      if (formData.years_living_in_arabic_environments_years) {
+         const yearsNum = Number(
+            formData.years_living_in_arabic_environments_years
+         );
+         const monthsNum = Number(
+            formData.years_living_in_arabic_environments_months
+         );
+
+         if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
+            newErrors.years_living_in_arabic_environments_years =
+               "يرجى إدخال عمر صحيح";
+         }
+
+         if (isNaN(monthsNum) || monthsNum < 0 || monthsNum > 11) {
+            newErrors.years_living_in_arabic_environments_months =
+               "يرجى إدخال عمر صحيح";
          }
       }
 

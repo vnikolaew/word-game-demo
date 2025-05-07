@@ -19,7 +19,7 @@ export async function main() {
    await prisma.word.deleteMany({});
    await prisma.wordList.deleteMany({});
 
-   const include_all = true;
+   const include_all = false;
    const csv_ids = [
       21, 3, 178, 47, 115, 24, 196, 170, 151, 76, 192, 26, 101, 167, 34, 9, 54,
       61, 160, 38,

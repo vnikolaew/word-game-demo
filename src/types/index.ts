@@ -130,6 +130,19 @@ export interface SurveyData {
 
    gender: string;
    age: string;
+
+   age_of_acquiring_arabic: string;
+   years_living_in_arabic_countries_years: string;
+   years_living_in_arabic_countries_months: string;
+
+   years_living_in_arabic_environments_years: string;
+   years_living_in_arabic_environments_months: string;
+
+   speaking_proficiency: string;
+   listening_proficiency: string;
+   reading_proficiency: string;
+   writing_proficiency: string;
+
    highestEducation: string;
    arabicDialect: string;
    nationality: string;

@@ -34,6 +34,11 @@ import { cn, showHeaderAndFooter } from "@/lib/utils";
 import ParentsLanguage from "./Survey/ParentsLanguage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useSurvey } from "@/hooks/useSurvey";
+import { Progress } from "../ui/progress";
+import AgeOfAcquiringArabic from "./Survey/AgeOfAcquiringArabic";
+import YearsLivingInArabicCountries from "./Survey/YearsLivingInArabicCountries";
+import YearsLivingInArabicEnvs from "./Survey/YearsLivingInArabicEnvs";
+import ArabicProficiencyLevel from "./Survey/ArabicProficiencyLevel";
 
 interface SurveyViewProps {
    onComplete: (data: SurveyData) => void;
@@ -142,37 +147,42 @@ export const CustomDropdown = ({
 export const DROPDOWN_PLACEHOLDER = `الرجاء تحديد خيار`;
 
 const FIELDS_BY_PAGE: (keyof SurveyData)[][] = [
-   [
-      `age`,
-      `gender`,
-      `highestEducation`,
-      `nationality`,
-      `otherNationality`,
-      `residence`,
-      `otherResidence`,
-      `currentUniversity`,
-   ],
+   [`age`, `gender`, `highestEducation`, `nationality`],
    [
       `nativeLanguage`,
       `otherNativeLanguage`,
       `languageAcquisition`,
       `otherAcquisitionLanguage`,
-      `familyLanguage`,
-      `otherFamilyLanguage`,
       `languages`,
-      `arabicDialect`,
+   ],
+   [
+      `age_of_acquiring_arabic`,
+      `years_living_in_arabic_countries_years`,
+      `years_living_in_arabic_countries_months`,
+      `years_living_in_arabic_environments_years`,
+      `years_living_in_arabic_environments_months`,
    ],
    [
       `kindergartenLanguage`,
       `otherKindergartenLanguage`,
+
       `primaryLanguage`,
       `otherPrimaryLanguage`,
+
       `middleLanguage`,
       `otherMiddleLanguage`,
+
       `highSchoolLanguage`,
       `otherHighSchoolLanguage`,
+
       `universityLanguage`,
       `otherUniversityLanguage`,
+   ],
+   [
+      `speaking_proficiency`,
+      `listening_proficiency`,
+      `reading_proficiency`,
+      `writing_proficiency`,
    ],
    [`readingHours`, `listeningHours`, `writingHours`, `speakingHours`],
    [`attentionDisorder`, `readingDisorder`, `vision`, `handedness`],
@@ -199,6 +209,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
       );
    }
 
+   const MAX_PAGES = FIELDS_BY_PAGE.length;
    const props = { errors, formData, setFormData } as const;
 
    return (
@@ -208,6 +219,9 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
          </CardHeader>
          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8">
+               <div className="w-1/2">
+                  <Progress dir="rtl" value={((page - 1) / MAX_PAGES) * 100} />
+               </div>
                {match(page)
                   .with(1, () => (
                      <>
@@ -215,7 +229,6 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <Gender {...props} />
                         <EducationLevel {...props} />
                         <Nationality {...props} />
-                        <Residence {...props} />
                         <CurrentUniversity {...props} />
                      </>
                   ))
@@ -223,12 +236,17 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                      <>
                         <NativeLanguage {...props} />
                         <ChildLanguages {...props} />
-                        <ParentsLanguage {...props} />
                         <Languages {...props} />
-                        <ArabicDialect {...props} />
                      </>
                   ))
                   .with(3, () => (
+                     <>
+                        <AgeOfAcquiringArabic {...props} />
+                        <YearsLivingInArabicCountries {...props} />
+                        <YearsLivingInArabicEnvs {...props} />
+                     </>
+                  ))
+                  .with(4, () => (
                      <>
                         <KindergartenLanguage {...props} />
                         <PrimaryLanguage {...props} />
@@ -237,8 +255,32 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <UniversityLanguage {...props} />
                      </>
                   ))
-                  .with(4, () => <LanguageUsageHours {...props} />)
                   .with(5, () => (
+                     <>
+                        <ArabicProficiencyLevel
+                           {...props}
+                           prop="speaking_proficiency"
+                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الحديث باللغة العربي`}
+                        />
+                        <ArabicProficiencyLevel
+                           {...props}
+                           prop="listening_proficiency"
+                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الاستماع للغة العربية`}
+                        />
+                        <ArabicProficiencyLevel
+                           {...props}
+                           prop={`reading_proficiency`}
+                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في قراءة اللغة العربية`}
+                        />
+                        <ArabicProficiencyLevel
+                           {...props}
+                           prop={`writing_proficiency`}
+                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الكتابة باللغة العربية`}
+                        />
+                     </>
+                  ))
+                  .with(6, () => <LanguageUsageHours {...props} />)
+                  .with(7, () => (
                      <>
                         <AttentionDisorder {...props} />
                         <ReadingDisorder {...props} />
@@ -248,7 +290,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                   ))
                   .otherwise((_) => null)}
 
-               {page < 5 ? (
+               {page < MAX_PAGES ? (
                   <div className="w-full flex items-center !mt-4 gap-4 justify-end">
                      <Button
                         disabled={page === 1}
@@ -260,7 +302,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <ChevronRight size={18} />
                      </Button>
                      <Button
-                        disabled={page === 5}
+                        disabled={page === MAX_PAGES}
                         onClick={(e) => {
                            e.preventDefault();
                            const new_errors = validateForm();
@@ -290,8 +332,18 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                      </Button>
                   </div>
                ) : (
-                  <div className="w-full flex items-center justify-center !mt-4">
-                     <Button type="submit" className="w-1/2 !mx-auto">
+                  <div className="w-full flex items-center justify-end !mt-4 gap-4">
+                     <Button
+                        disabled={page === 1}
+                        onClick={(_) => setPage((p) => p - 1)}
+                        variant={`outline`}
+                        type="button"
+                        className="w-fit !px-12 flex items-center gap-2"
+                     >
+                        سابق
+                        <ChevronRight size={18} />
+                     </Button>
+                     <Button type="submit" className="px-12">
                         إرسال
                      </Button>
                   </div>

@@ -26,31 +26,24 @@ function ChildLanguages({ errors, formData, setFormData }: Props) {
             }
          >
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="arabic_only" id="arabic_only" />
-               <Label htmlFor="arabic_only">العربية فقط</Label>
+               <RadioGroupItem value="native_only" id="native_only" />
+               <Label htmlFor="native_only">لغتك الأم فقط</Label>
             </div>
+
             <div className="flex items-center space-x-2">
                <RadioGroupItem
-                  value="arabic_then_other"
-                  id="arabic_then_other"
+                  value="native_then_other"
+                  id="native_then_other"
                />
-               <Label htmlFor="arabic_then_other">
-                  العربية أولاً ثم لغة أخرى
+               <Label htmlFor="native_then_other">
+                  لغتك الأم أولاً ثم لغة أخرى
                </Label>
             </div>
+
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="arabic_and_other" id="arabic_and_other" />
-               <Label htmlFor="arabic_and_other">
-                  العربية ولغة أخرى في نفس الوقت
-               </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-               <RadioGroupItem
-                  value="other_then_arabic"
-                  id="other_then_arabic"
-               />
-               <Label htmlFor="other_then_arabic">
-                  لغة أخرى أولاً ثم العربية
+               <RadioGroupItem value="native_and_other" id="native_and_other" />
+               <Label htmlFor="native_and_other">
+                  لغتك الأم ولغة أخرى في نفس الوقت
                </Label>
             </div>
          </RadioGroup>

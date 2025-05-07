@@ -90,30 +90,48 @@ export async function POST(req: Request) {
          vision,
          handedness,
          currentUniversity,
+         age_of_acquiring_arabic,
+         listening_proficiency,
+         reading_proficiency,
+         speaking_proficiency,
+         writing_proficiency,
+         years_living_in_arabic_countries_months,
+         years_living_in_arabic_countries_years,
+         years_living_in_arabic_environments_months,
+         years_living_in_arabic_environments_years,
       }: SurveyData = await req.json();
 
       // Validate required fields
       const requiredFields: (keyof SurveyData)[] = [
-         // `currentUniversity`,
+         "age",
+         "gender",
+         "highestEducation",
+         "nationality",
+
          "nativeLanguage",
          "languageAcquisition",
-         "familyLanguage",
-         "gender",
-         "age",
-         "highestEducation",
-         "arabicDialect",
-         "nationality",
-         "residence",
          "languages",
+
+         `age_of_acquiring_arabic`,
+         `years_living_in_arabic_countries_years`,
+         `years_living_in_arabic_environments_years`,
+
          "kindergartenLanguage",
          "primaryLanguage",
          "middleLanguage",
          "highSchoolLanguage",
          "universityLanguage",
+
+         `speaking_proficiency`,
+         `listening_proficiency`,
+         `reading_proficiency`,
+         `writing_proficiency`,
+
          "readingHours",
          "listeningHours",
          "writingHours",
          "speakingHours",
+
          "attentionDisorder",
          "readingDisorder",
          "vision",
@@ -135,6 +153,15 @@ export async function POST(req: Request) {
       // Save survey response
       const survey = await prisma.demographicSurvey.create({
          data: {
+            age_of_acquiring_arabic,
+            listening_proficiency,
+            reading_proficiency,
+            speaking_proficiency,
+            writing_proficiency,
+            years_living_in_arabic_countries_years,
+            years_living_in_arabic_environments_years,
+            years_living_in_arabic_countries_months,
+            years_living_in_arabic_environments_months,
             university: currentUniversity,
             userId: session.user.id,
             nativeLanguage,

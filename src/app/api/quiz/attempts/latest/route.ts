@@ -20,5 +20,5 @@ export async function GET() {
       take: 1,
    });
 
-   return NextResponse.json(attempts[0]);
+   return NextResponse.json(attempts?.at(0) ?? null);
 }

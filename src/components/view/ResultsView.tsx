@@ -16,8 +16,9 @@ import { useQuizResult } from "@/hooks/useQuizResult";
 import { useRouter } from "next/navigation";
 import { showHeaderAndFooter } from "@/lib/utils";
 import { Fragment, useEffect, useMemo, useState } from "react";
-import { Clipboard, ClipboardCheck } from "lucide-react";
+import { ChevronLeft, Clipboard, ClipboardCheck } from "lucide-react";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 export interface ProlificCodeProps {
    score: number;
@@ -134,13 +135,32 @@ export default function ResultsView({
       showHeaderAndFooter();
    }, []);
 
-   if (loading || !results) {
+   if (loading) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-[50vh]">
             <Spinner size="sm" />
             <p className="text-sm text-gray-500">
                يرجى الانتظار بينما نقوم بتحميل النتائج ...
             </p>
+         </div>
+      );
+   }
+
+   if (!results) {
+      return (
+         <div className="flex flex-col gap-12 items-center justify-center min-h-[50vh]">
+            <h2 className="font-semibold text-2xl text-neutral-500">
+               لم تقم بإجراء الاختبار بعد.
+            </h2>
+            <Link href={`/quiz`}>
+               <Button
+                  type="button"
+                  className="!px-12 inline-flex items-center gap-2"
+               >
+                  <ChevronLeft size={18} />
+                  ابدأ الاختبار الآن
+               </Button>
+            </Link>
          </div>
       );
    }

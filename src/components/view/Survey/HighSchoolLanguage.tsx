@@ -1,12 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SurveyData } from "@/types";
-import React, { Dispatch, Fragment, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import {
    FormErrors,
    CustomDropdown,
    DROPDOWN_PLACEHOLDER,
 } from "../SurveyView";
+import { EDUCATION_LEVEL_OPTIONS } from "./education-level-options";
 
 interface Props {
    formData: SurveyData;
@@ -19,17 +20,7 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
       <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>عندما كنت في مرحلة الثانوية، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
-            options={[
-               { value: "arabic", label: `العربية` },
-               { value: "english", label: `الإنجليزية` },
-               { value: "french", label: `الفرنسية` },
-               {
-                  value: "two_languages",
-                  label: `العربية ولغة أخرى (الرجاء التحديد)`,
-               },
-               { value: "other", label: `أخرى، يرجى التحديد` },
-               { value: "not_applicable", label: `لاينطبق` },
-            ]}
+            options={EDUCATION_LEVEL_OPTIONS}
             value={formData.highSchoolLanguage ?? ``}
             onChange={(value) =>
                setFormData((prev) => ({
@@ -40,8 +31,7 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
             placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.highSchoolLanguage}
          />
-         {(formData.highSchoolLanguage === `other` ||
-            formData.highSchoolLanguage?.includes(`two_languages`)) && (
+         {formData.highSchoolLanguage === `other` && (
             <div className="!mt-4">
                <Label>يرجى تحديد اللغة:</Label>
                <Input

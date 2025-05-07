@@ -20,13 +20,13 @@ function NativeLanguage({
          <Label htmlFor="nativeLanguage">أي لغة تعتبرها لغتك الأم؟</Label>
          <CustomDropdown
             options={[
-               { value: "", label: "يرجى اختيار إجابة" },
-               { value: "arabic", label: "العربية" },
-               {
-                  value: "arabic_and_other",
-                  label: "العربية ولغة أخرى",
-               },
-               { value: "other", label: "لغة أخرى" },
+               { value: "english", label: "الإنجليزية" },
+               { value: "urdu", label: "الأردية" },
+               { value: "bengali", label: "البنغالية" },
+               { value: "french", label: "الفرنسية" },
+               { value: "swahili", label: "السواحيلية" },
+               { value: "tagalog", label: "التاغالوغية" },
+               { value: "other", label: "أخرى، الرجاء التحديد" },
             ]}
             value={formData.nativeLanguage}
             onChange={(value) => {
@@ -40,8 +40,7 @@ function NativeLanguage({
             placeholder="يرجى اختيار إجابة"
             error={errors.nativeLanguage}
          />
-         {(formData.nativeLanguage === "arabic_and_other" ||
-            formData.nativeLanguage === "other") && (
+         {formData.nativeLanguage === "other" && (
             <div className="mt-2" key={formData.nativeLanguage}>
                <Input
                   placeholder="يرجى ذكر اللغة الأخرى"

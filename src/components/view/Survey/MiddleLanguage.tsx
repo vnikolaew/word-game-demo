@@ -7,6 +7,7 @@ import {
    FormErrors,
 } from "../SurveyView";
 import { SurveyData } from "@/types";
+import { EDUCATION_LEVEL_OPTIONS } from "./education-level-options";
 
 interface Props {
    formData: SurveyData;
@@ -19,17 +20,7 @@ function MiddleLanguage({ errors, formData, setFormData }: Props) {
       <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>عندما كنت في مرحلة المتوسطة، ماذا كانت لغة التدريس؟</Label>
          <CustomDropdown
-            options={[
-               { value: "arabic", label: `العربية` },
-               { value: "english", label: `الإنجليزية` },
-               { value: "french", label: `الفرنسية` },
-               {
-                  value: "two_languages",
-                  label: `العربية ولغة أخرى (الرجاء التحديد)`,
-               },
-               { value: "other", label: `أخرى، يرجى التحديد` },
-               { value: "not_applicable", label: `لاينطبق` },
-            ]}
+            options={EDUCATION_LEVEL_OPTIONS}
             value={formData.middleLanguage ?? ``}
             onChange={(value) =>
                setFormData((prev) => ({
@@ -40,8 +31,7 @@ function MiddleLanguage({ errors, formData, setFormData }: Props) {
             placeholder={DROPDOWN_PLACEHOLDER}
             error={errors.middleLanguage}
          />
-         {(formData.middleLanguage === `other` ||
-            formData.middleLanguage?.includes(`two_languages`)) && (
+         {formData.middleLanguage === `other` && (
             <div className="!mt-4">
                <Label>يرجى تحديد اللغة:</Label>
                <Input

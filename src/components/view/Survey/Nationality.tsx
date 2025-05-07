@@ -3,6 +3,7 @@ import { SurveyData } from "@/types";
 import { Label } from "@radix-ui/react-label";
 import React, { Dispatch, SetStateAction } from "react";
 import { CustomDropdown, FormErrors } from "../SurveyView";
+import { Combobox } from "@/components/ui/combobox";
 
 interface Props {
    formData: SurveyData;
@@ -33,21 +34,19 @@ export const NATIONALITY_OPTIONS = [
    { value: "other", label: "أخرى" },
 ] as const;
 
-function Nationality({ errors, formData, setFormData }: Props) {
+function Nationality({ formData, setFormData }: Props) {
    return (
-      <div className="space-y-2 w-3/4 md:!w-1/2">
+      <div className="space-y-2 w-3/4 md:!w-1/2 flex flex-col items-start">
          <Label>ما هي جنسيتك؟</Label>
-         <CustomDropdown
+         <Combobox
+            className="!w-full"
             options={NATIONALITY_OPTIONS}
-            value={formData.nationality}
             onChange={(value) =>
-               setFormData((prev) => ({
-                  ...prev,
-                  nationality: value,
-               }))
+               setFormData({ ...formData, nationality: value })
             }
-            placeholder="يرجى اختيار إجابة"
-            error={errors.nationality}
+            empty={`لا جنسية`}
+            placeholder={`البحث عن جنسية`}
+            key={`nationality`}
          />
          {formData.nationality === `other` && (
             <div className="!mt-4">
