@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { generateAnonymousId } from "@/lib/utils";
-import { DemographicSurvey, QuizAttempt, User } from "@prisma/client";
+import { DemographicSurvey, QuizAttempt, User, WordList } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -170,7 +170,7 @@ function quizSurveyToCsvRow(
 }
 
 function quizResponseToCsvRow(
-   quiz: QuizAttempt & { user: Partial<User> },
+   quiz: QuizAttempt & { user: Partial<User>; wordList: WordList },
    response: any
 ) {
    const userResponse =
@@ -196,7 +196,7 @@ function quizResponseToCsvRow(
       "User Viewport Size": quiz.viewportSize,
       "Page number": response.pageNumber,
       "Item shown in the page": response.word,
-      "Wordlist ID": quiz.wordListId,
+      "Wordlist ID": quiz.wordList.original_id,
       "Quiz ID": quiz.id,
       "Quiz Duration in milliseconds": quiz.totalQuizDuration ?? `Unknown`,
       "User Reaction Time in milliseconds": response.responseTime,
