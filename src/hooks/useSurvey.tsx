@@ -123,25 +123,10 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       }
 
       if (
-         (formData.familyLanguage?.toLowerCase().includes(`other`) ||
-            formData.familyLanguage?.toLowerCase().includes(`mix`)) &&
-         !formData.otherFamilyLanguage
-      ) {
-         newErrors.familyLanguage = `يرجى تحديد اللغة.`;
-      }
-
-      if (
          formData.nationality?.toLowerCase() === "other" &&
          !formData.otherNationality
       ) {
          newErrors.nationality = `يرجى تحديد الجنسية.`;
-      }
-
-      if (
-         formData.residence?.toLowerCase() === "other" &&
-         !formData.otherResidence
-      ) {
-         newErrors.residence = "يرجى تحديد اللغة";
       }
 
       const pairKeys: [keyof SurveyData, keyof SurveyData][] = [
@@ -176,16 +161,23 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
          const yearsNum = Number(
             formData.years_living_in_arabic_countries_years
          );
-         const monthsNum = Number(
-            formData.years_living_in_arabic_countries_months
-         );
+         const monthsNum = isNaN(
+            Number(formData.years_living_in_arabic_countries_months)
+         )
+            ? null
+            : Number(formData.years_living_in_arabic_countries_months);
 
          if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
             newErrors.years_living_in_arabic_countries_years =
                "يرجى إدخال عمر صحيح";
          }
 
-         if (isNaN(monthsNum) || monthsNum < 0 || monthsNum > 11) {
+         if (
+            monthsNum === null ||
+            isNaN(monthsNum) ||
+            monthsNum < 0 ||
+            monthsNum > 11
+         ) {
             newErrors.years_living_in_arabic_countries_months =
                "يرجى إدخال عمر صحيح";
          }
@@ -195,16 +187,23 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
          const yearsNum = Number(
             formData.years_living_in_arabic_environments_years
          );
-         const monthsNum = Number(
-            formData.years_living_in_arabic_environments_months
-         );
+         const monthsNum = isNaN(
+            Number(formData.years_living_in_arabic_environments_months)
+         )
+            ? null
+            : Number(formData.years_living_in_arabic_environments_months);
 
          if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
             newErrors.years_living_in_arabic_environments_years =
                "يرجى إدخال عمر صحيح";
          }
 
-         if (isNaN(monthsNum) || monthsNum < 0 || monthsNum > 11) {
+         if (
+            monthsNum === null ||
+            isNaN(monthsNum) ||
+            monthsNum < 0 ||
+            monthsNum > 11
+         ) {
             newErrors.years_living_in_arabic_environments_months =
                "يرجى إدخال عمر صحيح";
          }
