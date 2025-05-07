@@ -59,14 +59,16 @@ function WordLists() {
                <Table>
                   <Headings />
                   <TableBody>
-                     {wordLists.map((list) => (
-                        <Row
-                           key={list.id}
-                           handleEditClick={handleEditClick}
-                           handleDeleteWordList={handleDeleteWordList}
-                           list={list}
-                        />
-                     ))}
+                     {wordLists
+                        .sort((a, b) => a.original_id - b.original_id)
+                        .map((list) => (
+                           <Row
+                              key={list.id}
+                              handleEditClick={handleEditClick}
+                              handleDeleteWordList={handleDeleteWordList}
+                              list={list}
+                           />
+                        ))}
                   </TableBody>
                </Table>
             </div>
