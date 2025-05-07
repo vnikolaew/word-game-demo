@@ -126,23 +126,31 @@ function quizSurveyToCsvRow(
 ) {
    return {
       anonymousUserId: generateAnonymousId(survey.user.id!),
+      userDomain: process.env.WEB_DOMAIN!,
+
+      age: survey.age,
+      gender: survey.gender,
+      highestEducation: survey.highestEducation,
+      nationality: survey.nationality,
+      otherNationality: survey.otherNationality,
+
       nativeLanguage: survey.nativeLanguage,
       otherNativeLanguage: survey.otherNativeLanguage,
       languageAcquisition: survey.languageAcquisition,
       otherAcquisitionLanguage: survey.otherAcquisitionLanguage,
-      familyLanguage: survey.familyLanguage,
-      otherFamilyLanguage: survey.otherFamilyLanguage,
-      gender: survey.gender,
-      age: survey.age,
-      highestEducation: survey.highestEducation,
-      arabicDialect: survey.arabicDialect,
-      nationality: survey.nationality,
-      otherNationality: survey.otherNationality,
-      residence: survey.residence,
-      otherResidence: survey.otherResidence,
-      university: survey.university,
       languages: survey.languages,
-      userDomain: process.env.WEB_DOMAIN!,
+
+      age_of_acquiring_arabic: survey.age_of_acquiring_arabic,
+      years_living_in_arabic_countries:
+         !survey.years_living_in_arabic_countries_months
+            ? `${survey.years_living_in_arabic_countries_years} سنة`
+            : `${survey.years_living_in_arabic_countries_years} سنة ${survey.years_living_in_arabic_countries_months} شهر`,
+
+      years_living_in_arabic_environments:
+         !survey.years_living_in_arabic_environments_months
+            ? `${survey.years_living_in_arabic_environments_years} سنة`
+            : `${survey.years_living_in_arabic_environments_years} سنة ${survey.years_living_in_arabic_environments_months} شهر`,
+
       kindergartenLanguage: survey.kindergartenLanguage,
       otherKindergartenLanguage: survey.otherKindergartenLanguage,
       primaryLanguage: survey.primaryLanguage,
@@ -153,10 +161,17 @@ function quizSurveyToCsvRow(
       otherHighSchoolLanguage: survey.otherHighSchoolLanguage,
       universityLanguage: survey.universityLanguage,
       otherUniversityLanguage: survey.otherUniversityLanguage,
+
+      speaking_proficiency: survey.speaking_proficiency,
+      listening_proficiency: survey.listening_proficiency,
+      reading_proficiency: survey.reading_proficiency,
+      writing_proficiency: survey.writing_proficiency,
+
       readingHours: survey.readingHours,
       listeningHours: survey.listeningHours,
       writingHours: survey.writingHours,
       speakingHours: survey.speakingHours,
+
       attentionDisorder: survey.attentionDisorder,
       readingDisorder: survey.readingDisorder,
       vision: survey.vision,
