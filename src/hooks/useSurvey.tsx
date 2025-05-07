@@ -153,7 +153,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       if (formData.age_of_acquiring_arabic) {
          const ageNum = Number(formData.age_of_acquiring_arabic);
          if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
-            newErrors.age_of_acquiring_arabic = "يرجى إدخال عمر صحيح";
+            newErrors.age_of_acquiring_arabic = `الرجاء إدخال رقم صالح`;
          }
       }
 
@@ -168,8 +168,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             : Number(formData.years_living_in_arabic_countries_months);
 
          if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
-            newErrors.years_living_in_arabic_countries_years =
-               "يرجى إدخال عمر صحيح";
+            newErrors.years_living_in_arabic_countries_years = `الرجاء إدخال رقم صالح`;
          }
 
          if (
@@ -178,8 +177,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             monthsNum < 0 ||
             monthsNum > 11
          ) {
-            newErrors.years_living_in_arabic_countries_months =
-               "يرجى إدخال عمر صحيح";
+            newErrors.years_living_in_arabic_countries_months = `الرجاء إدخال رقم صالح`;
          }
       }
 
@@ -194,8 +192,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             : Number(formData.years_living_in_arabic_environments_months);
 
          if (isNaN(yearsNum) || yearsNum < 0 || yearsNum > 120) {
-            newErrors.years_living_in_arabic_environments_years =
-               "يرجى إدخال عمر صحيح";
+            newErrors.years_living_in_arabic_environments_years = `الرجاء إدخال رقم صالح`;
          }
 
          if (
@@ -204,8 +201,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             monthsNum < 0 ||
             monthsNum > 11
          ) {
-            newErrors.years_living_in_arabic_environments_months =
-               "يرجى إدخال عمر صحيح";
+            newErrors.years_living_in_arabic_environments_months = `الرجاء إدخال رقم صالح`;
          }
       }
 
