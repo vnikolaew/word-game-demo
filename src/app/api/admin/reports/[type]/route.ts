@@ -105,7 +105,7 @@ export async function GET(
                   "User Viewport Size": quiz.viewportSize,
                   "Page number": response.pageNumber,
                   "Item shown in the page": response.word,
-                  "Wordlist ID": quiz.wordListId,
+                  "Wordlist ID": quiz.wordList.original_id,
                   "Quiz ID": quiz.id,
                   "Quiz Duration in milliseconds":
                      quiz.totalQuizDuration ?? `Unknown`,
