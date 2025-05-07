@@ -50,7 +50,7 @@ function ChildLanguages({ errors, formData, setFormData }: Props) {
          {formData.languageAcquisition?.toLowerCase().includes(`other`) && (
             <div className="space-y-2 !mt-4">
                <Label>
-                  إذا كنت قد تعلمت لغة غير العربية قبل سن السادسة، يرجى تحديدها:
+                  إذا كنت تعلمت لغة غير لغتك الأم قبل سن السادسة، يرجى تحديدها
                </Label>
                <Input
                   value={formData.otherAcquisitionLanguage}

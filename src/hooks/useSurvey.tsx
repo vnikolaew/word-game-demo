@@ -30,7 +30,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       age: "",
       highestEducation: "",
       arabicDialect: "",
-      nationality: "saudi",
+      nationality: "",
       otherNationality: "",
       residence: "",
       otherResidence: "",
