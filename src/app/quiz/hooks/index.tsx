@@ -2,7 +2,7 @@
 import { UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__, __IS_TEST__ } from "@/lib/consts";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
 
 export type QuizLimitInfo = {
@@ -22,6 +22,8 @@ export function useQuiz() {
    const [consent, setConsent] = useState<UserConsent | null>(null);
    const router = useRouter();
    const [screen] = useQueryState(`screen`, parseAsString);
+   const pathname = usePathname();
+   console.log({ pathname });
 
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
@@ -65,9 +67,6 @@ export function useQuiz() {
 
          if (screen === `practice`) {
             setAppState(`practice`);
-            return;
-         } else if (screen === `main`) {
-            setAppState(`quiz`);
             return;
          }
 

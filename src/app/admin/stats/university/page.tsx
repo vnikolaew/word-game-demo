@@ -8,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 export const dynamic = "force-dynamic";
+
 async function Page() {
    return <University />;
 }
