@@ -80,6 +80,13 @@ export function useQuiz() {
          const hasFinishedMoreThanDayAgo =
             now - proficiencyFinishedDate >= ONE_DAY_MS;
 
+         console.log({
+            hasFinishedMoreThanDayAgo,
+            now,
+            proficiencyFinishedDate,
+            proficiencyQuizFinishedAt,
+         });
+
          if (apiConsent) {
             setConsent(apiConsent);
 
