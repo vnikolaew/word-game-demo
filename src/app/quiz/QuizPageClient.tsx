@@ -60,7 +60,7 @@ export default function AppPage({}: Props) {
                .with(`practice`, (_) => (
                   <PracticeView
                      onComplete={() => {
-                        setScreen(`main`).then(() => setAppState(`quiz`));
+                        setAppState(`quiz`);
                      }}
                   />
                ))
