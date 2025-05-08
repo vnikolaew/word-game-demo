@@ -257,7 +257,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                         <ArabicProficiencyLevel
                            {...props}
                            prop="speaking_proficiency"
-                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الحديث باللغة العربي`}
+                           question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الحديث باللغة العربية`}
                         />
                         <ArabicProficiencyLevel
                            {...props}

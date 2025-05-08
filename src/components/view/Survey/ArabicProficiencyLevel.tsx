@@ -36,7 +36,10 @@ function ArabicProficiencyLevel({
       <div className="space-y-2 w-3/4 md:!w-1/2">
          <Label>{question}</Label>
          <CustomDropdown
-            options={OPTIONS}
+            options={OPTIONS.map(({ label, value }) => ({
+               value,
+               label: `${value} - ${label}`,
+            }))}
             value={Number(formData[prop]) ?? ``}
             onChange={(value) =>
                setFormData((prev) => ({
