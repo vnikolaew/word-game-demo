@@ -80,13 +80,6 @@ export function useQuiz() {
          const hasFinishedMoreThanDayAgo =
             now - proficiencyFinishedDate >= ONE_DAY_MS;
 
-         console.log({
-            hasFinishedMoreThanDayAgo,
-            now,
-            proficiencyFinishedDate,
-            proficiencyQuizFinishedAt,
-         });
-
          if (apiConsent) {
             setConsent(apiConsent);
 
@@ -98,6 +91,7 @@ export function useQuiz() {
                      Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
                         ONE_HOUR_MS
                   );
+                  console.log(`we are here`);
 
                   setQuizLimitInfo({
                      message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,

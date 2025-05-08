@@ -2,6 +2,8 @@ export const __IS_DEV__ = process.env.NODE_ENV === `development`;
 
 export const __IS_PROD__ = process.env.NODE_ENV === `production`;
 
-export const __IS_TEST__ = process.env.NODE_ENV_2 === `testing`;
+export const __IS_TEST__ =
+   process.env.NODE_ENV_2 === `testing` ||
+   process.env.NEXT_PUBLIC_NODE_ENV === `testing`;
 
 export const APP_NAME = `kalimat-game-learner`;
