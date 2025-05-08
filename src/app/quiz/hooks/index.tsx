@@ -106,7 +106,7 @@ export function useQuiz() {
             setAppState("consent");
          }
 
-         if (apiLimit && hasFinishedMoreThanDayAgo) {
+         if (apiLimit) {
             setQuizLimitInfo({
                message: apiLimit.message,
                tryAgainIn: apiLimit.tryAgainIn,
