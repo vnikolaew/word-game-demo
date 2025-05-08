@@ -26,7 +26,7 @@ function AgeOfAcquiringArabic({ errors, formData, setFormData }: Props) {
                   age_of_acquiring_arabic: e.target.value.toString(),
                })
             }
-            placeholder="يرجى إدخال عمرك"
+            placeholder={`الرجاء أدخل رقماً`}
          />
          {errors.age_of_acquiring_arabic && (
             <p className="text-red-500 text-sm">يرجى إدخال عمر صحيح</p>

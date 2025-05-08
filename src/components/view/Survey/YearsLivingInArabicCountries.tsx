@@ -10,6 +10,8 @@ interface Props {
    setFormData: Dispatch<SetStateAction<SurveyData>>;
 }
 
+const PLACEHOLDER = `الرجاء أدخل رقماً`;
+
 function YearsLivingInArabicCountries({
    errors,
    formData,
@@ -33,7 +35,7 @@ function YearsLivingInArabicCountries({
                         e.target.value.toString(),
                   })
                }
-               placeholder="يرجى إدخال عمرك"
+               placeholder={PLACEHOLDER}
             />
             <Input
                id="years_living_in_arabic_countries_months"
@@ -46,7 +48,7 @@ function YearsLivingInArabicCountries({
                         e.target.value.toString(),
                   })
                }
-               placeholder="يرجى إدخال عمرك"
+               placeholder={PLACEHOLDER}
             />
          </div>
          {errors.years_living_in_arabic_countries_years && (
