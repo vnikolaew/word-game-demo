@@ -22,8 +22,6 @@ export function useQuiz() {
    const [consent, setConsent] = useState<UserConsent | null>(null);
    const router = useRouter();
    const [screen] = useQueryState(`screen`, parseAsString);
-   const pathname = usePathname();
-   console.log({ pathname });
 
    const [appState, setAppState] = useState<AppState>("quiz");
    const [quizLimitInfo, setQuizLimitInfo] = useState<QuizLimitInfo>(null!);
@@ -88,7 +86,7 @@ export function useQuiz() {
             if (Boolean(hasFinishedProficiencyTest)) {
                if (hasFinishedMoreThanDayAgo || __IS_TEST__) {
                   setAppState("quiz");
-               } else {
+               } else if (!__IS_TEST__) {
                   const tryAgainIn = Math.floor(
                      Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
                         ONE_HOUR_MS
