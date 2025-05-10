@@ -18,7 +18,6 @@ import { useQuiz } from "./hooks";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ProficiencyTestLimitView from "@/components/view/ProficiencyTestLimitView";
-import { useQueryState, parseAsString } from "nuqs";
 
 interface Props {}
 
@@ -33,7 +32,6 @@ export default function AppPage({}: Props) {
       setAppState,
    } = useQuiz();
    const router = useRouter();
-   const [, setScreen] = useQueryState(`screen`, parseAsString);
 
    if (appState === `proficiency`) router.push(`/quiz/proficiency`);
 

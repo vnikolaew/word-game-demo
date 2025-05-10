@@ -2,7 +2,7 @@
 import { UserConsent } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import { __IS_PROD__, __IS_TEST__ } from "@/lib/consts";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { parseAsString, useQueryState } from "nuqs";
 
 export type QuizLimitInfo = {

@@ -19,6 +19,7 @@ import { Users, CheckCircle, Clock } from "lucide-react";
 import { useAdminStats } from "./hooks";
 import { showHeaderAndFooter } from "@/lib/utils";
 import { useEffect } from "react";
+import { PRERENDER_REVALIDATE_ONLY_GENERATED_HEADER } from "next/dist/lib/constants";
 
 export default function AdminDashboard() {
    const { isLoading, stats } = useAdminStats();
