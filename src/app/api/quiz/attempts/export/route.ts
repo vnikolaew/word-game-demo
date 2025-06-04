@@ -61,7 +61,7 @@ export async function GET() {
                response.word,
                attempt.wordListId,
                Math.round(response.responseTime),
-               response.isRealWord ? "word" : "nonword",
+               response.response === 0 ? "word" : "nonword",
                response.responseType,
                response.isCorrect ? "1" : "0",
                response.isTimeout ? "1" : "0",
