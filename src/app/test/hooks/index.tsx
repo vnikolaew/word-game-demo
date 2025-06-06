@@ -382,7 +382,7 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
                const word = shuffledWords.at(index)!;
                return {
                   isCorrect: isCorrect(r),
-                  isNonWord: r.correct_response === NON_WORD,
+                  isNonWord: currentList.nonWords.includes(word),
                   isTimeout: r.response === null,
                   pageNumber: index + 1,
                   responseTime: r.rt,
