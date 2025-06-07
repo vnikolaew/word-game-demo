@@ -59,7 +59,7 @@ export async function GET() {
                attempt.viewportSize,
                response.pageNumber,
                response.word,
-               attempt.wordListId,
+               attempt.wordList.id,
                Math.round(response.responseTime),
                response.response === 0 ? "word" : "nonword",
                response.responseType,
