@@ -29,6 +29,10 @@ function UniversityLanguage({ errors, formData, setFormData }: Props) {
                   label: `العربية ولغة أخرى (الرجاء التحديد)`,
                },
                { value: "other", label: `أخرى، يرجى التحديد` },
+               {
+                  value: `not_applicable`,
+                  label: `لاينطبق`,
+               },
             ]}
             value={formData.universityLanguage ?? ``}
             onChange={(value) =>
