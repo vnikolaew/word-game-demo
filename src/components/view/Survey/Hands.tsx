@@ -21,11 +21,11 @@ function Hands({ errors, formData, setFormData }: Props) {
          question={`هل أنت أيمن (تستخدم يدك اليمنى بشكل أساسي) أم أيسر (تستخدم يدك اليسرى بشكل أساسي)؟`}
          options={[
             {
-               label: `أيمن`,
+               label: `أيسر`,
                value: `Left-handed`,
             },
             {
-               label: `أيسر`,
+               label: `يمين`,
                value: `Right-handed`,
             },
          ]}
