@@ -12,7 +12,6 @@ interface Props {
 function ArabicDialect({errors, formData, setFormData}: Props) {
    return (
        <div className="space-y-2 w-3/4 md:!w-1/2">
-          <Label>أي لهجة عربية تتحدث؟</Label>
           <Label>
              أي لهجة عربية تتحدث؟
           </Label>
