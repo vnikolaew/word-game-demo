@@ -1,7 +1,7 @@
-import { Label } from "@radix-ui/react-label";
-import React, { Dispatch, SetStateAction } from "react";
-import { CustomDropdown, FormErrors } from "../SurveyView";
-import { SurveyData } from "@/types";
+import {Label} from "@radix-ui/react-label";
+import React, {Dispatch, SetStateAction} from "react";
+import {CustomDropdown, FormErrors} from "../SurveyView";
+import {SurveyData} from "@/types";
 
 interface Props {
    formData: SurveyData;
@@ -9,30 +9,33 @@ interface Props {
    setFormData: Dispatch<SetStateAction<SurveyData>>;
 }
 
-function ArabicDialect({ errors, formData, setFormData }: Props) {
+function ArabicDialect({errors, formData, setFormData}: Props) {
    return (
-      <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>أي لهجة عربية تتحدث؟</Label>
-         <CustomDropdown
-            options={[
-               { value: "gulf", label: "خليجية" },
-               { value: "egyptian", label: `مصرية` },
-               { value: "levantine", label: `شامية` },
-               { value: "yemeni", label: `يمنية` },
-               { value: "iraqi", label: `عراقية` },
-               { value: "maghrebi", label: `مغربية` },
-            ]}
-            value={formData.arabicDialect}
-            onChange={(value) =>
-               setFormData((prev) => ({
-                  ...prev,
-                  arabicDialect: value,
-               }))
-            }
-            placeholder="يرجى اختيار إجابة"
-            error={errors.arabicDialect}
-         />
-      </div>
+       <div className="space-y-2 w-3/4 md:!w-1/2">
+          <Label>أي لهجة عربية تتحدث؟</Label>
+          <Label>
+             أي لهجة عربية تتحدث؟
+          </Label>
+          <CustomDropdown
+              options={[
+                 {value: "gulf", label: "خليجية"},
+                 {value: "egyptian", label: `مصرية`},
+                 {value: "levantine", label: `شامية`},
+                 {value: "yemeni", label: `يمنية`},
+                 {value: "iraqi", label: `عراقية`},
+                 {value: "maghrebi", label: `مغاربية`},
+              ]}
+              value={formData.arabicDialect}
+              onChange={(value) =>
+                  setFormData((prev) => ({
+                     ...prev,
+                     arabicDialect: value,
+                  }))
+              }
+              placeholder="يرجى اختيار إجابة"
+              error={errors.arabicDialect}
+          />
+       </div>
    );
 }
 
