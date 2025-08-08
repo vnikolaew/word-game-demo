@@ -128,10 +128,11 @@ export interface SurveyData {
    familyLanguage: string;
    otherFamilyLanguage?: string;
 
+   arabicDialect: string;
+
    gender: string;
    age: string;
    highestEducation: string;
-   arabicDialect: string;
    nationality: string;
    otherNationality?: string;
    currentUniversity?: string;
