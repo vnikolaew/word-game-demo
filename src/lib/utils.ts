@@ -44,3 +44,5 @@ export function showHeaderAndFooter() {
       element.style.visibility = `visible`;
    });
 }
+
+export const HIGH_SCORE_THRESHOLD = 80

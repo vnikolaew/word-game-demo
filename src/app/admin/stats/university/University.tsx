@@ -222,7 +222,7 @@ function University() {
             />
 
             <StatCard
-               title={`العدد الإجمالي للفرق المكتملة التي حصلت على درجات 90% أو أعلى لـ ${uniLabel}`}
+               title={`العدد الإجمالي للفرق المكتملة التي حصلت على درجات 80% أو أعلى لـ ${uniLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import {HIGH_SCORE_THRESHOLD} from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
@@ -59,7 +60,7 @@ export async function GET(req: NextRequest) {
       ).length;
 
       const totalHighScoreCompletedQuizzes = quizzes.filter(
-         (q) => q.quizStatus === `completed` && q.score >= 90
+         (q) => q.quizStatus === `completed` && q.score >= HIGH_SCORE_THRESHOLD
       ).length;
 
       return NextResponse.json(

@@ -2,10 +2,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { HIGH_SCORE_THRESHOLD } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
-
-const HIGH_SCORE_THRESHOLD = 80;
 
 export async function GET() {
    try {
