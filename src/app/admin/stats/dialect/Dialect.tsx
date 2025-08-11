@@ -184,7 +184,7 @@ function Dialect() {
             />
 
             <StatCard
-               title={`إجمالي عدد الاختبارات المكتملة بدرجات 90% أو أعلى لـ ${dialectLabel}`}
+               title={`إجمالي عدد الاختبارات المكتملة بدرجات 80% أو أعلى لـ ${dialectLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""
