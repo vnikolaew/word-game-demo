@@ -18,7 +18,15 @@ interface Props {
 function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>عندما كنت في مرحلة الثانوية، ماذا كانت لغة التدريس؟</Label>
+         <div>
+            <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+                   htmlFor="highSchoolLanguage"
+            >
+               When you were in high school, what was the language of instruction?
+            </Label>
+            <br/>
+            <Label>عندما كنت في مرحلة الثانوية، ماذا كانت لغة التدريس؟</Label>
+         </div>
          <CustomDropdown
             options={EDUCATION_LEVEL_OPTIONS}
             value={formData.highSchoolLanguage ?? ``}
@@ -33,7 +41,7 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
          />
          {formData.highSchoolLanguage === `other` && (
             <div className="!mt-4">
-               <Label>يرجى تحديد اللغة:</Label>
+               <Label>Please specify the language:</Label>
                <Input
                   value={formData.otherHighSchoolLanguage}
                   onChange={(e) =>

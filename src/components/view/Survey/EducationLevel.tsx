@@ -12,25 +12,31 @@ interface Props {
 function EducationLevel({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label htmlFor="highestEducation">
-            يرجى اختيار أعلى مستوى تعليمي أكملته:
-         </Label>
+         <div>
+            <Label dir={`ltr`} htmlFor="highestEducation">
+               Please choose the highest educational level you have completed:
+            </Label>
+            <br/>
+            <Label htmlFor="highestEducation">
+               يرجى اختيار أعلى مستوى تعليمي أكملته:
+            </Label>
+         </div>
          <CustomDropdown
             value={formData.highestEducation}
             options={[
                {
                   value: "less_than_high_school",
-                  label: "أقل من المدرسة الثانوية",
+                  label: `Less than high school`,
                },
-               { value: "high_school", label: "المدرسة الثانوية" },
-               { value: "vocational", label: "تدريب مهني" },
-               { value: "some_college", label: "بعض التعليم الجامعي" },
-               { value: "college_degree", label: "درجة جامعية" },
-               { value: "some_postgraduate", label: "بعض التعليم العالي" },
-               { value: "master_degree", label: "درجة الماجستير" },
+               { value: "high_school", label: "High school" },
+               { value: "vocational", label: "Vocational training" },
+               { value: "some_college", label: "Some college education" },
+               { value: "college_degree", label: "College degree" },
+               { value: "some_postgraduate", label: "Some graduate education" },
+               { value: "master_degree", label: "Master's degree" },
                {
                   value: "phd",
-                  label: "دكتوراه (في الفلسفة أو الطب أو القانون، إلخ.)",
+                  label: "Doctorate (Philosophy or Medicine or Law, etc.)",
                },
             ]}
             onChange={(value) =>
@@ -39,7 +45,7 @@ function EducationLevel({ errors, formData, setFormData }: Props) {
                   highestEducation: value,
                }))
             }
-            placeholder="يرجى اختيار إجابة"
+            placeholder=""
             error={errors.highestEducation}
          />
       </div>

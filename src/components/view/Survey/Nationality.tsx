@@ -39,7 +39,13 @@ function Nationality({ formData, setFormData, errors }: Props) {
 
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2 flex flex-col items-start">
-         <Label>ما هي جنسيتك؟</Label>
+         <div>
+            <Label dir={`ltr`} htmlFor="nationality">
+               What is your nationality?
+            </Label>
+            <br/>
+            <Label htmlFor="nationality">ما هي جنسيتك؟</Label>
+         </div>
          <Input
             className={cn(
                errors.nationality && `!border-red-500 !outline-red-500`,
@@ -50,14 +56,14 @@ function Nationality({ formData, setFormData, errors }: Props) {
                setFormData({ ...formData, nationality: e.target.value });
             }}
             value={value}
-            placeholder={`أدخل جنسيتك هنا`}
+            placeholder={`Enter your nationality here`}
          />
          {errors.nationality && (
             <p className="text-red-500 text-sm">يرجى إدخال عمر صحيح</p>
          )}
          {formData.nationality === `other` && (
             <div className="!mt-4">
-               <Label>يرجى تحديد الجنسية:</Label>
+               <Label>Please select a nationality:</Label>
                <Input
                   value={formData.otherNationality}
                   onChange={(e) =>

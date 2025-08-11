@@ -11,20 +11,29 @@ interface Props {
 
 const OPTIONS = [
    { value: "0", label: `0` },
-   { value: "1", label: `ساعة واحدة` },
-   { value: "2", label: `ساعتان` },
-   { value: "3", label: `3 ساعات` },
-   { value: "4", label: `4 ساعات` },
-   { value: "5", label: `5 ساعات` },
-   { value: "6", label: `6 ساعات أو أكثر` },
+   { value: "1", label: `1 hour` },
+   { value: "2", label: `2 hours` },
+   { value: "3", label: `3 hours` },
+   { value: "4", label: `4 hours` },
+   { value: "5", label: `5 hours` },
+   { value: "6", label: `6 hours or more` },
 ] as const;
 
 function LanguageUsageHours({ errors, formData, setFormData }: Props) {
    return (
       <div className="w-3/4 md:!w-1/2 space-y-8">
          <div className="space-y-2">
-            <Label>كم ساعة تقضي يومياً في قراءة اللغة العربية الفصحى؟</Label>
+            <div>
+               <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+                      htmlFor={`readingHours`}
+               >
+                  How many hours per day do you spend reading in Modern Standard Arabic?
+               </Label>
+               <br/>
+               <Label htmlFor={`readingHours`}>كم ساعة تقضي يومياً في قراءة اللغة العربية الفصحى؟</Label>
+            </div>
             <CustomDropdown
+                reverse
                options={OPTIONS}
                value={formData.readingHours}
                onChange={(value) =>
@@ -33,16 +42,24 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
                      readingHours: value,
                   }))
                }
-               placeholder="يرجى اختيار عدد الساعات"
+               placeholder=""
                error={errors.readingHours}
             />
          </div>
 
          <div className="space-y-2">
-            <Label>
-               كم ساعة تقضي يومياً في الاستماع إلى اللغة العربية الفصحى؟
-            </Label>
+            <div>
+               <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+               >
+                  How many hours per day do you spend listening to Modern Standard Arabic?
+               </Label>
+               <br/>
+               <Label>
+                  كم ساعة تقضي يومياً في الاستماع إلى اللغة العربية الفصحى؟
+               </Label>
+            </div>
             <CustomDropdown
+                reverse
                options={OPTIONS}
                value={formData.listeningHours}
                onChange={(value) =>
@@ -51,14 +68,22 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
                      listeningHours: value,
                   }))
                }
-               placeholder="يرجى اختيار عدد الساعات"
+               placeholder={``}
                error={errors.listeningHours}
             />
          </div>
 
          <div className="space-y-2">
-            <Label>كم ساعة تقضي يومياً في الكتابة باللغة العربية الفصحى؟</Label>
+            <div>
+               <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+               >
+                  How many hours per day do you spend writing in Modern Standard Arabic?
+               </Label>
+               <br/>
+               <Label>كم ساعة تقضي يومياً في الكتابة باللغة العربية الفصحى؟</Label>
+            </div>
             <CustomDropdown
+                reverse
                options={OPTIONS}
                value={formData.writingHours}
                onChange={(value) =>
@@ -67,14 +92,22 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
                      writingHours: value,
                   }))
                }
-               placeholder="يرجى اختيار عدد الساعات"
+               placeholder={``}
                error={errors.writingHours}
             />
          </div>
 
          <div className="space-y-2">
-            <Label>كم ساعة تقضي يومياً في التحدث باللغة العربية الفصحى؟</Label>
+            <div>
+               <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+               >
+                  How many hours per day do you spend speaking Modern Standard Arabic?
+               </Label>
+               <br/>
+               <Label>كم ساعة تقضي يومياً في التحدث باللغة العربية الفصحى؟</Label>
+            </div>
             <CustomDropdown
+                reverse
                options={OPTIONS}
                value={formData.speakingHours}
                onChange={(value) =>
@@ -83,7 +116,7 @@ function LanguageUsageHours({ errors, formData, setFormData }: Props) {
                      speakingHours: value,
                   }))
                }
-               placeholder="يرجى اختيار عدد الساعات"
+               placeholder={``}
                error={errors.speakingHours}
             />
          </div>

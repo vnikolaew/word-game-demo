@@ -50,6 +50,7 @@ interface CustomDropdownProps {
    placeholder: string;
    error?: string;
    className?: string;
+   reverse?: boolean;
 }
 
 export const CustomDropdown = ({
@@ -57,6 +58,7 @@ export const CustomDropdown = ({
    value,
    onChange,
    placeholder,
+    reverse,
    error,
    className,
 }: CustomDropdownProps) => {
@@ -95,6 +97,7 @@ export const CustomDropdown = ({
             onClick={() => setIsOpen(!isOpen)}
          >
             <span
+                dir={reverse ? `ltr` : `rtl`}
                tabIndex={0}
                className={selectedOption ? "text-gray-900" : "text-gray-500"}
             >
@@ -121,6 +124,7 @@ export const CustomDropdown = ({
             <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
                {options.map((option) => (
                   <div
+                      dir={reverse ? `ltr` : `rtl`}
                      key={option.value}
                      aria-disabled={!option.value?.length}
                      className={`p-3 cursor-pointer hover:bg-gray-50 transition-colors ${
@@ -141,7 +145,7 @@ export const CustomDropdown = ({
    );
 };
 
-export const DROPDOWN_PLACEHOLDER = `الرجاء تحديد خيار`;
+export const DROPDOWN_PLACEHOLDER = `Please select an option`
 
 const FIELDS_BY_PAGE: (keyof SurveyData)[][] = [
    [`age`, `gender`, `highestEducation`, `nationality`],
@@ -258,21 +262,25 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                            {...props}
                            prop="speaking_proficiency"
                            question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الحديث باللغة العربية`}
+                           questionEn={`On a scale of zero to ten, please rate your proficiency level in speaking Arabic`}
                         />
                         <ArabicProficiencyLevel
                            {...props}
                            prop="listening_proficiency"
                            question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الاستماع للغة العربية`}
+                           questionEn={`On a scale of zero to ten, please rate your proficiency level in listening to Arabic`}
                         />
                         <ArabicProficiencyLevel
                            {...props}
                            prop={`reading_proficiency`}
                            question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في قراءة اللغة العربية`}
+                           questionEn={`On a scale of zero to ten, please rate your proficiency level in reading Arabic`}
                         />
                         <ArabicProficiencyLevel
                            {...props}
                            prop={`writing_proficiency`}
                            question={`على مقياس من صفر إلى عشرة، رجاء اختيار مستوى كفاءتك في الكتابة باللغة العربية`}
+                           questionEn={`On a scale of zero to ten, please rate your proficiency level in writing Arabic`}
                         />
                      </>
                   ))

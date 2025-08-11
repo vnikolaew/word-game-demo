@@ -78,13 +78,18 @@ export function PracticeView({ onComplete }: PracticeViewProps) {
          <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
                <CardTitle className="text-center text-2xl">
+                  WELCOME TO THE PRACTICE SESSION
+                  <br/>
                   مرحباً بك في جلسة التدريب
                </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 text-center">
                <p className="text-lg">
-                  ستبدأ أولاً بجلسة تدريبية للتعرف على كيفية الإجابة على
-                  الاختبار
+                  <span dir={`ltr`}>
+                  You will first start with a practice session to learn how to answer the task.
+                  </span>
+                  <br/>
+                  ستبدأ أولاً بجلسة تدريبية للتعرف على كيفية الإجابة على الاختبار
                </p>
                <Button
                   onClick={() => setState("instructions")}

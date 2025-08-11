@@ -13,16 +13,24 @@ interface Props {
 function Languages({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>
-            فضلاً اذكر جميع اللغات التي تعرفها مرّتبة حسب تعلّمك لها (اللغة الأم
-            أولاً)
-         </Label>
+         <div>
+            <Label dir={`ltr`} htmlFor="languages">
+               Please list all the languages you know in order of learning (native language first)
+            </Label>
+            <br/>
+            <Label htmlFor="languages">
+               فضلاً اذكر جميع اللغات التي تعرفها مرّتبة حسب تعلّمك لها (اللغة الأم
+               أولاً)
+            </Label>
+         </div>
          <Input
+             name="languages"
+             id="languages"
             value={formData.languages}
             onChange={(e) =>
                setFormData({ ...formData, languages: e.target.value })
             }
-            placeholder="اذكر جميع اللغات التي تعرفها مرتبة حسب تعلمك لها (اللغة الأم أولاً)"
+            placeholder={`List all the languages you know in order of learning (native language first)`}
          />
          {errors.languages && (
             <p className="text-red-500 text-sm">هذا الحقل مطلوب</p>

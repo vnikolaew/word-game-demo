@@ -1,35 +1,35 @@
 export const EDUCATION_LEVEL_OPTIONS = [
-   { value: "english", label: `الإنجليزية` },
+   { value: "english", label: `English` },
    {
       value: "urdu",
-      label: `الأردية`,
+      label: `Urdu`,
    },
    {
       value: `bengali`,
-      label: `البنغالية`,
+      label: `Bengali`,
    },
    {
       value: `french`,
-      label: `الفرنسية`,
+      label: `French`,
    },
    {
       value: `swahili`,
-      label: `السواحيلية`,
+      label: `Swahili`,
    },
    {
       value: `tagalog`,
-      label: `التاغالوغية`,
+      label: `Tagalog`,
    },
    {
       value: `arabic`,
-      label: `العربية`,
+      label: `Arabic`,
    },
    {
       value: `other`,
-      label: `أخرى، الرجاء التحديد`,
+      label: `Other, please specify`,
    },
    {
       value: `not_applicable`,
-      label: `لاينطبق`,
+      label: `Not applicable`,
    },
 ] as const;

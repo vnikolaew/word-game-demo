@@ -10,7 +10,7 @@ interface Props {
    setFormData: Dispatch<SetStateAction<SurveyData>>;
 }
 
-const PLACEHOLDER = `الرجاء أدخل رقماً`;
+const PLACEHOLDER = `Enter a number`;
 
 function YearsLivingInArabicCountries({
    errors,
@@ -19,10 +19,16 @@ function YearsLivingInArabicCountries({
 }: Props) {
    return (
       <div className="space-y-2 w-1/2">
-         <Label htmlFor="years_living_in_arabic_countries_years">
-            كم عدد السنوات والشهور التي أمضيتها في بلد يُتحدث فيها اللغة
-            العربية؟
-         </Label>
+         <div>
+            <Label className={`!text-left !pl-auto items-end justify-end`} dir={`ltr`} htmlFor="years_living_in_arabic_countries_years">
+               How many years and months have you spent in an Arabic-speaking country?
+            </Label>
+            <br/>
+            <Label htmlFor="years_living_in_arabic_countries_years">
+               كم عدد السنوات والشهور التي أمضيتها في بلد يُتحدث فيها اللغة
+               العربية؟
+            </Label>
+         </div>
          <div className="flex items-center gap-2">
             <Input
                id="years_living_in_arabic_countries_years"
@@ -35,7 +41,7 @@ function YearsLivingInArabicCountries({
                         e.target.value.toString(),
                   })
                }
-               placeholder={PLACEHOLDER}
+               placeholder={PLACEHOLDER + ` for years`}
             />
             <Input
                id="years_living_in_arabic_countries_months"
@@ -48,7 +54,7 @@ function YearsLivingInArabicCountries({
                         e.target.value.toString(),
                   })
                }
-               placeholder={PLACEHOLDER}
+               placeholder={PLACEHOLDER + ` for months`}
             />
          </div>
          {errors.years_living_in_arabic_countries_years && (

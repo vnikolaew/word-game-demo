@@ -18,7 +18,15 @@ interface Props {
 function KindergartenLanguage({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>عندما كنت في مرحلة الروضة، ماذا كانت لغة التدريس؟</Label>
+         <div>
+            <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+                   htmlFor="kindergartenLanguage"
+            >
+               When you were in kindergarten, what was the language of instruction?
+            </Label>
+            <br/>
+            <Label>عندما كنت في مرحلة الروضة، ماذا كانت لغة التدريس؟</Label>
+         </div>
          <CustomDropdown
             options={EDUCATION_LEVEL_OPTIONS}
             value={formData.kindergartenLanguage ?? ``}
@@ -33,7 +41,7 @@ function KindergartenLanguage({ errors, formData, setFormData }: Props) {
          />
          {formData.kindergartenLanguage === `other` && (
             <div className="!mt-4">
-               <Label>يرجى تحديد اللغة:</Label>
+               <Label>Please specify the language:</Label>
                <Input
                   value={formData.otherKindergartenLanguage}
                   onChange={(e) =>

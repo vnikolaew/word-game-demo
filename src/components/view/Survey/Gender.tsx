@@ -13,7 +13,13 @@ interface Props {
 function Gender({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2">
-         <Label>يرجى تحديد جنسك:</Label>
+         <div>
+            <Label htmlFor="gender">
+               Please specify your gender
+            </Label>
+            <br/>
+            <Label htmlFor={`gender`}>يرجى تحديد جنسك:</Label>
+         </div>
          <RadioGroup
             value={formData.gender}
             dir="rtl"
@@ -24,18 +30,18 @@ function Gender({ errors, formData, setFormData }: Props) {
          >
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="male" id="male" />
-               <Label htmlFor="male">ذكر</Label>
+               <Label htmlFor="male">Male</Label>
             </div>
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="female" id="female" />
-               <Label htmlFor="female">أنثى</Label>
+               <Label htmlFor="female">Female</Label>
             </div>
             <div className="flex items-center space-x-2">
                <RadioGroupItem
                   value="prefer_not_to_say"
                   id="prefer_not_to_say"
                />
-               <Label htmlFor="prefer_not_to_say">لا أود الإفصاح</Label>
+               <Label htmlFor="prefer_not_to_say">Prefer not to disclose</Label>
             </div>
          </RadioGroup>
          {errors.gender && (

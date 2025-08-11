@@ -15,6 +15,8 @@ function ReadingDisorder({ errors, formData, setFormData }: Props) {
          prop="readingDisorder"
          category="اضطراب القراءة"
          description={`اضطراب القراءة هو صعوبة في التعرف على الكلمات وفهمها رغم القدرات الذهنية الطبيعية.`}
+         questionEn={`Have you been diagnosed with dyslexia or similar reading difficulties?`}
+         descriptionEn={`Dyslexia is difficulty recognizing and understanding words despite normal mental abilities.`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}

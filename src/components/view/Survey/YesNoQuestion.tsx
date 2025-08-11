@@ -1,68 +1,78 @@
-import { SurveyData } from "@/types";
-import { Label } from "@radix-ui/react-label";
-import React, { Dispatch, Fragment, SetStateAction } from "react";
-import { FormErrors } from "../SurveyView";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {SurveyData} from "@/types";
+import {Label} from "@radix-ui/react-label";
+import React, {Dispatch, Fragment, SetStateAction} from "react";
+import {FormErrors} from "../SurveyView";
+import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group";
 
 interface Props {
    formData: SurveyData;
    errors: FormErrors;
    setFormData: Dispatch<SetStateAction<SurveyData>>;
    question: string;
+   questionEn: string;
    category: string;
    description: string;
+   descriptionEn: string;
    prop: keyof SurveyData;
    options?: { label: string; value: string }[];
 }
 
 function YesNoQuestion({
-   errors,
-   description,
-   question,
-   formData,
-   setFormData,
-   prop: key,
-   options,
-}: Props) {
+                          errors,
+                          description,
+                          question,
+                          formData,
+                          setFormData,
+                          prop: key,
+                          options,
+                          questionEn, descriptionEn
+                       }: Props) {
    return (
-      <div className="space-y-2">
-         <Label>{question}</Label>
-         <p className="text-neutral-500 text-sm drop-shadow-sm">
-            {description.trim()}
-         </p>
-         <RadioGroup
-            value={formData[key]}
-            dir="rtl"
-            onValueChange={(value: string) =>
-               setFormData({ ...formData, [key]: value })
-            }
-         >
-            {options?.length ? (
-               <Fragment>
-                  {options.map(({ label, value }) => (
-                     <div key={value} className="flex items-center space-x-2">
-                        <RadioGroupItem value={value} id={value} />
-                        <Label htmlFor={value}>{label}</Label>
-                     </div>
-                  ))}
-               </Fragment>
-            ) : (
-               <Fragment>
-                  <div className="flex items-center space-x-2">
-                     <RadioGroupItem value="no" id={`${key}-no`} />
-                     <Label htmlFor={`${key}-no`}>لا</Label>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                     <RadioGroupItem value="yes" id={`${key}-yes`} />
-                     <Label htmlFor={`${key}-yes`}>نعم</Label>
-                  </div>
-               </Fragment>
-            )}
-         </RadioGroup>
-         {errors[key] && (
-            <p className="text-red-500 text-sm">هذا الحقل مطلوب</p>
-         )}
-      </div>
+       <div className="space-y-2">
+          <div>
+             <Label dir="ltr">{questionEn}</Label>
+             <p dir="ltr" className="text-neutral-500 text-sm drop-shadow-sm">
+                {descriptionEn.trim()}
+             </p>
+
+             <Label>{question}</Label>
+             <p className="text-neutral-500 text-sm drop-shadow-sm">
+                {description.trim()}
+             </p>
+          </div>
+          <RadioGroup
+              value={formData[key]}
+              dir="rtl"
+              onValueChange={(value: string) =>
+                  setFormData({...formData, [key]: value})
+              }
+          >
+             {options?.length ? (
+                 <Fragment>
+                    {options.map(({label, value}) => (
+                        <div key={value} className="flex items-center space-x-2">
+                           <RadioGroupItem value={value} id={value}/>
+                           <Label htmlFor={value}>{label}</Label>
+                        </div>
+                    ))}
+                 </Fragment>
+             ) : (
+                 <Fragment>
+                    <div className="flex items-center space-x-2">
+                       <RadioGroupItem value="no" id={`${key}-no`}/>
+                       <Label htmlFor={`${key}-no`}>No</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                       <RadioGroupItem value="yes" id={`${key}-yes`}/>
+                       <Label htmlFor={`${key}-yes`}>Yes</Label>
+                    </div>
+                 </Fragment>
+             )}
+          </RadioGroup>
+          {errors[key] && (
+              <p className="text-red-500 text-sm">هذا الحقل مطلوب</p>
+          )}
+       </div>
    );
 }
 

@@ -17,16 +17,22 @@ function NativeLanguage({
 }: NativeLanguageProps) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label htmlFor="nativeLanguage">أي لغة تعتبرها لغتك الأم؟</Label>
+         <div>
+            <Label dir={`ltr`} htmlFor="nativeLanguage">
+               Which language do you consider your native language?
+            </Label>
+            <br/>
+            <Label htmlFor="nativeLanguage">أي لغة تعتبرها لغتك الأم؟</Label>
+         </div>
          <CustomDropdown
             options={[
-               { value: "english", label: "الإنجليزية" },
-               { value: "urdu", label: "الأردية" },
-               { value: "bengali", label: "البنغالية" },
-               { value: "french", label: "الفرنسية" },
-               { value: "swahili", label: "السواحيلية" },
-               { value: "tagalog", label: "التاغالوغية" },
-               { value: "other", label: "أخرى، الرجاء التحديد" },
+               { value: "english", label: "English" },
+               { value: "urdu", label: "Urdu" },
+               { value: "bengali", label: "Bengali" },
+               { value: "french", label: "French" },
+               { value: "swahili", label: "Swahili" },
+               { value: "tagalog", label: "Tagalog" },
+               { value: "other", label: "Other, please specify" },
             ]}
             value={formData.nativeLanguage}
             onChange={(value) => {
@@ -37,13 +43,13 @@ function NativeLanguage({
                      value === "arabic" ? "" : prev.otherNativeLanguage,
                }));
             }}
-            placeholder="يرجى اختيار إجابة"
+            placeholder="Please choose an answer"
             error={errors.nativeLanguage}
          />
          {formData.nativeLanguage === "other" && (
             <div className="mt-2" key={formData.nativeLanguage}>
                <Input
-                  placeholder="يرجى ذكر اللغة الأخرى"
+                   placeholder="Please specify your native language"
                   value={formData.otherNativeLanguage}
                   onChange={(e) =>
                      setFormData((prev) => ({

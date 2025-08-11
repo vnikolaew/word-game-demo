@@ -18,7 +18,15 @@ interface Props {
 function MiddleLanguage({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-3/4 md:!w-1/2">
-         <Label>عندما كنت في مرحلة المتوسطة، ماذا كانت لغة التدريس؟</Label>
+         <div>
+            <Label className={`!text-right !pl-auto items-end justify-end`} dir={`ltr`}
+                   htmlFor="middleLanguage"
+            >
+               When you were in middle school, what was the language of instruction?
+            </Label>
+            <br/>
+            <Label>عندما كنت في مرحلة المتوسطة، ماذا كانت لغة التدريس؟</Label>
+         </div>
          <CustomDropdown
             options={EDUCATION_LEVEL_OPTIONS}
             value={formData.middleLanguage ?? ``}
@@ -33,7 +41,7 @@ function MiddleLanguage({ errors, formData, setFormData }: Props) {
          />
          {formData.middleLanguage === `other` && (
             <div className="!mt-4">
-               <Label>يرجى تحديد اللغة:</Label>
+               <Label>Please specify the language:</Label>
                <Input
                   value={formData.otherMiddleLanguage}
                   onChange={(e) =>

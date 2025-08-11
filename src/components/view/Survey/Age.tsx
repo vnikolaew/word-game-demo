@@ -12,13 +12,19 @@ interface Props {
 function Age({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-1/2">
-         <Label htmlFor="age">كم عمرك؟ يرجى كتابة عمرك كرقم:</Label>
+         <div>
+            <Label htmlFor="age">
+               How old are you? Please write your age as a number
+            </Label>
+            <br/>
+            <Label htmlFor="age">كم عمرك؟ يرجى كتابة عمرك كرقم:</Label>
+         </div>
          <Input
             id="age"
             type="number"
             value={formData.age}
             onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-            placeholder="يرجى إدخال عمرك"
+            placeholder={`Please enter your age`}
          />
          {errors.age && (
             <p className="text-red-500 text-sm">يرجى إدخال عمر صحيح</p>

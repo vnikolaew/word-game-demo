@@ -13,9 +13,17 @@ interface Props {
 function AgeOfAcquiringArabic({ errors, formData, setFormData }: Props) {
    return (
       <div className="space-y-2 w-1/2">
-         <Label htmlFor="age_of_acquiring_arabic">
-            اكتب السن الذي بدأت فيه اكتساب اللغة العربية
-         </Label>
+         <div>
+            <Label className={`!text-left !pl-auto items-end justify-end`} dir={`ltr`} htmlFor="age_of_acquiring_arabic">
+               <span>
+               Write the age at which you began acquiring the Arabic language
+               </span>
+            </Label>
+            <br/>
+            <Label htmlFor="age_of_acquiring_arabic">
+               اكتب السن الذي بدأت فيه اكتساب اللغة العربية
+            </Label>
+         </div>
          <Input
             id="age_of_acquiring_arabic"
             type="number"
@@ -26,7 +34,7 @@ function AgeOfAcquiringArabic({ errors, formData, setFormData }: Props) {
                   age_of_acquiring_arabic: e.target.value.toString(),
                })
             }
-            placeholder={`الرجاء أدخل رقماً`}
+            placeholder={`Please enter a number`}
          />
          {errors.age_of_acquiring_arabic && (
             <p className="text-red-500 text-sm">يرجى إدخال عمر صحيح</p>

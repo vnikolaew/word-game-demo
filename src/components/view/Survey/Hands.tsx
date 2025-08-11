@@ -15,18 +15,20 @@ function Hands({ errors, formData, setFormData }: Props) {
          prop="handedness"
          category="اليمنى أو اليسرى"
          description="اليد المفضلة التي تستخدمها للكتابة وأداء المهام اليدوية الدقيقة."
+         questionEn={`Are you right-handed (primarily use your right hand) or left-handed (primarily use your left hand)?`}
+         descriptionEn={`The preferred hand you use for writing and performing precise manual tasks`}
          errors={errors}
          formData={formData}
          setFormData={setFormData}
          question={`هل أنت أيمن (تستخدم يدك اليمنى بشكل أساسي) أم أيسر (تستخدم يدك اليسرى بشكل أساسي)؟`}
          options={[
             {
-               label: `أيمن`,
                value: `Right-handed`,
+               label: `Right-handed`,
             },
             {
-               label: `أيسر`,
                value: `Left-handed`,
+               label: `Left-handed`,
             },
          ]}
       />

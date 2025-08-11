@@ -9,6 +9,14 @@ export const MainFirstInstructions = [
    "الاجابة الخاطئة في الاختبار سٌتنقص من درجتك ولهذا فضلاً لا تختر الكلمات التي لاتعرفها. ضع علامة صح بجانب الكلمات التي تعرفها فحسب.",
 ];
 
+export const MainFirstInstructionsEn = [
+   `You will read 90 words in the test.`,
+   `Some of these words are real Arabic words and others are constructed words made to look like real words.`,
+   `Please choose the words that you know or can use.`,
+   `Select the word by placing a checkmark next to the word.`,
+   `Wrong answers will be penalized, so please do not choose words you don't know. Put a checkmark next to only the words you know.`,
+];
+
 /// Page 2 prof test instructions ///
 export const MainSecondInstructions = [
    "الرجاء إكمال الاختبار بمفردك.",
@@ -16,9 +24,20 @@ export const MainSecondInstructions = [
    "خذ وقتك لإكمال الاجابة.",
 ];
 
+export const MainSecondInstructionsEn = [
+   `Please complete the test by yourself.`,
+   `Please do not use a dictionary.`,
+   `Take your time to complete the answer.`,
+];
+
 ///  "ShortTestInstructions" appears on all prof test pages///
 export const ShortTestInstructions = [
    "من فضلك انظر الى هذه الكلمات. بعض هذه الكلمات هي كلمات عربية حقيقية والبعض الآخر كلمات تم تركيبها لتبدو وكأنها كلمات حقيقية. فضلاً اختر الكلمات التي تعرفها أو تستطيع استخدامها. استخدم هذا المثال:",
+   "☑ كتاب",
+];
+
+export const ShortTestInstructionsEn = [
+   `Please look at these words. Some of these words are real Arabic words and others are constructed words made to look like real words. Please choose the words that you know or can use. Use this example:`,
    "☑ كتاب",
 ];
 
