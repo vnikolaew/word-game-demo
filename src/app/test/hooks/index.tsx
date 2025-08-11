@@ -19,10 +19,10 @@ export interface JsPsychTrialData {
 
 export const TOTAL_WORDS = 100;
 export const FEEDBACK_DURATION = 200;
-export const ANSWER_TIMEOUT = 2_000 + FEEDBACK_DURATION;
+export const ANSWER_TIMEOUT = 4_000 + FEEDBACK_DURATION;
 
 export const FIXATION_TIMEOUT = 500;
-export const FIXATION_TIMEOUT_MOBILE = 2_000;
+export const FIXATION_TIMEOUT_MOBILE = 4_000;
 
 const shuffleArray = (array: string[]) => {
    const shuffled = [...array];

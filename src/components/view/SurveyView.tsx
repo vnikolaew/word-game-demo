@@ -315,9 +315,7 @@ export function SurveyView({ onComplete }: SurveyViewProps) {
                            setPage((p) => p + 1);
                            setErrors((e) => {
                               const new_errors = { ...e };
-                              FIELDS_BY_PAGE[page].forEach((f) => {
-                                 delete new_errors[f];
-                              });
+                              FIELDS_BY_PAGE[page].forEach((f) => delete new_errors[f]);
                               return new_errors;
                            });
                         }}

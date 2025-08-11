@@ -44,7 +44,7 @@ export function usePracticeQuiz() {
 
    // Constants for timing
    const FEEDBACK_DURATION = 200; // 200ms for feedback
-   const STIMULUS_DURATION = 2000; // 2000ms (2 seconds) for word display
+   const STIMULUS_DURATION = 4_000; // 2000ms (2 seconds) for word display
 
    const currentItem = useMemo(
       () => shuffledItems[currentIndex] || shuffledItems[0],
