@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-const HIGH_SCORE_THRESHOLD = 90;
+const HIGH_SCORE_THRESHOLD = 80;
 
 export async function GET() {
    try {
