@@ -19,6 +19,7 @@ import {
    Percent,
 } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
+import {HIGH_SCORE_THRESHOLD} from "@/lib/utils";
 
 interface Data {
    totalUsers: number;
@@ -59,7 +60,7 @@ function DashboardSkeleton() {
                            إجمالي الاختبارات
                         </TableHead>
                         <TableHead className="text-right">
-                           الدرجات العالية (&gt;70%)
+                           الدرجات العالية (&gt;{HIGH_SCORE_THRESHOLD}%)
                         </TableHead>
                         <TableHead className="text-right">
                            معدل النجاح
@@ -222,7 +223,7 @@ function University() {
             />
 
             <StatCard
-               title={`العدد الإجمالي للفرق المكتملة التي حصلت على درجات 90% أو أعلى لـ ${uniLabel}`}
+               title={`العدد الإجمالي للفرق المكتملة التي حصلت على درجات 80% أو أعلى لـ ${uniLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""

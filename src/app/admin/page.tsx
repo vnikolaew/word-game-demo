@@ -17,9 +17,8 @@ import { Users, CheckCircle, Clock } from "lucide-react";
 
 // Types
 import { useAdminStats } from "./hooks";
-import { showHeaderAndFooter } from "@/lib/utils";
+import {HIGH_SCORE_THRESHOLD, showHeaderAndFooter} from "@/lib/utils";
 import { useEffect } from "react";
-import { PRERENDER_REVALIDATE_ONLY_GENERATED_HEADER } from "next/dist/lib/constants";
 
 export default function AdminDashboard() {
    const { isLoading, stats } = useAdminStats();
@@ -54,7 +53,7 @@ export default function AdminDashboard() {
                title="اختبارات الدرجات العالية"
                value={stats.highScoreQuizzes}
                icon={CheckCircle}
-               description="درجات أعلى من 70%"
+               description="درجات أعلى من 80%"
             />
 
             <StatCard
@@ -105,7 +104,7 @@ const Headings = () => (
       <TableRow>
          <TableHead className="text-right">معرف قائمة الكلمات</TableHead>
          <TableHead className="text-right">إجمالي الاختبارات</TableHead>
-         <TableHead className="text-right">الدرجات العالية (&gt;90%)</TableHead>
+         <TableHead className="text-right">الدرجات العالية (&gt;{HIGH_SCORE_THRESHOLD}%)</TableHead>
          <TableHead className="text-right">معدل النجاح</TableHead>
       </TableRow>
    </TableHeader>
@@ -167,7 +166,7 @@ function DashboardSkeleton() {
                            إجمالي الاختبارات
                         </TableHead>
                         <TableHead className="text-right">
-                           الدرجات العالية (&gt;70%)
+                           الدرجات العالية (&gt;{HIGH_SCORE_THRESHOLD}%)
                         </TableHead>
                         <TableHead className="text-right">
                            معدل النجاح

@@ -6,6 +6,7 @@ import { CustomDropdown } from "@/components/view/SurveyView";
 import { Label } from "@radix-ui/react-label";
 import { Table, Users, FileQuestion, CheckCircle, Trophy, Percent } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
+import {HIGH_SCORE_THRESHOLD} from "@/lib/utils";
 
 function StatCard({
    title,
@@ -63,7 +64,7 @@ function DashboardSkeleton() {
                            إجمالي الاختبارات
                         </TableHead>
                         <TableHead className="text-right">
-                           الدرجات العالية (&gt;70%)
+                           الدرجات العالية (&gt;{HIGH_SCORE_THRESHOLD}%)
                         </TableHead>
                         <TableHead className="text-right">
                            معدل النجاح
@@ -184,7 +185,7 @@ function Dialect() {
             />
 
             <StatCard
-               title={`إجمالي عدد الاختبارات المكتملة بدرجات 90% أو أعلى لـ ${dialectLabel}`}
+               title={`إجمالي عدد الاختبارات المكتملة بدرجات 80% أو أعلى لـ ${dialectLabel}`}
                value={data.totalHighScoreCompletedQuizzes}
                icon={Trophy}
                description=""
