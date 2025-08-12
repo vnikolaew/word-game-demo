@@ -48,9 +48,7 @@ export function useQuiz(survey?: DemographicSurvey | null) {
          if (apiConsent) {
             setConsent(apiConsent);
             setAppState("quiz");
-         } else {
-            setAppState("consent");
-         }
+         } else setAppState("consent");
 
          if (apiLimit) {
             setQuizLimitInfo({
