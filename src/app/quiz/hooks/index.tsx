@@ -1,7 +1,7 @@
 "use client";
 import {UserConsent} from "@prisma/client";
 import {useCallback, useEffect, useState} from "react";
-import {__IS_PROD__, __IS_TEST__} from "@/lib/consts";
+import {__IS_PROD__} from "@/lib/consts";
 import {useRouter} from "next/navigation";
 import {parseAsString, useQueryState} from "nuqs";
 
@@ -68,36 +68,11 @@ export function useQuiz() {
             return;
          }
 
-         const {hasFinishedProficiencyTest, proficiencyQuizFinishedAt} =
-             proficiencyTestInfo;
-
-         const now = Date.now();
-         const proficiencyFinishedDate = Date.parse(proficiencyQuizFinishedAt);
-
-         const ONE_DAY_MS = 1000 * 60 * 60 * 24;
-         const ONE_HOUR_MS = 1000 * 60 * 60;
-
-         const hasFinishedMoreThanDayAgo =
-             now - proficiencyFinishedDate >= ONE_DAY_MS;
+         const {hasFinishedProficiencyTest} = proficiencyTestInfo;
 
          if (apiConsent) {
             setConsent(apiConsent);
-
-            if (Boolean(hasFinishedProficiencyTest)) {
-               if (hasFinishedMoreThanDayAgo) setAppState("quiz");
-               else {
-                  const tryAgainIn = Math.floor(
-                      Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
-                      ONE_HOUR_MS
-                  );
-
-                  setQuizLimitInfo({
-                     message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
-                     tryAgainIn,
-                  });
-                  setAppState("proficiency-limit");
-               }
-            } else setAppState("proficiency");
+            setAppState(Boolean(hasFinishedProficiencyTest) ? "quiz" : `proficiency`);
          } else setAppState("consent");
 
          if (apiLimit) {

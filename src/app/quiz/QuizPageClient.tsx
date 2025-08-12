@@ -69,7 +69,6 @@ export default function AppPage({}: Props) {
                   <QuizLimitView limitInfo={quizLimitInfo} />
                ))
                .with(`proficiency-limit`, (_) => (
-                  // <QuizView onComplete={handleQuizComplete} />
                   <ProficiencyTestLimitView
                      limitInfo={
                         quizLimitInfo ?? { message: ``, tryAgainIn: 10 }
