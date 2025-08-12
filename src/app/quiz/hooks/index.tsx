@@ -1,9 +1,9 @@
 "use client";
-import { UserConsent } from "@prisma/client";
-import { useCallback, useEffect, useState } from "react";
-import { __IS_PROD__, __IS_TEST__ } from "@/lib/consts";
-import { useRouter } from "next/navigation";
-import { parseAsString, useQueryState } from "nuqs";
+import {UserConsent} from "@prisma/client";
+import {useCallback, useEffect, useState} from "react";
+import {__IS_PROD__, __IS_TEST__} from "@/lib/consts";
+import {useRouter} from "next/navigation";
+import {parseAsString, useQueryState} from "nuqs";
 
 export type QuizLimitInfo = {
    message: string;
@@ -11,12 +11,12 @@ export type QuizLimitInfo = {
 };
 
 type AppState =
-   | "consent"
-   | "proficiency"
-   | "proficiency-limit"
-   | "practice"
-   | "quiz"
-   | `limit`;
+    | "consent"
+    | "proficiency"
+    | "proficiency-limit"
+    | "practice"
+    | "quiz"
+    | `limit`;
 
 export function useQuiz() {
    const [consent, setConsent] = useState<UserConsent | null>(null);
@@ -68,8 +68,8 @@ export function useQuiz() {
             return;
          }
 
-         const { hasFinishedProficiencyTest, proficiencyQuizFinishedAt } =
-            proficiencyTestInfo;
+         const {hasFinishedProficiencyTest, proficiencyQuizFinishedAt} =
+             proficiencyTestInfo;
 
          const now = Date.now();
          const proficiencyFinishedDate = Date.parse(proficiencyQuizFinishedAt);
@@ -78,20 +78,18 @@ export function useQuiz() {
          const ONE_HOUR_MS = 1000 * 60 * 60;
 
          const hasFinishedMoreThanDayAgo =
-            now - proficiencyFinishedDate >= ONE_DAY_MS;
+             now - proficiencyFinishedDate >= ONE_DAY_MS;
 
          if (apiConsent) {
             setConsent(apiConsent);
 
             if (Boolean(hasFinishedProficiencyTest)) {
-               if (hasFinishedMoreThanDayAgo || __IS_TEST__) {
-                  setAppState("quiz");
-               } else if (!__IS_TEST__) {
+               if (hasFinishedMoreThanDayAgo) setAppState("quiz");
+               else {
                   const tryAgainIn = Math.floor(
-                     Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
-                        ONE_HOUR_MS
+                      Math.abs(ONE_DAY_MS - (now - proficiencyFinishedDate)) /
+                      ONE_HOUR_MS
                   );
-                  console.log(`we are here`);
 
                   setQuizLimitInfo({
                      message: `شكرًا لك. ستتمكن من إجراء الاختبار بعد {hours} ساعة من الآن.`,
@@ -99,20 +97,15 @@ export function useQuiz() {
                   });
                   setAppState("proficiency-limit");
                }
-            } else {
-               setAppState("proficiency");
-            }
-         } else {
-            setAppState("consent");
-         }
+            } else setAppState("proficiency");
+         } else setAppState("consent");
 
          if (apiLimit) {
             setQuizLimitInfo({
                message: apiLimit.message,
                tryAgainIn: apiLimit.tryAgainIn,
             });
-            if (apiLimit.success === false && (__IS_PROD__ || __IS_TEST__))
-               setAppState(`limit`);
+            if (apiLimit.success === false && __IS_PROD__) setAppState(`limit`);
          }
       })();
    }, [screen]);

@@ -101,7 +101,7 @@ export function ConsentView({onConsent}: ConsentViewProps) {
                 </h2>
                 <p>
                    <span dir={`ltr`}>
-                   The purpose of this study is to measure Arabic speakers&#39; knowledge of Classical Arabic words.
+                      The purpose of this study is to measure Arabic speakers' knowledge of Modern Standard Arabic words.
                    </span>
                    <br/>
                    <span dir={`rtl`}>
