@@ -47,13 +47,13 @@ export async function GET() {
       // Get statistics by word list
       const wordLists = await prisma.wordList.findMany({
          include: {
-            quizAttempts: true,
+            quizAttempts: {select: { id: true, score: true, quizStatus: true}},
          },
       });
 
       const quizzesByWordList = wordLists.map((wordList) => ({
-         wordListId: wordList.id,
-         totalQuizzes: wordList.quizAttempts.length,
+         wordListId: wordList.original_id,
+         totalQuizzes: wordList.quizAttempts.filter(a => a.quizStatus === `completed`).length,
          highScoreQuizzes: wordList.quizAttempts.filter(
             (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
          ).length,
