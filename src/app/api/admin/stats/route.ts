@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
+import {NextResponse} from "next/server";
+import {getServerSession} from "next-auth";
+import {authOptions} from "@/lib/auth";
+import {prisma} from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +12,7 @@ export async function GET() {
       const session = await getServerSession(authOptions);
 
       if (!session?.user?.email) {
-         return new NextResponse("Unauthorized", { status: 401 });
+         return new NextResponse("Unauthorized", {status: 401});
       }
 
       const user = await prisma.user.findUnique({
@@ -22,7 +22,7 @@ export async function GET() {
       });
 
       if (!user?.isAdmin) {
-         return new NextResponse("Unauthorized", { status: 401 });
+         return new NextResponse("Unauthorized", {status: 401});
       }
 
       // Get total users
@@ -30,20 +30,20 @@ export async function GET() {
 
       // Get quiz statistics
       const quizzes = await prisma.quizAttempt.findMany({
-         where: { quizStatus: `completed` },
+         where: {quizStatus: `completed`},
       });
       const completedQuizzes = quizzes.length;
       const highScoreQuizzes = quizzes.filter(
-         (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
+          (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
       ).length;
 
       // Calculate average quiz time
       const totalTime = quizzes.reduce(
-         (acc, quiz) => acc + quiz.totalQuizDuration,
-         0
+          (acc, quiz) => acc + quiz.totalQuizDuration,
+          0
       );
       const averageQuizTime =
-         completedQuizzes > 0 ? Math.round(totalTime / completedQuizzes) : 0;
+          completedQuizzes > 0 ? Math.round(totalTime / completedQuizzes) : 0;
 
       // Get statistics by word list
       const wordLists = await prisma.wordList.findMany({
@@ -53,10 +53,10 @@ export async function GET() {
       });
 
       const quizzesByWordList = wordLists.map((wordList) => ({
-         wordListId: wordList.id,
-         totalQuizzes: wordList.quizAttempts.length,
+         wordListId: wordList.original_id,
+         totalQuizzes: wordList.quizAttempts.filter(a => a.quizStatus === `completed`).length,
          highScoreQuizzes: wordList.quizAttempts.filter(
-            (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
+             (quiz) => quiz.score >= HIGH_SCORE_THRESHOLD
          ).length,
       }));
 
@@ -69,6 +69,6 @@ export async function GET() {
       });
    } catch (error) {
       console.error("[ADMIN_STATS_GET]", error);
-      return new NextResponse("Internal error", { status: 500 });
+      return new NextResponse("Internal error", {status: 500});
    }
 }
