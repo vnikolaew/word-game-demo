@@ -15,9 +15,6 @@ const LIMITS = {
    NOT_LIMITED: `أنت لست محدودا`,
 } as const;
 
-const ONE_HOUR_MS = 1000 * 60 * 60;
-const ONE_DAY_MS = 1000 * 60 * 60 * 24;
-
 export const dynamic = "force-dynamic";
 
 export async function GET() {
@@ -26,8 +23,9 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
    }
 
-   const ONE_HOUR_AGO = new Date(Date.now() - ONE_HOUR_MS); // Latest hour,
-   const ONE_DAY_AGO = new Date(Date.now() - ONE_DAY_MS); // Latest 24 hours,
+   const now = new Date();
+   const ONE_HOUR_AGO = new Date(now.setMinutes(0, 0,0)); // Latest hour,
+   const ONE_DAY_AGO = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Latest 24 hours,
 
    const user = await prisma.user.findUnique({
       where: { id: session.user.id },
