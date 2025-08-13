@@ -48,7 +48,7 @@ function ArabicProficiencyLevel({
          <CustomDropdown
             options={OPTIONS.map(({ label, value }) => ({
                value,
-               label: `${label}`,
+               label: `${value} - ${label}`
             }))}
             value={Number(formData[prop]) ?? ``}
             onChange={(value) =>
