@@ -26,11 +26,20 @@ export async function GET() {
       const wordLists = await prisma.wordList.findMany({
          include: {
             words: true,
+            _count: {
+               select: {
+                  quizAttempts: {
+                     where: {quizStatus: "completed"},
+                  },
+               }
+            },
          },
          orderBy: {
             createdAt: "desc",
          },
       });
+      wordLists.forEach(list =>
+          list.timesUsed = list._count.quizAttempts)
 
       return NextResponse.json(wordLists);
    } catch (error) {
