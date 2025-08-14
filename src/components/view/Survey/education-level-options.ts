@@ -33,3 +33,6 @@ export const EDUCATION_LEVEL_OPTIONS = [
       label: `Not applicable`,
    },
 ] as const;
+
+
+export const EDUCATION_LEVEL_OPTIONS_AR = `الإنجليزية,الأردية,البنغالية,الفرنسية,السواحيلية,التاغالوغية,العربية,أخرى، الرجاء التحديد,لاينطبق`.split(`,`).map((o) => o.trim())

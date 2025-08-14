@@ -7,7 +7,7 @@ import {
    CustomDropdown,
    DROPDOWN_PLACEHOLDER,
 } from "../SurveyView";
-import { EDUCATION_LEVEL_OPTIONS } from "./education-level-options";
+import {EDUCATION_LEVEL_OPTIONS, EDUCATION_LEVEL_OPTIONS_AR} from "./education-level-options";
 
 interface Props {
    formData: SurveyData;
@@ -28,7 +28,7 @@ function HighSchoolLanguage({ errors, formData, setFormData }: Props) {
             <Label>عندما كنت في مرحلة الثانوية، ماذا كانت لغة التدريس؟</Label>
          </div>
          <CustomDropdown
-            options={EDUCATION_LEVEL_OPTIONS}
+             options={EDUCATION_LEVEL_OPTIONS.map((o, i) => ({...o, labelAr: EDUCATION_LEVEL_OPTIONS_AR[i]}))}
             value={formData.highSchoolLanguage ?? ``}
             onChange={(value) =>
                setFormData((prev) => ({

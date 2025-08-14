@@ -12,6 +12,8 @@ interface Props {
    questionEn: string;
 }
 
+const OPTIONS_AR = `لا يوجد,منخفض جداً,منخفض,مقبول,أقل قليلاً من المناسب,مناسب,أكثر كثيراً من المناسب,جيد,جيد جداً,ممتاز,مثالي`.split(`,`).map((o) => o.trim());
+
 const OPTIONS = [
    { value: 0, label: "none" },
    { value: 1, label: "very low" },
@@ -46,9 +48,10 @@ function ArabicProficiencyLevel({
             <Label>{question}</Label>
          </div>
          <CustomDropdown
-            options={OPTIONS.map(({ label, value }) => ({
+            options={OPTIONS.map(({ label, value }, i) => ({
                value,
-               label: `${value} - ${label}`
+               label: `${value} - ${label}`,
+               labelAr: `${value} - ${OPTIONS_AR[i]}` ,
             }))}
             value={Number(formData[prop]) ?? ``}
             onChange={(value) =>

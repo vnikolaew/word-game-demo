@@ -30,18 +30,33 @@ function Gender({ errors, formData, setFormData }: Props) {
          >
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="male" id="male" />
-               <Label htmlFor="male">Male</Label>
+               <div className="flex flex-col items-center space-x-2">
+                  <Label htmlFor="male">Male</Label>
+                  <Label htmlFor="male">
+                     ذكر
+                  </Label>
+               </div>
             </div>
             <div className="flex items-center space-x-2">
                <RadioGroupItem value="female" id="female" />
-               <Label htmlFor="female">Female</Label>
+               <div className="flex flex-col items-center">
+                  <Label htmlFor="female">Female</Label>
+                  <Label htmlFor="female">
+                     أنثى
+                  </Label>
+               </div>
             </div>
             <div className="flex items-center space-x-2">
                <RadioGroupItem
                   value="prefer_not_to_say"
                   id="prefer_not_to_say"
                />
-               <Label htmlFor="prefer_not_to_say">Prefer not to disclose</Label>
+               <div className="flex flex-col items-center">
+                  <Label htmlFor="prefer_not_to_say">Prefer not to disclose</Label>
+                  <Label htmlFor="prefer_not_to_say">
+                     يفضل عدم الإفصاح
+                  </Label>
+               </div>
             </div>
          </RadioGroup>
          {errors.gender && (

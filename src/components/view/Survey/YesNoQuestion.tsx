@@ -14,7 +14,7 @@ interface Props {
    description: string;
    descriptionEn: string;
    prop: keyof SurveyData;
-   options?: { label: string; value: string }[];
+   options?: { label: string; value: string, labelAr?:string }[];
 }
 
 function YesNoQuestion({
@@ -49,10 +49,13 @@ function YesNoQuestion({
           >
              {options?.length ? (
                  <Fragment>
-                    {options.map(({label, value}) => (
+                    {options.map(({label, labelAr, value}) => (
                         <div key={value} className="flex items-center space-x-2">
                            <RadioGroupItem value={value} id={value}/>
-                           <Label htmlFor={value}>{label}</Label>
+                           <div className={`flex flex-col items-start`}>
+                              <Label htmlFor={value}>{label}</Label>
+                              <Label htmlFor={value}>{labelAr}</Label>
+                           </div>
                         </div>
                     ))}
                  </Fragment>
@@ -60,11 +63,21 @@ function YesNoQuestion({
                  <Fragment>
                     <div className="flex items-center space-x-2">
                        <RadioGroupItem value="no" id={`${key}-no`}/>
-                       <Label htmlFor={`${key}-no`}>No</Label>
+                       <div className={`flex flex-col items-start`}>
+                          <Label htmlFor={`${key}-no`}>No</Label>
+                          <Label htmlFor={`${key}-no`}>
+                             لا
+                          </Label>
+                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
                        <RadioGroupItem value="yes" id={`${key}-yes`}/>
-                       <Label htmlFor={`${key}-yes`}>Yes</Label>
+                       <div className={`flex flex-col items-start`}>
+                          <Label htmlFor={`${key}-yes`}>Yes</Label>
+                          <Label htmlFor={`${key}-yes`}>
+                             نعم
+                          </Label>
+                       </div>
                     </div>
                  </Fragment>
              )}

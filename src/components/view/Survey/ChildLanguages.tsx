@@ -33,9 +33,14 @@ function ChildLanguages({errors, formData, setFormData}: Props) {
           >
              <div className="flex items-center space-x-2">
                 <RadioGroupItem value="native_only" id="native_only"/>
-                <Label htmlFor="native_only">
-                   Your native language only
-                </Label>
+                <div className="flex flex-col items-start">
+                   <Label htmlFor="native_only">
+                      Your native language only
+                   </Label>
+                   <Label htmlFor="native_only">
+                      لغتك الأم فقط
+                   </Label>
+                </div>
              </div>
 
              <div className="flex items-center space-x-2">
@@ -43,16 +48,27 @@ function ChildLanguages({errors, formData, setFormData}: Props) {
                     value="native_then_other"
                     id="native_then_other"
                 />
-                <Label htmlFor="native_then_other">
-                   Your native language first then another language
-                </Label>
+                <div className="flex flex-col items-start">
+                   <Label htmlFor="native_then_other">
+                      Your native language first then another language
+                   </Label>
+                   <Label htmlFor="native_then_other">
+                      لغتك الأم أولاً ثم لغة أخرى
+                   </Label>
+                </div>
              </div>
+
 
              <div className="flex items-center space-x-2">
                 <RadioGroupItem value="native_and_other" id="native_and_other"/>
-                <Label htmlFor="native_and_other">
-                   Your native language and another language at the same time
-                </Label>
+                <div className="flex flex-col items-start">
+                   <Label htmlFor="native_and_other">
+                      Your native language and another language at the same time
+                   </Label>
+                   <Label htmlFor="native_and_other">
+                      لغتك الأم ولغة أخرى في نفس الوقت
+                   </Label>
+                </div>
              </div>
           </RadioGroup>
           {formData.languageAcquisition?.toLowerCase().includes(`other`) && (

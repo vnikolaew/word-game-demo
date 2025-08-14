@@ -7,7 +7,7 @@ import {
 } from "../SurveyView";
 import { Label } from "@/components/ui/label";
 import { SurveyData } from "@/types";
-import { EDUCATION_LEVEL_OPTIONS } from "./education-level-options";
+import {EDUCATION_LEVEL_OPTIONS, EDUCATION_LEVEL_OPTIONS_AR} from "./education-level-options";
 
 interface Props {
    formData: SurveyData;
@@ -28,7 +28,7 @@ function PrimaryLanguage({ errors, formData, setFormData }: Props) {
             <Label>عندما كنت في مرحلة الابتدائية، ماذا كانت لغة التدريس؟</Label>
          </div>
          <CustomDropdown
-            options={EDUCATION_LEVEL_OPTIONS}
+             options={EDUCATION_LEVEL_OPTIONS.map((o, i) => ({...o, labelAr: EDUCATION_LEVEL_OPTIONS_AR[i]}))}
             value={formData.primaryLanguage ?? ``}
             onChange={(value) =>
                setFormData((prev) => ({

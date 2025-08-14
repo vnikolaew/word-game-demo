@@ -25,10 +25,12 @@ function Hands({ errors, formData, setFormData }: Props) {
             {
                value: `Right-handed`,
                label: `Right-handed`,
+               labelAr: `يمين`
             },
             {
                value: `Left-handed`,
                label: `Left-handed`,
+               labelAr: `غادر`
             },
          ]}
       />
