@@ -73,9 +73,14 @@ function ChildLanguages({errors, formData, setFormData}: Props) {
           </RadioGroup>
           {formData.languageAcquisition?.toLowerCase().includes(`other`) && (
               <div className="space-y-2 !mt-4">
+              <div className="space-y-2 flex flex-col">
                  <Label dir={`ltr`}>
                     If you learned a language other than your native language before the age of 6, please specify it:
                  </Label>
+                 <Label dir={`rtl`}>
+                    إذا تعلمت لغة أخرى غير لغتك الأم قبل سن السادسة، كرماً ذكرها:
+                 </Label>
+              </div>
                  <Input
                      value={formData.otherAcquisitionLanguage}
                      onChange={(e) =>
