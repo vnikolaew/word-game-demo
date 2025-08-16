@@ -84,7 +84,7 @@ function ChildLanguages({errors, formData, setFormData}: Props) {
                             otherAcquisitionLanguage: e.target.value,
                          })
                      }
-                     placeholder="Specify the language here"
+                     placeholder={`Please specify the language  / الرجاء تحديد اللغة`}
                  />
               </div>
           )}

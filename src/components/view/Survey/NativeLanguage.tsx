@@ -51,7 +51,7 @@ function NativeLanguage({
           {formData.nativeLanguage === "other" && (
               <div className="mt-2" key={formData.nativeLanguage}>
                  <Input
-                     placeholder="Please specify your native language"
+                     placeholder={`Please specify your native language / يرجى اختيار إجابة`}
                      value={formData.otherNativeLanguage}
                      onChange={(e) =>
                          setFormData((prev) => ({
