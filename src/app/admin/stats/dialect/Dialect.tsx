@@ -103,13 +103,27 @@ interface Data {
    totalHighScoreCompletedQuizzes: number;
 }
 
-const OPTONS = [
-   { value: "gulf", label: "خليجية" },
-   { value: "egyptian", label: "مصرية" },
-   { value: "levantine", label: "شامية" },
-   { value: "yemeni", label: "يمنية" },
-   { value: "iraqi", label: "عراقية" },
-   { value: "maghrebi", label: "مغربية" },
+const OPTIONS = [
+   {value: "saudi", label: "سعودية"},
+   {value: "emirati", label: "إماراتية"},
+   {value: "bahraini", label: "بحرينية"},
+   {value: "kuwaiti", label: "كويتية"},
+   {value: "yemeni", label: "يمنية"},
+   {value: "qatari", label: "قطرية"},
+   {value: "omani", label: "عمانية"},
+   {value: "jordanian", label: "أردنية"},
+   {value: "syrian", label: "سورية"},
+   {value: "lebanese", label: "لبنانية"},
+   {value: "palestinian", label: "فلسطينية"},
+   {value: "iraqi", label: "عراقية"},
+   {value: "sudanese", label: "سودانية"},
+   {value: "egyptian", label: "مصرية"},
+   {value: "libyan", label: "ليبية"},
+   {value: "tunisian", label: "تونسية"},
+   {value: "algerian", label: "جزائرية"},
+   {value: "moroccan", label: "مغربية"},
+   {value: "mauritanian", label: "موريتانية"},
+   {value: "other", label: "أخرى"}
 ] as const;
 
 function Dialect() {
@@ -118,7 +132,7 @@ function Dialect() {
    const [type, setType] = useState(``);
 
    const dialectLabel = useMemo(() => {
-      const label = OPTONS.find((o) => o.value === type)?.label;
+      const label = OPTIONS.find((o) => o.value === type)?.label;
       return label ? `${label} اللهجة` : `جميع اللهجات`;
    }, [type]);
 
@@ -155,7 +169,7 @@ function Dialect() {
             <div className="!w-[400px]">
                <CustomDropdown
                   className="!p-2"
-                  options={OPTONS}
+                  options={OPTIONS}
                   placeholder="يرجى اختيار إجابة"
                   value={type}
                   onChange={(type) => setType(type)}
