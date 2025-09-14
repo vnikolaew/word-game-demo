@@ -6,6 +6,7 @@ import { AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { QuizLimitInfo } from "@/app/quiz/hooks";
 import Link from "next/link";
+import {normalizeTimeLeft} from "@/lib/utils";
 
 export interface QuizLimitViewProps {
    limitInfo: QuizLimitInfo;
@@ -16,11 +17,19 @@ function QuizLimitView({
 }: QuizLimitViewProps) {
    const formattedMessage = useMemo(() => {
       if (isNaN(tryAgainIn)) return message;
-      if (message.includes(`{hours}`))
-         return message.replaceAll(`{hours}`, tryAgainIn.toFixed(2));
+      if (message.includes(`{hours}`)) {
+         const {seconds, minutes} = normalizeTimeLeft(tryAgainIn)
+         return message
+             .replaceAll(`{hours}`, minutes.toString())
+             .replaceAll(`{minutes}`, seconds.toString())
+      }
 
-      if (message.includes(`{minutes}`))
-         return message.replaceAll(`{minutes}`, tryAgainIn.toFixed(2));
+      if (message.includes(`{minutes}`)) {
+         const {seconds, minutes} = normalizeTimeLeft(tryAgainIn)
+         return message
+             .replaceAll(`{minutes}`, minutes.toString())
+             .replaceAll(`{seconds}`, seconds.toString())
+      }
    }, [message, tryAgainIn]);
 
    return (
