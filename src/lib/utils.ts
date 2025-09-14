@@ -49,4 +49,4 @@ export const PROLIFIC_EMAIL_REGEX = /^[a-f0-9]{24,}@email\.prolific\.com$/;
 
 export const PROLIFIC_USER_IMAGE = `https://s101-recruiting.cdn.greenhouse.io/external_greenhouse_job_boards/logos/400/045/310/original/Prolific_Icon_Prolific_Blue.png?1689233226`;
 
-export const HIGH_SCORE_THRESHOLD = 80;
+export const HIGH_SCORE_THRESHOLD = 60;
