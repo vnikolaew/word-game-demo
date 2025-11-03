@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { generateAnonymousId } from "@/lib/utils";
+import {QuizAttempt, Word, WordList} from "@prisma/client";
+import groupBy from "lodash/groupBy";
 
 export const dynamic = "force-dynamic";
 
@@ -78,48 +80,11 @@ export async function GET(
             },
          });
 
-         // Transform quiz data into detailed response-level data
-         data = quizzes.flatMap((quiz) => {
-            const responses = quiz.responses as any[];
-            return responses.map((response) => {
-               const userResponse =
-                  response.response === 0
-                     ? `word`
-                     : response.response === null
-                       ? ``
-                       : `nonword`;
+         const all_words = groupBy(await prisma.word.findMany(),
+             w => w.wordListId)
 
-               return {
-                  "UTC Date and Time": quiz.createdAt.toISOString(),
-                  "User Private ID": generateAnonymousId(quiz.user.id),
-                  "User Device Type": quiz.deviceType,
-                  "User OS": quiz.deviceOS,
-                  "User Browser": quiz.deviceBrowser,
-                  "User Domain": process.env.WEB_DOMAIN!,
-                  "User Proficiency Score":
-                     quiz.user.score === null ||
-                     !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
-                        ? `مجهول`
-                        : quiz.user.score?.toString(),
-                  "User Monitor Size": quiz.monitorSize,
-                  "User Viewport Size": quiz.viewportSize,
-                  "Page number": response.pageNumber,
-                  "Item shown in the page": response.word,
-                  "Wordlist ID": quiz.wordList.original_id,
-                  "Quiz ID": quiz.id,
-                  "Quiz Duration in milliseconds":
-                     quiz.totalQuizDuration ?? `Unknown`,
-                  "User Reaction Time in milliseconds": response.responseTime,
-                  "User Response": userResponse,
-                  "Response type": response.responseType,
-                  Correct: response.isCorrect ? 1 : 0,
-                  Timeout: response.isTimeout || response.response === null,
-                  Answer: response.isNonWord ? "nonword" : "word",
-                  "Quiz score": quiz.score,
-                  "Quiz status": quiz.quizStatus,
-               };
-            });
-         });
+         // Transform quiz data into detailed response-level data
+         data = quizzes.flatMap((quiz) => getQuizCSVRow(quiz, all_words));
       } else if (type === "survey") {
          const surveys = await prisma.demographicSurvey.findMany({
             include: {
@@ -195,4 +160,59 @@ export async function GET(
       console.error("[ADMIN_REPORTS_GET]", error);
       return new NextResponse("Internal error", { status: 500 });
    }
+}
+
+
+function getQuizCSVRow(quiz: QuizAttempt & {
+   wordList: WordList,
+   user: { id: string }
+}, all_words: Record<string, Word[]>) {
+   const responses = quiz.responses as any[];
+   const current_list = all_words[quiz.wordListId]
+
+   const correctness = responses.map(response => {
+      const userResponse = response.response === 0
+          ? `word` : response.response === null ? `` : `nonword`;
+
+      const current_word = current_list
+          ?.find(w => w.word === response.word)
+
+      return current_word?.isNonWord
+          ? userResponse === `nonword`
+          : userResponse === `word`
+   })
+   const score = correctness.filter(Boolean).length;
+
+   return responses.map((response, index) => {
+      const correct = correctness[index]
+      const userResponse = response.response === 0
+          ? `word` : response.response === null ? `` : `nonword`;
+      const current_word = current_list
+          ?.find(w => w.word === response.word)
+
+      return {
+         "UTC Date and Time": quiz.createdAt.toISOString(),
+         "User Private ID": generateAnonymousId(quiz.user.id),
+         "User Device Type": quiz.deviceType,
+         "User OS": quiz.deviceOS,
+         "User Browser": quiz.deviceBrowser,
+         "User Monitor Size": quiz.monitorSize,
+         "User Viewport Size": quiz.viewportSize,
+         "Page number": response.pageNumber,
+         "Item shown in the page": response.word,
+         "Wordlist ID": quiz.wordList.original_id,
+         "User Domain": process.env.WEB_DOMAIN!,
+         "Quiz ID": quiz.id,
+         "Quiz Duration in milliseconds":
+             quiz.totalQuizDuration ?? `Unknown`,
+         "User Reaction Time in milliseconds": response.responseTime,
+         "User Response": userResponse,
+         "Response type": response.responseType,
+         Correct: correct ? 1 : 0,
+         Timeout: response.isTimeout || response.response === null,
+         Answer: current_word?.isNonWord ? "nonword" : "word",
+         "Quiz score": score,
+         "Quiz status": quiz.quizStatus,
+      };
+   })
 }
