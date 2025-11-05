@@ -46,3 +46,8 @@ export function generateQuizPages(
 
    return pages;
 }
+
+export function getWordFromStimulus(stimulus: string) {
+   const doc = new DOMParser().parseFromString(stimulus, 'text/html');
+   return doc?.body?.textContent?.trim();
+}

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-interface WordList {
+export interface WordList {
   id: string;
   words: string[];
   nonWords: string[];

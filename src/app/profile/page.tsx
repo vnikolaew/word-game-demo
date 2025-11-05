@@ -7,6 +7,45 @@ import { redirect } from "next/navigation";
 export const metadata: Metadata = {
    title: `الملف الشخصي | التعرف على الكلمات العربية`,
    description: `عرض وإدارة ملفك الشخصي`,
+   applicationName: APP_NAME,
+
+
+
+   creator: `Sara Fahad`,
+
+
+   authors: [{
+
+
+      name: `Sara Fahad`
+
+
+   }],
+
+
+   keywords: [
+
+
+      `لغز`,
+
+
+      `استبيان`,
+
+
+      `استطلاع`,
+
+
+      `الناطقة بالعربية`,
+
+
+      `امتحان`,
+
+
+      `كلمات`,
+
+
+      `حساب تعريفي`
+   ]
 };
 
 export const dynamic = "force-dynamic";
