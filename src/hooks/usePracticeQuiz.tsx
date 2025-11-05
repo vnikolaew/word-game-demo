@@ -88,6 +88,7 @@ export function usePracticeQuiz() {
          if (showFeedback || isComplete) return;
 
          const correct = response === currentItem.isWord;
+
          setIsCorrect(correct);
          setShowFeedback(true);
          setShowWord(false);

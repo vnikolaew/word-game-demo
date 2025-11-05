@@ -21,6 +21,18 @@ export const metadata: Metadata = {
    title: "اختبار الكلمات",
    description: "اختبر معرفتك بالكلمات العربية",
    applicationName: APP_NAME,
+   creator: `Sara Fahad`,
+   authors: [{
+      name: `Sara Fahad`
+   }],
+   keywords: [
+      `لغز`,
+      `استبيان`,
+      `استطلاع`,
+      `الناطقة بالعربية`,
+      `امتحان`,
+      `كلمات`,
+   ]
 };
 
 type RootLayoutProps = {

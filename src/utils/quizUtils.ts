@@ -1,4 +1,4 @@
-import { Word } from "@/app/quiz/proficiency/words";
+import {Word} from "@/app/quiz/proficiency/words";
 
 export function shuffleArray<T>(array: T[]): T[] {
    const shuffled = [...array];
@@ -10,8 +10,8 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function generateQuizPages(
-   wordList: Word[],
-   wordsPerPage: number = 15
+    wordList: Word[],
+    wordsPerPage: number = 15
 ): Word[][] {
    const realWords = shuffleArray(wordList.filter((word) => word.isReal));
    const nonWords = shuffleArray(wordList.filter((word) => !word.isReal));
@@ -29,7 +29,7 @@ export function generateQuizPages(
       for (let j = 1; j < page.length; j++) {
          if (!page[j - 1].isReal && !page[j].isReal) {
             const nextRealWordIndex = page.findIndex(
-               (word, index) => index > j && word.isReal
+                (word, index) => index > j && word.isReal
             );
             if (nextRealWordIndex !== -1) {
                [page[j], page[nextRealWordIndex]] = [
@@ -44,4 +44,9 @@ export function generateQuizPages(
    }
 
    return pages;
+}
+
+export function getWordFromStimulus(stimulus: string) {
+   const doc = new DOMParser().parseFromString(stimulus, 'text/html');
+   return doc?.body?.textContent?.trim();
 }

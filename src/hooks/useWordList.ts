@@ -1,6 +1,7 @@
+'use client'
 import { useState, useCallback } from "react";
 
-interface WordList {
+export interface WordList {
   id: string;
   words: string[];
   nonWords: string[];
@@ -15,6 +16,7 @@ export function useWordList() {
   const getNewWordList = useCallback(async () => {
     setIsLoading(true);
     setError(null);
+
     try {
       const response = await fetch("/api/wordlists");
       if (!response.ok) {
@@ -28,7 +30,7 @@ export function useWordList() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [currentList]);
 
   const getUserWordLists = useCallback(async () => {
     try {
