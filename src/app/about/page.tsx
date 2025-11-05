@@ -1,3 +1,4 @@
+import { APP_NAME } from "@/lib/consts";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -29,6 +30,19 @@ const pageData = {
 export const metadata: Metadata = {
    title: "حول الصفحة",
    description: "صفحة حول المنصة",
+   applicationName: APP_NAME,
+   creator: `Sara Fahad`,
+   authors: [{
+      name: `Sara Fahad`
+   }],
+   keywords: [
+      `لغز`,
+      `استبيان`,
+      `استطلاع`,
+      `الناطقة بالعربية`,
+      `امتحان`,
+      `كلمات`,
+   ]
 };
 
 export default async function AboutPage() {

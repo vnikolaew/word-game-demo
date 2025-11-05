@@ -14,12 +14,18 @@ import { Progress } from "../ui/progress";
 import { RefreshCw } from "lucide-react";
 import Script from "next/script";
 import InstuctionsPicture from "./Instructions/InstuctionsPicture";
+import {WordListResponse} from "@/types";
 
 interface QuizViewProps {
    onComplete: () => void;
+   list: WordListResponse
+   shuffledWords: string[]
 }
 
 const TOTAL_WORDS = 100;
+
+const WORD = `word`;
+const NON_WORD = `non-word`;
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -42,7 +48,7 @@ const scriptSources = [
 
 const DARK_BG_CLASSNAME = "!bg-gray-700";
 
-export default function QuizView({ onComplete }: QuizViewProps) {
+export default function QuizView({ onComplete, list, shuffledWords }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
    const [scriptsLoaded, setScriptsLoaded] = useState<boolean[]>(
       Array.from({ length: scriptSources.length }).map((_) => false)
@@ -67,13 +73,8 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       error,
       isSubmitting,
       isMobile,
-      shuffledWords,
-      currentList,
-      isLoading,
-      wordListError,
-      getNewWordList,
       handleChoice,
-   } = useExperiment(state, allScriptsLoaded);
+   } = useExperiment(list, shuffledWords, state, allScriptsLoaded);
    const router = useRouter();
 
    const updateLoaded = (index: number) => {
@@ -92,23 +93,20 @@ export default function QuizView({ onComplete }: QuizViewProps) {
    useEffect(() => {
       if (responses?.length >= TOTAL_WORDS) {
          submitQuizAttempt().then((success) => {
-            if (success) {
-               onComplete();
-            }
+            if (success) onComplete();
          });
       }
-   }, [onComplete, responses?.length, router, submitQuizAttempt]);
+   }, [onComplete, responses, router, submitQuizAttempt]);
 
-   if (error || wordListError) {
+   if (error) {
       return (
          <div className="flex flex-col items-center justify-center min-h-[50vh]">
             <p className="text-red-500 mb-4 text-lg">
-               {(error instanceof Error ? error.message : error) ||
-                  wordListError}
+               {(error instanceof Error ? error.message : error)}
             </p>
             <Button
                className="mt-12 !px-12 inline-flex items-center gap-2"
-               onClick={getNewWordList}
+               // onClick={getNewWordList}
             >
                <RefreshCw size={18} />
                حاول ثانية
@@ -135,7 +133,7 @@ export default function QuizView({ onComplete }: QuizViewProps) {
       );
    }
 
-   if (isLoading || !currentList || !shuffledWords?.length) {
+   if (!list || !shuffledWords?.length) {
       return (
          <div className="flex flex-col gap-2 items-center justify-center min-h-screen">
             <Spinner className="animate-spin" size="sm" />

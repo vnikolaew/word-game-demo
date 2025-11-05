@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 
-interface WordList {
+export interface WordList {
   id: string;
   words: string[];
   nonWords: string[];
@@ -28,7 +28,7 @@ export function useWordList() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [currentList]);
 
   const getUserWordLists = useCallback(async () => {
     try {

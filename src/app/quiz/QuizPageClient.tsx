@@ -13,16 +13,21 @@ import QuizView from "@/components/view/QuizView";
 
 // types
 import QuizLimitView from "@/components/view/QuizLimitView";
-import { __IS_PROD__ } from "@/lib/consts";
 import { useQuiz } from "./hooks";
 import Link from "next/link";
 import { DemographicSurvey } from "@prisma/client";
+import {WordListResponse} from "@/types";
 
 interface Props {
    survey?: DemographicSurvey | null;
+   shuffledWords: string[]
+   list: WordListResponse & {
+      id: number
+      attemptsRemaining: number
+   }
 }
 
-export default function AppPage({ survey }: Props) {
+export default function AppPage({ survey, list, shuffledWords }: Props) {
    const {
       appState,
       error,
@@ -57,7 +62,7 @@ export default function AppPage({ survey }: Props) {
                   <PracticeView onComplete={() => setAppState(`quiz`)} />
                ))
                .with(`quiz`, (_) => (
-                  <QuizView onComplete={handleQuizComplete} />
+                  <QuizView shuffledWords={shuffledWords} list={list} onComplete={handleQuizComplete} />
                ))
                .with(`limit`, (_) => (
                   <QuizLimitView limitInfo={quizLimitInfo} />

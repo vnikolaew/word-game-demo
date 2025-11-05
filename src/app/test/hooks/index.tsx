@@ -1,7 +1,9 @@
 import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { useWordList } from "@/hooks/useWordList";
+import { useWordList, WordList } from "@/hooks/useWordList";
 import { DeviceInfo, QuizResponse } from "@/types";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useInitExperiment } from "./useInitExperiment";
+import { getWordFromStimulus } from "@/utils/quizUtils";
 
 export interface JsPsychTrialData {
    correct: boolean;
@@ -24,15 +26,6 @@ export const ANSWER_TIMEOUT = 2_000 + FEEDBACK_DURATION;
 export const FIXATION_TIMEOUT = 500;
 export const FIXATION_TIMEOUT_MOBILE = 2_000;
 
-const shuffleArray = (array: string[]) => {
-   const shuffled = [...array];
-   for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-   }
-   return shuffled;
-};
-
 export const MAX_MOBILE_WIDTH = 768;
 
 const WORD = `word`;
@@ -41,7 +34,7 @@ const NON_WORD = `non-word`;
 const ARROW_LEFT = `ArrowLeft`;
 const ARROW_RIGHT = `ArrowRight`;
 
-export function useExperiment(state: string, scriptsLoaded: boolean) {
+export function useExperiment(list: WordList, shuffledWords: string[], state: string, scriptsLoaded: boolean) {
    const run = useRef(false);
    const isMobile = useMediaQuery(`(max-width: ${MAX_MOBILE_WIDTH}px)`);
    const [loaded, setLoaded] = useState(false);
@@ -79,31 +72,16 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
    }, [isMobile]);
 
    const [responses, setResponses] = useState<JsPsychTrialData[]>([]);
-   const {
-      currentList,
-      getNewWordList,
-      isLoading,
-      error: wordListError,
-   } = useWordList();
-   const [shuffledWords, setShuffledWords] = useState<string[]>(null!);
+
    const [currentIndex, setCurrentIndex] = useState(0);
    const [correct, setCorrect] = useState(false);
    const [error, setError] = useState<string>(null!);
    const [show, setShow] = useState(false);
 
-   useEffect(() => {
-      getNewWordList();
-   }, []);
-
-   useEffect(() => {
-      if (currentList) {
-         const selectedWords = shuffleArray([
-            ...currentList.words,
-            ...currentList.nonWords,
-         ]).slice(0, TOTAL_WORDS);
-         setShuffledWords(selectedWords);
-      }
-   }, [currentList]);
+   const {word_types, handleChoice} = useInitExperiment(
+       list!,
+       shuffledWords, setResponses, setCurrentIndex, setShow, run, setCorrect, state, scriptsLoaded, setLoaded, setError, currentIndex
+   )
 
    useEffect(() => {
       if (!loaded || !scriptsLoaded) return;
@@ -121,59 +99,6 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
       content.appendChild(feedbackContainer);
    }, [loaded, scriptsLoaded]);
-
-   const handleChoice = useCallback(
-      (choice: typeof ARROW_LEFT | typeof ARROW_RIGHT) => {
-         const word =
-            document
-               .querySelector(`#jspsych-html-button-response-stimulus > h1`)
-               ?.textContent?.toString() ?? ``;
-
-         const correct =
-            choice === ARROW_RIGHT
-               ? currentList?.words.includes(word)
-               : currentList?.nonWords.includes(word);
-
-         const content = document.querySelector(
-            `.jspsych-content-wrapper #feedback`
-         ) as HTMLDivElement;
-
-         const wrapper = document.querySelector(
-            `#jspsych-content`
-         ) as HTMLDivElement;
-
-         if (content && wrapper?.children?.length > 0) {
-            const feedbackSvg = content.querySelector(`svg`);
-            if (feedbackSvg) content.removeChild(feedbackSvg);
-
-            let svg = ``;
-            if (correct)
-               svg = `<svg title="صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-icon lucide-check !text-green-500"><path d="M20 6 9 17l-5-5"/></svg>`;
-            else
-               svg = `<svg title="غير صحيح" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x !text-red-500"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
-
-            content.style.visibility = `visible`;
-            content.insertAdjacentHTML(`beforeend`, svg);
-         }
-
-         const btnOne = document.getElementById(
-            `choice-${ARROW_LEFT}`
-         ) as HTMLButtonElement;
-
-         const btnTwo = document.getElementById(
-            `choice-${ARROW_RIGHT}`
-         ) as HTMLButtonElement;
-
-         setTimeout(() => {
-            if (choice === ARROW_RIGHT) {
-               btnOne?.click();
-            } else if (choice === ARROW_LEFT) {
-               btnTwo?.click();
-            }
-         }, FEEDBACK_DURATION);
-      },
-      [currentList?.nonWords, currentList?.words]
-   );
 
    useEffect(() => {
       const listener = (e: KeyboardEvent) => {
@@ -333,41 +258,32 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
 
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
-      if (!currentList || responses?.length < TOTAL_WORDS) return false;
+      if (!list || responses?.length < TOTAL_WORDS) return false;
 
-      const isCorrect = (r: JsPsychTrialData) => {
-         const correct =
-            (r.correct_response === WORD && r.response?.toString() === `0`) ||
-            (r.correct_response === NON_WORD && r.response?.toString() === `1`);
-         return correct;
-      };
+      const isCorrect = (r: JsPsychTrialData) => r.correct;
 
       try {
          setIsSubmitting(true);
          const deviceInfo = getDeviceInfo();
+         const correctWords  = responses.map(res => {
+            const word = getWordFromStimulus(res.stimulus)!
+            return list.words.includes(word) && isCorrect(res)
+         })
 
-         // Calculate detailed statistics
-         const correctWords = shuffledWords.filter(
-            (w, index) =>
-               currentList.words.includes(w) && isCorrect(responses.at(index)!)
-         ).length;
+         const incorrectWords  = responses.map(res => {
+            const word = getWordFromStimulus(res.stimulus)!
+            return list.words.includes(word) && !isCorrect(res)
+         })
 
-         const incorrectWords = shuffledWords.filter(
-            (w, index) =>
-               currentList.words.includes(w) && !isCorrect(responses.at(index)!)
-         ).length;
+         const correctNonWords   = responses.map(res => {
+            const word = getWordFromStimulus(res.stimulus)!
+            return list.nonWords.includes(word) && isCorrect(res)
+         })
 
-         const correctNonWords = shuffledWords.filter(
-            (w, index) =>
-               currentList.nonWords.includes(w) &&
-               isCorrect(responses.at(index)!)
-         ).length;
-
-         const incorrectNonWords = shuffledWords.filter(
-            (w, index) =>
-               currentList.nonWords.includes(w) &&
-               !isCorrect(responses.at(index)!)
-         ).length;
+         const incorrectNonWords    = responses.map(res => {
+            const word = getWordFromStimulus(res.stimulus)!
+            return list.nonWords.includes(word) && !isCorrect(res)
+         })
 
          const npxionTime = Math.round(
             responses.reduce((sum, r) => sum + r.rt, 0)
@@ -377,12 +293,15 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
          const totalQuizDuration = responses.at(-1)?.time_elapsed;
 
          const body = {
-            wordListId: currentList.id,
+            wordListId: list.id,
             responses: responses.map<QuizResponse>((r, index) => {
-               const word = shuffledWords.at(index)!;
+               const word = getWordFromStimulus(r.stimulus)!
+               const word_index = shuffledWords.indexOf(word)
+               const type = word_types.at(word_index)!
+
                return {
                   isCorrect: isCorrect(r),
-                  isNonWord: currentList.nonWords.includes(word),
+                  isNonWord: type === NON_WORD,
                   isTimeout: r.response === null,
                   pageNumber: index + 1,
                   responseTime: r.rt,
@@ -423,24 +342,21 @@ export function useExperiment(state: string, scriptsLoaded: boolean) {
       } finally {
          setIsSubmitting(false);
       }
-   }, [currentList, responses, getDeviceInfo, shuffledWords]);
+   }, [list, responses, getDeviceInfo, shuffledWords]);
 
    return {
       show,
       responses: responses.filter((r) => r.task === `response`),
-      currentList,
-      shuffledWords,
+      currentList: list,
       correct,
       error,
       submitQuizAttempt,
       getDeviceInfo,
       isSubmitting,
       isMobile,
-      getNewWordList,
       loaded,
       setLoaded,
-      isLoading,
-      wordListError,
       handleChoice,
+      currentIndex, word_types
    };
 }
