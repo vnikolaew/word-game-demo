@@ -7,7 +7,7 @@ import Instructions from "./Instructions";
 import { useExperiment } from "@/app/test/hooks";
 import { cn, hideHeaderAndFooter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, Fragment, useMemo } from "react";
+import { useState, useEffect, Fragment, useMemo, useRef } from "react";
 import { Card } from "../ui/card";
 import { Tajawal } from "next/font/google";
 import { Progress } from "../ui/progress";
@@ -50,6 +50,8 @@ const DARK_BG_CLASSNAME = "!bg-gray-700";
 
 export default function QuizView({ onComplete, list, shuffledWords }: QuizViewProps) {
    const [state, setState] = useState<string>("instructions");
+   const quizSubmitted = useRef<boolean>(false)
+
    const [scriptsLoaded, setScriptsLoaded] = useState<boolean[]>(
       Array.from({ length: scriptSources.length }).map((_) => false)
    );
@@ -91,12 +93,14 @@ export default function QuizView({ onComplete, list, shuffledWords }: QuizViewPr
    }, [state]);
 
    useEffect(() => {
-      if (responses?.length >= TOTAL_WORDS) {
+      if (responses?.length >= TOTAL_WORDS && !quizSubmitted.current) {
+         quizSubmitted.current = true;
+
          submitQuizAttempt().then((success) => {
             if (success) onComplete();
          });
       }
-   }, [onComplete, responses, router, submitQuizAttempt]);
+   }, [onComplete, responses, submitQuizAttempt]);
 
    if (error) {
       return (

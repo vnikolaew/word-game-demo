@@ -78,16 +78,16 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
    const [error, setError] = useState<string>(null!);
    const [show, setShow] = useState(false);
 
-   const {word_types, handleChoice} = useInitExperiment(
+   const { word_types, handleChoice } = useInitExperiment(
        list!,
-       shuffledWords, setResponses, setCurrentIndex, setShow, run, setCorrect, state, scriptsLoaded, setLoaded, setError, currentIndex
+       shuffledWords, setResponses, setCurrentIndex, setShow, run, setCorrect, state, scriptsLoaded, setLoaded, setError
    )
 
    useEffect(() => {
       if (!loaded || !scriptsLoaded) return;
 
       const content = document.querySelector(
-         `.jspsych-content-wrapper`
+          `.jspsych-content-wrapper`
       ) as HTMLDivElement;
 
       if (!content || content.querySelector(`#feedback`)) return;
@@ -110,152 +110,6 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
       return () => window.removeEventListener(`keydown`, listener);
    }, [handleChoice, responses, shuffledWords]);
 
-   useEffect(() => {
-      const initExperiment = () => {
-         if (run.current || state !== `quiz`) return;
-         run.current = true;
-
-         /* initialize jsPsych */
-         const jsPsych = initJsPsych({
-            display_element: `jspsych-experiment`,
-            on_data_update: function (data) {
-               const is_mobile = window.innerWidth <= MAX_MOBILE_WIDTH;
-
-               if (data.task === `response`) {
-                  setResponses((r) => [
-                     ...r,
-                     { ...data, is_mobile } as JsPsychTrialData,
-                  ]);
-               }
-            },
-            on_finish: function () {
-               setShow(true);
-            },
-         });
-
-         /* create timeline */
-         const timeline = [];
-
-         /* define welcome message trial */
-         const welcome = isMobile
-            ? {
-                 type: jsPsychHtmlKeyboardResponse,
-                 stimulus: `أهلاً بكم في الاختبار. سيبدأ الاختبار قريباً.`,
-                 choices: "NO_KEYS",
-                 trial_duration: function () {
-                    return FIXATION_TIMEOUT_MOBILE;
-                 },
-                 data: {
-                    task: "fixation",
-                 },
-              }
-            : {
-                 type: jsPsychHtmlKeyboardResponse,
-                 stimulus: "أهلاً بك في الاختبار. اضغط أي مفتاح للمتابعة.",
-              };
-         timeline.push(welcome);
-
-         /* define trial stimuli array for timeline variables */
-         const test_stimuli = shuffledWords.map((word) => {
-            const is_word = currentList?.words.includes(word);
-            return {
-               stimulus: `<h1 className="text-3xl font-bold">${word}</h1>`,
-               word,
-               correct_response: is_word ? WORD : NON_WORD,
-            };
-         });
-
-         /* define fixation and test trials */
-         const test = {
-            type: jsPsychHtmlButtonResponse,
-            stimulus: jsPsych.timelineVariable("stimulus"),
-            choices: [ARROW_LEFT, ARROW_RIGHT],
-            prompt: "",
-            button_html: (choice: any) =>
-               `<button id="choice-${choice}" style="width: 0px; height: 0px; margin: 20px; cursor: pointer; display:none;">${choice}</button>`,
-            trial_duration: function () {
-               return ANSWER_TIMEOUT;
-            },
-            data: {
-               task: "response",
-               correct_response: jsPsych.timelineVariable("correct_response"),
-            },
-            on_start: function () {
-               setCorrect(null!);
-            },
-            on_finish: function (data: any) {
-               const response = data.response === 0 ? WORD : NON_WORD;
-
-               const c =
-                  data.response !== null
-                     ? data.correct_response === response
-                     : false;
-
-               data.correct = c;
-               setCorrect(c);
-               setCurrentIndex((i) => i + 1);
-            },
-         };
-
-         const fixation = {
-            type: jsPsychHtmlKeyboardResponse,
-            stimulus: "",
-            choices: "NO_KEYS",
-            on_start: function () {
-               const content = document.querySelector(
-                  `.jspsych-content-wrapper #feedback`
-               ) as HTMLDivElement;
-
-               if (content) content.style.visibility = `hidden`;
-            },
-            on_finish: function () {
-               const content = document.querySelector(
-                  `.jspsych-content-wrapper #feedback`
-               ) as HTMLDivElement;
-
-               if (content) content.style.visibility = `hidden`;
-            },
-            trial_duration: function () {
-               return FIXATION_TIMEOUT;
-            },
-            data: {
-               task: "fixation",
-            },
-         };
-
-         /* define test procedure */
-         const test_procedure = {
-            timeline: [fixation, test],
-            timeline_variables: test_stimuli,
-            repetitions: 1,
-            randomize_order: true,
-         };
-         timeline.push(test_procedure);
-
-         /* start the experiment */
-         jsPsych.run(timeline);
-      };
-
-      // Load jsPsych scripts dynamically
-      if (!shuffledWords?.length || !currentList || !scriptsLoaded) return;
-
-      try {
-         setTimeout(() => {
-            initExperiment();
-            setLoaded(true);
-         }, 500);
-      } catch (error) {
-         setError(error instanceof Error ? error.message : (error as string));
-      }
-   }, [
-      getNewWordList,
-      shuffledWords,
-      currentList,
-      state,
-      scriptsLoaded,
-      isMobile,
-   ]);
-
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
       if (!list || responses?.length < TOTAL_WORDS) return false;
@@ -265,40 +119,45 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
       try {
          setIsSubmitting(true);
          const deviceInfo = getDeviceInfo();
-         const correctWords  = responses.map(res => {
+
+         const correctWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && isCorrect(res)
          })
 
-         const incorrectWords  = responses.map(res => {
+         const incorrectWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && !isCorrect(res)
          })
 
-         const correctNonWords   = responses.map(res => {
+         const correctNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && isCorrect(res)
          })
 
-         const incorrectNonWords    = responses.map(res => {
+         const incorrectNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && !isCorrect(res)
          })
 
          const npxionTime = Math.round(
-            responses.reduce((sum, r) => sum + r.rt, 0)
+             responses.reduce((sum, r) => sum + r.rt, 0)
          );
 
          // Calculate total quiz duration
          const totalQuizDuration = responses.at(-1)?.time_elapsed;
+         const score = responses.filter(isCorrect).length;
+         const quizStatus = `completed`
 
          const body = {
             wordListId: list.id,
             responses: responses.map<QuizResponse>((r, index) => {
                const word = getWordFromStimulus(r.stimulus)!
-               const word_index = shuffledWords.indexOf(word)
-               const type = word_types.at(word_index)!
+               const type = list.words.includes(word)
+                   ? WORD : list.nonWords.includes(word)
+                       ? NON_WORD : ``
 
+               const responseType = r.is_mobile ? `buttons` : `keyboard`
                return {
                   isCorrect: isCorrect(r),
                   isNonWord: type === NON_WORD,
@@ -306,11 +165,11 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
                   pageNumber: index + 1,
                   responseTime: r.rt,
                   response: r.response,
-                  responseType: r.is_mobile ? `buttons` : `keyboard`,
+                  responseType,
                   word,
                };
             }),
-            score: responses.filter((r) => isCorrect(r)).length,
+            score,
             correctWords,
             incorrectWords,
             correctNonWords,
@@ -318,7 +177,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
             npxionTime,
             totalQuizDuration,
             ...deviceInfo,
-            quizStatus: `completed`,
+            quizStatus,
          };
 
          const submitResponse = await fetch("/api/quiz/attempts", {
@@ -336,7 +195,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
          return true;
       } catch (err) {
          setError(
-            err instanceof Error ? err.message : "Failed to submit results"
+             err instanceof Error ? err.message : "Failed to submit results"
          );
          return false;
       } finally {

@@ -87,9 +87,9 @@ export function useQuiz(survey?: DemographicSurvey | null) {
    }, [consent?.consentVersion]);
 
    // Handle quiz completion
-   const handleQuizComplete = async () => {
+   const handleQuizComplete = useCallback(async () => {
       router.push(survey ? `/quiz/result` : `/quiz/survey`);
-   };
+   }, [survey, router]);
 
    return {
       handleConsent,

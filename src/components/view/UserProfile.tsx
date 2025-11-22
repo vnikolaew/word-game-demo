@@ -27,7 +27,7 @@ const formatCompletionTime = (duration: number | undefined | null): string => {
 };
 
 // Icons
-import { Trash2, LogOut, Ban, CircleSlash, Key } from "lucide-react";
+import { Trash2, LogOut, CircleSlash, Key, Loader } from "lucide-react";
 
 // Types
 import { UserProfile as UserProfileType } from "@/types";
@@ -39,9 +39,7 @@ import {
    TooltipProvider,
    TooltipTrigger,
 } from "../ui/tooltip";
-import AuthProvider from "../providers/AuthProvider";
 import { match } from "ts-pattern";
-import { Provider } from "jotai/react";
 import GoogleIcon from "../icons/GoogleIcon";
 
 const AccountManagement = ({}) => {
@@ -114,12 +112,22 @@ const AccountManagement = ({}) => {
                      </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                     <AlertDialogCancel>إلغاء</AlertDialogCancel>
+                     <AlertDialogCancel
+                         className={`!cursor-pointer`}
+                         disabled={isLoading}
+                     >إلغاء</AlertDialogCancel>
                      <AlertDialogAction
                         onClick={handleDeleteAccount}
-                        className="bg-red-600 hover:bg-red-700"
+                        disabled={isLoading}
+                        className="bg-red-600 hover:bg-red-700 !cursor-pointer"
                      >
-                        حذف الحساب
+                        {isLoading ? (
+                            <>
+                               <Spinner size={`sm`} className={`animate-spin !ml-2`} />
+                               {` `}
+                               جاري الحذف...
+                            </>
+                        ) : `حذف الحساب`}
                      </AlertDialogAction>
                   </AlertDialogFooter>
                </AlertDialogContent>
@@ -176,7 +184,16 @@ const QuizHistory = ({
                         <div>
                            <p className="text-sm text-gray-500">التاريخ</p>
                            <time className="font-medium">
-                              {new Date(attempt.createdAt).toLocaleDateString()}
+                              {
+                                 new Intl.DateTimeFormat('ar', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: 'numeric',
+                                    minute: 'numeric',
+                                    second: 'numeric',
+                                 }).format(new Date(attempt.createdAt))
+                              }
                            </time>
                         </div>
                      </div>

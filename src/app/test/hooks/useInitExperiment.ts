@@ -1,6 +1,6 @@
 'use client'
 
-import {useCallback, useEffect, useMemo} from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
    ANSWER_TIMEOUT, FEEDBACK_DURATION,
    FIXATION_TIMEOUT,
@@ -8,7 +8,7 @@ import {
    JsPsychTrialData,
    MAX_MOBILE_WIDTH
 } from "@/app/test/hooks/index";
-import {useMediaQuery} from "@/hooks/useMediaQuery";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { getWordFromStimulus } from "@/utils/quizUtils";
 
 interface WordList {
@@ -62,7 +62,6 @@ export function useInitExperiment(
     scriptsLoaded: boolean,
     setLoaded: (l: boolean) => void,
     setError: (e: string) => void,
-    currentIndex: number
 ) {
    const isMobile = useMediaQuery(`(max-width: ${MAX_MOBILE_WIDTH}px)`);
 
@@ -96,7 +95,7 @@ export function useInitExperiment(
 
             setResponses((r) => [
                ...r,
-               {...data, is_mobile, correct}
+               { ...data, is_mobile, correct }
             ]);
          },
          on_finish: function () {
@@ -230,6 +229,9 @@ export function useInitExperiment(
               document
                   .querySelector(`#jspsych-html-button-response-stimulus > h1`)
                   ?.textContent?.toString()?.trim() ?? ``;
+          if (![...currentList.words, ...currentList.nonWords].includes(word)) {
+             return
+          }
 
           const correct = choice === ARROW_RIGHT
               ? currentList?.words.includes(word)
@@ -253,8 +255,8 @@ export function useInitExperiment(
              }
           }, FEEDBACK_DURATION);
        },
-       [currentList?.nonWords, currentList?.words, shuffledWords, currentIndex]
+       [currentList.nonWords, currentList.words]
    );
 
-   return {handleChoice, word_types}
+   return { handleChoice, word_types }
 }

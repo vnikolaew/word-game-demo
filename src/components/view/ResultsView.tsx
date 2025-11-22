@@ -98,16 +98,21 @@ export default function ResultsView({ onNext, onRetake }: ResultsViewProps) {
                      <WhatsappIcon size={32} round />
                   </WhatsappShareButton>
                </div>
-               <Button className="mt-4" onClick={handleShare}>
+               <Button title={
+                  `مشاركة نتيجة الاختبار`
+               } className="mt-4" onClick={handleShare}>
                   مشاركة
                </Button>
             </div>
 
             <div className="flex justify-center gap-4 mt-8">
-               <Button onClick={onRetake} variant="outline">
+               <Button
+                   title={`إعادة الاختبار`}
+                   onClick={onRetake} variant="outline">
                   إعادة الاختبار
                </Button>
-               <Button onClick={onNext}>العودة للصفحة الرئيسية</Button>
+               <Button title={`العودة إلى المنزل`}
+                   onClick={onNext}>العودة للصفحة الرئيسية</Button>
             </div>
          </CardContent>
       </Card>

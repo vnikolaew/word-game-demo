@@ -9,6 +9,7 @@ import AuthProvider from "@/components/providers/AuthProvider";
 import Footer from "@/components/view/Footer";
 import { APP_NAME } from "@/lib/consts";
 import Head from "next/head";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -54,7 +55,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
                <Toaster />
                <Header />
 
-               {children}
+               <NuqsAdapter>{children}</NuqsAdapter>
                <Footer />
             </AuthProvider>
          </body>
