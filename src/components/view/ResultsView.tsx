@@ -11,7 +11,7 @@ import {
    TwitterIcon,
    WhatsappIcon,
 } from "react-share";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useQuizResult } from "@/hooks/useQuizResult";
 
 interface ResultsViewProps {

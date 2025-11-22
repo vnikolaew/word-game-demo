@@ -11,6 +11,7 @@ import { downloadFile } from "@/lib/utils";
 import { FileDown } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/Spinner";
 
 function Reports() {
    const [surveyLoading, setSurveyLoading] = useState(false);
@@ -31,8 +32,8 @@ function Reports() {
 
          const blob = await response.blob();
          await downloadFile(
-            `${type}_data_${new Date().toISOString().split("T")[0]}.csv`,
-            blob
+             `${type}_data_${new Date().toISOString().split("T")[0]}.csv`,
+             blob
          );
 
          toast.success(`تم تصدير بيانات ${type} بنجاح`);
@@ -46,50 +47,69 @@ function Reports() {
    };
 
    return (
-      <div className="space-y-6">
-         <h1 className="text-3xl font-bold">التقارير</h1>
+       <div className="space-y-6">
+          <h1 className="text-3xl font-bold">التقارير</h1>
 
-         <div className="grid gap-4 md:grid-cols-2">
-            <Card>
-               <CardHeader>
-                  <CardTitle>بيانات الاختبارات</CardTitle>
-                  <CardDescription>
-                     تصدير جميع محاولات الاختبار مع معرفات المستخدمين المجهولة
-                  </CardDescription>
-               </CardHeader>
-               <CardContent className="!mt-auto">
-                  <Button
-                     onClick={() => handleExport("quiz")}
-                     disabled={quizLoading}
-                     className="w-full !cursor-pointer"
-                  >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاختبارات
-                  </Button>
-               </CardContent>
-            </Card>
+          <div className="grid gap-4 md:grid-cols-2">
+             <Card>
+                <CardHeader>
+                   <CardTitle>بيانات الاختبارات</CardTitle>
+                   <CardDescription>
+                      تصدير جميع محاولات الاختبار مع معرفات المستخدمين المجهولة
+                   </CardDescription>
+                </CardHeader>
+                <CardContent className="!mt-auto">
+                   <Button
+                       onClick={() => handleExport("quiz")}
+                       disabled={quizLoading}
+                       className="w-full !cursor-pointer"
+                   >
+                      {quizLoading ? (
+                          <>
+                             <Spinner size={`sm`}/>
+                             جاري التحميل...
+                          </>
+                      ) : (
+                          <>
+                             <FileDown className="h-4 w-4 ml-2"/>
+                             تصدير بيانات الاختبارات
+                          </>
+                      )}
+                   </Button>
+                </CardContent>
+             </Card>
 
-            <Card>
-               <CardHeader>
-                  <CardTitle>بيانات الاستطلاع</CardTitle>
-                  <CardDescription>
-                     تصدير جميع استجابات الاستطلاع الديموغرافي مع معرفات
-                     المستخدمين المجهولة
-                  </CardDescription>
-               </CardHeader>
-               <CardContent className="!mt-auto">
-                  <Button
-                     onClick={() => handleExport("survey")}
-                     disabled={surveyLoading}
-                     className="w-full cursor-pointer"
-                  >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاستطلاع
-                  </Button>
-               </CardContent>
-            </Card>
-         </div>
-      </div>
+             <Card>
+                <CardHeader>
+                   <CardTitle>بيانات الاستطلاع</CardTitle>
+                   <CardDescription>
+                      تصدير جميع استجابات الاستطلاع الديموغرافي مع معرفات
+                      المستخدمين المجهولة
+                   </CardDescription>
+                </CardHeader>
+                <CardContent className="!mt-auto">
+                   <Button
+                       onClick={() => handleExport("survey")}
+                       disabled={surveyLoading}
+                       className="w-full cursor-pointer"
+                   >
+
+                      {surveyLoading ? (
+                          <>
+                             <Spinner size={`sm`}/>
+                             جاري التحميل...
+                          </>
+                      ) : (
+                          <>
+                             <FileDown className="h-4 w-4 ml-2"/>
+                             تصدير بيانات الاستطلاع
+                          </>
+                      )}
+                   </Button>
+                </CardContent>
+             </Card>
+          </div>
+       </div>
    );
 }
 
