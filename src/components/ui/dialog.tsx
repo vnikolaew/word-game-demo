@@ -3,7 +3,7 @@
 import * as React from "react";
 import { XIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion";
+import { motion, AnimatePresence, HTMLMotionProps } from "motion/react";
 
 interface DialogContextType {
   open: boolean;

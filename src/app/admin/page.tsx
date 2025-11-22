@@ -27,7 +27,7 @@ type QuizByWordList = {
    highScoreQuizzes: number
 }
 
-export const dynamic = 'force-dynamic'
+// export const dynamic = 'force-dynamic'
 
 export default function AdminDashboard() {
    const { isLoading, stats } = useAdminStats();

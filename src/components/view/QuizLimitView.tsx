@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { AlertCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { QuizLimitInfo } from "@/app/quiz/hooks";
 import Link from "next/link";
 

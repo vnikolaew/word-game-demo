@@ -3,17 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import { User, LogOut, Settings, FlaskConical } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { User, LogOut, Settings } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
-// Components
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-// Jotai
 import { cn } from "@/lib/utils";
 import useHeader from "@/hooks/useHeader";
-import { __IS_DEV__ } from "@/lib/consts";
 
 const Header = () => {
    const { dropdownRef, isAdmin, session, isOpen, setIsOpen } = useHeader();

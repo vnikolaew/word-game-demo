@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import "./globals.css";
 
 import { Tajawal } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
@@ -10,6 +9,7 @@ import Footer from "@/components/view/Footer";
 import { APP_NAME } from "@/lib/consts";
 import Head from "next/head";
 import { NuqsAdapter } from "nuqs/adapters/next";
+import "./globals.css";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
