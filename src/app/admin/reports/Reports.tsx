@@ -11,6 +11,7 @@ import { downloadFile } from "@/lib/utils";
 import { FileDown } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/Spinner";
 
 function Reports() {
    const [surveyLoading, setSurveyLoading] = useState(false);
@@ -63,8 +64,17 @@ function Reports() {
                      disabled={quizLoading}
                      className="w-full !cursor-pointer"
                   >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاختبارات
+                     {quizLoading ? (
+                         <>
+                            <Spinner size={`sm`} />
+                            جاري التحميل...
+                         </>
+                     )  : (
+                         <>
+                            <FileDown className="h-4 w-4 ml-2" />
+                            تصدير بيانات الاختبارات
+                         </>
+                     )}
                   </Button>
                </CardContent>
             </Card>
@@ -83,8 +93,17 @@ function Reports() {
                      disabled={surveyLoading}
                      className="w-full cursor-pointer"
                   >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاستطلاع
+                     {surveyLoading ? (
+                         <>
+                            <Spinner size={`sm`} />
+                            جاري التحميل...
+                         </>
+                     )  : (
+                         <>
+                            <FileDown className="h-4 w-4 ml-2" />
+                            تصدير بيانات الاستطلاع
+                         </>
+                     )}
                   </Button>
                </CardContent>
             </Card>
