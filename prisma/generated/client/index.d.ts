@@ -11310,14 +11310,14 @@ export namespace Prisma {
     gender: string
     age: string
     university: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic: string | null
+    listening_proficiency: string | null
+    reading_proficiency: string | null
+    speaking_proficiency: string | null
+    writing_proficiency: string | null
+    years_living_in_arabic_countries_years: string | null
     years_living_in_arabic_countries_months: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years: string | null
     years_living_in_arabic_environments_months: string | null
     highestEducation: string
     arabicDialect: string
@@ -11591,14 +11591,14 @@ export namespace Prisma {
       gender: string
       age: string
       university: string | null
-      age_of_acquiring_arabic: string
-      listening_proficiency: string
-      reading_proficiency: string
-      speaking_proficiency: string
-      writing_proficiency: string
-      years_living_in_arabic_countries_years: string
+      age_of_acquiring_arabic: string | null
+      listening_proficiency: string | null
+      reading_proficiency: string | null
+      speaking_proficiency: string | null
+      writing_proficiency: string | null
+      years_living_in_arabic_countries_years: string | null
       years_living_in_arabic_countries_months: string | null
-      years_living_in_arabic_environments_years: string
+      years_living_in_arabic_environments_years: string | null
       years_living_in_arabic_environments_months: string | null
       highestEducation: string
       arabicDialect: string
@@ -14478,14 +14478,14 @@ export namespace Prisma {
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
     university?: StringNullableFilter<"DemographicSurvey"> | string | null
-    age_of_acquiring_arabic?: StringFilter<"DemographicSurvey"> | string
-    listening_proficiency?: StringFilter<"DemographicSurvey"> | string
-    reading_proficiency?: StringFilter<"DemographicSurvey"> | string
-    speaking_proficiency?: StringFilter<"DemographicSurvey"> | string
-    writing_proficiency?: StringFilter<"DemographicSurvey"> | string
-    years_living_in_arabic_countries_years?: StringFilter<"DemographicSurvey"> | string
+    age_of_acquiring_arabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    listening_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    reading_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    speaking_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    writing_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    years_living_in_arabic_countries_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_countries_months?: StringNullableFilter<"DemographicSurvey"> | string | null
-    years_living_in_arabic_environments_years?: StringFilter<"DemographicSurvey"> | string
+    years_living_in_arabic_environments_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_environments_months?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
@@ -14528,14 +14528,14 @@ export namespace Prisma {
     gender?: SortOrder
     age?: SortOrder
     university?: SortOrderInput | SortOrder
-    age_of_acquiring_arabic?: SortOrder
-    listening_proficiency?: SortOrder
-    reading_proficiency?: SortOrder
-    speaking_proficiency?: SortOrder
-    writing_proficiency?: SortOrder
-    years_living_in_arabic_countries_years?: SortOrder
+    age_of_acquiring_arabic?: SortOrderInput | SortOrder
+    listening_proficiency?: SortOrderInput | SortOrder
+    reading_proficiency?: SortOrderInput | SortOrder
+    speaking_proficiency?: SortOrderInput | SortOrder
+    writing_proficiency?: SortOrderInput | SortOrder
+    years_living_in_arabic_countries_years?: SortOrderInput | SortOrder
     years_living_in_arabic_countries_months?: SortOrderInput | SortOrder
-    years_living_in_arabic_environments_years?: SortOrder
+    years_living_in_arabic_environments_years?: SortOrderInput | SortOrder
     years_living_in_arabic_environments_months?: SortOrderInput | SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
@@ -14581,14 +14581,14 @@ export namespace Prisma {
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
     university?: StringNullableFilter<"DemographicSurvey"> | string | null
-    age_of_acquiring_arabic?: StringFilter<"DemographicSurvey"> | string
-    listening_proficiency?: StringFilter<"DemographicSurvey"> | string
-    reading_proficiency?: StringFilter<"DemographicSurvey"> | string
-    speaking_proficiency?: StringFilter<"DemographicSurvey"> | string
-    writing_proficiency?: StringFilter<"DemographicSurvey"> | string
-    years_living_in_arabic_countries_years?: StringFilter<"DemographicSurvey"> | string
+    age_of_acquiring_arabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    listening_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    reading_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    speaking_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    writing_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    years_living_in_arabic_countries_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_countries_months?: StringNullableFilter<"DemographicSurvey"> | string | null
-    years_living_in_arabic_environments_years?: StringFilter<"DemographicSurvey"> | string
+    years_living_in_arabic_environments_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_environments_months?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
@@ -14631,14 +14631,14 @@ export namespace Prisma {
     gender?: SortOrder
     age?: SortOrder
     university?: SortOrderInput | SortOrder
-    age_of_acquiring_arabic?: SortOrder
-    listening_proficiency?: SortOrder
-    reading_proficiency?: SortOrder
-    speaking_proficiency?: SortOrder
-    writing_proficiency?: SortOrder
-    years_living_in_arabic_countries_years?: SortOrder
+    age_of_acquiring_arabic?: SortOrderInput | SortOrder
+    listening_proficiency?: SortOrderInput | SortOrder
+    reading_proficiency?: SortOrderInput | SortOrder
+    speaking_proficiency?: SortOrderInput | SortOrder
+    writing_proficiency?: SortOrderInput | SortOrder
+    years_living_in_arabic_countries_years?: SortOrderInput | SortOrder
     years_living_in_arabic_countries_months?: SortOrderInput | SortOrder
-    years_living_in_arabic_environments_years?: SortOrder
+    years_living_in_arabic_environments_years?: SortOrderInput | SortOrder
     years_living_in_arabic_environments_months?: SortOrderInput | SortOrder
     highestEducation?: SortOrder
     arabicDialect?: SortOrder
@@ -14686,14 +14686,14 @@ export namespace Prisma {
     gender?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     age?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     university?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
-    age_of_acquiring_arabic?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    listening_proficiency?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    reading_proficiency?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    speaking_proficiency?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    writing_proficiency?: StringWithAggregatesFilter<"DemographicSurvey"> | string
-    years_living_in_arabic_countries_years?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    age_of_acquiring_arabic?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    listening_proficiency?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    reading_proficiency?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    speaking_proficiency?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    writing_proficiency?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
+    years_living_in_arabic_countries_years?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_countries_months?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
-    years_living_in_arabic_environments_years?: StringWithAggregatesFilter<"DemographicSurvey"> | string
+    years_living_in_arabic_environments_years?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_environments_months?: StringNullableWithAggregatesFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringWithAggregatesFilter<"DemographicSurvey"> | string
     arabicDialect?: StringWithAggregatesFilter<"DemographicSurvey"> | string
@@ -15394,14 +15394,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -15444,14 +15444,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -15492,14 +15492,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -15542,14 +15542,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -15591,14 +15591,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -15639,14 +15639,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -15688,14 +15688,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -17602,14 +17602,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -17650,14 +17650,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -17873,14 +17873,14 @@ export namespace Prisma {
     gender?: StringFilter<"DemographicSurvey"> | string
     age?: StringFilter<"DemographicSurvey"> | string
     university?: StringNullableFilter<"DemographicSurvey"> | string | null
-    age_of_acquiring_arabic?: StringFilter<"DemographicSurvey"> | string
-    listening_proficiency?: StringFilter<"DemographicSurvey"> | string
-    reading_proficiency?: StringFilter<"DemographicSurvey"> | string
-    speaking_proficiency?: StringFilter<"DemographicSurvey"> | string
-    writing_proficiency?: StringFilter<"DemographicSurvey"> | string
-    years_living_in_arabic_countries_years?: StringFilter<"DemographicSurvey"> | string
+    age_of_acquiring_arabic?: StringNullableFilter<"DemographicSurvey"> | string | null
+    listening_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    reading_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    speaking_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    writing_proficiency?: StringNullableFilter<"DemographicSurvey"> | string | null
+    years_living_in_arabic_countries_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_countries_months?: StringNullableFilter<"DemographicSurvey"> | string | null
-    years_living_in_arabic_environments_years?: StringFilter<"DemographicSurvey"> | string
+    years_living_in_arabic_environments_years?: StringNullableFilter<"DemographicSurvey"> | string | null
     years_living_in_arabic_environments_months?: StringNullableFilter<"DemographicSurvey"> | string | null
     highestEducation?: StringFilter<"DemographicSurvey"> | string
     arabicDialect?: StringFilter<"DemographicSurvey"> | string
@@ -18853,14 +18853,14 @@ export namespace Prisma {
     gender: string
     age: string
     university?: string | null
-    age_of_acquiring_arabic: string
-    listening_proficiency: string
-    reading_proficiency: string
-    speaking_proficiency: string
-    writing_proficiency: string
-    years_living_in_arabic_countries_years: string
+    age_of_acquiring_arabic?: string | null
+    listening_proficiency?: string | null
+    reading_proficiency?: string | null
+    speaking_proficiency?: string | null
+    writing_proficiency?: string | null
+    years_living_in_arabic_countries_years?: string | null
     years_living_in_arabic_countries_months?: string | null
-    years_living_in_arabic_environments_years: string
+    years_living_in_arabic_environments_years?: string | null
     years_living_in_arabic_environments_months?: string | null
     highestEducation: string
     arabicDialect: string
@@ -19033,14 +19033,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -19081,14 +19081,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string
@@ -19129,14 +19129,14 @@ export namespace Prisma {
     gender?: StringFieldUpdateOperationsInput | string
     age?: StringFieldUpdateOperationsInput | string
     university?: NullableStringFieldUpdateOperationsInput | string | null
-    age_of_acquiring_arabic?: StringFieldUpdateOperationsInput | string
-    listening_proficiency?: StringFieldUpdateOperationsInput | string
-    reading_proficiency?: StringFieldUpdateOperationsInput | string
-    speaking_proficiency?: StringFieldUpdateOperationsInput | string
-    writing_proficiency?: StringFieldUpdateOperationsInput | string
-    years_living_in_arabic_countries_years?: StringFieldUpdateOperationsInput | string
+    age_of_acquiring_arabic?: NullableStringFieldUpdateOperationsInput | string | null
+    listening_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    reading_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    speaking_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    writing_proficiency?: NullableStringFieldUpdateOperationsInput | string | null
+    years_living_in_arabic_countries_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_countries_months?: NullableStringFieldUpdateOperationsInput | string | null
-    years_living_in_arabic_environments_years?: StringFieldUpdateOperationsInput | string
+    years_living_in_arabic_environments_years?: NullableStringFieldUpdateOperationsInput | string | null
     years_living_in_arabic_environments_months?: NullableStringFieldUpdateOperationsInput | string | null
     highestEducation?: StringFieldUpdateOperationsInput | string
     arabicDialect?: StringFieldUpdateOperationsInput | string

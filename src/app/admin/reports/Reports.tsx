@@ -11,6 +11,7 @@ import { downloadFile } from "@/lib/utils";
 import { FileDown } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { Spinner } from "@/components/ui/Spinner";
 
 function Reports() {
    const [surveyLoading, setSurveyLoading] = useState(false);
@@ -61,10 +62,19 @@ function Reports() {
                   <Button
                      onClick={() => handleExport("quiz")}
                      disabled={quizLoading}
-                     className="w-full !cursor-pointer"
+                     className="w-full cursor-pointer !inline-flex items-center gap-2"
                   >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاختبارات
+                     {quizLoading ? (
+                         <>
+                            <Spinner size={`sm`} />
+                            جاري التحميل...
+                         </>
+                     ) : (
+                         <>
+                            <FileDown className="h-4 w-4 ml-2" />
+                            تصدير بيانات الاختبارات
+                         </>
+                     )}
                   </Button>
                </CardContent>
             </Card>
@@ -81,10 +91,19 @@ function Reports() {
                   <Button
                      onClick={() => handleExport("survey")}
                      disabled={surveyLoading}
-                     className="w-full cursor-pointer"
+                     className="w-full cursor-pointer !inline-flex items-center gap-2"
                   >
-                     <FileDown className="h-4 w-4 ml-2" />
-                     تصدير بيانات الاستطلاع
+                     {surveyLoading ? (
+                         <>
+                            <Spinner size={`sm`} />
+                            جاري التحميل...
+                         </>
+                     ) : (
+                         <>
+                            <FileDown className="h-4 w-4 ml-2" />
+                            تصدير بيانات الاستطلاع
+                         </>
+                     )}
                   </Button>
                </CardContent>
             </Card>

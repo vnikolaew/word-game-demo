@@ -1,6 +1,6 @@
 "use client";
 import React, { ComponentProps, useId } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { AlertCircle } from "lucide-react";
 

@@ -151,9 +151,6 @@ export default function QuizView({ onComplete, list, shuffledWords }: QuizViewPr
 
    return (
        <Fragment>
-          <div
-              className={`!absolute !top-4 !right-4 !w-fit !bg-gray-300 !p-4 !rounded-md !flex flex-col items-start gap-1 !z-[1000] !h-screen !overflow-y-auto`}>
-          </div>
           {scriptSources
               .filter(
                   (_, i) =>

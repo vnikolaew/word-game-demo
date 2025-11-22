@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { User, LogOut, Settings, FlaskConical } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 // Components
 import { Button } from "@/components/ui/button";

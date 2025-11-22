@@ -1,6 +1,6 @@
 "use client";
 import { QuizLimitInfo } from "@/app/quiz/hooks";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { AlertCircle } from "lucide-react";
 import React, { useMemo } from "react";
 import { Button } from "../ui/button";
