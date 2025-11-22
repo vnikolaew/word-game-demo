@@ -11,6 +11,8 @@ import {
    BookType,
    School,
 } from "lucide-react";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/Spinner";
 
 const navigation = [
    { name: "لوحة القيادة", href: "/admin", icon: LayoutDashboard },
@@ -28,6 +30,8 @@ const navigation = [
       icon: School,
    },
 ];
+
+export const dynamic = "force-dynamic"
 
 export default function AdminLayout({
    children,
@@ -67,7 +71,11 @@ export default function AdminLayout({
 
          {/* Main content */}
          <div className="flex-1 overflow-auto">
-            <div className="p-8">{children}</div>
+            <Suspense fallback={<div>
+               <Spinner size={`lg`} />
+            </div>}>
+               <div className="p-8">{children}</div>
+            </Suspense>
          </div>
       </div>
    );
