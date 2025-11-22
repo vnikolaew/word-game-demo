@@ -203,16 +203,16 @@ export default function ResultsView({
                      <WhatsappIcon size={32} round />
                   </WhatsappShareButton>
                </div>
-               <Button className="mt-4" onClick={handleShare}>
+               <Button title={`مشاركة نتيجة الاختبار`} className="mt-4" onClick={handleShare}>
                   مشاركة
                </Button>
             </div>
 
             <div className="flex justify-center gap-4 mt-8">
-               <Button onClick={handleRetake} variant="outline">
+               <Button title={`إعادة الاختبار`} onClick={handleRetake} variant="outline">
                   إعادة الاختبار
                </Button>
-               <Button onClick={handleResultsComplete}>
+               <Button title={`العودة إلى المنزل`} onClick={handleResultsComplete}>
                   العودة للصفحة الرئيسية
                </Button>
             </div>

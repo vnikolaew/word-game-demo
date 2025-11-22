@@ -89,6 +89,7 @@ function WordLists() {
                         <Label>الكلمات</Label>
                         <Button
                            className="!cursor-pointer"
+                           title={`Add a new word`}
                            onClick={addWord}
                            size="sm"
                         >
@@ -130,6 +131,7 @@ function WordLists() {
                               <Button
                                  className={cn(`cursor-pointer`)}
                                  variant="ghost"
+                                 title={`Remove word`}
                                  size="sm"
                                  onClick={() => removeWord(index)}
                               >
@@ -149,7 +151,7 @@ function WordLists() {
                         setWords([]);
                      }}
                   >
-                     Cancel
+                     يلغي
                   </Button>
                   <Button
                      onClick={() =>
@@ -158,7 +160,7 @@ function WordLists() {
                            : handleCreateWordList()
                      }
                   >
-                     {selectedWordList ? "Update" : "Create"}
+                     {selectedWordList ? "تحديث" : "يخلق"}
                   </Button>
                </DialogFooter>
             </DialogContent>
@@ -204,17 +206,19 @@ const Row = ({
             className="!cursor-pointer"
             variant="ghost"
             size="sm"
+            title={`Edit word list`}
             onClick={() => handleEditClick(list)}
          >
-            <Edit className="h-4 w-4" />
+            <Edit className="h-4 w-4 !text-blue-600" />
          </Button>
          <Button
             variant="ghost"
+            title={`Delete word list`}
             className="!cursor-pointer"
             size="sm"
             onClick={() => handleDeleteWordList(list.id)}
          >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-4 w-4 !text-red-600" />
          </Button>
       </TableCell>
    </TableRow>

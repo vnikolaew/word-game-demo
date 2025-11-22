@@ -1,21 +1,21 @@
 "use client";
 
 // components
-import {Button} from "@/components/ui/button";
-import {Card, CardContent} from "@/components/ui/card";
-import {Spinner} from "@/components/ui/Spinner";
-import {match} from "ts-pattern";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/Spinner";
+import { match } from "ts-pattern";
 
 // views
-import {ConsentView} from "@/components/view/ConsentView";
-import {PracticeView} from "@/components/view/PracticeView";
+import { ConsentView } from "@/components/view/ConsentView";
+import { PracticeView } from "@/components/view/PracticeView";
 import QuizView from "@/components/view/QuizView";
 
 // types
 import QuizLimitView from "@/components/view/QuizLimitView";
-import {useQuiz} from "./hooks";
+import { useQuiz } from "./hooks";
 import Link from "next/link";
-import {WordListResponse} from "@/types";
+import { WordListResponse } from "@/types";
 
 interface Props {
    shuffledWords: string[]
@@ -25,7 +25,7 @@ interface Props {
    }
 }
 
-export default function AppPage({list, shuffledWords}: Props) {
+export default function AppPage({ list, shuffledWords }: Props) {
    const {
       appState,
       error,

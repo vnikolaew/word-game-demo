@@ -89,7 +89,7 @@ export function useQuiz() {
    }, [consent?.consentVersion]);
 
    // Handle quiz completion
-   const handleQuizComplete = async () => {
+   const handleQuizComplete = useCallback(async () => {
       try {
          const response = await fetch("/api/survey");
          if (!response.ok) router.push(`/quiz/survey`);
@@ -99,7 +99,7 @@ export function useQuiz() {
       } catch (error) {
          router.push(`/quiz/survey`);
       }
-   };
+   }, [router]);
 
    return {
       handleConsent,

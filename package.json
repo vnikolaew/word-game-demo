@@ -54,6 +54,7 @@
       "next-auth": "^4.24.7",
       "next-share": "^0.27.0",
       "next-themes": "^0.4.6",
+      "nuqs": "^2.8.1",
       "pako": "^1.0.10",
       "pixi-filters": "^5.0.0",
       "pixi.js-legacy": "^6.0.4",
