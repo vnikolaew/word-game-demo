@@ -210,6 +210,13 @@ function quizResponseToCsvRow(
                ? ``
                : WORD
 
+   const userProficiencyScore =
+       quiz.user.score === null ||
+       !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
+           ? `مجهول`
+           : (typeof quiz.user.score === `number` ? quiz.user.score.toFixed(2)
+               : quiz.user.score?.toString());
+
    return {
       "UTC Date and Time": quiz.createdAt.toISOString(),
       "User Private ID": generateAnonymousId(quiz.user.id!),
@@ -217,11 +224,7 @@ function quizResponseToCsvRow(
       "User OS": quiz.deviceOS,
       "User Browser": quiz.deviceBrowser,
       "User Domain": process.env.WEB_DOMAIN!,
-      "User Proficiency Score":
-          quiz.user.score === null ||
-          !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
-              ? `مجهول`
-              : quiz.user.score?.toString(),
+      "User Proficiency Score": userProficiencyScore,
       "User Monitor Size": quiz.monitorSize,
       "User Viewport Size": quiz.viewportSize,
       "Page number": response.pageNumber,
