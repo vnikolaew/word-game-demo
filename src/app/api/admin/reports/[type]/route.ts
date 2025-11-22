@@ -7,6 +7,18 @@ import { DemographicSurvey, QuizAttempt, User, WordList } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
+
+export type QuizWordResponse = {
+   word: string
+   response: number
+   isCorrect: boolean
+   isNonWord: boolean
+   isTimeout: boolean
+   pageNumber: number
+   responseTime: number
+   responseType: string
+}
+
 // Function to convert array to CSV
 function arrayToCSV(data: any[]) {
    if (data.length === 0) return "";
@@ -15,17 +27,17 @@ function arrayToCSV(data: any[]) {
    const rows = [
       headers.join(","),
       ...data.map((row) =>
-         headers
-            .map((header) => {
-               const value = row[header];
-               // Handle arrays, nulls, and escape commas
-               if (Array.isArray(value)) return `"${value.join(";")}"`;
-               if (value === null) return "";
-               if (typeof value === "string" && value.includes(","))
-                  return `"${value}"`;
-               return value;
-            })
-            .join(",")
+          headers
+              .map((header) => {
+                 const value = row[header];
+                 // Handle arrays, nulls, and escape commas
+                 if (Array.isArray(value)) return `"${value.join(";")}"`;
+                 if (value === null) return "";
+                 if (typeof value === "string" && value.includes(","))
+                    return `"${value}"`;
+                 return value;
+              })
+              .join(",")
       ),
    ];
 
@@ -33,8 +45,8 @@ function arrayToCSV(data: any[]) {
 }
 
 export async function GET(
-   _: Request,
-   { params }: { params: { type: string } }
+    _: Request,
+    { params }: { params: { type: string } }
 ) {
    try {
       const session = await getServerSession(authOptions);
@@ -81,9 +93,9 @@ export async function GET(
 
          // Transform quiz data into detailed response-level data
          data = quizzes.flatMap((quiz) => {
-            const responses = quiz.responses as any[];
+            const responses = quiz.responses as QuizWordResponse[];
             return responses.map((response) =>
-               quizResponseToCsvRow(quiz, response)
+                quizResponseToCsvRow(quiz, response)
             );
          });
       } else if (type === "survey") {
@@ -111,7 +123,7 @@ export async function GET(
          headers: {
             "Content-Type": "text/csv",
             "Content-Disposition": `attachment; filename=${type}_data_${
-               new Date().toISOString().split("T")[0]
+                new Date().toISOString().split("T")[0]
             }.csv`,
          },
       });
@@ -122,7 +134,7 @@ export async function GET(
 }
 
 function quizSurveyToCsvRow(
-   survey: DemographicSurvey & { user: Partial<User> }
+    survey: DemographicSurvey & { user: Partial<User> }
 ) {
    return {
       anonymousUserId: generateAnonymousId(survey.user.id!),
@@ -142,14 +154,14 @@ function quizSurveyToCsvRow(
 
       age_of_acquiring_arabic: survey.age_of_acquiring_arabic,
       years_living_in_arabic_countries:
-         !survey.years_living_in_arabic_countries_months
-            ? `${survey.years_living_in_arabic_countries_years} years`
-            : `${survey.years_living_in_arabic_countries_years} years ${survey.years_living_in_arabic_countries_months} months`,
+          !survey.years_living_in_arabic_countries_months
+              ? `${survey.years_living_in_arabic_countries_years} years`
+              : `${survey.years_living_in_arabic_countries_years} years ${survey.years_living_in_arabic_countries_months} months`,
 
       years_living_in_arabic_environments:
-         !survey.years_living_in_arabic_environments_months
-            ? `${survey.years_living_in_arabic_environments_years} years`
-            : `${survey.years_living_in_arabic_environments_years} years ${survey.years_living_in_arabic_environments_months} months`,
+          !survey.years_living_in_arabic_environments_months
+              ? `${survey.years_living_in_arabic_environments_years} years`
+              : `${survey.years_living_in_arabic_environments_years} years ${survey.years_living_in_arabic_environments_months} months`,
 
       kindergartenLanguage: survey.kindergartenLanguage,
       otherKindergartenLanguage: survey.otherKindergartenLanguage,
@@ -176,24 +188,27 @@ function quizSurveyToCsvRow(
       readingDisorder: survey.readingDisorder,
       vision: survey.vision,
       handedness: [`yes`, `no`].includes(survey.handedness)
-         ? survey.handedness === `yes`
-            ? `Left-handed`
-            : `Right-handed`
-         : survey.handedness,
+          ? survey.handedness === `yes`
+              ? `Left-handed`
+              : `Right-handed`
+          : survey.handedness,
       date: survey.createdAt,
    };
 }
 
+const WORD = `word`
+const NONWORD = `nonword`
+
 function quizResponseToCsvRow(
-   quiz: QuizAttempt & { user: Partial<User>; wordList: WordList },
-   response: any
+    quiz: QuizAttempt & { user: Partial<User>; wordList: WordList },
+    response: QuizWordResponse
 ) {
    const userResponse =
-      response.response === 0
-         ? `word`
-         : response.response === null
-           ? ``
-           : `nonword`;
+       response.response === 0
+           ? NONWORD
+           : response.response === null
+               ? ``
+               : WORD
 
    return {
       "UTC Date and Time": quiz.createdAt.toISOString(),
@@ -203,10 +218,10 @@ function quizResponseToCsvRow(
       "User Browser": quiz.deviceBrowser,
       "User Domain": process.env.WEB_DOMAIN!,
       "User Proficiency Score":
-         quiz.user.score === null ||
-         !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
-            ? `مجهول`
-            : quiz.user.score?.toString(),
+          quiz.user.score === null ||
+          !(quiz.user.proficiencyQuizFinishedAt instanceof Date)
+              ? `مجهول`
+              : quiz.user.score?.toString(),
       "User Monitor Size": quiz.monitorSize,
       "User Viewport Size": quiz.viewportSize,
       "Page number": response.pageNumber,
@@ -219,7 +234,7 @@ function quizResponseToCsvRow(
       "Response type": response.responseType,
       Correct: response.isCorrect ? 1 : 0,
       Timeout: response.isTimeout || response.response === null,
-      Answer: response.isNonWord ? "nonword" : "word",
+      Answer: response.isNonWord ? NONWORD : WORD,
       "Quiz score": quiz.score,
       "Quiz status": quiz.quizStatus,
    };
