@@ -3,6 +3,7 @@ import UserProfile from "@/components/view/UserProfile";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { APP_NAME } from "@/lib/consts";
 
 export const metadata: Metadata = {
    title: `الملف الشخصي | التعرف على الكلمات العربية`,

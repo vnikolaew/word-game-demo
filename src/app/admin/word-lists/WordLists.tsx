@@ -60,6 +60,7 @@ function WordLists() {
                         <Label>الكلمات</Label>
                         <Button
                            className="!cursor-pointer"
+                           title={`Add a new word`}
                            onClick={addWord}
                            size="sm"
                         >
@@ -100,6 +101,7 @@ function WordLists() {
                               </Button>
                               <Button
                                  className={cn(`cursor-pointer`)}
+                                 title={`Remove word`}
                                  variant="ghost"
                                  size="sm"
                                  onClick={() => removeWord(index)}
@@ -120,7 +122,7 @@ function WordLists() {
                         setWords([]);
                      }}
                   >
-                     Cancel
+                     يلغي
                   </Button>
                   <Button
                      onClick={() =>
@@ -129,7 +131,7 @@ function WordLists() {
                            : handleCreateWordList()
                      }
                   >
-                     {selectedWordList ? "Update" : "Create"}
+                     {selectedWordList ? "تحديث" : "يخلق"}
                   </Button>
                </DialogFooter>
             </DialogContent>
@@ -205,18 +207,20 @@ const Row = ({
          <Button
             className="!cursor-pointer"
             variant="ghost"
+            title={`Edit word list`}
             size="sm"
             onClick={() => handleEditClick(list)}
          >
-            <Edit className="h-4 w-4" />
+            <Edit className="h-4 w-4 !text-blue-600" />
          </Button>
          <Button
             variant="ghost"
+            title={`Delete word list`}
             className="!cursor-pointer"
             size="sm"
             onClick={() => handleDeleteWordList(list.id)}
          >
-            <Trash2 className="h-4 w-4" />
+            <Trash2 className="h-4 w-4 !text-red-600" />
          </Button>
       </TableCell>
    </TableRow>

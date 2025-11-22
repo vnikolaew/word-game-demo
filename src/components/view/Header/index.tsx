@@ -31,18 +31,6 @@ const Header = () => {
                      من نحن
                   </Button>
                </Link>
-               {__IS_DEV__ && (
-                  <Link href="/test">
-                     <Button
-                        className="inline-flex gap-2 items-center"
-                        variant="ghost"
-                        size="sm"
-                     >
-                        <FlaskConical size={12} />
-                        امتحان
-                     </Button>
-                  </Link>
-               )}
                {session ? (
                   <>
                      <Link href="/quiz">

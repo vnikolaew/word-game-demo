@@ -1,24 +1,24 @@
 "use client";
 
 // components
-import {Button} from "@/components/ui/button";
-import {Card, CardContent} from "@/components/ui/card";
-import {Spinner} from "@/components/ui/Spinner";
-import {match} from "ts-pattern";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/Spinner";
+import { match } from "ts-pattern";
 
 // views
-import {ConsentView} from "@/components/view/ConsentView";
-import {PracticeView} from "@/components/view/PracticeView";
+import { ConsentView } from "@/components/view/ConsentView";
+import { PracticeView } from "@/components/view/PracticeView";
 import QuizView from "@/components/view/QuizView";
 
 // types
 import QuizLimitView from "@/components/view/QuizLimitView";
-import {__IS_PROD__} from "@/lib/consts";
-import {useQuiz} from "./hooks";
+import { __IS_PROD__ } from "@/lib/consts";
+import { useQuiz } from "./hooks";
 import Link from "next/link";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import ProficiencyTestLimitView from "@/components/view/ProficiencyTestLimitView";
-import {WordListResponse} from "@/types";
+import { WordListResponse } from "@/types";
 
 interface Props {
    shuffledWords: string[]
@@ -28,7 +28,7 @@ interface Props {
    }
 }
 
-export default function AppPage({list, shuffledWords}: Props) {
+export default function AppPage({ list, shuffledWords }: Props) {
    const {
       appState,
       error,
@@ -70,7 +70,10 @@ export default function AppPage({list, shuffledWords}: Props) {
                       />
                   ))
                   .with(`quiz`, (_) => (
-                      <QuizView shuffledWords={shuffledWords} list={list} onComplete={handleQuizComplete}/>
+                      <QuizView
+                          shuffledWords={shuffledWords}
+                          list={list}
+                          onComplete={handleQuizComplete}/>
                   ))
                   .with(`limit`, (_) => (
                       <QuizLimitView limitInfo={quizLimitInfo}/>
@@ -78,7 +81,7 @@ export default function AppPage({list, shuffledWords}: Props) {
                   .with(`proficiency-limit`, (_) => (
                       <ProficiencyTestLimitView
                           limitInfo={
-                              quizLimitInfo ?? {message: ``, tryAgainIn: 10}
+                              quizLimitInfo ?? { message: ``, tryAgainIn: 10 }
                           }
                       />
                   ))

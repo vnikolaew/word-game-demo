@@ -112,18 +112,18 @@ export function useQuiz() {
    }, [consent?.consentVersion]);
 
    // Handle quiz completion
-   const handleQuizComplete = async () => {
+   const handleQuizComplete = useCallback(async () => {
       try {
          const response = await fetch("/api/survey");
          if (!response.ok) router.push(`/quiz/survey`);
 
          const survey = await response.json();
-
          router.push(survey ? `/quiz/result` : `/quiz/survey`);
       } catch (error) {
+         console.log(`Error fetching user survey.`, error)
          router.push(`/quiz/survey`);
       }
-   };
+   }, [router]);
 
    return {
       handleConsent,

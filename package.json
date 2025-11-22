@@ -47,6 +47,7 @@
       "framer-motion": "^11.0.8",
       "howler": "^2.2.1",
       "jotai": "^2.12.3",
+      "lodash": "^4.17.21",
       "log4javascript": "github:Ritzlgrmft/log4javascript",
       "lottie-react": "^2.4.1",
       "lucide-react": "^0.344.0",

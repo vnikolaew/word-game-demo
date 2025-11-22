@@ -21,7 +21,7 @@ export async function GET() {
       });
 
       if (!survey) {
-         return NextResponse.json(null, { status: 200 });
+         return NextResponse.json(null, { status: 404 });
       }
 
       return NextResponse.json(survey, { status: 200 });

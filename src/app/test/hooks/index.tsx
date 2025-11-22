@@ -1,8 +1,7 @@
-import {useMediaQuery} from "@/hooks/useMediaQuery";
-import {WordList} from "@/hooks/useWordList";
-import {DeviceInfo, QuizResponse} from "@/types";
-import {useCallback, useEffect, useRef, useState} from "react";
-import {useWordList} from "@/hooks/useWordList";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { WordList } from "@/hooks/useWordList";
+import { DeviceInfo, QuizResponse } from "@/types";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInitExperiment } from "./useInitExperiment";
 import { getWordFromStimulus } from "@/utils/quizUtils";
 
@@ -78,7 +77,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
    const [correct, setCorrect] = useState(false);
    const [error, setError] = useState<string>(null!);
    const [show, setShow] = useState(false);
-   const {word_types, handleChoice} = useInitExperiment(
+   const { word_types, handleChoice } = useInitExperiment(
        list!,
        shuffledWords, setResponses, setCurrentIndex, setShow, run, setCorrect, state, scriptsLoaded, setLoaded, setError, currentIndex
    )
@@ -115,32 +114,31 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
    const [isSubmitting, setIsSubmitting] = useState(false);
    const submitQuizAttempt = useCallback(async () => {
       if (!list || responses?.length < TOTAL_WORDS) return false;
-
       const isCorrect = (r: JsPsychTrialData) => r.correct;
 
       try {
          setIsSubmitting(true);
          const deviceInfo = getDeviceInfo();
 
-         const correctWords  = responses.map(res => {
+         const correctWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && isCorrect(res)
-         })
+         }).length;
 
-         const incorrectWords  = responses.map(res => {
+         const incorrectWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && !isCorrect(res)
-         })
+         }).length
 
-         const correctNonWords   = responses.map(res => {
+         const correctNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && isCorrect(res)
-         })
+         }).length
 
-         const incorrectNonWords    = responses.map(res => {
+         const incorrectNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && !isCorrect(res)
-         })
+         }).length
 
          const npxionTime = Math.round(
              responses.reduce((sum, r) => sum + r.rt, 0)
@@ -148,14 +146,18 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
 
          // Calculate total quiz duration
          const totalQuizDuration = responses.at(-1)?.time_elapsed;
+         const score = responses.filter(isCorrect).length;
+         const quizStatus = `completed`
 
          const body = {
             wordListId: list.id,
             responses: responses.map<QuizResponse>((r, index) => {
                const word = getWordFromStimulus(r.stimulus)!
-               const word_index = shuffledWords.indexOf(word)
-               const type = word_types.at(word_index)!
+               const type = list.words.includes(word)
+                   ? WORD : list.nonWords.includes(word)
+                       ? NON_WORD : ``
 
+               const responseType = r.is_mobile ? `buttons` : `keyboard`
                return {
                   isCorrect: isCorrect(r),
                   isNonWord: type === NON_WORD,
@@ -163,11 +165,11 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
                   pageNumber: index + 1,
                   responseTime: r.rt,
                   response: r.response,
-                  responseType: r.is_mobile ? `buttons` : `keyboard`,
+                  responseType,
                   word,
                };
             }),
-            score: responses.filter((r) => isCorrect(r)).length,
+            score,
             correctWords,
             incorrectWords,
             correctNonWords,
@@ -175,7 +177,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
             npxionTime,
             totalQuizDuration,
             ...deviceInfo,
-            quizStatus: `completed`,
+            quizStatus
          };
 
          const submitResponse = await fetch("/api/quiz/attempts", {
@@ -199,7 +201,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
       } finally {
          setIsSubmitting(false);
       }
-   }, [list, responses, getDeviceInfo, shuffledWords]);
+   }, [list, responses, getDeviceInfo]);
 
    return {
       show,
