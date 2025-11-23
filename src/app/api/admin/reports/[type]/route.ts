@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -9,6 +9,19 @@ import { QuizAttempt, Word, WordList } from "@prisma/client";
 import { APP_NAME } from "@/lib/consts";
 
 export const dynamic = "force-dynamic";
+
+export function isInt(obj: any) {
+   try {
+      if (isNaN(obj)) {
+         return false;
+      }
+
+      const x = parseFloat(obj);
+      return (x | 0) === x;
+   } catch {
+      return false;
+   }
+}
 
 export type CSVSurveyRow = {
    anonymousUserId: string;
@@ -248,7 +261,7 @@ function arrayToCSV(data: any[]) {
 }
 
 export async function GET(
-    req: Request,
+    req: NextRequest,
     { params }: { params: { type: string } }
 ) {
    try {
@@ -270,13 +283,22 @@ export async function GET(
 
       let data;
       let data_buffer: Excel.Buffer | undefined;
+
       const { type } = params;
+      const limit = isInt(req.nextUrl.searchParams.get("limit"))
+          ? parseInt(req.nextUrl.searchParams.get("limit") ?? ``)
+          : 100;
+      const offset = isInt(req.nextUrl.searchParams.get("offset"))
+          ? parseInt(req.nextUrl.searchParams.get("offset") ?? ``)
+          : 0;
 
       if (type === "quiz") {
          const quizzes: (QuizAttempt & {
             wordList: WordList,
             user: { id: string }
          })[] = await prisma.quizAttempt.findMany({
+            skip: offset,
+            take: limit,
             include: {
                user: {
                   select: {
@@ -364,11 +386,15 @@ export async function GET(
          return new NextResponse("Invalid report type", { status: 400 });
       }
 
+      const fromTo = type === `quiz`
+          ? `(${offset * 100 + 1}-${offset * 100 + limit})`
+          : ``
+
       return new NextResponse(data_buffer, {
          headers: {
             "Content-Type":
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "Content-Disposition": `attachment; filename=${type}_data_${
+            "Content-Disposition": `attachment; filename=${type}_data${fromTo}_${
                 new Date().toISOString().split("T")[0]
             }.csv`,
          },
