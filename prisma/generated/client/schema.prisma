@@ -144,16 +144,16 @@ model DemographicSurvey {
   age        String
   university String?
 
-  age_of_acquiring_arabic String
-  listening_proficiency   String
-  reading_proficiency     String
-  speaking_proficiency    String
-  writing_proficiency     String
+  age_of_acquiring_arabic String?
+  listening_proficiency   String?
+  reading_proficiency     String?
+  speaking_proficiency    String?
+  writing_proficiency     String?
 
-  years_living_in_arabic_countries_years  String
+  years_living_in_arabic_countries_years  String?
   years_living_in_arabic_countries_months String?
 
-  years_living_in_arabic_environments_years  String
+  years_living_in_arabic_environments_years  String?
   years_living_in_arabic_environments_months String?
 
   highestEducation String  @map("highest_education")

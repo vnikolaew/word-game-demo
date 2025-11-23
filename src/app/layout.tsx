@@ -33,6 +33,7 @@ export const metadata: Metadata = {
       `الناطقة بالعربية`,
       `امتحان`,
       `كلمات`,
+       process.env.WEB_DOMAIN!
    ]
 };
 

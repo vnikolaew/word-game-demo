@@ -1,21 +1,29 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-   reactStrictMode: true,
-   typescript: { ignoreBuildErrors: true },
-   eslint: { ignoreDuringBuilds: true },
-   experimental: {
-      serverActions: {
-         allowedOrigins: ["localhost:3000"],
-      },
-   },
-   webpack: (config, options) => {
-      config.module.rules.push({
-         test: /\.(vert|frag)$/i,
-         use: "raw-loader",
-      });
+    reactStrictMode: true,
+    typescript: { ignoreBuildErrors: true },
+    eslint: { ignoreDuringBuilds: true },
+    images: {
+        remotePatterns: [
+            {
+                protocol: `https`,
+                hostname: `lh3.googleusercontent.com`
+            }
+        ]
+    },
+    experimental: {
+        serverActions: {
+            allowedOrigins: ["localhost:3000"],
+        },
+    },
+    webpack: (config, options) => {
+        config.module.rules.push({
+            test: /\.(vert|frag)$/i,
+            use: "raw-loader",
+        });
 
-      return config;
-   },
+        return config;
+    },
 };
 
 export default nextConfig;
