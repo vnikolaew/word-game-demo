@@ -20,6 +20,7 @@ import { useAdminStats } from "./hooks";
 import { HIGH_SCORE_THRESHOLD, showHeaderAndFooter } from "@/lib/utils";
 import { useCallback, useEffect } from "react";
 import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
+import { DashboardQuiz } from "@/types";
 
 export const dynamic = 'force-dynamic'
 
@@ -115,7 +116,7 @@ export default function AdminDashboard() {
    );
 }
 
-const WordListRow = ({ wordList }: { wordList: any }) => (
+const WordListRow = ({ wordList }: { wordList: DashboardQuiz }) => (
     <TableRow key={wordList.wordListId}>
        <TableCell>#{wordList.wordListId}</TableCell>
        <TableCell>{wordList.totalQuizzes}</TableCell>
@@ -124,7 +125,7 @@ const WordListRow = ({ wordList }: { wordList: any }) => (
           {(wordList.totalQuizzes === 0
                   ? 0
                   : (wordList.highScoreQuizzes / wordList.totalQuizzes) * 100
-          ).toFixed(1)}
+          ).toFixed(2)}
           %
        </TableCell>
     </TableRow>

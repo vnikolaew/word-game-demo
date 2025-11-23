@@ -62,7 +62,7 @@ function Reports() {
                    <Button
                        onClick={() => handleExport("quiz")}
                        disabled={quizLoading}
-                       className="w-full !cursor-pointer"
+                       className="w-full cursor-pointer !inline-flex items-center gap-2"
                    >
                       {quizLoading ? (
                           <>
@@ -91,9 +91,8 @@ function Reports() {
                    <Button
                        onClick={() => handleExport("survey")}
                        disabled={surveyLoading}
-                       className="w-full cursor-pointer"
+                       className="w-full cursor-pointer !inline-flex items-center gap-2"
                    >
-
                       {surveyLoading ? (
                           <>
                              <Spinner size={`sm`}/>

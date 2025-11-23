@@ -123,22 +123,22 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
          const correctWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && isCorrect(res)
-         })
+         }).length
 
          const incorrectWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.words.includes(word) && !isCorrect(res)
-         })
+         }).length
 
          const correctNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && isCorrect(res)
-         })
+         }).length
 
          const incorrectNonWords = responses.filter(res => {
             const word = getWordFromStimulus(res.stimulus)!
             return list.nonWords.includes(word) && !isCorrect(res)
-         })
+         }).length
 
          const npxionTime = Math.round(
              responses.reduce((sum, r) => sum + r.rt, 0)
@@ -201,7 +201,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
       } finally {
          setIsSubmitting(false);
       }
-   }, [list, responses, getDeviceInfo, shuffledWords]);
+   }, [list, responses, getDeviceInfo]);
 
    return {
       show,

@@ -1,9 +1,22 @@
 import { WordList } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
 
 export function useWordListsStats() {
+   const [sort] = useQueryState(`sort`, parseAsString)
+   const [order] = useQueryState(`order`, parseAsStringEnum([`asc`, `desc`]).withDefault(`asc`))
+
    const [wordLists, setWordLists] = useState<WordList[]>([]);
+   const normalizedWordLists = useMemo(() => {
+      return wordLists
+          ?.sort((a, b) => {
+             if (sort === `id`) return order === `asc` ? a.original_id - b.original_id : b.original_id - a.original_id
+             if (sort === `times`) return order === `asc` ? a.timesUsed - b.timesUsed : b.timesUsed - a.timesUsed
+             return 0
+          })
+   }, [wordLists, sort, order])
+
    const [isLoading, setIsLoading] = useState(true);
    const [selectedWordList, setSelectedWordList] = useState<WordList | null>(
       null
@@ -161,7 +174,7 @@ export function useWordListsStats() {
       removeWord,
       updateWord,
       isLoading,
-      wordLists,
+      wordLists: normalizedWordLists,
       selectedWordList,
       setSelectedWordList,
       isDialogOpen,

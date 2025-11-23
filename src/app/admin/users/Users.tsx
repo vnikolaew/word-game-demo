@@ -12,9 +12,40 @@ import {
    TableCell,
 } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogTitle } from "@radix-ui/react-dialog";
-import { Search, Eye } from "lucide-react";
-import React from "react";
+import { Search, Eye, ArrowUp, ArrowUpDown, ArrowDown } from "lucide-react";
+import React, { PropsWithChildren } from "react";
 import { useUsersStats } from "./hooks";
+import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
+import { cn } from "@/lib/utils";
+
+const SortButton = ({ field }: { field: string }) => {
+   const [sort, setSort] = useQueryState(`sort`, parseAsString)
+   const [order, setOrder] = useQueryState(`order`, parseAsStringEnum([`asc`, `desc`]).withDefault(`asc`))
+
+   return (
+       <span onClick={async _ => {
+          await setSort(field)
+          await setOrder(!order?.length ? `asc` : order === `asc` ? `desc` : `asc`)
+       }} className={`!cursor-pointer !w-6 !h-fit`}>
+          {field === sort ? order === `asc` ? (
+              <ArrowDown size={14}/>
+          ) : (
+              <ArrowUp size={14}/>
+          ) : <ArrowUpDown size={14} className={``}/>}
+       </span>
+   )
+}
+
+const SortableTableHead = ({ field, children, className, ...rest }: PropsWithChildren & {
+   field: string
+} & React.ComponentProps<"th">) => (
+    <TableHead className={cn(`text-right`, className)} {...rest}>
+       <div className={`!inline-flex items-center !text-right !ml-auto !w-full`}>
+          <SortButton field={field}/>
+          {children}
+       </div>
+    </TableHead>
+)
 
 function UsersTableSkeleton() {
    return (
@@ -182,11 +213,13 @@ function Users() {
 const Headings = () => (
     <TableHeader>
        <TableRow>
-          <TableHead className={`!text-right`}>الاسم</TableHead>
-          <TableHead className={`text-right`}>البريد الإلكتروني</TableHead>
-          <TableHead className={`text-right`}>معرف المستخدم</TableHead>
-          <TableHead className={`text-right`}>تاريخ الانضمام</TableHead>
-          <TableHead className={`text-right`}>الاختبارات المنجزة</TableHead>
+          <SortableTableHead field={`name`} className={`!text-right`}>
+             الاسم
+          </SortableTableHead>
+          <SortableTableHead field={`email`} className={`text-right`}>البريد الإلكتروني</SortableTableHead>
+          <SortableTableHead field={`id`} className={`text-right`}>معرف المستخدم</SortableTableHead>
+          <SortableTableHead field={`date`} className={`text-right`}>تاريخ الانضمام</SortableTableHead>
+          <SortableTableHead field={`test`} className={`text-right`}>الاختبارات المنجزة</SortableTableHead>
           <TableHead className={`text-right`}>الإجراءات</TableHead>
        </TableRow>
     </TableHeader>
