@@ -46,8 +46,8 @@ function Reports({ total_count, survey_count }: { total_count: number, survey_co
          );
 
          if (type === `quiz`) {
-            const from = offset * 100
-            const to = from + limit > total_count ? total_count : from + limit
+            const from = offset + 1
+            const to = from + limit > total_count ? total_count : offset + limit
             const message = `تم تصدير بيانات الاختبار (#${from}-${to}) بنجاح.`
 
             toast.success(message);
