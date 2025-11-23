@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -223,8 +223,21 @@ export interface CSVQuizExportRow {
 }
 
 
+export function isInt(obj: any) {
+   try {
+      if (isNaN(obj)) {
+         return false;
+      }
+
+      const x = parseFloat(obj);
+      return (x | 0) === x;
+   } catch {
+      return false;
+   }
+}
+
 export async function GET(
-    _: Request,
+    req: NextRequest,
     { params }: { params: { type: string } }
 ) {
    try {
@@ -248,9 +261,17 @@ export async function GET(
       let data_buffer: Excel.Buffer | undefined;
 
       const { type } = params;
+      const limit = isInt(req.nextUrl.searchParams.get("limit"))
+          ? parseInt(req.nextUrl.searchParams.get("limit") ?? ``)
+          : 100;
+      const offset = isInt(req.nextUrl.searchParams.get("offset"))
+          ? parseInt(req.nextUrl.searchParams.get("offset") ?? ``)
+          : 0;
 
       if (type === "quiz") {
          const quizzes = await prisma.quizAttempt.findMany({
+            skip: offset,
+            take: limit,
             include: {
                user: {
                   select: {
