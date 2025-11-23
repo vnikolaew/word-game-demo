@@ -6,17 +6,20 @@ export type WordListResponse = {
    lastUsedAt: Date;
 };
 
+export interface DashboardQuiz {
+   wordListId: number;
+   totalQuizzes: number;
+   highScoreQuizzes: number;
+}
+
 export interface DashboardStats {
    totalUsers: number;
    completedQuizzes: number;
    highScoreQuizzes: number;
    averageQuizTime: number;
-   quizzesByWordList: {
-      wordListId: number;
-      totalQuizzes: number;
-      highScoreQuizzes: number;
-   }[];
+   quizzesByWordList: DashboardQuiz[];
 }
+
 export interface User {
    id: string;
    name: string | null;

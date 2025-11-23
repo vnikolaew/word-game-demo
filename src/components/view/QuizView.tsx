@@ -227,23 +227,6 @@ export default function QuizView({onComplete, list, shuffledWords}: QuizViewProp
                            <span/>
                        )}
                     </div>
-                    {__IS_DEV__ && (
-                        <div dir={`ltr`} className={`flex items-start gap-12`}>
-                           <div>
-                              User responses (in order): {responses.length}.
-                              Score: {responses.map((res) => res.correct).filter(Boolean).length}
-                              <ul className={`!list-disc !pl-2 !pr-2 !h-[300px] !overflow-y-scroll`}>
-                                 {responses.map((res, index) => {
-                                    return (
-                                        <div key={res?.trial_index + index}>
-                                           <li>{(res.response?.toString() === `0` ? NON_WORD : res.response?.toString() === `1` ? WORD : ``).toUpperCase()} - {res.correct?.toString()} - {res.correct_response?.toString()} - {res.trial_index / 2} - {index + 1}</li>
-                                        </div>
-                                    );
-                                 })}
-                              </ul>
-                           </div>
-                        </div>
-                    )}
                  </div>
              )}
           </Card>

@@ -1,16 +1,29 @@
 import { WordList } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { toast } from "sonner";
+import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
 
 export function useWordListsStats() {
+   const [sort] = useQueryState(`sort`, parseAsString)
+   const [order] = useQueryState(`order`, parseAsStringEnum([`asc`, `desc`]).withDefault(`asc`))
+
    const [wordLists, setWordLists] = useState<WordList[]>([]);
+   const normalizedWordLists = useMemo(() => {
+      return wordLists
+          ?.sort((a, b) => {
+             if (sort === `id`) return order === `asc` ? a.original_id - b.original_id : b.original_id - a.original_id
+             if (sort === `times`) return order === `asc` ? a.timesUsed - b.timesUsed : b.timesUsed - a.timesUsed
+             return 0
+          })
+   }, [wordLists, sort, order])
+
    const [isLoading, setIsLoading] = useState(true);
    const [selectedWordList, setSelectedWordList] = useState<WordList | null>(
-      null
+       null
    );
    const [isDialogOpen, setIsDialogOpen] = useState(false);
    const [words, setWords] = useState<{ word: string; isNonWord: boolean }[]>(
-      []
+       []
    );
 
    useEffect(() => {
@@ -62,9 +75,9 @@ export function useWordListsStats() {
       } catch (error) {
          console.error("خطأ في إنشاء قائمة الكلمات:", error);
          toast.error(
-            error instanceof Error
-               ? error.message
-               : "فشل في إنشاء قائمة الكلمات"
+             error instanceof Error
+                 ? error.message
+                 : "فشل في إنشاء قائمة الكلمات"
          );
       }
    };
@@ -95,9 +108,9 @@ export function useWordListsStats() {
       } catch (error) {
          console.error("خطأ في تحديث قائمة الكلمات:", error);
          toast.error(
-            error instanceof Error
-               ? error.message
-               : "فشل في تحديث قائمة الكلمات"
+             error instanceof Error
+                 ? error.message
+                 : "فشل في تحديث قائمة الكلمات"
          );
       }
    };
@@ -120,7 +133,7 @@ export function useWordListsStats() {
       } catch (error) {
          console.error("خطأ في حذف قائمة الكلمات:", error);
          toast.error(
-            error instanceof Error ? error.message : "فشل في حذف قائمة الكلمات"
+             error instanceof Error ? error.message : "فشل في حذف قائمة الكلمات"
          );
       }
    };
@@ -128,7 +141,7 @@ export function useWordListsStats() {
    const handleEditClick = (wordList: WordList) => {
       setSelectedWordList(wordList);
       setWords(
-         wordList.words.map((w) => ({ word: w.word, isNonWord: w.isNonWord }))
+          wordList.words.map((w) => ({ word: w.word, isNonWord: w.isNonWord }))
       );
       setIsDialogOpen(true);
    };
@@ -148,9 +161,9 @@ export function useWordListsStats() {
    };
 
    const updateWord = (
-      index: number,
-      field: "word" | "isNonWord",
-      value: string | boolean
+       index: number,
+       field: "word" | "isNonWord",
+       value: string | boolean
    ) => {
       const newWords = [...words];
       newWords[index] = { ...newWords[index], [field]: value };
@@ -161,7 +174,7 @@ export function useWordListsStats() {
       removeWord,
       updateWord,
       isLoading,
-      wordLists,
+      wordLists: normalizedWordLists,
       selectedWordList,
       setSelectedWordList,
       isDialogOpen,
