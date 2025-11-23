@@ -24,6 +24,7 @@ import { Spinner } from "@/components/ui/Spinner";
 function Reports({ total_count, survey_count }: { total_count: number, survey_count: number }) {
    const [surveyLoading, setSurveyLoading] = useState(false);
    const [quizLoading, setQuizLoading] = useState(false);
+   const total_reports = Math.ceil(total_count / 100)
 
    const handleExport = async (type: "quiz" | "survey", { limit, offset }: { limit: number, offset: number }) => {
       try {
@@ -44,7 +45,15 @@ function Reports({ total_count, survey_count }: { total_count: number, survey_co
              blob
          );
 
-         toast.success(`تم تصدير بيانات ${type} بنجاح`);
+         if (type === `quiz`) {
+            const from = offset * 100
+            const to = from + limit > total_count ? total_count : from + limit
+            const message = `تم تصدير بيانات الاختبار (#${from}-${to}) بنجاح.`
+
+            toast.success(message);
+         } else {
+            toast.success(`تم تصدير بيانات ${type} بنجاح`);
+         }
       } catch (error) {
          console.error(`خطأ في تصدير بيانات ${type}:`, error);
          toast.error(`فشل في تصدير بيانات ${type}`);
@@ -78,6 +87,7 @@ function Reports({ total_count, survey_count }: { total_count: number, survey_co
                       <DropdownMenuTrigger asChild>
                          <Button
                              // onClick={() => handleExport("quiz")}
+                             title={quizLoading ? `تحميل...` : ``}
                              disabled={quizLoading}
                              className="w-full cursor-pointer !inline-flex items-center gap-2"
                          >
@@ -100,12 +110,14 @@ function Reports({ total_count, survey_count }: { total_count: number, survey_co
                          </DropdownMenuLabel>
                          <DropdownMenuSeparator/>
                          {Array
-                             .from({ length: Math.ceil(total_count / 100) })
+                             .from({ length: total_reports })
                              .map((_, i) => (
-                                 <DropdownMenuItem onClick={_ => handleDownloadReport(i)}
-                                                   className={`!text-right !cursor-pointer`} key={i}>
+                                 <DropdownMenuItem
+                                     onClick={_ => handleDownloadReport(i)}
+                                     className={`!text-right !cursor-pointer`} key={i}>
                                     <div className={`!flex items-center gap-2 justify-between !w-full`}>
-                                       يتم تشغيل الاختبار #{i * 100}-{(i + 1) * 100}
+                                       يتم تشغيل الاختبار
+                                       #{i * 100 + 1}-{i === total_reports - 1 ? total_count : (i + 1) * 100}
                                        <FileDown className="h-4 w-4 ml-2 !text-black"/>
                                     </div>
                                  </DropdownMenuItem>
@@ -127,7 +139,8 @@ function Reports({ total_count, survey_count }: { total_count: number, survey_co
                 </CardHeader>
                 <CardContent className="!mt-auto">
                    <Button
-                       onClick={() => handleExport("survey")}
+                       onClick={() => handleExport("survey", { limit: 100, offset: 0 })}
+                       title={surveyLoading ? `تحميل...` : ``}
                        disabled={surveyLoading}
                        className="w-full cursor-pointer !inline-flex items-center gap-2"
                    >

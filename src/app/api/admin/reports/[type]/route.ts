@@ -364,11 +364,15 @@ export async function GET(
          return new NextResponse("Invalid report type", { status: 400 });
       }
 
+      const fromTo = type === `quiz`
+         ? `(${offset * 100 + 1}-${offset * 100 + limit})`
+         : ``
+
       return new NextResponse(data_buffer, {
          headers: {
             "Content-Type":
                 "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "Content-Disposition": `attachment; filename=${type}_data_${
+            "Content-Disposition": `attachment; filename=${type}_data${fromTo}_${
                 new Date().toISOString().split("T")[0]
             }.csv`,
          },
