@@ -439,8 +439,12 @@ function quizResponseToCsvRow(
            : (typeof quiz.user.score === `number` ? quiz.user.score.toFixed(2)
                : quiz.user.score?.toString());
 
+   const timestamp = typeof response.timestamp === `number`
+       ? new Date(response.timestamp).toISOString()
+       : quiz.createdAt?.toISOString()
+
    return {
-      "UTC Date and Time": new Date(response.timestamp).toISOString(),
+      "UTC Date and Time": timestamp,
       "User Private ID": generateAnonymousId(quiz.user.id!),
       "User Device Type": quiz.deviceType,
       "User OS": quiz.deviceOS,
