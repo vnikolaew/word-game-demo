@@ -26,22 +26,22 @@ function ParentsLanguage({ errors, formData, setFormData }: Props) {
             }
          >
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="arabic_only" id="arabic_only" />
-               <Label htmlFor="arabic_only">العربية فقط من كلا الوالدين</Label>
+               <RadioGroupItem value="arabic_only" id="arabic_only_parents" />
+               <Label htmlFor="arabic_only_parents">العربية فقط من كلا الوالدين</Label>
             </div>
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="other_only" id="other_only" />
-               <Label htmlFor="other_only">لغة أخرى فقط من كلا الوالدين</Label>
+               <RadioGroupItem value="other_only" id="other_only_parents" />
+               <Label htmlFor="other_only_parents">لغة أخرى فقط من كلا الوالدين</Label>
             </div>
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="arabic_and_other" id="arabic_and_other" />
-               <Label htmlFor="arabic_and_other">
+               <RadioGroupItem value="arabic_and_other" id="arabic_and_other_parents" />
+               <Label htmlFor="arabic_and_other_parents">
                   العربية من أحد الوالدين ولغة أخرى من الوالد الآخر
                </Label>
             </div>
             <div className="flex items-center space-x-2">
-               <RadioGroupItem value="mix" id="mix" />
-               <Label htmlFor="mix">
+               <RadioGroupItem value="mix" id="mix_parents" />
+               <Label htmlFor="mix_parents">
                   مزيج من العربية ولغة أخرى من كلا الوالدين
                </Label>
             </div>

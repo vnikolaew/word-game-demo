@@ -21,6 +21,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       age: "",
       highestEducation: "",
       arabicDialect: "",
+      otherArabicDialect: ``,
       nationality: "",
       otherNationality: "",
       residence: "",
@@ -75,14 +76,11 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
          "handedness",
       ];
 
-      // Debug log
-      console.log("Current form data:", formData);
-
       // Check each required field
       requiredFields.forEach((field) => {
          if (
-            !formData[field as keyof SurveyData] ||
-            formData[field as keyof SurveyData] === ""
+             !formData[field as keyof SurveyData] ||
+             formData[field as keyof SurveyData] === ""
          ) {
             newErrors[field] = "هذا الحقل مطلوب";
             console.warn(`Missing field: ${field}`);
@@ -91,47 +89,54 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
 
       const SAUDI_ARABIA = `saudi_arabia`;
       if (
-         formData.residence === SAUDI_ARABIA &&
-         !formData.currentUniversity?.length
+          formData.residence === SAUDI_ARABIA &&
+          !formData.currentUniversity?.length
       ) {
          newErrors.currentUniversity = `يرجى تحديد الجامعة.`;
       }
 
       if (
-         (formData.nativeLanguage === "arabic_and_other" ||
-            formData.nativeLanguage === "other") &&
-         !formData.otherNativeLanguage
+          (formData.nativeLanguage === "arabic_and_other" ||
+              formData.nativeLanguage === "other") &&
+          !formData.otherNativeLanguage
       ) {
          newErrors.nativeLanguage = `يرجى تحديد اللغة.`;
       }
 
       if (
-         formData.languageAcquisition?.toLowerCase().includes("other") &&
-         !formData.otherAcquisitionLanguage
+          formData.languageAcquisition?.toLowerCase().includes("other") &&
+          !formData.otherAcquisitionLanguage
       ) {
          newErrors.languageAcquisition = `يرجى تحديد اللغة.`;
       }
 
       if (
-         (formData.familyLanguage?.toLowerCase().includes(`other`) ||
-            formData.familyLanguage?.toLowerCase().includes(`mix`)) &&
-         !formData.otherFamilyLanguage
+          (formData.familyLanguage?.toLowerCase().includes(`other`) ||
+              formData.familyLanguage?.toLowerCase().includes(`mix`)) &&
+          !formData.otherFamilyLanguage
       ) {
          newErrors.familyLanguage = `يرجى تحديد اللغة.`;
       }
 
       if (
-         formData.nationality?.toLowerCase() === "other" &&
-         !formData.otherNationality
+          formData.nationality?.toLowerCase() === "other" &&
+          !formData.otherNationality
       ) {
          newErrors.nationality = `يرجى تحديد الجنسية.`;
       }
 
       if (
-         formData.residence?.toLowerCase() === "other" &&
-         !formData.otherResidence
+          formData.residence?.toLowerCase() === "other" &&
+          !formData.otherResidence
       ) {
          newErrors.residence = "يرجى تحديد اللغة";
+      }
+
+      if (
+          formData.arabicDialect?.toLowerCase() === "other" &&
+          !formData.otherArabicDialect
+      ) {
+         newErrors.arabicDialect = "يرجى تحديد اللغة";
       }
 
       const pairKeys: [keyof SurveyData, keyof SurveyData][] = [
@@ -143,9 +148,9 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       ];
       pairKeys.forEach(([key, otherKey]) => {
          if (
-            (formData[key]?.toLowerCase() === "other" ||
-               formData[key]?.toLowerCase() === `two_languages`) &&
-            !formData[otherKey]
+             (formData[key]?.toLowerCase() === "other" ||
+                 formData[key]?.toLowerCase() === `two_languages`) &&
+             !formData[otherKey]
          ) {
             newErrors[key] = `يرجى تحديد اللغة.`;
          }
@@ -162,6 +167,13 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       setErrors(newErrors);
       return newErrors;
    };
+
+   const normalizeFormData = (values: SurveyData) => {
+      values.arabicDialect = values.arabicDialect === `other`
+          ? (values.otherArabicDialect ?? ``)
+          : values.arabicDialect;
+      return values
+   }
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -181,7 +193,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
             headers: {
                "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(normalizeFormData(formData)),
          });
 
          if (!response.ok) {
@@ -193,7 +205,7 @@ export function useSurvey(onComplete: (data: SurveyData) => void) {
       } catch (error) {
          console.error("Error submitting survey:", error);
          toast.error(
-            error instanceof Error ? error.message : "فشل في إرسال الاستبيان"
+             error instanceof Error ? error.message : "فشل في إرسال الاستبيان"
          );
       } finally {
          setLoading(false);

@@ -130,6 +130,7 @@ export interface SurveyData {
    otherFamilyLanguage?: string;
 
    arabicDialect: string;
+   otherArabicDialect?: string;
 
    gender: string;
    age: string;
