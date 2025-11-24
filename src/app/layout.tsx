@@ -60,7 +60,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
           <NuqsAdapter>{children}</NuqsAdapter>
           <Footer/>
-          <CookieBanner consents={userConsents}/>
+          {userConsents && (
+              <CookieBanner consents={userConsents}/>
+          )}
        </AuthProvider>
        </body>
        </html>

@@ -11,7 +11,7 @@ export async function getUserConsents() {
    try {
       const session = await getServerSession(authOptions);
       if (!session?.user?.id) {
-         return []
+         return null!
       }
 
       const consents = await prisma.userConsent.findMany({
