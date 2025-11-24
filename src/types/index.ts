@@ -134,23 +134,33 @@ export interface SurveyData {
    gender: string;
    age: string;
    highestEducation: string;
+
    arabicDialect: string;
+   otherArabicDialect?: string;
+
    nationality: string;
    otherNationality?: string;
+
    currentUniversity?: string;
    residence: string;
    otherResidence?: string;
    languages: string;
+
    kindergartenLanguage: string;
    otherKindergartenLanguage?: string;
+
    primaryLanguage: string;
    otherPrimaryLanguage?: string;
+
    middleLanguage: string;
    otherMiddleLanguage?: string;
+
    highSchoolLanguage: string;
    otherHighSchoolLanguage?: string;
+
    universityLanguage: string;
    otherUniversityLanguage?: string;
+
    readingHours: string;
    listeningHours: string;
    writingHours: string;
