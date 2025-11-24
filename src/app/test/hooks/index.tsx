@@ -12,6 +12,7 @@ export interface JsPsychTrialData {
    plugin_version: string;
    response: string;
    rt: number;
+   timestamp?: number
    stimulus: string;
    task: string;
    time_elapsed: number;
@@ -167,6 +168,7 @@ export function useExperiment(list: WordList, shuffledWords: string[], state: st
                   isTimeout: r.response === null,
                   pageNumber: index + 1,
                   responseTime: r.rt,
+                  timestamp: r.timestamp,
                   response: r.response,
                   responseType,
                   word,

@@ -136,6 +136,7 @@ export type QuizWordResponse = {
    isTimeout: boolean
    pageNumber: number
    responseTime: number
+   timestamp: number
    responseType: string
 }
 
@@ -365,8 +366,8 @@ export async function GET(
       }
 
       const fromTo = type === `quiz`
-         ? `(${offset * 100 + 1}-${offset * 100 + limit})`
-         : ``
+          ? `(${offset * 100 + 1}-${offset * 100 + limit})`
+          : ``
 
       return new NextResponse(data_buffer, {
          headers: {
@@ -416,8 +417,12 @@ function getQuizCSVRow(quiz: QuizAttempt & {
           const current_word = current_list
               ?.find(w => w.word === response.word)
 
+          const timestamp = typeof response.timestamp === `number`
+              ? new Date(response.timestamp).toISOString()
+              : quiz.createdAt?.toISOString()
+
           return {
-             "UTC Date and Time": quiz.createdAt.toISOString(),
+             "UTC Date and Time": timestamp,
              "User Private ID": generateAnonymousId(quiz.user.id),
              "User Device Type": quiz.deviceType,
              "User OS": quiz.deviceOS,

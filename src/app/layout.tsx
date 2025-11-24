@@ -10,6 +10,8 @@ import { APP_NAME } from "@/lib/consts";
 import Head from "next/head";
 import { NuqsAdapter } from "nuqs/adapters/next";
 import "./globals.css";
+import { getUserConsents } from "./queries";
+import CookieBanner from "@/components/view/CookieBanner";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -40,7 +42,9 @@ type RootLayoutProps = {
    children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+   const userConsents = await getUserConsents()
+
    return (
        <html lang="ar" dir="rtl">
        <Head>
@@ -59,6 +63,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
              {children}
           </NuqsAdapter>
           <Footer/>
+          <CookieBanner consents={userConsents}/>
        </AuthProvider>
        </body>
        </html>
