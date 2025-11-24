@@ -1,15 +1,17 @@
-import type {Metadata} from "next";
+import type { Metadata } from "next";
 
 import "./globals.css";
 
-import {NuqsAdapter} from "nuqs/adapters/next/app";
-import {Tajawal} from "next/font/google";
-import {Toaster} from "@/components/ui/sonner";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Tajawal } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/view/Header";
 import AuthProvider from "@/components/providers/AuthProvider";
 import Footer from "@/components/view/Footer";
-import {APP_NAME} from "@/lib/consts";
+import CookieBanner from "@/components/view/CookieBanner";
+import { APP_NAME } from "@/lib/consts";
 import Head from "next/head";
+import { getUserConsents } from "@/app/queries";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
       `الناطقة بالعربية`,
       `امتحان`,
       `كلمات`,
-       process.env.WEB_DOMAIN!
+      process.env.WEB_DOMAIN!
    ]
 };
 
@@ -41,7 +43,8 @@ type RootLayoutProps = {
    children: React.ReactNode;
 };
 
-export default function RootLayout({children}: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+   const userConsents = await getUserConsents()
    return (
        <html lang="ar" dir="rtl">
        <Head>
@@ -58,6 +61,7 @@ export default function RootLayout({children}: RootLayoutProps) {
 
           <NuqsAdapter>{children}</NuqsAdapter>
           <Footer/>
+          <CookieBanner consents={userConsents}/>
        </AuthProvider>
        </body>
        </html>

@@ -16,6 +16,7 @@ import { Search, Eye, ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import React, { PropsWithChildren } from "react";
 import { useUsersStats } from "./hooks";
 import { cn } from "@/lib/utils";
+import { parseAsString, parseAsStringEnum, useQueryState } from "nuqs";
 
 function UsersTableSkeleton() {
    return (

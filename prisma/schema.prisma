@@ -197,7 +197,7 @@ model DemographicSurvey {
 
 model UserConsent {
   id             String   @id @default(cuid())
-  userId         String   @unique @map("user_id")
+  userId         String   @map("user_id")
   consentedAt    DateTime @map("consented_at")
   consentVersion String   @map("consent_version")
   createdAt      DateTime @default(now())

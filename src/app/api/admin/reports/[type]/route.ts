@@ -22,7 +22,6 @@ export function isInt(obj: any) {
    }
 }
 
-
 export type CSVSurveyRow = {
    anonymousUserId: string;
    userDomain: string;
@@ -223,6 +222,7 @@ export type QuizWordResponse = {
    isTimeout: boolean
    pageNumber: number
    responseTime: number
+   timestamp: number
    responseType: string
 }
 
@@ -440,7 +440,7 @@ function quizResponseToCsvRow(
                : quiz.user.score?.toString());
 
    return {
-      "UTC Date and Time": quiz.createdAt.toISOString(),
+      "UTC Date and Time": new Date(response.timestamp).toISOString(),
       "User Private ID": generateAnonymousId(quiz.user.id!),
       "User Device Type": quiz.deviceType,
       "User OS": quiz.deviceOS,

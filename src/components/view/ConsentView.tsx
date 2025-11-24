@@ -1,9 +1,9 @@
 "use client";
 
-import {useState} from "react";
+import { useState } from "react";
 
 // components
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
    Card,
    CardContent,
@@ -12,9 +12,9 @@ import {
    CardHeader,
    CardTitle,
 } from "@/components/ui/card";
-import {Checkbox} from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
-import {Check, Copy} from "lucide-react";
+import { Check, Copy } from "lucide-react";
 
 interface ConsentViewProps {
    onConsent: () => void;
@@ -38,7 +38,7 @@ const consentItems = [
    },
 ];
 
-export function ConsentView({onConsent}: ConsentViewProps) {
+export function ConsentView({ onConsent }: ConsentViewProps) {
    const [checkedItems, setCheckedItems] = useState<string[]>([]);
    const [submitting, setSubmitting] = useState(false);
    const [copied, setCopied] = useState(false);

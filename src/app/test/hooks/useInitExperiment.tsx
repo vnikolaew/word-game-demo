@@ -61,8 +61,7 @@ export function useInitExperiment(
     state: string,
     scriptsLoaded: boolean,
     setLoaded: (l: boolean) => void,
-    setError: (e: string) => void,
-    currentIndex: number
+    setError: (e: string) => void
 ) {
    const isMobile = useMediaQuery(`(max-width: ${MAX_MOBILE_WIDTH}px)`);
 
@@ -150,7 +149,7 @@ export function useInitExperiment(
             task: "response",
             correct_response: jsPsych.timelineVariable("correct_response"),
          },
-         on_start: function () {
+         on_start: function (data: { data: any }) {
             setCorrect(null!);
          },
          on_finish: function (data: any) {
@@ -165,6 +164,9 @@ export function useInitExperiment(
                 || (response === NON_WORD && word_types[word_index] === NON_WORD)
 
             data.correct = c;
+            data.timestamp = (typeof data.rt === `number`)
+                ? Date.now() - (data.rt as number)
+                : Date.now() - ANSWER_TIMEOUT;
 
             setCorrect(c);
             setCurrentIndex((i) => i + 1);
