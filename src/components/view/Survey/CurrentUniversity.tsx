@@ -45,6 +45,10 @@ function CurrentUniversity({ errors, formData, setFormData }: Props) {
                   label: "جامعة القصيم",
                },
                {
+                  value: "king_abdulaziz_university",
+                  label: `جامعة الملك عبدالعزيز`
+               },
+               {
                   value: "other",
                   label: "أخرى، الرجاء التحديد",
                },
