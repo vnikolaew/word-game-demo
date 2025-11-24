@@ -164,6 +164,9 @@ export function useInitExperiment(
                 || (response === NON_WORD && word_types[word_index] === NON_WORD)
 
             data.correct = c;
+            data.timestamp = (typeof data.rt === `number`)
+                ? Date.now() - (data.rt as number)
+                : Date.now() - ANSWER_TIMEOUT;
 
             setCorrect(c);
             setCurrentIndex((i) => i + 1);

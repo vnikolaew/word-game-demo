@@ -74,9 +74,9 @@ model Word {
 }
 
 model WordList {
-  id              Int            @id @default(autoincrement())
-    original_id     Int           @default(0)
-    
+  id          Int @id @default(autoincrement())
+  original_id Int @default(0)
+
   createdAt       DateTime       @default(now())
   timesUsed       Int            @default(0)
   lastUsedAt      DateTime?
@@ -125,64 +125,64 @@ model QuizAttempt {
 }
 
 model DemographicSurvey {
-  id                        String   @id @default(cuid())
-  userId                    String   @unique @map("user_id")
+  id     String @id @default(cuid())
+  userId String @unique @map("user_id")
 
-  nativeLanguage            String   @map("native_language")
-  otherNativeLanguage       String?  @map("other_native_language")
+  nativeLanguage      String  @map("native_language")
+  otherNativeLanguage String? @map("other_native_language")
 
-  languageAcquisition       String   @map("language_acquisition")
-  otherAcquisitionLanguage  String?  @map("other_acquisition_language")
+  languageAcquisition      String  @map("language_acquisition")
+  otherAcquisitionLanguage String? @map("other_acquisition_language")
 
-  familyLanguage            String   @map("family_language")
-  otherFamilyLanguage       String?  @map("other_family_language")
+  familyLanguage      String  @map("family_language")
+  otherFamilyLanguage String? @map("other_family_language")
 
-  gender                    String
-  age                       String
-  university                String?
+  gender     String
+  age        String
+  university String?
 
-  highestEducation          String   @map("highest_education")
-  arabicDialect             String   @map("arabic_dialect")
-  nationality               String
-  otherNationality          String?  @map("other_nationality")
+  highestEducation String  @map("highest_education")
+  arabicDialect    String  @map("arabic_dialect")
+  nationality      String
+  otherNationality String? @map("other_nationality")
 
-  residence                 String
-  otherResidence            String?  @map("other_residence")
+  residence      String
+  otherResidence String? @map("other_residence")
 
-  languages                 String
+  languages String
 
-  kindergartenLanguage      String   @map("kindergarten_language")
-  otherKindergartenLanguage String?  @map("other_kindergarten_language")
+  kindergartenLanguage      String  @map("kindergarten_language")
+  otherKindergartenLanguage String? @map("other_kindergarten_language")
 
-  primaryLanguage           String   @map("primary_language")
-  otherPrimaryLanguage      String?  @map("other_primary_language")
+  primaryLanguage      String  @map("primary_language")
+  otherPrimaryLanguage String? @map("other_primary_language")
 
-  middleLanguage            String   @map("middle_language")
-  otherMiddleLanguage       String?  @map("other_middle_language")
+  middleLanguage      String  @map("middle_language")
+  otherMiddleLanguage String? @map("other_middle_language")
 
-  highSchoolLanguage        String   @map("high_school_language")
-  otherHighSchoolLanguage   String?  @map("other_high_school_language")
+  highSchoolLanguage      String  @map("high_school_language")
+  otherHighSchoolLanguage String? @map("other_high_school_language")
 
-  universityLanguage        String   @map("university_language")
-  otherUniversityLanguage   String?  @map("other_university_language")
+  universityLanguage      String  @map("university_language")
+  otherUniversityLanguage String? @map("other_university_language")
 
-  readingHours              String   @map("reading_hours")
-  listeningHours            String   @map("listening_hours")
-  writingHours              String   @map("writing_hours")
-  speakingHours             String   @map("speaking_hours")
+  readingHours   String @map("reading_hours")
+  listeningHours String @map("listening_hours")
+  writingHours   String @map("writing_hours")
+  speakingHours  String @map("speaking_hours")
 
-  attentionDisorder         String   @map("attention_disorder")
-  readingDisorder           String   @map("reading_disorder")
-  vision                    String
-  handedness                String
+  attentionDisorder String @map("attention_disorder")
+  readingDisorder   String @map("reading_disorder")
+  vision            String
+  handedness        String
 
-  createdAt                 DateTime @default(now())
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UserConsent {
   id             String   @id @default(cuid())
-  userId         String   @unique @map("user_id")
+  userId         String   @map("user_id")
   consentedAt    DateTime @map("consented_at")
   consentVersion String   @map("consent_version")
   createdAt      DateTime @default(now())

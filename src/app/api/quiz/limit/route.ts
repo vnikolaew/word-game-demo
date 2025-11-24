@@ -5,7 +5,7 @@ import {NextResponse} from "next/server";
 
 const LIMITS = {
    ONE_HOUR: {
-      limit: 4,
+      limit: 5,
       message: `لقد أجريت الاختبار أربع مرات أو أكثر خلال الساعة الماضية. يُرجى المحاولة مرة أخرى خلال {minutes}.
 `,
    },
@@ -28,8 +28,11 @@ export async function GET() {
    }
 
    const now = new Date();
-   const ONE_HOUR_AGO = new Date(now.setMinutes(0, 0,0)); // Latest hour,
-   const ONE_DAY_AGO = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+   const startOfHour = new Date(now);
+   startOfHour.setMinutes(0, 0, 0);
+   
+   const startOfDay = new Date(now);
+   startOfDay.setHours(0, 0, 0, 0);
 
    const user = await prisma.user.findUnique({
       where: {id: session.user.id},
@@ -38,7 +41,7 @@ export async function GET() {
             orderBy: {createdAt: `desc`},
             where: {
                createdAt: {
-                  gte: ONE_DAY_AGO,
+                  gte: startOfDay,
                },
             },
          },
@@ -46,12 +49,11 @@ export async function GET() {
    });
 
    const quizzesLastHour =
-       user?.quizAttempts.filter((a) => a.createdAt >= ONE_HOUR_AGO).length ?? 0;
+       user?.quizAttempts.filter((a) => a.createdAt >= startOfHour).length ?? 0;
 
    if (quizzesLastHour >= LIMITS.ONE_HOUR.limit) {
-      const latestQuiz = user?.quizAttempts.at(0)?.createdAt;
-      const tryAgainIn =
-          Math.abs(latestQuiz!.getTime() - ONE_HOUR_AGO.getTime()) / ONE_MINUTE_MS
+      const nextHour = new Date(startOfHour.getTime() + ONE_HOUR_MS);
+      const tryAgainIn = Math.ceil((nextHour.getTime() - now.getTime()) / ONE_MINUTE_MS);
 
       return NextResponse.json(
           {message: LIMITS.ONE_HOUR.message, success: false, tryAgainIn},
@@ -59,12 +61,11 @@ export async function GET() {
       );
    }
    const quizzesLastDay =
-       user?.quizAttempts.filter((a) => a.createdAt >= ONE_DAY_AGO).length ?? 0;
+       user?.quizAttempts.filter((a) => a.createdAt >= startOfDay).length ?? 0;
 
    if (quizzesLastDay >= LIMITS.ONE_DAY.limit) {
-      const latestQuiz = user?.quizAttempts.at(0)?.createdAt;
-      const tryAgainIn =
-          Math.abs(latestQuiz!.getTime() - ONE_DAY_AGO.getTime()) / ONE_HOUR_MS;
+      const nextDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
+      const tryAgainIn = Math.ceil((nextDay.getTime() - now.getTime()) / ONE_HOUR_MS);
 
       return NextResponse.json(
           {message: LIMITS.ONE_DAY.message, success: false, tryAgainIn},

@@ -232,6 +232,7 @@ export type QuizWordResponse = {
    isTimeout: boolean
    pageNumber: number
    responseTime: number
+   timestamp: number
    responseType: string
 }
 
@@ -411,7 +412,7 @@ const NONWORD = `nonword`
 function getQuizCSVRow(quiz: QuizAttempt & {
    wordList: WordList,
    user: { id: string }
-}, all_words: Record<string, Word[]>) : CSVQuizExportRow[] {
+}, all_words: Record<string, Word[]>): CSVQuizExportRow[] {
    const responses = quiz.responses as QuizWordResponse[];
    const current_list = all_words[quiz.wordListId]
 
@@ -438,8 +439,12 @@ function getQuizCSVRow(quiz: QuizAttempt & {
           const current_word = current_list
               ?.find(w => w.word === response.word)
 
+          const timestamp = typeof response.timestamp === `number`
+              ? new Date(response.timestamp).toISOString()
+              : quiz.createdAt?.toISOString()
+
           return {
-             "UTC Date and Time": quiz.createdAt.toISOString(),
+             "UTC Date and Time": timestamp,
              "User Private ID": generateAnonymousId(quiz.user.id),
              "User Device Type": quiz.deviceType,
              "User OS": quiz.deviceOS,

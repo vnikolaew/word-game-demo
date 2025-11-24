@@ -10,6 +10,8 @@ import Footer from "@/components/view/Footer";
 import { APP_NAME } from "@/lib/consts";
 import Head from "next/head";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import CookieBanner from "@/components/view/CookieBanner";
+import { getUserConsents } from "./queries";
 
 const tajawal = Tajawal({
    variable: "--font-arabic",
@@ -40,25 +42,27 @@ type RootLayoutProps = {
    children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+   const userConsents = await getUserConsents()
    return (
-      <html lang="ar" dir="rtl">
-         <Head>
-            <link
-               href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
-               rel="stylesheet"
-               type="text/css"
-            />
-         </Head>
-         <body className={`${tajawal.className} antialiased mx-auto max-w-7xl`}>
-            <AuthProvider>
-               <Toaster />
-               <Header />
+       <html lang="ar" dir="rtl">
+       <Head>
+          <link
+              href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
+              rel="stylesheet"
+              type="text/css"
+          />
+       </Head>
+       <body className={`${tajawal.className} antialiased mx-auto max-w-7xl`}>
+       <AuthProvider>
+          <Toaster/>
+          <Header/>
 
-               <NuqsAdapter>{children}</NuqsAdapter>
-               <Footer />
-            </AuthProvider>
-         </body>
-      </html>
+          <NuqsAdapter>{children}</NuqsAdapter>
+          <Footer/>
+          <CookieBanner consents={userConsents}/>
+       </AuthProvider>
+       </body>
+       </html>
    );
 }
