@@ -24,7 +24,7 @@ import { Spinner } from "@/components/ui/Spinner";
 function Reports({ total_count, survey_count }: { total_count: number; survey_count: number }) {
    const [surveyLoading, setSurveyLoading] = useState(false);
    const [quizLoading, setQuizLoading] = useState(false);
-   const total_reports = Math.ceil(total_count / 100)
+   const total_reports = Math.ceil(total_count / 1000)
 
    const handleExport = async (type: "quiz" | "survey", { limit, offset }: { limit: number, offset: number }) => {
       try {
@@ -64,7 +64,7 @@ function Reports({ total_count, survey_count }: { total_count: number; survey_co
    };
 
    async function handleDownloadReport(index: number) {
-      const [limit, offset] = [100, index * 100]
+      const [limit, offset] = [1000, index * 1000]
       await handleExport(`quiz`, { limit, offset })
    }
 
@@ -115,7 +115,7 @@ function Reports({ total_count, survey_count }: { total_count: number; survey_co
                                                    className={`!text-right !cursor-pointer`} key={i}>
                                     <div className={`!flex items-center gap-2 justify-between !w-full`}>
                                        يتم تشغيل الاختبار
-                                       #{i * 100 + 1}-{i === total_reports - 1 ? total_count : (i + 1) * 100}
+                                       #{i * 1000 + 1}-{i === total_reports - 1 ? total_count : (i + 1) * 1000}
                                        <FileDown className="h-4 w-4 ml-2 !text-black"/>
                                     </div>
                                  </DropdownMenuItem>
