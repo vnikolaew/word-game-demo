@@ -277,7 +277,7 @@ export async function GET(
       const { type } = params;
       const limit = isInt(req.nextUrl.searchParams.get("limit"))
           ? parseInt(req.nextUrl.searchParams.get("limit") ?? ``)
-          : 100;
+          : 1_000;
       const offset = isInt(req.nextUrl.searchParams.get("offset"))
           ? parseInt(req.nextUrl.searchParams.get("offset") ?? ``)
           : 0;
@@ -337,7 +337,7 @@ export async function GET(
       }
 
       const fromTo = type === `quiz`
-          ? `(${offset * 100 + 1}-${offset * 100 + limit})`
+          ? `(${offset + 1}-${offset + limit})`
           : ``
 
       return new NextResponse(data_buffer, {
